@@ -8,36 +8,69 @@
 
 using namespace std;
 
-vector<int> Block::findNeighbors()
+Block::Block(int block_id, pair<int, int> LL, int width, int height, BlockType block_type)
 {
-    vector<int> neighbors;
+    if (block_type == UNDEFINED)
+    {
+        cerr << "Block type is UNDEFINED" << endl;
+        exit(1);
+    }
 
-    // LL_Bottom, sweep rightward until the rightmost point of the block > getRightX()
-    // or the block is at the rightmost of the outline
-
-    // LL_Left
-
-    // UR_Top
-
-    // UR_Right
-
-    return neighbors;
+    else if (block_type == CELL)
+    {
+        this->block_id = block_id;
+        this->LL = LL;
+        this->width = width;
+        this->height = height;
+        this->LL_Bottom = nullptr;
+        this->LL_Left = nullptr;
+        this->UR_Top = nullptr;
+        this->UR_Right = nullptr;
+        this->block_type = block_type;
+    }
+    else
+    {
+        this->block_id = -1;
+        this->LL = LL;
+        this->width = width;
+        this->height = height;
+        this->LL_Bottom = nullptr;
+        this->LL_Left = nullptr;
+        this->UR_Top = nullptr;
+        this->UR_Right = nullptr;
+        this->block_type = block_type;
+    }
 }
 
-Block::Block(int block_id, pair<int, int> LL, int width, int height)
+bool Block::adjacent(const Block &b) const
 {
-    this->block_id = block_id;
-    this->LL = LL;
-    this->width = width;
-    this->height = height;
-    this->LL_Bottom = nullptr;
-    this->LL_Left = nullptr;
-    this->UR_Top = nullptr;
-    this->UR_Right = nullptr;
+    // Return true only if the 2 blocks share an edge
+
+    // case1: the blocks share a vertical edge
+    if (this->LL.first == b.LL.first + b.width || this->LL.first + this->width == b.LL.first)
+    {
+        // check if the y coordinates overlap
+        if (this->LL.second<b.LL.second + b.height &&this->LL.second + this->height> b.LL.second)
+        {
+            return true;
+        }
+    }
+    // case2: the blocks share a horizontal edge
+    else if (this->LL.second == b.LL.second + b.height || this->LL.second + this->height == b.LL.second)
+    {
+        // check if the x coordinates overlap
+        if (this->LL.first<b.LL.first + b.width &&this->LL.first + this->width> b.LL.first)
+        {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 Block::Block()
 {
+    this->block_type = UNDEFINED;
     this->block_id = -1;
     this->LL = make_pair(-1, -1);
     this->width = -1;
@@ -50,6 +83,7 @@ Block::Block()
 
 void Block::operator=(const Block &b)
 {
+    this->block_type = b.block_type;
     this->block_id = b.block_id;
     this->LL = b.LL;
     this->width = b.width;
