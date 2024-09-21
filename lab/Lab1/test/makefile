@@ -28,7 +28,7 @@ $(EXEC): $(OBJ_FILES)
 
 # Rule to compile .cpp files to .o files
 define compile_rule
-$(OBJ_DIR)/$(1).o: $(SOURCE_DIR)/$(1).cpp | $(OBJ_DIR)
+$(OBJ_DIR)/$(1).o: $(SOURCE_DIR)/$(1).cpp $(wildcard $(SOURCE_DIR)/*.h) | $(OBJ_DIR)
 	g++ -c $(CFLAGS) -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
 endef
 
@@ -44,13 +44,13 @@ clean:
 
 # Define a pattern rule for run targets
 run_%: $(EXEC)
-	./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt
+	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt
 
 # Run all testcases
 run_all: $(EXEC)
 	@$(foreach file,$(basename $(notdir $(TESTCASE_FILES))), \
 		echo "Running $(file)"; \
-		./$(EXEC) $(TESTCASE_DIR)/$(file).txt $(OUT_DIR)/$(file)_out.txt; \
+		timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$(file).txt $(OUT_DIR)/$(file)_out.txt; \
 		printf "Finished running $(file)\n\n";)
 
 # Check a specific testcase by number
