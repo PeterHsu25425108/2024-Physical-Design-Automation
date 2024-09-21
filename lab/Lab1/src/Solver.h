@@ -1,6 +1,6 @@
 #ifndef SOLVER_H
 #define SOLVER_H
-
+#include "DEBUG.h"
 #include <iostream>
 #include <fstream>
 #include <vector>

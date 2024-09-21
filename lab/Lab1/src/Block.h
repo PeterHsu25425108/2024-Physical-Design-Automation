@@ -1,6 +1,6 @@
 #ifndef BLOCK_H
 #define BLOCK_H
-
+#include "DEBUG.h"
 #include <iostream>
 #include <fstream>
 #include <vector>
