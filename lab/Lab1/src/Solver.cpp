@@ -20,11 +20,59 @@ void Solver::InsertCellBlock(Block &block)
         exit(1);
     }
 
-    pair<int, int> LL = block.LL;
-    pair<int, int> UR = block.getUR();
+    int block_TopY = block.getTopY();
+    int block_BottomY = block.getBottomY();
+    int block_middleX = (block.getTopY() + block.getBottomY()) / 2;
 
-    // Find the block in which the LL and UR corners are located
-    pair<int, int> LL_block_LL = PointFinding(LL);
+    pair<int, int> Top_CheckPoint = make_pair(block_middleX, block_TopY);
+    pair<int, int> Bottom_CheckPoint = make_pair(block_middleX, block_BottomY);
+
+    Block *Top_Block = &PointFinding(Top_CheckPoint);
+    Block *Bottom_Block = &PointFinding(Bottom_CheckPoint);
+
+    bool split_top, split_bottom;
+
+    // if block_TopY == outlineHeight, the block is on the top edge of the outline, no need to split the block on top
+    if (block_TopY == outlineHeight)
+    {
+        split_top = false;
+    }
+    // if Top_CheckPoint is not found in any block,
+    //  or Top_CheckPoint.second is on the bottom edge of the block that contains the point,
+    // then no need to split the top block
+    else if (Top_Block == &Void || Top_Block->getBottomY() == block_TopY)
+    {
+        split_top = false;
+    }
+    else
+    {
+        split_top = true;
+    }
+
+    // if block_BottomY == 0, the block is on the bottom edge of the outline, no need to split the block on bottom
+    if (block_BottomY == 0)
+    {
+        split_bottom = false;
+    }
+    // if Bottom_CheckPoint is not found in any block,
+    //  or Bottom_CheckPoint.second is on the bottom edge of the block that contains the point,
+    // then no need to split the bottom block
+    else if (Bottom_Block == &Void || Bottom_Block->getBottomY() == block_BottomY)
+    {
+        split_bottom = false;
+    }
+    else
+    {
+        split_bottom = true;
+    }
+
+    // split the block on top
+
+    // split the block on bottom
+
+    // find the left and right neighbors of the block
+
+    // merge the block with the left neighbor if possible
 }
 
 // Find the neighbors of the block
@@ -129,13 +177,14 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
     return neighbors;
 }
 
-pair<int, int> Solver::PointFinding(pair<int, int> point)
+// Find the block that contains the point, if not found, return the Void block
+Block &Solver::PointFinding(pair<int, int> point) const
 {
     // Find the block that contains the point
     // Return the LL corner of the block
 
     // Pick the front block in the outline
-    Block *block = &blocks.front();
+    Block *block = const_cast<Block *>(&blocks.front());
     Block *prev_block = nullptr;
 
     if (block == nullptr)
@@ -174,7 +223,7 @@ pair<int, int> Solver::PointFinding(pair<int, int> point)
         if (block->PointInBlock(point))
         {
             // The point is found
-            return block->LL;
+            return *block;
         }
         // If the point is on the top or right edge of the block,
         // chances are the point is in the next block
@@ -182,7 +231,7 @@ pair<int, int> Solver::PointFinding(pair<int, int> point)
         {
             if (block->UR_Top->PointInBlock(point))
             {
-                return block->UR_Top->LL;
+                return *(block->UR_Top);
             }
 
             prev_block = block;
@@ -192,7 +241,7 @@ pair<int, int> Solver::PointFinding(pair<int, int> point)
         {
             if (block->UR_Right->PointInBlock(point))
             {
-                return block->UR_Right->LL;
+                return *(block->UR_Right);
             }
 
             prev_block = block;
@@ -249,10 +298,12 @@ pair<int, int> Solver::PointFinding(pair<int, int> point)
     if (block == &Void)
     {
         // The point isn't found
-        cerr << "The point is not in the block" << endl;
+        /*cerr << "The point is not in the block" << endl;
         cerr << "Previous Block x range: " << prev_block->getLeftX() << "<= x <" << prev_block->getRightX() << endl;
         cerr << "Previous Block y range: " << prev_block->getBottomY() << "<= y <" << prev_block->getTopY() << endl;
-        exit(1);
+        exit(1);*/
+
+        return const_cast<Block &>(Void);
     }
     else if (block == nullptr)
     {
@@ -263,7 +314,7 @@ pair<int, int> Solver::PointFinding(pair<int, int> point)
         exit(1);
     }
 
-    cerr << "The UR_Top pointer is uninitialized" << endl;
+    cerr << "PointFinding: The block pointer is uninitialized" << endl;
     exit(1);
 }
 
@@ -306,7 +357,17 @@ void Solver::CMDParser(ifstream &in_file)
             }
 
             // Find the block that contains the point (x, y)
-            pair<int, int> LL_corner = PointFinding(make_pair(x, y));
+            Block block_found = PointFinding(make_pair(x, y));
+
+            if (block_found == Void)
+            {
+                cerr << "PointFinding output Void" << endl;
+                cerr << "Point: " << x << " " << y << endl;
+
+                exit(1);
+            }
+
+            pair<int, int> LL_corner = block_found.LL;
 
             if (DEBUG_POINTFINDING)
             {

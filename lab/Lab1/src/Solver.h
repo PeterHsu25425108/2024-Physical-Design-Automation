@@ -60,7 +60,7 @@ public:
     void writeOutput(ostream &out);
 
     // Return the LL corner of the block that contains the point
-    pair<int, int> PointFinding(pair<int, int> point);
+    Block &PointFinding(pair<int, int> point) const;
 
     // Insert a cell block into the outline,
     // update the neighbors of the blocks, and perform merge/split of the space block if necessary

@@ -69,6 +69,7 @@ bool Block::adjacent(const Block &b) const
 
 void Block::operator=(const Block &b)
 {
+
     this->block_type = b.block_type;
     this->block_id = b.block_id;
     this->LL = b.LL;
