@@ -8,7 +8,7 @@
 
 using namespace std;
 
-Block::Block(int block_id, pair<int, int> LL, int width, int height, BlockType block_type)
+Block::Block(std::pair<int, int> LL, int width, int height, BlockType block_type, int block_id, Block *LL_Bottom, Block *LL_Left, Block *UR_Top, Block *UR_Right)
 {
     if (block_type == UNDEFINED)
     {
@@ -22,22 +22,21 @@ Block::Block(int block_id, pair<int, int> LL, int width, int height, BlockType b
         this->LL = LL;
         this->width = width;
         this->height = height;
-        this->LL_Bottom = nullptr;
-        this->LL_Left = nullptr;
-        this->UR_Top = nullptr;
-        this->UR_Right = nullptr;
+        this->LL_Bottom = LL_Bottom;
+        this->LL_Left = LL_Left;
+        this->UR_Top = UR_Top;
+        this->UR_Right = UR_Right;
         this->block_type = block_type;
     }
     else
     {
-        this->block_id = -1;
         this->LL = LL;
         this->width = width;
         this->height = height;
-        this->LL_Bottom = nullptr;
-        this->LL_Left = nullptr;
-        this->UR_Top = nullptr;
-        this->UR_Right = nullptr;
+        this->LL_Bottom = LL_Bottom;
+        this->LL_Left = LL_Left;
+        this->UR_Top = UR_Top;
+        this->UR_Right = UR_Right;
         this->block_type = block_type;
     }
 }
@@ -68,19 +67,6 @@ bool Block::adjacent(const Block &b) const
     return false;
 }
 
-Block::Block()
-{
-    this->block_type = UNDEFINED;
-    this->block_id = -1;
-    this->LL = make_pair(-1, -1);
-    this->width = -1;
-    this->height = -1;
-    this->LL_Bottom = nullptr;
-    this->LL_Left = nullptr;
-    this->UR_Top = nullptr;
-    this->UR_Right = nullptr;
-}
-
 void Block::operator=(const Block &b)
 {
     this->block_type = b.block_type;
@@ -92,4 +78,9 @@ void Block::operator=(const Block &b)
     this->LL_Left = b.LL_Left;
     this->UR_Top = b.UR_Top;
     this->UR_Right = b.UR_Right;
+}
+
+bool Block::PointInBlock(pair<int, int> point) const
+{
+    return (point.first >= LL.first && point.first < LL.first + width && point.second >= LL.second && point.second < LL.second + height);
 }

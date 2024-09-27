@@ -13,6 +13,14 @@ int main(int argc, char *argv[])
     Solver solver;
     solver.CMDParser(in_file);
 
+    solver.writeOutput(out_file);
+
+    if (DEBUG_MAIN)
+    {
+        cout << endl;
+        solver.writeOutput(cout);
+    }
+
     in_file.close();
     out_file.close();
 

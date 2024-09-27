@@ -20,15 +20,27 @@ enum BlockType
 struct Block
 {
     BlockType block_type;
+    // The block_id of the cell block, -1: space block, -2: Void block, Positive integer: cell block
     int block_id;
     pair<int, int> LL;
     int width, height;
     // The neighbor pointers of the block
     Block *LL_Bottom, *LL_Left, *UR_Top, *UR_Right;
 
-    Block(int block_id, pair<int, int> LL, int width, int height, BlockType block_type);
+    Block(pair<int, int> LL, int width, int height, BlockType block_type, int block_id = -1, Block *LL_Bottom = nullptr, Block *LL_Left = nullptr, Block *UR_Top = nullptr, Block *UR_Right = nullptr);
 
-    Block();
+    Block()
+    {
+        this->block_type = UNDEFINED;
+        this->block_id = -1;
+        this->LL = make_pair(-1, -1);
+        this->width = -1;
+        this->height = -1;
+        this->LL_Bottom = nullptr;
+        this->LL_Left = nullptr;
+        this->UR_Top = nullptr;
+        this->UR_Right = nullptr;
+    }
 
     void operator=(const Block &b);
 
@@ -46,6 +58,8 @@ struct Block
         else
             return false;
     }
+
+    bool PointInBlock(pair<int, int> point) const;
 
     bool adjacent(const Block &b) const;
 
@@ -67,6 +81,21 @@ struct Block
     int getTopY() const
     {
         return LL.second + height;
+    }
+
+    pair<int, int> getUR() const
+    {
+        return make_pair(LL.first + width, LL.second + height);
+    }
+
+    pair<int, int> getUL() const
+    {
+        return make_pair(LL.first, LL.second + height);
+    }
+
+    pair<int, int> getLR() const
+    {
+        return make_pair(LL.first + width, LL.second);
     }
 };
 

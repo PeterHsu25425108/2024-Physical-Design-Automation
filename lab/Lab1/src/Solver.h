@@ -16,6 +16,7 @@ using namespace std;
 class Solver
 {
 private:
+    int num_block_outline;
     int outlineWidth;
     int outlineHeight;
 
@@ -25,7 +26,7 @@ private:
 
     // An unordered map that stores the cell blocks in the outline,
     // u can use the block_id as the key to access the block
-    unordered_map<int, Block> cell_blocks;
+    unordered_map<int, Block *> Id2CellBlockPtr;
 
     // If the neighbor pointer points out of the outline,
     // it points to Void
@@ -40,48 +41,33 @@ private:
     vector<Block *> CellBlockPtr;
 
 public:
-    Solver()
+    Solver() : Void(make_pair(-1, -1), -1, -1, SPACE, -2)
     {
+        num_block_outline = 0;
         outlineWidth = -1;
         outlineHeight = -1;
-        Void = Block(-1, make_pair(-1, -1), -1, -1, SPACE);
     }
 
     ~Solver()
     {
     }
 
+    void addBlock(const Block &block);
+
     void CMDParser(ifstream &in_file);
 
     // Write the output to the out_file
-    void writeOutput(ofstream &out_file);
+    void writeOutput(ostream &out);
 
     // Return the LL corner of the block that contains the point
     pair<int, int> PointFinding(pair<int, int> point);
-
-    void InsertBlock(Block &block)
-    {
-        if (block.block_type == CELL)
-        {
-            InsertCellBlock(block);
-        }
-        else if (block.block_type == SPACE)
-        {
-            InsertSpaceBlock(block);
-        }
-        else
-        {
-            cerr << "Block type is UNDEFINED" << endl;
-            exit(1);
-        }
-    }
 
     // Insert a cell block into the outline,
     // update the neighbors of the blocks, and perform merge/split of the space block if necessary
     void InsertCellBlock(Block &block);
 
-    // Insert a space block into the outline,
-    void InsertSpaceBlock(Block &block);
+    // Find the neighbors of the block
+    vector<Block *> findNeighbors(const Block &block) const;
 };
 
 #endif
