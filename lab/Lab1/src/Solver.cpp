@@ -67,12 +67,20 @@ void Solver::InsertCellBlock(Block &block)
     }
 
     // split the block on top
+    if (split_top)
+    {
+    }
 
     // split the block on bottom
+    if (split_bottom)
+    {
+    }
 
-    // find the left and right neighbors of the block
+    // find the space blocks stacked in between the top and bottom blocks
 
-    // merge the block with the left neighbor if possible
+    // split the block on left and right
+
+    // merge the block with the neighbors if possible
 }
 
 // Find the neighbors of the block
