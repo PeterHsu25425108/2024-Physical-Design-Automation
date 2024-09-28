@@ -84,7 +84,8 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
     // Q: how to update the neighbor ptr of the neighboring blocks of the split space blocks
 }
 
-// split the block on top and bottom, slice them horizontally
+// split the block on top and bottom, slice them horizontally,
+// the input block becomes the bottom block after the split
 void Solver::SplitSpace_Hori(Block &space_block, int split_Y)
 {
     // check if the block is a space block
@@ -95,11 +96,10 @@ void Solver::SplitSpace_Hori(Block &space_block, int split_Y)
         exit(1);
     }
 
-    space_block.height = split_Y - space_block.getBottomY();
-
     int b_new_bottomY = split_Y;
     int b_new_topY = space_block.getTopY();
     int b_new_height = b_new_topY - b_new_bottomY;
+    space_block.height = split_Y - space_block.getBottomY();
 
     Block *b_new_LL_Bottom = &space_block;
     Block *b_new_LL_Left = space_block.LL_Left;
