@@ -426,7 +426,7 @@ Block &Solver::PointFinding(pair<int, int> point) const
     // Return the LL corner of the block
 
     // Pick the front block in the outline
-    Block *block = const_cast<Block *>(&blocks.front());
+    Block *block = rand() % 2 ? const_cast<Block *>(&blocks.front()) : const_cast<Block *>(&blocks.back());
     Block *prev_block = nullptr;
 
     if (block == nullptr)
