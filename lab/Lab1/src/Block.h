@@ -14,13 +14,17 @@ enum BlockType
 {
     CELL,
     SPACE,
-    UNDEFINED
+    UNDEFINED,
+    VOID
 };
 
 struct Block
 {
     BlockType block_type;
-    // The block_id of the cell block, -1: space block, -2: Void block, Positive integer: cell block
+    // The block_id of the cell block,
+    // Positive integer: cell block
+    // 0: Void
+    // Negative integer: space block
     int block_id;
     pair<int, int> LL;
     int width, height;

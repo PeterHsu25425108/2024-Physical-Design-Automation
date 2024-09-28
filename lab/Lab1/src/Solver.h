@@ -16,6 +16,9 @@ using namespace std;
 class Solver
 {
 private:
+    // The number of blocks in the outline,
+    // including both space and cell blocks,
+    // used to detect infinite loop in PointFinding
     int num_block_outline;
     int outlineWidth;
     int outlineHeight;
@@ -26,7 +29,11 @@ private:
 
     // An unordered map that stores the cell blocks in the outline,
     // u can use the block_id as the key to access the block
-    unordered_map<int, Block *> Id2CellBlockPtr;
+    unordered_map<int, list<Block>::iterator> Id2CellBlockPtr;
+
+    // An unordered map that stores the space blocks in the outline,
+    // u can use the block_id as the key to access the block
+    unordered_map<int, list<Block>::iterator> Id2SpaceBlockPtr;
 
     // If the neighbor pointer points out of the outline,
     // it points to Void
@@ -40,9 +47,15 @@ private:
     // used for outputting the cell blocks in the correct order
     vector<Block *> CellBlockPtr;
 
+    // accumulate the number of space blocks created throughout the process,
+    // used to assign an unique block_id to every space block created,
+    // including those that are later deleted
+    int space_block_accumulate = 0;
+
 public:
-    Solver() : Void(make_pair(-1, -1), -1, -1, SPACE, -2)
+    Solver() : Void(make_pair(-1, -1), -1, -1, VOID, 0)
     {
+        space_block_accumulate = 0;
         num_block_outline = 0;
         outlineWidth = -1;
         outlineHeight = -1;
@@ -52,8 +65,19 @@ public:
     {
     }
 
+    void SplitSpace_Hori(Block &block, int split_Y);
+    void SplitSpace_Vert(Block &cell_block, Block &Top_Blcok, Block &Bottom_Block);
+
+    void MergeSpace(vector<Block *> &space_blocks);
+
+    void deleteSpaceBlock(Block *block);
+
+    // Add a block(space or cell) to the outline.
+    // The block is added to the end of the blocks list, O(1) time.
+    // The block_id of the cell block is stored in the corresponding unordered map.
     void addBlock(const Block &block);
 
+    // Main function to parse the input file and solve the problem
     void CMDParser(ifstream &in_file);
 
     // Write the output to the out_file
