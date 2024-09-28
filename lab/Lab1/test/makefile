@@ -24,12 +24,12 @@ ANS_FILES = $(wildcard $(ANS_DIR)/*.txt)
 all: $(EXEC)
 
 $(EXEC): $(OBJ_FILES)
-	g++ $(LDFLAGS) -o $@ $^
+	g++ $(LDFLAGS) -g -o $@ $^
 
 # Rule to compile .cpp files to .o files
 define compile_rule
 $(OBJ_DIR)/$(1).o: $(SOURCE_DIR)/$(1).cpp $(wildcard $(SOURCE_DIR)/*.h) | $(OBJ_DIR)
-	g++ -c $(CFLAGS) -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
+	g++ -c $(CFLAGS) -g -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
 endef
 
 # Generate compile rules for each .cpp file
@@ -45,6 +45,9 @@ clean:
 # Define a pattern rule for run targets
 run_%: $(EXEC)
 	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt
+
+run_valgrind_%: $(EXEC)
+	valgrind --leak-check=full --log-file=memory.log ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt
 
 # Run all testcases
 run_all: $(EXEC)

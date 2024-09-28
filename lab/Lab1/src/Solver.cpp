@@ -14,6 +14,9 @@ using namespace std;
 // Split the block on left and right, slice them vertically
 void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_Block)
 {
+    // Add the cell block to the outline
+    cell_block = *addBlock(cell_block);
+
     // check if the block is a cell block
     if (cell_block.block_type != CELL)
     {
@@ -26,7 +29,16 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
     if (&Top_Block == &Bottom_Block)
     {
         cerr << "The top and bottom blocks are the same" << endl;
-        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << endl;
+        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << " width: " << cell_block.width << " height: " << cell_block.height << endl;
+        cerr << "Top Block id: " << Top_Block.block_id << " LL: " << Top_Block.LL.first << " " << Top_Block.LL.second << " width: " << Top_Block.width << " height: " << Top_Block.height << endl;
+        cerr << "Bottom Block id: " << Bottom_Block.block_id << " LL: " << Bottom_Block.LL.first << " " << Bottom_Block.LL.second << " width: " << Bottom_Block.width << " height: " << Bottom_Block.height << endl;
+
+        // print all the blocks
+        for (Block &b : blocks)
+        {
+            cerr << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+        }
+
         exit(1);
     }
 
@@ -52,7 +64,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             // since it overlaps with the cell block
             if (b->block_type != SPACE)
             {
-                cerr << "The block is " << b->block_type << ", not a space block" << endl;
+                cerr << "Split_ver: The block is " << b->block_type << ", not a space block" << endl;
                 cerr << "Block id: " << b->block_id << " LL: " << b->LL.first << " " << b->LL.second << endl;
                 exit(1);
             }
@@ -114,7 +126,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         {
             // Create the new space block on the left
             int new_width = cell_block.getLeftX() - leftX;
-            addBlock(Block(space_blocks[i]->LL, new_width, space_blocks[i]->height, SPACE, -1, &Void, space_blocks[i]->LL_Left, &Void, &cell_block));
+            new_space_blocks[i].first = new Block(space_blocks[i]->LL, new_width, space_blocks[i]->height, SPACE, -1, &Void, space_blocks[i]->LL_Left, &Void, &cell_block);
         }
         else if (leftX > cell_block.getLeftX())
         {
@@ -135,7 +147,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             int new_width = rightX - cell_block.getRightX();
 
             // The neighbor pointers of the new space block are not yet updated
-            addBlock(Block(make_pair(cell_block.getRightX(), space_blocks[i]->LL.second), new_width, space_blocks[i]->height, SPACE, -1, &Void, &cell_block, &Void, space_blocks[i]->UR_Right));
+            new_space_blocks[i].second = new Block(make_pair(cell_block.getRightX(), space_blocks[i]->LL.second), new_width, space_blocks[i]->height, SPACE, -1, &Void, &cell_block, &Void, space_blocks[i]->UR_Right);
         }
         else if (rightX < cell_block.getRightX())
         {
@@ -204,6 +216,22 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         // Update the neighbor pointers of the space block
         for (Block *neighbor : neighbors[i])
         {
+
+            if (neighbor == &Void)
+            {
+                cerr << "The neighbor is Void" << endl;
+                cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                exit(1);
+            }
+            else if (neighbor == nullptr)
+            {
+                cerr << "The neighbor is nullptr" << endl;
+                cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                exit(1);
+            }
+
             // check if b is one of the space block to be split
             bool neighbor_split = space_blocks_map.find(neighbor->block_id) != space_blocks_map.end();
 
@@ -521,7 +549,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
     }
 
     // Add the new space blocks to the outline
-    for (int i = 0; i < new_space_blocks.size(); i++)
+    /*for (int i = 0; i < new_space_blocks.size(); i++)
     {
         if (new_space_blocks[i].first != nullptr)
         {
@@ -532,20 +560,27 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         {
             addBlock(*new_space_blocks[i].second);
         }
-    }
-
-    // Add the cell block to the outline
-    addBlock(cell_block);
+    }*/
 }
 
 // split the block on top and bottom, slice them horizontally,
 // the input block becomes the bottom block after the split
 void Solver::SplitSpace_Hori(Block &space_block, int split_Y)
 {
+
+    if (DEBUG_INSERT)
+    {
+        cout << "original space block: " << space_block.block_id << " LL: " << space_block.LL.first << " " << space_block.LL.second << " width: " << space_block.width << " height: " << space_block.height << endl;
+        for (Block &b : blocks)
+        {
+            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+        }
+    }
+
     // check if the block is a space block
     if (space_block.block_type != SPACE)
     {
-        cerr << "The block is " << space_block.block_type << ", not a space block" << endl;
+        cerr << "Split_hori: The block is " << space_block.block_type << ", not a space block" << endl;
         cerr << " LL: " << space_block.LL.first << " " << space_block.LL.second << endl;
         exit(1);
     }
@@ -560,10 +595,15 @@ void Solver::SplitSpace_Hori(Block &space_block, int split_Y)
     Block *b_new_UR_Top = space_block.UR_Top;
     Block *b_new_UR_Right = space_block.UR_Right;
 
-    addBlock(Block(make_pair(space_block.LL.first, b_new_bottomY), space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
-    Block *b_new = &blocks.back();
+    Block *b_new = addBlock(Block(make_pair(space_block.LL.first, b_new_bottomY), space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
+    // Block *b_new = &blocks.back();
 
     space_block.UR_Top = b_new;
+
+    if (DEBUG_INSERT)
+    {
+        cout << "original space block after split_hori: " << space_block.block_id << " LL: " << space_block.LL.first << " " << space_block.LL.second << " width: " << space_block.width << " height: " << space_block.height << endl;
+    }
 }
 
 // The input is a vector of space blocks on the same side(left or right) of the cell block,
@@ -674,19 +714,25 @@ void Solver::deleteSpaceBlock(Block *block)
 {
     if (block->block_type != SPACE)
     {
-        cerr << "The block is " << block->block_type << ", not a space block" << endl;
+        cerr << "Merge: The block is " << block->block_type << ", not a space block" << endl;
         cerr << "Block id: " << block->block_id << " LL: " << block->LL.first << " " << block->LL.second << endl;
         exit(1);
     }
 
     // remove the block from the blocks list in O(1) time
-    blocks.erase(Id2SpaceBlockPtr[block->block_id]);
+    auto it = Id2SpaceBlockPtr.find(block->block_id);
+
+    if (it == Id2SpaceBlockPtr.end())
+    {
+        cerr << "The block is not found in the Id2SpaceBlockPtr" << endl;
+        cerr << "Block id: " << block->block_id << " LL: " << block->LL.first << " " << block->LL.second << endl;
+        exit(1);
+    }
+
+    blocks.erase(it->second);
 
     // remove the block from the Id2SpaceBlockPtr
-    Id2SpaceBlockPtr.erase(block->block_id);
-
-    // delete the block
-    delete block;
+    Id2SpaceBlockPtr.erase(it);
 }
 
 void Solver::InsertCellBlock(Block &block)
@@ -753,22 +799,59 @@ void Solver::InsertCellBlock(Block &block)
     // split the block on top and bottom, slice them horizontally
     if (split_top)
     {
+
+        if (DEBUG_INSERT)
+        {
+            cout << "Splitting the top block" << endl;
+        }
+
         SplitSpace_Hori(Top_Block, block_TopY);
 
         // update Top_Block to the block whose bottom edge
         // is the same as the top edge of the block
-        Top_Block = *Top_Block.UR_Top;
+
+        if (DEBUG_INSERT)
+        {
+            cout << "blocks before alias change" << endl;
+            for (Block &b : blocks)
+            {
+                cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+            }
+        }
+
+        if (DEBUG_INSERT)
+        {
+            cout << "blocks after alias change" << endl;
+            for (Block &b : blocks)
+            {
+                cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+            }
+        }
     }
 
     if (split_bottom)
     {
+        if (DEBUG_INSERT)
+        {
+            cout << "Splitting the bottom block" << endl;
+        }
+
         SplitSpace_Hori(Bottom_Block, block_BottomY);
+    }
+
+    if (DEBUG_INSERT)
+    {
+        for (Block &b : blocks)
+        {
+            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+        }
     }
 
     // find the space blocks stacked in between the top and bottom blocks
     // split the block on left and right, slice them vertically
     // merge the block with the neighbors if possible
-    SplitSpace_Vert(block, Top_Block, Bottom_Block);
+    Block &New_Top_Block = split_top ? *Top_Block.UR_Top : Top_Block;
+    SplitSpace_Vert(block, New_Top_Block, Bottom_Block);
 }
 
 // Find the neighbors of the block
@@ -1105,8 +1188,19 @@ void Solver::CMDParser(ifstream &in_file)
     }
 }
 
-void Solver::addBlock(const Block &block)
+Block *Solver::addBlock(const Block &block)
 {
+    // block.block_id = -space_block_accumulate - 1;
+
+    if (DEBUG_INSERT)
+    {
+        cout << "blocks before addBlock" << endl;
+        for (Block &b : blocks)
+        {
+            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+        }
+    }
+
     blocks.push_back(block);
 
     // Store the pointer to the cell blocks in ascending order of their block_id
@@ -1124,6 +1218,17 @@ void Solver::addBlock(const Block &block)
 
     // Update the number of blocks
     num_block_outline++;
+
+    if (DEBUG_INSERT)
+    {
+        cout << "blocks after addBlock" << endl;
+        for (Block &b : blocks)
+        {
+            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+        }
+    }
+
+    return &blocks.back();
 }
 
 void Solver::writeOutput(ostream &out)

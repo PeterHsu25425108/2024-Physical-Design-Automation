@@ -75,7 +75,7 @@ public:
     // Add a block(space or cell) to the outline.
     // The block is added to the end of the blocks list, O(1) time.
     // The block_id of the cell block is stored in the corresponding unordered map.
-    void addBlock(const Block &block);
+    Block *addBlock(const Block &block);
 
     // Main function to parse the input file and solve the problem
     void CMDParser(ifstream &in_file);
