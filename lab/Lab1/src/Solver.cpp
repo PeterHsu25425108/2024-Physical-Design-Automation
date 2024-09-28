@@ -31,12 +31,11 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
     }
 
     // Store the space blocks in between the top and bottom blocks
-    // But not including the top and bottom blocks
     vector<Block *> space_blocks;
+    // For looking up the space blocks by their block_id
+    unordered_map<int, Block *> space_blocks_map;
+
     Block *b = &Bottom_Block;
-    // contains the new space blocks that are created after the split of the
-    // space block below the current space block considered(b)
-    pair<Block *, Block *> new_space_blocks = make_pair(nullptr, nullptr);
 
     while (b != &Top_Block && b->getBottomY() < cell_block.getTopY())
     {
@@ -55,6 +54,19 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             {
                 cerr << "The block is " << b->block_type << ", not a space block" << endl;
                 cerr << "Block id: " << b->block_id << " LL: " << b->LL.first << " " << b->LL.second << endl;
+                exit(1);
+            }
+
+            // check if b's bottom edge is the top edge of the cell block
+            if (space_blocks.size() > 0 && b->getBottomY() != space_blocks.back()->getTopY())
+            {
+                cerr << "The bottom edge of the space block is not the top edge of the prev space block" << endl;
+                cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << " width: " << cell_block.width << " height: " << cell_block.height << endl;
+                // print the space blocks
+                for (Block *sb : space_blocks)
+                {
+                    cerr << "Space Block id: " << sb->block_id << " LL: " << sb->LL.first << " " << sb->LL.second << " width: " << sb->width << " height: " << sb->height << endl;
+                }
                 exit(1);
             }
 
@@ -80,8 +92,450 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         }
     }
 
-    // Split the space blocks on left and right, slice them vertically, UNDONE
-    // Q: how to update the neighbor ptr of the neighboring blocks of the split space blocks
+    // Split the space blocks on left and right, slice them vertically
+
+    // Stores the space blocks created after the split of the space block on the left and right
+    // first: left space block, second: right space block
+    // The LL_Left,  UR_Right is assign when initializing the new space block
+    vector<pair<Block *, Block *>> new_space_blocks(space_blocks.size(), make_pair(nullptr, nullptr));
+
+    // 1. update the neighbor pointers of the space blocks so that they point to the new space blocks
+    // or the cell block
+    // 2. update the neighbor pointers of the cell block
+    // 3. The new space block will be created and added to the outline
+    for (int i = 0; i < space_blocks.size(); i++)
+    {
+        // Create the space blocks
+        // case1: the space block is completely on the left of the cell block
+        int leftX = space_blocks[i]->getLeftX();
+        int rightX = space_blocks[i]->getRightX();
+
+        if (leftX < cell_block.getLeftX())
+        {
+            // Create the new space block on the left
+            int new_width = cell_block.getLeftX() - leftX;
+            addBlock(Block(space_blocks[i]->LL, new_width, space_blocks[i]->height, SPACE, -1, &Void, space_blocks[i]->LL_Left, &Void, &cell_block));
+        }
+        else if (leftX > cell_block.getLeftX())
+        {
+            // This should not happen
+            cerr << "Abnormal space block on the left of the cell block" << endl;
+            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+            exit(1);
+        }
+        else // leftX == cell_block.getLeftX()
+        {
+            new_space_blocks[i].first = nullptr;
+        }
+
+        if (rightX > cell_block.getRightX())
+        {
+            // Create the new space block on the right
+            int new_width = rightX - cell_block.getRightX();
+
+            // The neighbor pointers of the new space block are not yet updated
+            addBlock(Block(make_pair(cell_block.getRightX(), space_blocks[i]->LL.second), new_width, space_blocks[i]->height, SPACE, -1, &Void, &cell_block, &Void, space_blocks[i]->UR_Right));
+        }
+        else if (rightX < cell_block.getRightX())
+        {
+            // This should not happen
+            cerr << "Abnormal space block on the right of the cell block" << endl;
+            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+            exit(1);
+        }
+        else // rightX == cell_block.getRightX()
+        {
+            new_space_blocks[i].second = nullptr;
+        }
+    }
+
+    // update the LL_Left and UR_Right of the new space blocks
+    if (new_space_blocks.size() != 0 && new_space_blocks[0].first != nullptr)
+    {
+        // cell block's LL_Left should be new_space_blocks[0].first
+        cell_block.LL_Left = new_space_blocks[0].first;
+    }
+    else
+    {
+        // cell block's LL_Left should be space_blocks[0]->LL_Left
+        cell_block.LL_Left = space_blocks[0]->LL_Left;
+    }
+
+    if (new_space_blocks.size() != 0 && new_space_blocks.back().second != nullptr)
+    {
+        // cell block's UR_Right should be new_space_blocks.back().second
+        cell_block.UR_Right = new_space_blocks.back().second;
+    }
+    else
+    {
+        // cell block's UR_Right should be space_blocks.back()->UR_Right
+        cell_block.UR_Right = space_blocks.back()->UR_Right;
+    }
+
+    // check if the UR_Top of the cell blcoks should be void
+    if (cell_block.getTopY() == outlineHeight)
+    {
+        cell_block.UR_Top = &Void;
+    }
+    // check if the LL_Bottom of the cell block should be void
+    if (cell_block.getBottomY() == 0)
+    {
+        cell_block.LL_Bottom = &Void;
+    }
+
+    vector<vector<Block *>> neighbors(space_blocks.size());
+
+    // Find the neighbors of the space blocks
+    for (int i = 0; i < space_blocks.size(); i++)
+    {
+        neighbors[i] = findNeighbors(*space_blocks[i]);
+    }
+
+    for (int i = 0; i < space_blocks.size(); i++)
+    {
+        bool new_left = (new_space_blocks[i].first != nullptr);
+        bool new_right = (new_space_blocks[i].second != nullptr);
+
+        // Find the neighbors of the space block
+        // vector<Block *> neighbors = findNeighbors(*space_blocks[i]);
+
+        // Update the neighbor pointers of the space block
+        for (Block *neighbor : neighbors[i])
+        {
+            // check if b is one of the space block to be split
+            bool neighbor_split = space_blocks_map.find(neighbor->block_id) != space_blocks_map.end();
+
+            // check which edge of the space block b is adjacent to space_blocks[i]
+            bool left_edge = (neighbor->getRightX() == space_blocks[i]->getLeftX());
+            bool right_edge = (neighbor->getLeftX() == space_blocks[i]->getRightX());
+            bool top_edge = (neighbor->getBottomY() == space_blocks[i]->getTopY());
+            bool bottom_edge = (neighbor->getTopY() == space_blocks[i]->getBottomY());
+
+            // there should be only one edge that is adjacent to the cell block
+            if ((int)left_edge + (int)right_edge + (int)top_edge + (int)bottom_edge != 1)
+            {
+                cerr << "The space block has more than one edge adjacent to the cell block" << endl;
+                cerr << "Adj edges: ";
+                if (left_edge)
+                    cerr << "left ";
+                if (right_edge)
+                    cerr << "right ";
+                if (top_edge)
+                    cerr << "top ";
+                if (bottom_edge)
+                    cerr << "bottom ";
+                cerr << endl;
+                cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                exit(1);
+            }
+
+            if (left_edge)
+            {
+
+                if (neighbor->UR_Right == space_blocks[i])
+                {
+                    neighbor->UR_Right = new_left ? new_space_blocks[i].first : &cell_block;
+                }
+            }
+            else if (right_edge)
+            {
+
+                if (neighbor->LL_Left == space_blocks[i])
+                {
+                    neighbor->LL_Left = new_right ? new_space_blocks[i].second : &cell_block;
+                }
+            }
+            else if (top_edge)
+            {
+                // check for update of the UR_Top of cell block
+                if (neighbor->getLeftX() < cell_block.getRightX() && neighbor->getRightX() >= cell_block.getRightX())
+                {
+                    cell_block.UR_Top = neighbor;
+                }
+
+                if (neighbor_split)
+                {
+                    if (i == new_space_blocks.size() - 1)
+                    {
+                        // not possible
+                        cerr << "The highest space block to be split vertically have to_be_split top edge neighbor" << endl;
+                        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                        cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                        cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                        exit(1);
+                    }
+
+                    bool neighbor_new_left = new_left ? new_space_blocks[i + 1].first : &cell_block;
+                    bool neighbor_new_right = new_right ? new_space_blocks[i + 1].second : &cell_block;
+
+                    // check for update of the LL_Bottom of new space block
+                    if (neighbor_new_left && new_left)
+                    {
+                        if (neighbor->LL_Bottom == space_blocks[i])
+                        {
+                            new_space_blocks[i + 1].first->LL_Bottom = new_space_blocks[i].first;
+                        }
+
+                        new_space_blocks[i].first->UR_Top = new_space_blocks[i + 1].first;
+                    }
+
+                    // check for update of the UR_Top of new space block
+                    if (neighbor_new_right && new_right)
+                    {
+                        if (space_blocks[i]->UR_Top == neighbor)
+                        {
+                            new_space_blocks[i].second->UR_Top = new_space_blocks[i + 1].second;
+                        }
+                        new_space_blocks[i + 1].second->LL_Bottom = new_space_blocks[i].second;
+                    }
+                }
+                else
+                {
+                    // check which side of the cell block the neighbor is on
+                    bool left_side = neighbor->getRightX() <= cell_block.getLeftX();
+                    bool right_side = neighbor->getLeftX() >= cell_block.getRightX();
+
+                    // check if the non split neighbor overlaps with the cell block
+                    if (!left_side && !right_side && (i < space_blocks.size() - 1))
+                    {
+                        cerr << "The non split neighbor overlaps with the cell block" << endl;
+                        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                        cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                        cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                        exit(1);
+                    }
+                    else if (left_side && right_side)
+                    {
+                        cerr << "The non split neighbor is on both side of the cell block" << endl;
+                        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                        cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                        cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                        exit(1);
+                    }
+
+                    else if (left_side)
+                    {
+                        if (!new_left)
+                        {
+                            cerr << "The non split neighbor is on the left side of the cell block, but the space block has no left space block" << endl;
+                            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                            cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                            exit(1);
+                        }
+
+                        // check for update of the LL_Bottom of the neighbor
+                        if (neighbor->LL_Bottom == space_blocks[i])
+                        {
+                            neighbor->LL_Bottom = new_space_blocks[i].first;
+                        }
+
+                        // check for update of the UR_Top of new left space block
+                        if (neighbor->getRightX() == cell_block.getLeftX())
+                        {
+                            new_space_blocks[i].first->UR_Top = neighbor;
+                        }
+                    }
+                    else if (right_side)
+                    {
+                        if (!new_right)
+                        {
+                            cerr << "The non split neighbor is on the right side of the cell block, but the space block has no right space block" << endl;
+                            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                            cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                            exit(1);
+                        }
+
+                        // check for update of the LL_Bottom of the neighbor
+                        if (neighbor->LL_Bottom == space_blocks[i])
+                        {
+                            neighbor->LL_Bottom = new_space_blocks[i].second;
+                        }
+
+                        // check for update of the UR_Top of new space block
+                        if (space_blocks[i]->UR_Top == neighbor)
+                        {
+                            new_space_blocks[i].second->LL_Bottom = neighbor;
+                        }
+                    }
+                    else
+                    {
+                        // check for update of the LL_Bottom of neighbor pointing to the cell block
+                        if (neighbor->getLeftX() >= cell_block.getLeftX() && neighbor->getLeftX() < cell_block.getRightX())
+                        {
+                            neighbor->LL_Bottom = &cell_block;
+                        }
+                        else if (neighbor->getLeftX() < cell_block.getLeftX())
+                        {
+                            neighbor->LL_Bottom = new_space_blocks[i].first;
+                        }
+                        else
+                        {
+                            neighbor->LL_Bottom = new_space_blocks[i].second;
+                        }
+                    }
+                }
+            }
+            else // bottom_edge
+            {
+                // check for update of the LL_Bottom of cell block
+                if (neighbor->getLeftX() <= cell_block.getLeftX() && neighbor->getRightX() > cell_block.getRightX())
+                {
+                    cell_block.LL_Bottom = neighbor;
+                }
+
+                if (neighbor_split)
+                {
+                    // not possible
+                    if (i == 0)
+                    {
+                        cerr << "The lowest space block to be split vertically have to_be_split bottom edge neighbor" << endl;
+                        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                        cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                        cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                        exit(1);
+                    }
+
+                    bool neighbor_new_left = new_left ? new_space_blocks[i - 1].first : &cell_block;
+                    bool neighbor_new_right = new_right ? new_space_blocks[i - 1].second : &cell_block;
+
+                    if (neighbor_new_left && new_left)
+                    {
+                        if (space_blocks[i]->LL_Bottom == neighbor)
+                        {
+                            new_space_blocks[i].first->LL_Bottom = new_space_blocks[i - 1].first;
+                        }
+
+                        new_space_blocks[i - 1].first->UR_Top = new_space_blocks[i].first;
+                    }
+
+                    if (neighbor_new_right && new_right)
+                    {
+                        if (neighbor->UR_Top == space_blocks[i])
+                        {
+                            new_space_blocks[i - 1].second->UR_Top = new_space_blocks[i].second;
+                        }
+                        new_space_blocks[i].second->LL_Bottom = new_space_blocks[i - 1].second;
+                    }
+                }
+                else
+                {
+                    // check which side of the cell block the neighbor is on
+                    bool left_side = neighbor->getRightX() <= cell_block.getLeftX();
+                    bool right_side = neighbor->getLeftX() >= cell_block.getRightX();
+
+                    // check if the non split neighbor overlaps with the cell block
+                    if (!left_side && !right_side && (i > 0))
+                    {
+                        cerr << "The non split neighbor overlaps with the cell block" << endl;
+                        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                        cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                        cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                        exit(1);
+                    }
+                    else if (left_side && right_side)
+                    {
+                        cerr << "The non split neighbor is on both side of the cell block" << endl;
+                        cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                        cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                        cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                        exit(1);
+                    }
+
+                    else if (left_side)
+                    {
+                        if (!new_left)
+                        {
+                            cerr << "The non split neighbor is on the left side of the cell block, but the space block has no left space block" << endl;
+                            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                            cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                            exit(1);
+                        }
+
+                        // check for update of the UR_Top of the neighbor
+                        if (neighbor->UR_Top == space_blocks[i])
+                        {
+                            neighbor->UR_Top = new_space_blocks[i].first;
+                        }
+
+                        // check for update of the LL_Bottom of new left space block
+                        if (space_blocks[i]->LL_Bottom == neighbor)
+                        {
+                            new_space_blocks[i].first->LL_Bottom = neighbor;
+                        }
+                    }
+                    else if (right_side)
+                    {
+                        if (!new_right)
+                        {
+                            cerr << "The non split neighbor is on the right side of the cell block, but the space block has no right space block" << endl;
+                            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
+                            cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+                            exit(1);
+                        }
+
+                        // check for update of the UR_Top of the neighbor
+                        if (neighbor->UR_Top == space_blocks[i])
+                        {
+                            neighbor->UR_Top = new_space_blocks[i].second;
+                        }
+
+                        // check for update of the LL_Bottom of new right space block
+                        if (neighbor->getLeftX() == cell_block.getRightX())
+                        {
+                            new_space_blocks[i].second->LL_Bottom = neighbor;
+                        }
+                    }
+                    else
+                    {
+                        // check for update of the UR_Top of neighbor pointing to the cell block
+                        if (neighbor->getRightX() > cell_block.getLeftX() && neighbor->getRightX() <= cell_block.getRightX())
+                        {
+                            neighbor->UR_Top = &cell_block;
+                        }
+                        else if (neighbor->getRightX() <= cell_block.getLeftX())
+                        {
+                            neighbor->UR_Top = new_space_blocks[i].first;
+                        }
+                        else
+                        {
+                            neighbor->UR_Top = new_space_blocks[i].second;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    // Delete the space blocks that are split
+    for (Block *b_delete : space_blocks)
+    {
+        deleteSpaceBlock(b_delete);
+    }
+
+    // Add the new space blocks to the outline
+    for (int i = 0; i < new_space_blocks.size(); i++)
+    {
+        if (new_space_blocks[i].first != nullptr)
+        {
+            addBlock(*new_space_blocks[i].first);
+        }
+
+        if (new_space_blocks[i].second != nullptr)
+        {
+            addBlock(*new_space_blocks[i].second);
+        }
+    }
+
+    // Add the cell block to the outline
+    addBlock(cell_block);
 }
 
 // split the block on top and bottom, slice them horizontally,
