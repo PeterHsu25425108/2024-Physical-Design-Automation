@@ -41,13 +41,15 @@ $(OBJ_DIR):
 
 clean:
 	rm -rf $(EXEC) $(OBJ_DIR)/*.o
+	rm ../layout/*.txt
+	rm ../drawing/*.png
 
 # Define a pattern rule for run targets
 run_%: $(EXEC)
-	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt
+	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
 
 run_valgrind_%: $(EXEC)
-	valgrind --leak-check=full --log-file=memory.log ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt
+	valgrind --leak-check=full --log-file=memory.log ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
 
 # Run all testcases
 run_all: $(EXEC)
@@ -58,11 +60,11 @@ run_all: $(EXEC)
 
 # Check a specific testcase by number
 check_case%:
-	diff $(OUT_DIR)/case$*_out.txt $(ANS_DIR)/output$*.txt;
+	diff -b $(OUT_DIR)/case$*_out.txt $(ANS_DIR)/output$*.txt;
 
 # Check all testcases
 check_all:
 	@$(foreach file,$(basename $(notdir $(TESTCASE_FILES))), \
 		echo "Checking $(file)"; \
-		diff $(OUT_DIR)/$(file)_out.txt $(ANS_DIR)/output$(file).txt; \
+		diff -b $(OUT_DIR)/$(file)_out.txt $(ANS_DIR)/output$(file).txt; \
 		printf "Finished checking $(file)\n\n";)

@@ -65,7 +65,7 @@ public:
     {
     }
 
-    void SplitSpace_Hori(Block &block, int split_Y);
+    void SplitSpace_Hori(Block &block, int split_Y, bool original_on_top);
     void SplitSpace_Vert(Block &cell_block, Block &Top_Blcok, Block &Bottom_Block);
 
     void MergeSpace(vector<Block *> &space_blocks);
@@ -84,11 +84,25 @@ public:
     void writeOutput(ostream &out);
 
     // Return the LL corner of the block that contains the point
-    Block &PointFinding(pair<int, int> point) const;
+    Block &PointFinding(pair<int, int> point /*, bool ignore_new_block = false */) const;
 
     // Insert a cell block into the outline,
     // update the neighbors of the blocks, and perform merge/split of the space block if necessary
     void InsertCellBlock(Block &block);
+
+    // output the info for plotting
+    void outputPlot(string filename)
+    {
+        ofstream out_file(filename);
+        out_file << num_block_outline << endl;
+        out_file << outlineWidth << " " << outlineHeight << endl;
+        for (Block &b : blocks)
+        {
+            // cerr << b.block_id << " " << b.LL.first << " " << b.LL.second << " " << b.width << " " << b.height << endl;
+            out_file << b.block_id << " " << b.LL.first << " " << b.LL.second << " " << b.width << " " << b.height << endl;
+        }
+        out_file.close();
+    }
 
     // Find the neighbors of the block
     vector<Block *> findNeighbors(const Block &block) const;

@@ -6,5 +6,6 @@
 #define DEBUG_MAIN 1
 #define DEBUG_POINTFINDING 1
 #define DEBUG_INSERT 1
+#define DEBUG_FINDNEIGH 1
 
 #endif

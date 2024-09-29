@@ -12,10 +12,51 @@
 using namespace std;
 
 // Split the block on left and right, slice them vertically
-void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_Block)
+void Solver::SplitSpace_Vert(Block &cell_block_in, Block &Top_Block, Block &Bottom_Block)
 {
+
+    if (DEBUG_INSERT)
+    {
+        cout << endl;
+        cout << "SplitSpace_Vert: Splitting the space blocks vertically" << endl;
+        cout << "Cell Block id: " << cell_block_in.block_id << " LL: " << cell_block_in.LL.first << " " << cell_block_in.LL.second << " width: " << cell_block_in.width << " height: " << cell_block_in.height << endl;
+        if (Top_Block == Void)
+        {
+            cout << "Top Block is Void" << endl;
+        }
+        else
+            cout << "Top Block id: " << Top_Block.block_id << " LL: " << Top_Block.LL.first << " " << Top_Block.LL.second << " width: " << Top_Block.width << " height: " << Top_Block.height << endl;
+        cout << "Bottom Block id: " << Bottom_Block.block_id << " LL: " << Bottom_Block.LL.first << " " << Bottom_Block.LL.second << " width: " << Bottom_Block.width << " height: " << Bottom_Block.height << endl;
+    }
+
+    if (DEBUG_FINDNEIGH)
+    {
+        cout << "--- blocks before inserting cell block ---" << endl;
+        for (Block &b : blocks)
+        {
+            cout << b;
+
+            cout << endl;
+        }
+
+        cout << "-----------------------------------------" << endl;
+    }
+
     // Add the cell block to the outline
-    cell_block = *addBlock(cell_block);
+    Block &cell_block = *addBlock(cell_block_in);
+
+    if (DEBUG_FINDNEIGH)
+    {
+        cout << "--- blocks after inserting cell block ---" << endl;
+        for (Block &b : blocks)
+        {
+            cout << b;
+
+            cout << endl;
+        }
+
+        cout << "-----------------------------------------" << endl;
+    }
 
     // check if the block is a cell block
     if (cell_block.block_type != CELL)
@@ -42,6 +83,19 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         exit(1);
     }
 
+    if (DEBUG_FINDNEIGH)
+    {
+        cout << "--- blocks before space block finding ---" << endl;
+        for (Block &b : blocks)
+        {
+            cout << b;
+
+            cout << endl;
+        }
+
+        cout << "-----------------------------------------" << endl;
+    }
+
     // Store the space blocks in between the top and bottom blocks
     vector<Block *> space_blocks;
     // For looking up the space blocks by their block_id
@@ -64,7 +118,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             // since it overlaps with the cell block
             if (b->block_type != SPACE)
             {
-                cerr << "Split_ver: The block is " << b->block_type << ", not a space block" << endl;
+                cerr << "Split_ver: The block is " << (b->block_type == CELL ? "CELL" : "Void") << ", not a space block" << endl;
                 cerr << "Block id: " << b->block_id << " LL: " << b->LL.first << " " << b->LL.second << endl;
                 exit(1);
             }
@@ -83,6 +137,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             }
 
             space_blocks.push_back(b);
+            space_blocks_map[b->block_id] = b;
             b = b->UR_Top;
         }
         else
@@ -102,6 +157,55 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << endl;
             exit(1);
         }
+    }
+
+    if (DEBUG_FINDNEIGH)
+    {
+        cout << "--- blocks before neighbor finding ---" << endl;
+        for (Block &b : blocks)
+        {
+            cout << b;
+            cout << endl;
+        }
+
+        cout << "-----------------------------------------" << endl;
+    }
+
+    vector<vector<Block *>> neighbors(space_blocks.size());
+
+    // Find the neighbors of the space blocks
+    for (int i = 0; i < space_blocks.size(); i++)
+    {
+        neighbors[i] = findNeighbors(*space_blocks[i]);
+        // check if cell block is in the neighbors
+        if (find(neighbors[i].begin(), neighbors[i].end(), &cell_block) != neighbors[i].end())
+        {
+            cerr << "The cell block is in the neighbors of the space block" << endl;
+            cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << " width: " << cell_block.width << " height: " << cell_block.height << endl;
+            cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+        }
+    }
+
+    if (DEBUG_INSERT)
+    {
+        cout << "Split_vert: Space blocks in between the top and bottom blocks" << endl;
+        for (Block *sb : space_blocks)
+        {
+            cout << "Space Block id: " << sb->block_id << " LL: " << sb->LL.first << " " << sb->LL.second << " width: " << sb->width << " height: " << sb->height << endl;
+        }
+    }
+
+    if (DEBUG_FINDNEIGH)
+    {
+        cout << "--- blocks after neighbor finding ---" << endl;
+        for (Block &b : blocks)
+        {
+            cout << b;
+
+            cout << endl;
+        }
+
+        cout << "-----------------------------------------" << endl;
     }
 
     // Split the space blocks on left and right, slice them vertically
@@ -126,7 +230,8 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         {
             // Create the new space block on the left
             int new_width = cell_block.getLeftX() - leftX;
-            new_space_blocks[i].first = new Block(space_blocks[i]->LL, new_width, space_blocks[i]->height, SPACE, -1, &Void, space_blocks[i]->LL_Left, &Void, &cell_block);
+            Block b_new(space_blocks[i]->LL, new_width, space_blocks[i]->height, SPACE, -1, &Void, space_blocks[i]->LL_Left, &Void, &cell_block);
+            new_space_blocks[i].first = addBlock(b_new);
         }
         else if (leftX > cell_block.getLeftX())
         {
@@ -147,7 +252,8 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             int new_width = rightX - cell_block.getRightX();
 
             // The neighbor pointers of the new space block are not yet updated
-            new_space_blocks[i].second = new Block(make_pair(cell_block.getRightX(), space_blocks[i]->LL.second), new_width, space_blocks[i]->height, SPACE, -1, &Void, &cell_block, &Void, space_blocks[i]->UR_Right);
+            Block b_new(make_pair(cell_block.getRightX(), space_blocks[i]->LL.second), new_width, space_blocks[i]->height, SPACE, -1, &Void, &cell_block, &Void, space_blocks[i]->UR_Right);
+            new_space_blocks[i].second = addBlock(b_new);
         }
         else if (rightX < cell_block.getRightX())
         {
@@ -163,7 +269,24 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         }
     }
 
-    // update the LL_Left and UR_Right of the new space blocks
+    if (DEBUG_INSERT)
+    {
+        cout << "Split_vert: New space blocks created" << endl;
+        for (int i = 0; i < new_space_blocks.size(); i++)
+        {
+            cout << "Space Block " << *space_blocks[i] << endl;
+            if (new_space_blocks[i].first != nullptr)
+            {
+                cout << "New Space Block on the left: " << *new_space_blocks[i].first << endl;
+            }
+            if (new_space_blocks[i].second != nullptr)
+            {
+                cout << "New Space Block on the right: " << *new_space_blocks[i].second << endl;
+            }
+        }
+    }
+
+    // update the LL_Left and UR_Right of the cell block
     if (new_space_blocks.size() != 0 && new_space_blocks[0].first != nullptr)
     {
         // cell block's LL_Left should be new_space_blocks[0].first
@@ -197,14 +320,6 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
         cell_block.LL_Bottom = &Void;
     }
 
-    vector<vector<Block *>> neighbors(space_blocks.size());
-
-    // Find the neighbors of the space blocks
-    for (int i = 0; i < space_blocks.size(); i++)
-    {
-        neighbors[i] = findNeighbors(*space_blocks[i]);
-    }
-
     for (int i = 0; i < space_blocks.size(); i++)
     {
         bool new_left = (new_space_blocks[i].first != nullptr);
@@ -212,6 +327,18 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
 
         // Find the neighbors of the space block
         // vector<Block *> neighbors = findNeighbors(*space_blocks[i]);
+
+        if (DEBUG_INSERT)
+        {
+            cout << endl;
+            cout << "Split_vert: Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
+            cout << "Split_vert: Neighbors of the space block" << endl;
+            for (Block *neighbor : neighbors[i])
+            {
+                cout << *neighbor << endl;
+            }
+            cout << endl;
+        }
 
         // Update the neighbor pointers of the space block
         for (Block *neighbor : neighbors[i])
@@ -244,16 +371,24 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             // there should be only one edge that is adjacent to the cell block
             if ((int)left_edge + (int)right_edge + (int)top_edge + (int)bottom_edge != 1)
             {
-                cerr << "The space block has more than one edge adjacent to the cell block" << endl;
-                cerr << "Adj edges: ";
-                if (left_edge)
-                    cerr << "left ";
-                if (right_edge)
-                    cerr << "right ";
-                if (top_edge)
-                    cerr << "top ";
-                if (bottom_edge)
-                    cerr << "bottom ";
+                if ((int)left_edge + (int)right_edge + (int)top_edge + (int)bottom_edge > 1)
+                {
+                    cerr << "The space block has more than one edge adjacent to the space block" << endl;
+                    cerr << "Adj edges: ";
+                    if (left_edge)
+                        cerr << "left ";
+                    if (right_edge)
+                        cerr << "right ";
+                    if (top_edge)
+                        cerr << "top ";
+                    if (bottom_edge)
+                        cerr << "bottom ";
+                }
+                else
+                {
+                    cerr << "The space block has no edge adjacent to the space block" << endl;
+                }
+
                 cerr << endl;
                 cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
                 cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
@@ -280,7 +415,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             else if (top_edge)
             {
                 // check for update of the UR_Top of cell block
-                if (neighbor->getLeftX() < cell_block.getRightX() && neighbor->getRightX() >= cell_block.getRightX())
+                if (neighbor->getLeftX() < cell_block.getRightX() && neighbor->getRightX() >= cell_block.getRightX() && neighbor->getBottomY() == cell_block.getTopY())
                 {
                     cell_block.UR_Top = neighbor;
                 }
@@ -323,6 +458,13 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
                 }
                 else
                 {
+
+                    if (DEBUG_INSERT)
+                    {
+                        cout << "top edge non split neighbor" << neighbor->block_id << endl;
+                        cout << "space block id: " << space_blocks[i]->block_id << endl;
+                    }
+
                     // check which side of the cell block the neighbor is on
                     bool left_side = neighbor->getRightX() <= cell_block.getLeftX();
                     bool right_side = neighbor->getLeftX() >= cell_block.getRightX();
@@ -330,7 +472,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
                     // check if the non split neighbor overlaps with the cell block
                     if (!left_side && !right_side && (i < space_blocks.size() - 1))
                     {
-                        cerr << "The non split neighbor overlaps with the cell block" << endl;
+                        cerr << "Top edge: The non split neighbor overlaps with the cell block" << endl;
                         cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
                         cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
                         cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
@@ -388,7 +530,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
                         // check for update of the UR_Top of new space block
                         if (space_blocks[i]->UR_Top == neighbor)
                         {
-                            new_space_blocks[i].second->LL_Bottom = neighbor;
+                            new_space_blocks[i].second->UR_Top = neighbor;
                         }
                     }
                     else
@@ -400,11 +542,33 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
                         }
                         else if (neighbor->getLeftX() < cell_block.getLeftX())
                         {
-                            neighbor->LL_Bottom = new_space_blocks[i].first;
+                            if (new_left)
+                                neighbor->LL_Bottom = new_space_blocks[i].first;
                         }
                         else
                         {
-                            neighbor->LL_Bottom = new_space_blocks[i].second;
+                            if (new_right)
+                                neighbor->LL_Bottom = new_space_blocks[i].second;
+                        }
+
+                        // check for update of the UR_Top of the new space block
+                        if (new_left && neighbor->getLeftX() <= new_space_blocks[i].first->getRightX())
+                        {
+                            new_space_blocks[i].first->UR_Top = neighbor;
+                        }
+
+                        if (new_right && neighbor->getRightX() >= new_space_blocks[i].second->getRightX())
+                        {
+                            if (DEBUG_INSERT)
+                            {
+                                cout << endl
+                                     << "new space block UR_Top update" << endl;
+                                cout << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
+                                cout << "New Space Block id: " << new_space_blocks[i].second->block_id << " LL: " << new_space_blocks[i].second->LL.first << " " << new_space_blocks[i].second->LL.second << " width: " << new_space_blocks[i].second->width << " height: " << new_space_blocks[i].second->height << endl;
+                                cout << endl;
+                            }
+
+                            new_space_blocks[i].second->UR_Top = neighbor;
                         }
                     }
                 }
@@ -412,7 +576,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
             else // bottom_edge
             {
                 // check for update of the LL_Bottom of cell block
-                if (neighbor->getLeftX() <= cell_block.getLeftX() && neighbor->getRightX() > cell_block.getRightX())
+                if (neighbor->getLeftX() <= cell_block.getLeftX() && neighbor->getRightX() > cell_block.getLeftX() && neighbor->getTopY() == cell_block.getBottomY())
                 {
                     cell_block.LL_Bottom = neighbor;
                 }
@@ -460,7 +624,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
                     // check if the non split neighbor overlaps with the cell block
                     if (!left_side && !right_side && (i > 0))
                     {
-                        cerr << "The non split neighbor overlaps with the cell block" << endl;
+                        cerr << "Bottom edge: The non split neighbor overlaps with the cell block" << endl;
                         cerr << "Cell Block id: " << cell_block.block_id << " LL: " << cell_block.LL.first << " " << cell_block.LL.second << "width: " << cell_block.width << " height: " << cell_block.height << endl;
                         cerr << "Neighbor Block id: " << neighbor->block_id << " LL: " << neighbor->LL.first << " " << neighbor->LL.second << " width: " << neighbor->width << " height: " << neighbor->height << endl;
                         cerr << "Space Block id: " << space_blocks[i]->block_id << " LL: " << space_blocks[i]->LL.first << " " << space_blocks[i]->LL.second << " width: " << space_blocks[i]->width << " height: " << space_blocks[i]->height << endl;
@@ -530,17 +694,69 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
                         }
                         else if (neighbor->getRightX() <= cell_block.getLeftX())
                         {
-                            neighbor->UR_Top = new_space_blocks[i].first;
+                            if (new_left)
+                                neighbor->UR_Top = new_space_blocks[i].first;
                         }
                         else
                         {
-                            neighbor->UR_Top = new_space_blocks[i].second;
+                            if (new_right)
+                                neighbor->UR_Top = new_space_blocks[i].second;
+                        }
+
+                        // check for update of the LL_Bottom of the new space block
+                        if (new_left && neighbor->getLeftX() <= new_space_blocks[i].first->getLeftX())
+                        {
+                            new_space_blocks[i].first->LL_Bottom = neighbor;
+                        }
+                        if (new_right && neighbor->getRightX() > new_space_blocks[i].second->getLeftX())
+                        {
+                            new_space_blocks[i].second->LL_Bottom = neighbor;
                         }
                     }
                 }
             }
         }
     }
+
+    // merge the space blocks on the left and right of the cell block
+    vector<Block *> left_merge_space_blocks;
+    vector<Block *> right_merge_space_blocks;
+    for (int i = 0; i < new_space_blocks.size(); i++)
+    {
+        if (new_space_blocks[i].first != nullptr)
+        {
+            left_merge_space_blocks.push_back(new_space_blocks[i].first);
+        }
+
+        if (new_space_blocks[i].second != nullptr)
+        {
+            right_merge_space_blocks.push_back(new_space_blocks[i].second);
+        }
+    }
+
+    // merge the space blocks on the left and right of the cell block
+    if (DEBUG_INSERT)
+    {
+        cout << endl
+             << "Merge left space blocks" << endl;
+        cout << "Left merge space blocks" << endl;
+        for (Block *b : left_merge_space_blocks)
+        {
+            cout << *b << endl;
+        }
+    }
+    MergeSpace(left_merge_space_blocks);
+    if (DEBUG_INSERT)
+    {
+        cout << endl
+             << "Merge right space blocks" << endl;
+        cout << "Right merge space blocks" << endl;
+        for (Block *b : right_merge_space_blocks)
+        {
+            cout << *b << endl;
+        }
+    }
+    MergeSpace(right_merge_space_blocks);
 
     // Delete the space blocks that are split
     for (Block *b_delete : space_blocks)
@@ -565,7 +781,7 @@ void Solver::SplitSpace_Vert(Block &cell_block, Block &Top_Block, Block &Bottom_
 
 // split the block on top and bottom, slice them horizontally,
 // the input block becomes the bottom block after the split
-void Solver::SplitSpace_Hori(Block &space_block, int split_Y)
+void Solver::SplitSpace_Hori(Block &space_block, int split_Y, bool original_on_top)
 {
 
     if (DEBUG_INSERT)
@@ -573,32 +789,112 @@ void Solver::SplitSpace_Hori(Block &space_block, int split_Y)
         cout << "original space block: " << space_block.block_id << " LL: " << space_block.LL.first << " " << space_block.LL.second << " width: " << space_block.width << " height: " << space_block.height << endl;
         for (Block &b : blocks)
         {
-            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+            cout << b << endl;
         }
     }
 
     // check if the block is a space block
     if (space_block.block_type != SPACE)
     {
-        cerr << "Split_hori: The block is " << space_block.block_type << ", not a space block" << endl;
+        cerr << "Split_hori: The block is " << (space_block.block_type == CELL ? "CELL" : "Void") << ", not a space block" << endl;
         cerr << " LL: " << space_block.LL.first << " " << space_block.LL.second << endl;
         exit(1);
     }
 
-    int b_new_bottomY = split_Y;
-    int b_new_topY = space_block.getTopY();
-    int b_new_height = b_new_topY - b_new_bottomY;
-    space_block.height = split_Y - space_block.getBottomY();
+    // first collect the top edge neighbors whose LL_Bottom is space_block and
+    // the bottom edge neighbors whose UR_Top is space_block
+    vector<Block *> top_edge_neighbors;
+    Block *b = space_block.UR_Top;
+    while (b != &Void && b->LL_Bottom == &space_block)
+    {
+        top_edge_neighbors.push_back(b);
+        b = b->LL_Left;
+    }
 
-    Block *b_new_LL_Bottom = &space_block;
-    Block *b_new_LL_Left = space_block.LL_Left;
-    Block *b_new_UR_Top = space_block.UR_Top;
-    Block *b_new_UR_Right = space_block.UR_Right;
+    vector<Block *> bottom_edge_neighbors;
+    b = space_block.LL_Bottom;
+    while (b != &Void && b->UR_Top == &space_block)
+    {
+        bottom_edge_neighbors.push_back(b);
+        b = b->LL_Left;
+    }
 
-    Block *b_new = addBlock(Block(make_pair(space_block.LL.first, b_new_bottomY), space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
-    // Block *b_new = &blocks.back();
+    if (original_on_top)
+    {
 
-    space_block.UR_Top = b_new;
+        int b_new_topY = split_Y;
+        int b_new_bottomY = space_block.getBottomY();
+        int b_new_height = b_new_topY - b_new_bottomY;
+        pair<int, int> b_new_LL = make_pair(space_block.LL.first, b_new_bottomY);
+
+        space_block.height = space_block.getTopY() - split_Y;
+        space_block.LL.second = split_Y;
+
+        Block *b_new_LL_Bottom = space_block.LL_Bottom;
+        Block *b_new_LL_Left = space_block.LL_Left;
+        Block *b_new_UR_Top = &space_block;
+        Block *b_new_UR_Right = space_block.UR_Right;
+
+        Block *b_new = addBlock(Block(b_new_LL, space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
+
+        space_block.LL_Bottom = b_new;
+
+        // update the UR_Top of the bottom edge neighbors
+        for (Block *b : bottom_edge_neighbors)
+        {
+            b->UR_Top = b_new;
+        }
+
+        // update the LL_Bottom of the top edge neighbors
+        for (Block *b : top_edge_neighbors)
+        {
+            b->LL_Bottom = &space_block;
+        }
+
+        // update the LL_Left of the right edge neighbors
+        Block *right_edge_neighbor = space_block.UR_Right;
+        if (right_edge_neighbor != &Void && right_edge_neighbor->LL_Left == &space_block)
+        {
+            right_edge_neighbor->LL_Left = b_new;
+        }
+    }
+    else
+    {
+
+        int b_new_bottomY = split_Y;
+        int b_new_topY = space_block.getTopY();
+        int b_new_height = b_new_topY - b_new_bottomY;
+        space_block.height = split_Y - space_block.getBottomY();
+
+        Block *b_new_LL_Bottom = &space_block;
+        Block *b_new_LL_Left = space_block.LL_Left;
+        Block *b_new_UR_Top = space_block.UR_Top;
+        Block *b_new_UR_Right = space_block.UR_Right;
+
+        Block *b_new = addBlock(Block(make_pair(space_block.LL.first, b_new_bottomY), space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
+        // Block *b_new = &blocks.back();
+
+        space_block.UR_Top = b_new;
+
+        // update the UR_Top of the bottom edge neighbors
+        for (Block *b : bottom_edge_neighbors)
+        {
+            b->UR_Top = &space_block;
+        }
+
+        // update the LL_Bottom of the top edge neighbors
+        for (Block *b : top_edge_neighbors)
+        {
+            b->LL_Bottom = b_new;
+        }
+
+        // update the UR_Right of the left edge neighbors
+        Block *left_edge_neighbor = space_block.LL_Left;
+        if (left_edge_neighbor != &Void && left_edge_neighbor->UR_Right == &space_block)
+        {
+            left_edge_neighbor->UR_Right = &space_block;
+        }
+    }
 
     if (DEBUG_INSERT)
     {
@@ -627,13 +923,38 @@ void Solver::MergeSpace(vector<Block *> &space_blocks)
         bool common_neighPtr = ((*it)->LL_Left == merge_group.back()->LL_Left && (*it)->UR_Right == merge_group.back()->UR_Right);
         bool mergeable = edge_aligned && common_neighPtr;
 
+        if (DEBUG_INSERT)
+        {
+            cout << "merge_group: ";
+            for (Block *b : merge_group)
+            {
+                cout << b->block_id << " ";
+            }
+            cout << endl;
+        }
+
         if (mergeable)
         {
+
+            if (DEBUG_INSERT)
+            {
+                cout << (*it)->block_id << " is mergeable with " << merge_group.back()->block_id << endl;
+            }
+
             // add the block to the merge_group
             merge_group.push_back(*it);
+
+            // if it is the last block in the space_blocks, merge the blocks in the merge_group if merge_group.size() > 1s
         }
-        else
+
+        if (!mergeable || it == space_blocks.end() - 1)
         {
+
+            if (DEBUG_INSERT)
+            {
+                cout << (*it)->block_id << " is not mergeable with " << merge_group.back()->block_id << endl;
+            }
+
             // merge the blocks in the merge_group into bd
             if (merge_group.size() > 1)
             {
@@ -696,6 +1017,10 @@ void Solver::MergeSpace(vector<Block *> &space_blocks)
                         deleteSpaceBlock(b);
                     }
                 }
+
+                // clear the merge_group
+                merge_group.clear();
+                merge_group.push_back(*it);
             }
             else
             {
@@ -714,7 +1039,7 @@ void Solver::deleteSpaceBlock(Block *block)
 {
     if (block->block_type != SPACE)
     {
-        cerr << "Merge: The block is " << block->block_type << ", not a space block" << endl;
+        cerr << "Merge: The block is " << (block->block_type == CELL ? "CELL" : "Void") << ", not a space block" << endl;
         cerr << "Block id: " << block->block_id << " LL: " << block->LL.first << " " << block->LL.second << endl;
         exit(1);
     }
@@ -733,6 +1058,8 @@ void Solver::deleteSpaceBlock(Block *block)
 
     // remove the block from the Id2SpaceBlockPtr
     Id2SpaceBlockPtr.erase(it);
+
+    num_block_outline--;
 }
 
 void Solver::InsertCellBlock(Block &block)
@@ -746,13 +1073,22 @@ void Solver::InsertCellBlock(Block &block)
 
     int block_TopY = block.getTopY();
     int block_BottomY = block.getBottomY();
-    int block_middleX = (block.getTopY() + block.getBottomY()) / 2;
+    int block_middleX = (block.getLeftX() + block.getRightX()) / 2;
 
     pair<int, int> Top_CheckPoint = make_pair(block_middleX, block_TopY);
     pair<int, int> Bottom_CheckPoint = make_pair(block_middleX, block_BottomY);
 
-    Block &Top_Block = PointFinding(Top_CheckPoint);
-    Block &Bottom_Block = PointFinding(Bottom_CheckPoint);
+    Block *Top_Block = &PointFinding(Top_CheckPoint);
+    Block *Bottom_Block = &PointFinding(Bottom_CheckPoint);
+    // Block & New_Top_Block = Top_Block;
+
+    if (DEBUG_INSERT)
+    {
+        cout << "Top_CheckPoint: " << Top_CheckPoint.first << " " << Top_CheckPoint.second << endl;
+        cout << "Bottom_CheckPoint: " << Bottom_CheckPoint.first << " " << Bottom_CheckPoint.second << endl;
+        cout << "Top_Block: " << Top_Block->block_id << " LL: " << Top_Block->LL.first << " " << Top_Block->LL.second << " width: " << Top_Block->width << " height: " << Top_Block->height << endl;
+        cout << "Bottom_Block: " << Bottom_Block->block_id << " LL: " << Bottom_Block->LL.first << " " << Bottom_Block->LL.second << " width: " << Bottom_Block->width << " height: " << Bottom_Block->height << endl;
+    }
 
     bool split_top, split_bottom;
 
@@ -764,7 +1100,7 @@ void Solver::InsertCellBlock(Block &block)
     // if Top_CheckPoint is not found in any block,
     //  or Top_CheckPoint.second is on the bottom edge of the block that contains the point,
     // then no need to split the top block
-    else if (Top_Block == Void || Top_Block.getBottomY() == block_TopY)
+    else if (Top_Block == &Void || Top_Block->getBottomY() == block_TopY)
     {
         split_top = false;
     }
@@ -781,13 +1117,13 @@ void Solver::InsertCellBlock(Block &block)
     // if Bottom_CheckPoint is not found in any block,
     //  or Bottom_CheckPoint.second is on the bottom edge of the block that contains the point,
     // then no need to split the bottom block
-    else if (Bottom_Block == Void)
+    else if (Bottom_Block == &Void)
     {
         cerr << "The Bottom_CheckPoint is not found in any block, but it should be" << endl;
         cerr << "while inserting Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
         exit(1);
     }
-    else if (/*Bottom_Block == Void ||*/ Bottom_Block.getBottomY() == block_BottomY)
+    else if (/*Bottom_Block == Void ||*/ Bottom_Block->getBottomY() == block_BottomY)
     {
         split_bottom = false;
     }
@@ -804,54 +1140,134 @@ void Solver::InsertCellBlock(Block &block)
         {
             cout << "Splitting the top block" << endl;
         }
+        SplitSpace_Hori(*Top_Block, block_TopY, true);
 
-        SplitSpace_Hori(Top_Block, block_TopY);
-
-        // update Top_Block to the block whose bottom edge
-        // is the same as the top edge of the block
-
-        if (DEBUG_INSERT)
+        if (Top_Block == Bottom_Block)
         {
-            cout << "blocks before alias change" << endl;
-            for (Block &b : blocks)
-            {
-                cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
-            }
+            Bottom_Block = Bottom_Block->LL_Bottom;
         }
-
-        if (DEBUG_INSERT)
-        {
-            cout << "blocks after alias change" << endl;
-            for (Block &b : blocks)
-            {
-                cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
-            }
-        }
-    }
-
-    if (split_bottom)
-    {
-        if (DEBUG_INSERT)
-        {
-            cout << "Splitting the bottom block" << endl;
-        }
-
-        SplitSpace_Hori(Bottom_Block, block_BottomY);
     }
 
     if (DEBUG_INSERT)
     {
+        cout << endl
+             << "===== blocks after Splitting the top block ======" << endl;
         for (Block &b : blocks)
         {
-            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
+            cout << b;
+            if (b.block_id == Top_Block->block_id)
+            {
+                cout << " <-- Top_Block";
+            }
+            if (b.block_id == Bottom_Block->block_id)
+            {
+                cout << " <-- Bottom_Block";
+            }
+            cout << endl;
         }
+        cout << "======================================" << endl;
+    }
+
+    if (split_bottom)
+    {
+
+        if (DEBUG_INSERT)
+        {
+            cout << "Splitting the bottom block" << endl;
+        }
+        SplitSpace_Hori(*Bottom_Block, block_BottomY, true);
+
+        cout << endl
+             << "blocks after Splitting the bottom block" << endl;
+        for (Block &b : blocks)
+        {
+            cout << b;
+            if (b.block_id == Bottom_Block->block_id)
+            {
+                cout << " <-- Bottom_Block";
+            }
+            if (b.block_id == Top_Block->block_id)
+            {
+                cout << " <-- Top_Block";
+            }
+            cout << endl;
+        }
+        cout << "======================================" << endl;
     }
 
     // find the space blocks stacked in between the top and bottom blocks
     // split the block on left and right, slice them vertically
     // merge the block with the neighbors if possible
-    Block &New_Top_Block = split_top ? *Top_Block.UR_Top : Top_Block;
-    SplitSpace_Vert(block, New_Top_Block, Bottom_Block);
+
+    SplitSpace_Vert(block, *Top_Block, *Bottom_Block);
+
+    if (DEBUG_INSERT)
+    {
+        cout << endl
+             << "===== After Inserting Block: " << block.block_id << " ======" << endl;
+        for (Block &b : blocks)
+        {
+            cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height;
+            if (b.UR_Top == &Void)
+            {
+                cout << " UR_Top: Void";
+            }
+            else if (b.UR_Top != nullptr)
+            {
+                cout << " UR_Top: " << b.UR_Top->block_id;
+            }
+            else
+            {
+                cout << " UR_Top: nullptr";
+            }
+
+            if (b.LL_Bottom == &Void)
+            {
+                cout << " LL_Bottom: Void";
+            }
+            else if (b.LL_Bottom != nullptr)
+            {
+                cout << " LL_Bottom: " << b.LL_Bottom->block_id;
+            }
+            else
+            {
+                cout << " LL_Bottom: nullptr";
+            }
+
+            if (b.LL_Left == &Void)
+            {
+                cout << " LL_Left: Void";
+            }
+            else if (b.LL_Left != nullptr)
+            {
+                cout << " LL_Left: " << b.LL_Left->block_id;
+            }
+            else
+            {
+                cout << " LL_Left: nullptr";
+            }
+
+            if (b.UR_Right == &Void)
+            {
+                cout << " UR_Right: Void";
+            }
+            else if (b.UR_Right != nullptr)
+            {
+                cout << " UR_Right: " << b.UR_Right->block_id;
+            }
+            else
+            {
+                cout << " UR_Right: nullptr";
+            }
+
+            cout << endl;
+        }
+        cout << "======================================" << endl;
+    }
+
+    // print the outline
+    string plot_name = "../layout/Insert_" + to_string(CellBlockPtr.size()) + "th.txt";
+    outputPlot(plot_name);
 }
 
 // Find the neighbors of the block
@@ -873,6 +1289,14 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         Block *b = block.UR_Top;
         while (b->getRightX() > block.getLeftX() && b != &Void)
         {
+            if (DEBUG_FINDNEIGH)
+            {
+                if (b->block_type == CELL)
+                {
+                    cerr << "top edge: cell neighbor" << b->block_id << endl;
+                }
+            }
+
             neighbors.push_back(b);
             b = b->LL_Left;
         }
@@ -898,6 +1322,18 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
                 cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
                 exit(1);
             }
+
+            if (DEBUG_FINDNEIGH)
+            {
+                Block *b_nxt = b->LL_Bottom;
+
+                if (b_nxt != nullptr && b_nxt->block_type == CELL)
+                {
+                    cerr << "right edge: cell neighbor" << b_nxt->block_id << endl;
+                    cerr << "previous block(LL_bottom = cell neighbor): " << b->block_id << endl;
+                }
+            }
+
             neighbors.push_back(b);
             b = b->LL_Bottom;
         }
@@ -923,6 +1359,15 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
                 cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
                 exit(1);
             }
+
+            if (DEBUG_FINDNEIGH)
+            {
+                if (b->block_type == CELL)
+                {
+                    cerr << "bottom edge: cell neighbor" << b->block_id << endl;
+                }
+            }
+
             neighbors.push_back(b);
             b = b->UR_Right;
         }
@@ -948,8 +1393,39 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
                 cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
                 exit(1);
             }
+
+            if (DEBUG_FINDNEIGH)
+            {
+                if (b->block_type == CELL)
+                {
+                    cerr << "left edge: cell neighbor" << b->block_id << endl;
+                }
+            }
+
             neighbors.push_back(b);
             b = b->UR_Top;
+        }
+    }
+
+    if (DEBUG_INSERT)
+    {
+        // check if there is any neighbor that is not in the outline
+        for (Block *b : neighbors)
+        {
+
+            /*if (b->block_type == CELL)
+            {
+
+                cerr << "cell neighbor" << b->block_id << endl;
+            }*/
+
+            if (Id2CellBlockPtr.find(b->block_id) != Id2CellBlockPtr.end() && Id2SpaceBlockPtr.find(b->block_id) != Id2SpaceBlockPtr.end())
+            {
+                cerr << "The neighbor is not in the outline" << endl;
+                cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+                cerr << "Neighbor id: " << b->block_id << " LL: " << b->LL.first << " " << b->LL.second << endl;
+                // exit(1);
+            }
         }
     }
 
@@ -957,13 +1433,25 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
 }
 
 // Find the block that contains the point, if not found, return the Void block
-Block &Solver::PointFinding(pair<int, int> point) const
+// ignore_new_block is used to ignore the new block that is just added to the outline
+Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) const
 {
     // Find the block that contains the point
     // Return the LL corner of the block
 
+    /*if (ignore_new_block && blocks.size() < 2)
+    {
+        if (blocks.size() == 1)
+            cerr << "The outline has only one block, cannot ignore the new block" << endl;
+        else
+            cerr << "The outline has no block, cannot ignore the new block" << endl;
+        exit(1);
+    }*/
+
+    const Block *last_element_ptr = /*(ignore_new_block) ? prev(&blocks.back()) : */ &blocks.back();
+
     // Pick the front block in the outline
-    Block *block = rand() % 2 ? const_cast<Block *>(&blocks.front()) : const_cast<Block *>(&blocks.back());
+    Block *block = rand() % 2 ? const_cast<Block *>(&blocks.front()) : const_cast<Block *>(last_element_ptr);
     Block *prev_block = nullptr;
 
     if (block == nullptr)
@@ -992,6 +1480,8 @@ Block &Solver::PointFinding(pair<int, int> point) const
 
     while (block != &Void && block != nullptr)
     {
+        Block *nxt_block;
+        bool inf_loop = false;
 
         if (DEBUG_POINTFINDING)
         {
@@ -1013,6 +1503,12 @@ Block &Solver::PointFinding(pair<int, int> point) const
                 return *(block->UR_Top);
             }
 
+            nxt_block = block->UR_Top;
+            if (nxt_block == prev_block)
+            {
+                inf_loop = true;
+            }
+
             prev_block = block;
             block = block->UR_Top;
         }
@@ -1021,6 +1517,12 @@ Block &Solver::PointFinding(pair<int, int> point) const
             if (block->UR_Right->PointInBlock(point))
             {
                 return *(block->UR_Right);
+            }
+
+            nxt_block = block->UR_Right;
+            if (nxt_block == prev_block)
+            {
+                inf_loop = true;
             }
 
             prev_block = block;
@@ -1039,11 +1541,23 @@ Block &Solver::PointFinding(pair<int, int> point) const
 
                 if (right)
                 {
+                    nxt_block = block->UR_Right;
+                    if (nxt_block == prev_block)
+                    {
+                        inf_loop = true;
+                    }
+
                     prev_block = block;
                     block = block->UR_Right;
                 }
                 else
                 {
+                    nxt_block = block->UR_Top;
+                    if (nxt_block == prev_block)
+                    {
+                        inf_loop = true;
+                    }
+
                     prev_block = block;
                     block = block->LL_Left;
                 }
@@ -1054,11 +1568,23 @@ Block &Solver::PointFinding(pair<int, int> point) const
 
                 if (up)
                 {
+                    nxt_block = block->UR_Top;
+                    if (nxt_block == prev_block)
+                    {
+                        inf_loop = true;
+                    }
+
                     prev_block = block;
                     block = block->UR_Top;
                 }
                 else
                 {
+                    nxt_block = block->UR_Right;
+                    if (nxt_block == prev_block)
+                    {
+                        inf_loop = true;
+                    }
+
                     prev_block = block;
                     block = block->LL_Bottom;
                 }
@@ -1067,9 +1593,13 @@ Block &Solver::PointFinding(pair<int, int> point) const
         iter++;
 
         // The number of iterations should not exceed the number of blocks in the outline
-        if (iter > num_block_outline)
+        if (iter > num_block_outline || inf_loop)
         {
             cerr << "PointFinding stuck in an infinite loop" << endl;
+            cerr << "Point: " << point.first << " " << point.second << endl;
+            cerr << "Previous Block x range: " << prev_block->getLeftX() << "<= x <" << prev_block->getRightX() << endl;
+            cerr << "Previous Block y range: " << prev_block->getBottomY() << "<= y <" << prev_block->getTopY() << endl;
+            exit(1);
         }
     }
 
@@ -1192,14 +1722,14 @@ Block *Solver::addBlock(const Block &block)
 {
     // block.block_id = -space_block_accumulate - 1;
 
-    if (DEBUG_INSERT)
+    /*if (DEBUG_INSERT)
     {
         cout << "blocks before addBlock" << endl;
         for (Block &b : blocks)
         {
             cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
         }
-    }
+    }*/
 
     blocks.push_back(block);
 
@@ -1219,14 +1749,14 @@ Block *Solver::addBlock(const Block &block)
     // Update the number of blocks
     num_block_outline++;
 
-    if (DEBUG_INSERT)
+    /*if (DEBUG_INSERT)
     {
         cout << "blocks after addBlock" << endl;
         for (Block &b : blocks)
         {
             cout << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height << endl;
         }
-    }
+    }*/
 
     return &blocks.back();
 }
@@ -1234,7 +1764,7 @@ Block *Solver::addBlock(const Block &block)
 void Solver::writeOutput(ostream &out)
 {
     // The total number of cell blocks
-    out << CellBlockPtr.size() << endl;
+    out << num_block_outline << endl;
 
     // Sort CellBlockPtr in ascending order of block_id
     sort(CellBlockPtr.begin(), CellBlockPtr.end(), [](Block *a, Block *b)

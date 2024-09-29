@@ -101,6 +101,64 @@ struct Block
     {
         return make_pair(LL.first + width, LL.second);
     }
+
+    friend ostream &operator<<(ostream &os, const Block &b)
+    {
+        os << "Block id: " << b.block_id << " LL: " << b.LL.first << " " << b.LL.second << " width: " << b.width << " height: " << b.height;
+        if (b.UR_Top == nullptr)
+        {
+            os << " UR_Top: nullptr";
+        }
+        else if (b.UR_Top->block_id == 0)
+        {
+            os << " UR_Top: Void";
+        }
+        else
+        {
+            os << " UR_Top: " << b.UR_Top->block_id;
+        }
+
+        if (b.LL_Bottom == nullptr)
+        {
+            os << " LL_Bottom: nullptr";
+        }
+        else if (b.LL_Bottom->block_id == 0)
+        {
+            os << " LL_Bottom: Void";
+        }
+        else
+        {
+            os << " LL_Bottom: " << b.LL_Bottom->block_id;
+        }
+
+        if (b.LL_Left == nullptr)
+        {
+            os << " LL_Left: nullptr";
+        }
+        else if (b.LL_Left->block_id == 0)
+        {
+            os << " LL_Left: Void";
+        }
+        else
+        {
+            os << " LL_Left: " << b.LL_Left->block_id;
+        }
+
+        if (b.UR_Right == nullptr)
+        {
+            os << " UR_Right: nullptr";
+        }
+        else if (b.UR_Right->block_id == 0)
+        {
+            os << " UR_Right: Void";
+        }
+        else
+        {
+            os << " UR_Right: " << b.UR_Right->block_id;
+        }
+
+        return os;
+    }
 };
 
 #endif
