@@ -22,6 +22,13 @@ def draw_block(ax, x, y, width, height, id):
         )
     )
 
+    # Calculate the center of the block
+    center_x = x + width / 2
+    center_y = y + height / 2
+
+    # Add the id text at the center of the block
+    ax.text(center_x, center_y, str(id), ha='center', va='center', fontsize=12, color='black')
+
 
 png_size = (16, 12)
 txt_name = sys.argv[1]
@@ -49,5 +56,5 @@ for block in range(total_block_number):
     i += 1
 
 # plt.savefig(str(sys.argv[1])[:-4]+".png")
-
+plt.show()
 plt.savefig(png_name)
