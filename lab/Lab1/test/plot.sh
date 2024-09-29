@@ -5,7 +5,7 @@
 mkdir -p drawing
 
 # plot all the txt files in /layout
-for file in layout/*.txt
+for file in ../layout/*.txt
 do
     # get the filename without the extension
     filename=$(basename -- "$file")

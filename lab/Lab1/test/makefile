@@ -47,9 +47,13 @@ clean:
 # Define a pattern rule for run targets
 run_%: $(EXEC)
 	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
-
+	./plot.sh
+	
 run_valgrind_%: $(EXEC)
 	valgrind --leak-check=full --log-file=memory.log ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
+
+plot: draw_block_layout.py
+	./plot.sh
 
 # Run all testcases
 run_all: $(EXEC)
