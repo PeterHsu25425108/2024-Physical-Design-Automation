@@ -81,7 +81,17 @@ void Block::operator=(const Block &b)
     this->UR_Right = b.UR_Right;
 }
 
-bool Block::PointInBlock(pair<int, int> point) const
+bool Block::PointInBlock(pair<int, int> point, bool allow_right, bool allow_top) const
 {
-    return (point.first >= LL.first && point.first < LL.first + width && point.second >= LL.second && point.second < LL.second + height);
+    if (!allow_right && !allow_top)
+        return (point.first >= LL.first && point.first < LL.first + width && point.second >= LL.second && point.second < LL.second + height);
+
+    else if (allow_right && !allow_top)
+        return (point.first >= LL.first && point.first <= LL.first + width && point.second >= LL.second && point.second < LL.second + height);
+
+    else if (!allow_right && allow_top)
+        return (point.first >= LL.first && point.first < LL.first + width && point.second >= LL.second && point.second <= LL.second + height);
+
+    else
+        return (point.first >= LL.first && point.first <= LL.first + width && point.second >= LL.second && point.second <= LL.second + height);
 }

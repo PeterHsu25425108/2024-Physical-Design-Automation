@@ -63,7 +63,7 @@ struct Block
             return false;
     }
 
-    bool PointInBlock(pair<int, int> point) const;
+    bool PointInBlock(pair<int, int> point, bool allow_right = false, bool allow_top = false) const;
 
     bool adjacent(const Block &b) const;
 

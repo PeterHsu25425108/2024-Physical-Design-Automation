@@ -1,838 +1,809 @@
-Outline Width: 100
-Outline Height: 100
+Outline Width: 600
+Outline Height: 800
 Outline Block: 
 LL: 0 0
-Instruction Type: P
-PointFinding input: 35 35
-PointFinding Start
-Point: 35 35
-Block: 0 0
-PointFinding While Iter: 1
-Block: 0 0
-Point: 35 35
-LL_corner: 0 0
 Instruction Type: 1
 block_id: 1
-Insert Block input: 1 35 35 30 30
+Insert Block input: 1 107 712 73 25
 PointFinding Start
-Point: 50 65
+Point: 143 737
 Block: 0 0
 PointFinding While Iter: 1
-Block: 0 0
+Block id: -1x range: 0<= x <600 y range: 0<= y <800
 PointFinding Start
-Point: 50 35
+Point: 143 712
 Block: 0 0
 PointFinding While Iter: 1
-Block: 0 0
-Top_CheckPoint: 50 65
-Bottom_CheckPoint: 50 35
-Top_Block: -1 LL: 0 0 width: 100 height: 100
-Bottom_Block: -1 LL: 0 0 width: 100 height: 100
+Block id: -1x range: 0<= x <600 y range: 0<= y <800
+Top_CheckPoint: 143 737
+Bottom_CheckPoint: 143 712
+Top_Block: -1 LL: 0 0 width: 600 height: 800
+Bottom_Block: -1 LL: 0 0 width: 600 height: 800
 Splitting the top block
-original space block: -1 LL: 0 0 width: 100 height: 100
-Block id: -1 LL: 0 0 width: 100 height: 100 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
-original space block after split_hori: -1 LL: 0 65 width: 100 height: 35
+original space block: -1 LL: 0 0 width: 600 height: 800
+Block id: -1 LL: 0 0 width: 600 height: 800 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+split_hori: top edge neighbors: 
+split_hori: bottom edge neighbors: 
+original space block after split_hori: -1 LL: 0 737 width: 600 height: 63
 
 ===== blocks after Splitting the top block ======
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void <-- Top_Block
-Block id: -2 LL: 0 0 width: 100 height: 65 UR_Top: -1 LL_Bottom: Void LL_Left: Void UR_Right: Void <-- Bottom_Block
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697 <-- Top_Block
+Block id: -2 LL: 0 0 width: 600 height: 737 UR_Top: -1 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
 ======================================
 Splitting the bottom block
-original space block: -2 LL: 0 0 width: 100 height: 65
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -2 LL: 0 0 width: 100 height: 65 UR_Top: -1 LL_Bottom: Void LL_Left: Void UR_Right: Void
-original space block after split_hori: -2 LL: 0 35 width: 100 height: 30
+original space block: -2 LL: 0 0 width: 600 height: 737
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -2 LL: 0 0 width: 600 height: 737 UR_Top: -1 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+split_hori: top edge neighbors: -1 
+split_hori: bottom edge neighbors: 
+original space block after split_hori: -2 LL: 0 712 width: 600 height: 25
 
 blocks after Splitting the bottom block
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void <-- Top_Block
-Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void <-- Bottom_Block
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697 <-- Top_Block
+Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 ======================================
 
 SplitSpace_Vert: Splitting the space blocks vertically
-Cell Block id: 1 LL: 35 35 width: 30 height: 30
-Top Block id: -1 LL: 0 65 width: 100 height: 35
-Bottom Block id: -2 LL: 0 35 width: 100 height: 30
+Cell Block id: 1 LL: 107 712 width: 73 height: 25
+Top Block id: -1 LL: 0 737 width: 600 height: 63
+Bottom Block id: -2 LL: 0 712 width: 600 height: 25
 --- blocks before inserting cell block ---
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks after inserting cell block ---
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before space block finding ---
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before neighbor finding ---
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: Space blocks in between the top and bottom blocks
-Space Block id: -2 LL: 0 35 width: 100 height: 30
+Space Block id: -2 LL: 0 712 width: 600 height: 25
 --- blocks after neighbor finding ---
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: New space blocks created
-Space Block Block id: -2 LL: 0 35 width: 100 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: Void
-New Space Block on the left: Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 1
-New Space Block on the right: Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: 1 UR_Right: Void
+Space Block Block id: -2 LL: 0 712 width: 600 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 29697
+New Space Block on the left: Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 1
+New Space Block on the right: Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 1 UR_Right: 29697
 
-Split_vert: Space Block id: -2 LL: 0 35 width: 100 height: 30
+Split_vert: Space Block id: -2 LL: 0 712 width: 600 height: 25
 Split_vert: Neighbors of the space block
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -2 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -2 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -2 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -2 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 
 top edge non split neighbor-1
 space block id: -2
 
 new space block UR_Top update
-Neighbor Block id: -1 LL: 0 65 width: 100 height: 35
-New Space Block id: -5 LL: 65 35 width: 35 height: 30
+Neighbor Block id: -1 LL: 0 737 width: 600 height: 63
+New Space Block id: -5 LL: 180 712 width: 420 height: 25
 
 
 Merge left space blocks
 Left merge space blocks
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: 1
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
 
 Merge right space blocks
 Right merge space blocks
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
 
 ===== After Inserting Block: 1 ======
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -4 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: Void LL_Bottom: -4 LL_Left: Void UR_Right: Void
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
 ======================================
+Instruction Type: P
+PointFinding input: 144 175
+PointFinding Start
+Point: 144 175
+Block: 0 737
+PointFinding While Iter: 1
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 144 175
+LL_corner: 0 0
+Instruction Type: P
+PointFinding input: 428 648
+PointFinding Start
+Point: 428 648
+Block: 0 737
+PointFinding While Iter: 1
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 428 648
+LL_corner: 0 0
+Instruction Type: P
+PointFinding input: 230 700
+PointFinding Start
+Point: 230 700
+Block: 0 737
+PointFinding While Iter: 1
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 230 700
+LL_corner: 0 0
+Instruction Type: P
+PointFinding input: 573 167
+PointFinding Start
+Point: 573 167
+Block: 0 737
+PointFinding While Iter: 1
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 573 167
+LL_corner: 0 0
+Instruction Type: P
+PointFinding input: 80 238
+PointFinding Start
+Point: 80 238
+Block: 180 712
+PointFinding While Iter: 1
+Block id: -5x range: 180<= x <600 y range: 712<= y <737
+PointFinding While Iter: 2
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 80 238
+LL_corner: 0 0
+Instruction Type: P
+PointFinding input: 490 328
+PointFinding Start
+Point: 490 328
+Block: 180 712
+PointFinding While Iter: 1
+Block id: -5x range: 180<= x <600 y range: 712<= y <737
+PointFinding While Iter: 2
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 490 328
+LL_corner: 0 0
+Instruction Type: P
+PointFinding input: 367 450
+PointFinding Start
+Point: 367 450
+Block: 0 737
+PointFinding While Iter: 1
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Point: 367 450
+LL_corner: 0 0
 Instruction Type: 2
 block_id: 2
-Insert Block input: 2 35 65 60 20
+Insert Block input: 2 0 661 73 24
 PointFinding Start
-Point: 65 85
-Block: 0 65
+Point: 36 685
+Block: 0 737
 PointFinding While Iter: 1
-Block: 0 65
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
 PointFinding Start
-Point: 65 65
-Block: 0 65
+Point: 36 661
+Block: 180 712
 PointFinding While Iter: 1
-Block: 0 65
-Top_CheckPoint: 65 85
-Bottom_CheckPoint: 65 65
-Top_Block: -1 LL: 0 65 width: 100 height: 35
-Bottom_Block: -1 LL: 0 65 width: 100 height: 35
+Block id: -5x range: 180<= x <600 y range: 712<= y <737
+PointFinding While Iter: 2
+Block id: -3x range: 0<= x <600 y range: 0<= y <712
+Top_CheckPoint: 36 685
+Bottom_CheckPoint: 36 661
+Top_Block: -3 LL: 0 0 width: 600 height: 712
+Bottom_Block: -3 LL: 0 0 width: 600 height: 712
 Splitting the top block
-original space block: -1 LL: 0 65 width: 100 height: 35
-Block id: -1 LL: 0 65 width: 100 height: 35 UR_Top: Void LL_Bottom: -4 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-original space block after split_hori: -1 LL: 0 85 width: 100 height: 15
+original space block: -3 LL: 0 0 width: 600 height: 712
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 0 width: 600 height: 712 UR_Top: -5 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+split_hori: top edge neighbors: -5 1 -4 
+split_hori: bottom edge neighbors: 
+original space block after split_hori: -3 LL: 0 685 width: 600 height: 27
 
 ===== blocks after Splitting the top block ======
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void <-- Top_Block
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void <-- Bottom_Block
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697 <-- Top_Block
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 0 width: 600 height: 685 UR_Top: -3 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
+======================================
+Splitting the bottom block
+original space block: -6 LL: 0 0 width: 600 height: 685
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 0 width: 600 height: 685 UR_Top: -3 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+split_hori: top edge neighbors: -3 
+split_hori: bottom edge neighbors: 
+original space block after split_hori: -6 LL: 0 661 width: 600 height: 24
+
+blocks after Splitting the bottom block
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697 <-- Top_Block
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 ======================================
 
 SplitSpace_Vert: Splitting the space blocks vertically
-Cell Block id: 2 LL: 35 65 width: 60 height: 20
-Top Block id: -1 LL: 0 85 width: 100 height: 15
-Bottom Block id: -6 LL: 0 65 width: 100 height: 20
+Cell Block id: 2 LL: 0 661 width: 73 height: 24
+Top Block id: -3 LL: 0 685 width: 600 height: 27
+Bottom Block id: -6 LL: 0 661 width: 600 height: 24
 --- blocks before inserting cell block ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks after inserting cell block ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before space block finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before neighbor finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: Space blocks in between the top and bottom blocks
-Space Block id: -6 LL: 0 65 width: 100 height: 20
+Space Block id: -6 LL: 0 661 width: 600 height: 24
 --- blocks after neighbor finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: New space blocks created
-Space Block Block id: -6 LL: 0 65 width: 100 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: Void
-New Space Block on the left: Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 2
-New Space Block on the right: Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: 2 UR_Right: Void
+Space Block Block id: -6 LL: 0 661 width: 600 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: 29697
+New Space Block on the right: Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 2 UR_Right: 29697
 
-Split_vert: Space Block id: -6 LL: 0 65 width: 100 height: 20
+Split_vert: Space Block id: -6 LL: 0 661 width: 600 height: 24
 Split_vert: Neighbors of the space block
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -6 LL_Left: Void UR_Right: Void
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -6 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: -6 LL_Left: 29697 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -6 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 
-top edge non split neighbor-1
+top edge non split neighbor-3
 space block id: -6
 
 new space block UR_Top update
-Neighbor Block id: -1 LL: 0 85 width: 100 height: 15
-New Space Block id: -8 LL: 95 65 width: 5 height: 20
+Neighbor Block id: -3 LL: 0 685 width: 600 height: 27
+New Space Block id: -8 LL: 73 661 width: 527 height: 24
 
 
 Merge left space blocks
 Left merge space blocks
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
 
 Merge right space blocks
 Right merge space blocks
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
 
 ===== After Inserting Block: 2 ======
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: Void LL_Bottom: -4 LL_Left: Void UR_Right: Void
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: Void UR_Right: Void
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -8 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: Void UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: Void
 ======================================
+Instruction Type: P
+PointFinding input: 573 440
+PointFinding Start
+Point: 573 440
+Block: 0 737
+PointFinding While Iter: 1
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
+PointFinding While Iter: 2
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
+PointFinding While Iter: 3
+Block id: -3x range: 0<= x <600 y range: 685<= y <712
+PointFinding While Iter: 4
+Block id: 2x range: 0<= x <73 y range: 661<= y <685
+PointFinding While Iter: 5
+Block id: -7x range: 0<= x <600 y range: 0<= y <661
+Point: 573 440
+LL_corner: 0 0
 Instruction Type: 3
 block_id: 3
-Insert Block input: 3 65 5 20 60
+Insert Block input: 3 501 85 53 158
 PointFinding Start
-Point: 75 65
-Block: 0 85
+Point: 527 243
+Block: 73 661
 PointFinding While Iter: 1
-Block: 0 85
+Block id: -8x range: 73<= x <600 y range: 661<= y <685
 PointFinding While Iter: 2
-Block: 0 65
-PointFinding While Iter: 3
-Block: 35 65
+Block id: -7x range: 0<= x <600 y range: 0<= y <661
 PointFinding Start
-Point: 75 5
-Block: 95 65
+Point: 527 85
+Block: 0 737
 PointFinding While Iter: 1
-Block: 95 65
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
 PointFinding While Iter: 2
-Block: 65 35
+Block id: -4x range: 0<= x <107 y range: 712<= y <737
 PointFinding While Iter: 3
-Block: 0 0
-Top_CheckPoint: 75 65
-Bottom_CheckPoint: 75 5
-Top_Block: 2 LL: 35 65 width: 60 height: 20
-Bottom_Block: -3 LL: 0 0 width: 100 height: 35
+Block id: -3x range: 0<= x <600 y range: 685<= y <712
+PointFinding While Iter: 4
+Block id: 2x range: 0<= x <73 y range: 661<= y <685
+PointFinding While Iter: 5
+Block id: -7x range: 0<= x <600 y range: 0<= y <661
+Top_CheckPoint: 527 243
+Bottom_CheckPoint: 527 85
+Top_Block: -7 LL: 0 0 width: 600 height: 661
+Bottom_Block: -7 LL: 0 0 width: 600 height: 661
+Splitting the top block
+original space block: -7 LL: 0 0 width: 600 height: 661
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 0 width: 600 height: 661 UR_Top: -8 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+split_hori: top edge neighbors: -8 2 
+split_hori: bottom edge neighbors: 
+original space block after split_hori: -7 LL: 0 243 width: 600 height: 418
 
 ===== blocks after Splitting the top block ======
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void <-- Bottom_Block
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8 <-- Top_Block
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697 <-- Top_Block
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 0 width: 600 height: 243 UR_Top: -7 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
 ======================================
 Splitting the bottom block
-original space block: -3 LL: 0 0 width: 100 height: 35
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 0 width: 100 height: 35 UR_Top: -5 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-original space block after split_hori: -3 LL: 0 5 width: 100 height: 30
+original space block: -9 LL: 0 0 width: 600 height: 243
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 0 width: 600 height: 243 UR_Top: -7 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+split_hori: top edge neighbors: -7 
+split_hori: bottom edge neighbors: 
+original space block after split_hori: -9 LL: 0 85 width: 600 height: 158
 
 blocks after Splitting the bottom block
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void <-- Bottom_Block
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8 <-- Top_Block
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697 <-- Top_Block
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 ======================================
 
 SplitSpace_Vert: Splitting the space blocks vertically
-Cell Block id: 3 LL: 65 5 width: 20 height: 60
-Top Block id: 2 LL: 35 65 width: 60 height: 20
-Bottom Block id: -3 LL: 0 5 width: 100 height: 30
+Cell Block id: 3 LL: 501 85 width: 53 height: 158
+Top Block id: -7 LL: 0 243 width: 600 height: 418
+Bottom Block id: -9 LL: 0 85 width: 600 height: 158
 --- blocks before inserting cell block ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks after inserting cell block ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before space block finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before neighbor finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: Space blocks in between the top and bottom blocks
-Space Block id: -3 LL: 0 5 width: 100 height: 30
-Space Block id: -5 LL: 65 35 width: 35 height: 30
+Space Block id: -9 LL: 0 85 width: 600 height: 158
 --- blocks after neighbor finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: New space blocks created
-Space Block Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-New Space Block on the left: Block id: -10 LL: 0 5 width: 65 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 3
-New Space Block on the right: Block id: -11 LL: 85 5 width: 15 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: 3 UR_Right: Void
-Space Block Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-New Space Block on the right: Block id: -12 LL: 85 35 width: 15 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: 3 UR_Right: Void
+Space Block Block id: -9 LL: 0 85 width: 600 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 29697
+New Space Block on the left: Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 3
+New Space Block on the right: Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 3 UR_Right: 29697
 
-Split_vert: Space Block id: -3 LL: 0 5 width: 100 height: 30
+Split_vert: Space Block id: -9 LL: 0 85 width: 600 height: 158
 Split_vert: Neighbors of the space block
-Block id: -5 LL: 65 35 width: 35 height: 30 UR_Top: -8 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -3 LL_Left: Void UR_Right: 1
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -3 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -9 LL_Left: 29697 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -9 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 
-top edge non split neighbor1
-space block id: -3
-top edge non split neighbor-4
-space block id: -3
+top edge non split neighbor-7
+space block id: -9
 
-Split_vert: Space Block id: -5 LL: 65 35 width: 35 height: 30
-Split_vert: Neighbors of the space block
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -5 LL_Left: 2 UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -3 LL: 0 5 width: 100 height: 30 UR_Top: -5 LL_Bottom: -9 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: -5
+new space block UR_Top update
+Neighbor Block id: -7 LL: 0 243 width: 600 height: 418
+New Space Block id: -12 LL: 554 85 width: 46 height: 158
 
-top edge non split neighbor-8
-space block id: -5
-top edge non split neighbor2
-space block id: -5
 
 Merge left space blocks
 Left merge space blocks
-Block id: -10 LL: 0 5 width: 65 height: 30 UR_Top: 1 LL_Bottom: -9 LL_Left: Void UR_Right: 3
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
 
 Merge right space blocks
 Right merge space blocks
-Block id: -11 LL: 85 5 width: 15 height: 30 UR_Top: -12 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -12 LL: 85 35 width: 15 height: 30 UR_Top: -8 LL_Bottom: -11 LL_Left: 3 UR_Right: Void
-merge_group: -11 
--12 is mergeable with -11
--12 is not mergeable with -12
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
 
 ===== After Inserting Block: 3 ======
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -10 UR_Right: -11
-Block id: -10 LL: 0 5 width: 65 height: 30 UR_Top: 1 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: Void LL_Bottom: -4 LL_Left: Void UR_Right: Void
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: Void UR_Right: Void
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: Void UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: Void
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: Void UR_Right: Void
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: Void UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: Void
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: Void
 ======================================
 Instruction Type: 4
 block_id: 4
-Insert Block input: 4 5 15 60 20
+Insert Block input: 4 413 693 17 107
 PointFinding Start
-Point: 35 35
-Block: 85 5
+Point: 421 800
+Block: 0 737
 PointFinding While Iter: 1
-Block: 85 5
-PointFinding While Iter: 2
-Block: 65 5
-PointFinding While Iter: 3
-Block: 0 5
+Block id: -1x range: 0<= x <600 y range: 737<= y <800
 PointFinding Start
-Point: 35 15
-Block: 0 85
+Point: 421 693
+Block: 554 85
 PointFinding While Iter: 1
-Block: 0 85
+Block id: -12x range: 554<= x <600 y range: 85<= y <243
 PointFinding While Iter: 2
-Block: 0 65
+Block id: -7x range: 0<= x <600 y range: 243<= y <661
 PointFinding While Iter: 3
-Block: 35 65
+Block id: -8x range: 73<= x <600 y range: 661<= y <685
 PointFinding While Iter: 4
-Block: 35 35
-PointFinding While Iter: 5
-Block: 0 5
-Top_CheckPoint: 35 35
-Bottom_CheckPoint: 35 15
-Top_Block: 1 LL: 35 35 width: 30 height: 30
-Bottom_Block: -10 LL: 0 5 width: 65 height: 30
+Block id: -3x range: 0<= x <600 y range: 685<= y <712
+Top_CheckPoint: 421 800
+Bottom_CheckPoint: 421 693
+Top_Block: 29697 LL: -1 -1 width: -1 height: -1
+Bottom_Block: -3 LL: 0 685 width: 600 height: 27
 
 ===== blocks after Splitting the top block ======
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3 <-- Top_Block
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -10 UR_Right: -11
-Block id: -10 LL: 0 5 width: 65 height: 30 UR_Top: 1 LL_Bottom: -9 LL_Left: Void UR_Right: 3 <-- Bottom_Block
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
 ======================================
 Splitting the bottom block
-original space block: -10 LL: 0 5 width: 65 height: 30
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -10 UR_Right: -11
-Block id: -10 LL: 0 5 width: 65 height: 30 UR_Top: 1 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-original space block after split_hori: -10 LL: 0 15 width: 65 height: 20
+original space block: -3 LL: 0 685 width: 600 height: 27
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 685 width: 600 height: 27 UR_Top: -5 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -3 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+split_hori: top edge neighbors: -5 1 -4 
+split_hori: bottom edge neighbors: 2 -8 
+original space block after split_hori: -3 LL: 0 693 width: 600 height: 19
 
 blocks after Splitting the bottom block
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3 <-- Top_Block
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3 <-- Bottom_Block
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697 <-- Bottom_Block
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
 ======================================
 
 SplitSpace_Vert: Splitting the space blocks vertically
-Cell Block id: 4 LL: 5 15 width: 60 height: 20
-Top Block id: 1 LL: 35 35 width: 30 height: 30
-Bottom Block id: -10 LL: 0 15 width: 65 height: 20
+Cell Block id: 4 LL: 413 693 width: 17 height: 107
+Top Block id: 29697 LL: -1 -1 width: -1 height: -1
+Bottom Block id: -3 LL: 0 693 width: 600 height: 19
 --- blocks before inserting cell block ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks after inserting cell block ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 4 LL: 413 693 width: 17 height: 107 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before space block finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 4 LL: 413 693 width: 17 height: 107 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 --- blocks before neighbor finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 4 LL: 413 693 width: 17 height: 107 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: Space blocks in between the top and bottom blocks
-Space Block id: -10 LL: 0 15 width: 65 height: 20
+Space Block id: -3 LL: 0 693 width: 600 height: 19
+Space Block id: -5 LL: 180 712 width: 420 height: 25
+Space Block id: -1 LL: 0 737 width: 600 height: 63
 --- blocks after neighbor finding ---
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: 29697 UR_Right: 29697
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 29697 UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: 29697
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 29697 UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: 29697
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
+Block id: 4 LL: 413 693 width: 17 height: 107 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 29697
 -----------------------------------------
 Split_vert: New space blocks created
-Space Block Block id: -10 LL: 0 15 width: 65 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: Void UR_Right: 3
-New Space Block on the left: Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 4
+Space Block Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+New Space Block on the left: Block id: -14 LL: 0 693 width: 413 height: 19 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 4
+New Space Block on the right: Block id: -15 LL: 430 693 width: 170 height: 19 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 4 UR_Right: 29697
+Space Block Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+New Space Block on the left: Block id: -16 LL: 180 712 width: 233 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 1 UR_Right: 4
+New Space Block on the right: Block id: -17 LL: 430 712 width: 170 height: 25 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 4 UR_Right: 29697
+Space Block Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+New Space Block on the left: Block id: -18 LL: 0 737 width: 413 height: 63 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 29697 UR_Right: 4
+New Space Block on the right: Block id: -19 LL: 430 737 width: 170 height: 63 UR_Top: 29697 LL_Bottom: 29697 LL_Left: 4 UR_Right: 29697
 
-Split_vert: Space Block id: -10 LL: 0 15 width: 65 height: 20
+Split_vert: Space Block id: -3 LL: 0 693 width: 600 height: 19
 Split_vert: Neighbors of the space block
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: -10 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 1
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: -10 LL_Bottom: -9 LL_Left: Void UR_Right: 3
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: -4 UR_Right: -5
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 29697 UR_Right: 1
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -3 LL_Bottom: 2 LL_Left: 29697 UR_Right: 29697
 
 top edge non split neighbor1
-space block id: -10
+space block id: -3
 top edge non split neighbor-4
-space block id: -10
+space block id: -3
+
+Split_vert: Space Block id: -5 LL: 180 712 width: 420 height: 25
+Split_vert: Neighbors of the space block
+Block id: -1 LL: 0 737 width: 600 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 29697
+Block id: -3 LL: 0 693 width: 600 height: 19 UR_Top: -5 LL_Bottom: -13 LL_Left: 29697 UR_Right: 29697
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -14 LL_Left: -4 UR_Right: -5
+
+
+Split_vert: Space Block id: -1 LL: 0 737 width: 600 height: 63
+Split_vert: Neighbors of the space block
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -1 LL_Bottom: -14 LL_Left: 29697 UR_Right: 1
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -1 LL_Bottom: -14 LL_Left: -4 UR_Right: -16
+Block id: -5 LL: 180 712 width: 420 height: 25 UR_Top: -1 LL_Bottom: -3 LL_Left: 1 UR_Right: 29697
+
 
 Merge left space blocks
 Left merge space blocks
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
+Block id: -14 LL: 0 693 width: 413 height: 19 UR_Top: -16 LL_Bottom: -13 LL_Left: 29697 UR_Right: 4
+Block id: -16 LL: 180 712 width: 233 height: 25 UR_Top: -18 LL_Bottom: -14 LL_Left: 1 UR_Right: 4
+Block id: -18 LL: 0 737 width: 413 height: 63 UR_Top: 29697 LL_Bottom: -4 LL_Left: 29697 UR_Right: 4
+merge_group: -14 
+-16 is not mergeable with -14
+merge_group: -16 
+-18 is not mergeable with -16
 
 Merge right space blocks
 Right merge space blocks
+Block id: -15 LL: 430 693 width: 170 height: 19 UR_Top: -17 LL_Bottom: -13 LL_Left: 4 UR_Right: 29697
+Block id: -17 LL: 430 712 width: 170 height: 25 UR_Top: -19 LL_Bottom: -15 LL_Left: 4 UR_Right: 29697
+Block id: -19 LL: 430 737 width: 170 height: 63 UR_Top: 29697 LL_Bottom: -17 LL_Left: 4 UR_Right: 29697
+merge_group: -15 
+-17 is mergeable with -15
+merge_group: -15 -17 
+-19 is mergeable with -17
+-19 is not mergeable with -19
 
 ===== After Inserting Block: 4 ======
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
+Block id: 1 LL: 107 712 width: 73 height: 25 UR_Top: -18 LL_Bottom: -14 LL_Left: -4 UR_Right: -16
+Block id: -4 LL: 0 712 width: 107 height: 25 UR_Top: -18 LL_Bottom: -14 LL_Left: Void UR_Right: 1
+Block id: -7 LL: 0 243 width: 600 height: 418 UR_Top: -8 LL_Bottom: -11 LL_Left: Void UR_Right: Void
+Block id: 2 LL: 0 661 width: 73 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: Void UR_Right: -8
+Block id: -8 LL: 73 661 width: 527 height: 24 UR_Top: -13 LL_Bottom: -7 LL_Left: 2 UR_Right: Void
+Block id: -10 LL: 0 0 width: 600 height: 85 UR_Top: -12 LL_Bottom: Void LL_Left: Void UR_Right: Void
+Block id: 3 LL: 501 85 width: 53 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: -11 UR_Right: -12
+Block id: -11 LL: 0 85 width: 501 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: Void UR_Right: 3
+Block id: -12 LL: 554 85 width: 46 height: 158 UR_Top: -7 LL_Bottom: -10 LL_Left: 3 UR_Right: Void
+Block id: -13 LL: 0 685 width: 600 height: 8 UR_Top: -15 LL_Bottom: 2 LL_Left: Void UR_Right: Void
+Block id: 4 LL: 413 693 width: 17 height: 107 UR_Top: Void LL_Bottom: -13 LL_Left: -14 UR_Right: -15
+Block id: -14 LL: 0 693 width: 413 height: 19 UR_Top: -16 LL_Bottom: -13 LL_Left: Void UR_Right: 4
+Block id: -15 LL: 430 693 width: 170 height: 107 UR_Top: Void LL_Bottom: -13 LL_Left: 4 UR_Right: Void
+Block id: -16 LL: 180 712 width: 233 height: 25 UR_Top: -18 LL_Bottom: -14 LL_Left: 1 UR_Right: 4
+Block id: -18 LL: 0 737 width: 413 height: 63 UR_Top: Void LL_Bottom: -4 LL_Left: Void UR_Right: 4
 ======================================
 Instruction Type: 5
 block_id: 5
-Insert Block input: 5 15 35 20 60
+Insert Block input: 5 575 756 25 44
 PointFinding Start
-Point: 25 95
-Block: 0 85
+Point: 587 800
+Block: 0 737
 PointFinding While Iter: 1
-Block: 0 85
-PointFinding Start
-Point: 25 35
-Block: 0 15
-PointFinding While Iter: 1
-Block: 0 15
-Top_CheckPoint: 25 95
-Bottom_CheckPoint: 25 35
-Top_Block: -1 LL: 0 85 width: 100 height: 15
-Bottom_Block: -4 LL: 0 35 width: 35 height: 30
-Splitting the top block
-original space block: -1 LL: 0 85 width: 100 height: 15
-Block id: -1 LL: 0 85 width: 100 height: 15 UR_Top: Void LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -1 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-original space block after split_hori: -1 LL: 0 95 width: 100 height: 5
-
-===== blocks after Splitting the top block ======
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void <-- Top_Block
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1 <-- Bottom_Block
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-======================================
-
-SplitSpace_Vert: Splitting the space blocks vertically
-Cell Block id: 5 LL: 15 35 width: 20 height: 60
-Top Block id: -1 LL: 0 95 width: 100 height: 5
-Bottom Block id: -4 LL: 0 35 width: 35 height: 30
---- blocks before inserting cell block ---
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
------------------------------------------
---- blocks after inserting cell block ---
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 5 LL: 15 35 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
------------------------------------------
---- blocks before space block finding ---
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 5 LL: 15 35 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
------------------------------------------
---- blocks before neighbor finding ---
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 5 LL: 15 35 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
------------------------------------------
-Split_vert: Space blocks in between the top and bottom blocks
-Space Block id: -4 LL: 0 35 width: 35 height: 30
-Space Block id: -7 LL: 0 65 width: 35 height: 20
-Space Block id: -15 LL: 0 85 width: 100 height: 10
---- blocks after neighbor finding ---
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 5 LL: 15 35 width: 20 height: 60 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: Void
------------------------------------------
-Split_vert: New space blocks created
-Space Block Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-New Space Block on the left: Block id: -16 LL: 0 35 width: 15 height: 30 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 5
-Space Block Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-New Space Block on the left: Block id: -17 LL: 0 65 width: 15 height: 20 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 5
-Space Block Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-New Space Block on the left: Block id: -18 LL: 0 85 width: 15 height: 10 UR_Top: Void LL_Bottom: Void LL_Left: Void UR_Right: 5
-New Space Block on the right: Block id: -19 LL: 35 85 width: 65 height: 10 UR_Top: Void LL_Bottom: Void LL_Left: 5 UR_Right: Void
-
-Split_vert: Space Block id: -4 LL: 0 35 width: 35 height: 30
-Split_vert: Neighbors of the space block
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: -4 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -4 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-
-
-Split_vert: Space Block id: -7 LL: 0 65 width: 35 height: 20
-Split_vert: Neighbors of the space block
-Block id: -15 LL: 0 85 width: 100 height: 10 UR_Top: -1 LL_Bottom: -7 LL_Left: Void UR_Right: Void
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: -7 UR_Right: -8
-Block id: -4 LL: 0 35 width: 35 height: 30 UR_Top: -7 LL_Bottom: -14 LL_Left: Void UR_Right: 1
-
-
-Split_vert: Space Block id: -15 LL: 0 85 width: 100 height: 10
-Split_vert: Neighbors of the space block
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -15 LL_Left: Void UR_Right: Void
-Block id: -7 LL: 0 65 width: 35 height: 20 UR_Top: -15 LL_Bottom: -4 LL_Left: Void UR_Right: 2
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: 5 UR_Right: -8
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-
-top edge non split neighbor-1
-space block id: -15
-
-new space block UR_Top update
-Neighbor Block id: -1 LL: 0 95 width: 100 height: 5
-New Space Block id: -19 LL: 35 85 width: 65 height: 10
-
-
-Merge left space blocks
-Left merge space blocks
-Block id: -16 LL: 0 35 width: 15 height: 30 UR_Top: -17 LL_Bottom: -14 LL_Left: Void UR_Right: 5
-Block id: -17 LL: 0 65 width: 15 height: 20 UR_Top: -18 LL_Bottom: -16 LL_Left: Void UR_Right: 5
-Block id: -18 LL: 0 85 width: 15 height: 10 UR_Top: -1 LL_Bottom: -17 LL_Left: Void UR_Right: 5
-merge_group: -16 
--17 is mergeable with -16
-merge_group: -16 -17 
--18 is mergeable with -17
--18 is not mergeable with -18
-
-Merge right space blocks
-Right merge space blocks
-Block id: -19 LL: 35 85 width: 65 height: 10 UR_Top: -1 LL_Bottom: 2 LL_Left: 5 UR_Right: Void
-
-===== After Inserting Block: 5 ======
-Block id: -1 LL: 0 95 width: 100 height: 5 UR_Top: Void LL_Bottom: -16 LL_Left: Void UR_Right: Void
-Block id: 1 LL: 35 35 width: 30 height: 30 UR_Top: 2 LL_Bottom: 4 LL_Left: 5 UR_Right: 3
-Block id: 2 LL: 35 65 width: 60 height: 20 UR_Top: -1 LL_Bottom: 1 LL_Left: 5 UR_Right: -8
-Block id: -8 LL: 95 65 width: 5 height: 20 UR_Top: -1 LL_Bottom: -11 LL_Left: 2 UR_Right: Void
-Block id: -9 LL: 0 0 width: 100 height: 5 UR_Top: -11 LL_Bottom: Void LL_Left: Void UR_Right: Void
-Block id: 3 LL: 65 5 width: 20 height: 60 UR_Top: 2 LL_Bottom: -9 LL_Left: -13 UR_Right: -11
-Block id: -11 LL: 85 5 width: 15 height: 60 UR_Top: -8 LL_Bottom: -9 LL_Left: 3 UR_Right: Void
-Block id: -13 LL: 0 5 width: 65 height: 10 UR_Top: 4 LL_Bottom: -9 LL_Left: Void UR_Right: 3
-Block id: 4 LL: 5 15 width: 60 height: 20 UR_Top: 1 LL_Bottom: -13 LL_Left: -14 UR_Right: 3
-Block id: -14 LL: 0 15 width: 5 height: 20 UR_Top: -16 LL_Bottom: -13 LL_Left: Void UR_Right: 4
-Block id: 5 LL: 15 35 width: 20 height: 60 UR_Top: -1 LL_Bottom: 4 LL_Left: -16 UR_Right: -19
-Block id: -16 LL: 0 35 width: 15 height: 60 UR_Top: -1 LL_Bottom: -14 LL_Left: Void UR_Right: 5
-Block id: -19 LL: 35 85 width: 65 height: 10 UR_Top: -1 LL_Bottom: 2 LL_Left: 5 UR_Right: Void
-======================================
-Instruction Type: P
-PointFinding input: 35 35
-PointFinding Start
-Point: 35 35
-Block: 0 95
-PointFinding While Iter: 1
-Block: 0 95
+Block id: -18x range: 0<= x <413 y range: 737<= y <800
 PointFinding While Iter: 2
-Block: 0 35
+Block id: 4x range: 413<= x <430 y range: 693<= y <800
 PointFinding While Iter: 3
-Block: 15 35
+Block id: -15x range: 430<= x <600 y range: 693<= y <800
 PointFinding While Iter: 4
-Block: 35 85
-PointFinding While Iter: 5
-Block: 35 65
-PointFinding While Iter: 6
-Block: 35 35
-Point: 35 35
-LL_corner: 35 35
-
-13
-1 4 0
-2 3 3
-3 3 3
-4 3 3
-5 3 3
-0 0
-35 35
+Block id: 4x range: 413<= x <430 y range: 693<= y <800

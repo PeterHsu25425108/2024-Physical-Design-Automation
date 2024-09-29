@@ -816,7 +816,24 @@ void Solver::SplitSpace_Hori(Block &space_block, int split_Y, bool original_on_t
     while (b != &Void && b->UR_Top == &space_block)
     {
         bottom_edge_neighbors.push_back(b);
-        b = b->LL_Left;
+        b = b->UR_Right;
+    }
+
+    if (DEBUG_INSERT)
+    {
+        cout << "split_hori: top edge neighbors: ";
+        for (Block *b : top_edge_neighbors)
+        {
+            cout << b->block_id << " ";
+        }
+        cout << endl;
+
+        cout << "split_hori: bottom edge neighbors: ";
+        for (Block *b : bottom_edge_neighbors)
+        {
+            cout << b->block_id << " ";
+        }
+        cout << endl;
     }
 
     if (original_on_top)
@@ -1448,6 +1465,12 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         exit(1);
     }*/
 
+    bool allow_top = point.second >= outlineHeight;
+    bool allow_right = point.first >= outlineWidth;
+
+    allow_top = false;
+    allow_right = false;
+
     const Block *last_element_ptr = /*(ignore_new_block) ? prev(&blocks.back()) : */ &blocks.back();
 
     // Pick the front block in the outline
@@ -1486,10 +1509,10 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         if (DEBUG_POINTFINDING)
         {
             cout << "PointFinding While Iter: " << iter + 1 << endl;
-            cout << "Block: " << block->LL.first << " " << block->LL.second << endl;
+            cout << "Block id: " << block->block_id << "x range: " << block->getLeftX() << "<= x <" << block->getRightX() << " y range: " << block->getBottomY() << "<= y <" << block->getTopY() << endl;
         }
 
-        if (block->PointInBlock(point))
+        if (block->PointInBlock(point, allow_right, allow_top))
         {
             // The point is found
             return *block;
@@ -1498,7 +1521,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         // chances are the point is in the next block
         else if (point.second == block->getTopY() && block->UR_Top != &Void && block->UR_Right != nullptr)
         {
-            if (block->UR_Top->PointInBlock(point))
+            if (block->UR_Top->PointInBlock(point, allow_right, allow_top))
             {
                 return *(block->UR_Top);
             }
@@ -1514,7 +1537,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         }
         else if (point.first == block->getRightX() && block->UR_Right != &Void && block->UR_Right != nullptr)
         {
-            if (block->UR_Right->PointInBlock(point))
+            if (block->UR_Right->PointInBlock(point, allow_right, allow_top))
             {
                 return *(block->UR_Right);
             }
@@ -1597,8 +1620,8 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         {
             cerr << "PointFinding stuck in an infinite loop" << endl;
             cerr << "Point: " << point.first << " " << point.second << endl;
-            cerr << "Previous Block x range: " << prev_block->getLeftX() << "<= x <" << prev_block->getRightX() << endl;
-            cerr << "Previous Block y range: " << prev_block->getBottomY() << "<= y <" << prev_block->getTopY() << endl;
+            cerr << "Previous Block id: " << prev_block->block_id << endl;
+            cerr << "Current Block id: " << block->block_id << endl;
             exit(1);
         }
     }

@@ -99,7 +99,31 @@ public:
         for (Block &b : blocks)
         {
             // cerr << b.block_id << " " << b.LL.first << " " << b.LL.second << " " << b.width << " " << b.height << endl;
-            out_file << b.block_id << " " << b.LL.first << " " << b.LL.second << " " << b.width << " " << b.height << endl;
+            out_file << b.block_id << " " << b.LL.first << " " << b.LL.second << " " << b.width << " " << b.height << " ";
+            // output the neighbor pointers
+            vector<Block *> neighbor_ptr;
+            neighbor_ptr.push_back(b.LL_Left);
+            neighbor_ptr.push_back(b.LL_Bottom);
+            neighbor_ptr.push_back(b.UR_Top);
+            neighbor_ptr.push_back(b.UR_Right);
+
+            for (int i = 0; i < neighbor_ptr.size(); i++)
+            {
+                Block *b_ptr = neighbor_ptr[i];
+                if (b_ptr == nullptr)
+                {
+                    out_file << "n" << " ";
+                }
+                else if (b_ptr == &Void)
+                {
+                    out_file << "v" << " ";
+                }
+                else
+                {
+                    out_file << b_ptr->block_id << " ";
+                }
+            }
+            out_file << endl;
         }
         out_file.close();
     }

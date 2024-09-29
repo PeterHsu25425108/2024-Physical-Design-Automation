@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 
-def draw_block(ax, x, y, width, height, id):
+def draw_block(ax, x, y, width, height, id, LL_Left, LL_Bottom, UR_Top, UR_Right):
     if id > 0:
         color = "#FCC"
     else:
@@ -27,10 +27,23 @@ def draw_block(ax, x, y, width, height, id):
     center_y = y + height / 2
 
     # Calculate the font size
-    font_size = 18
+    font_size = 14
+    small_font_size = 8
 
     # Add the id text at the center of the block
     ax.text(center_x, center_y, str(id), ha='center', va='center', fontsize=font_size, color='black')
+
+    # Add the LL_Left text at the bottom left of the block
+    ax.text(x+0.1*width, center_y, LL_Left, ha='center', va='center', fontsize = small_font_size, color='black')
+
+    # Add the LL_Bottom text at the bottom left of the block
+    ax.text(x+0.15*width, y+0.1*height, LL_Bottom, ha='center', va='center', fontsize = small_font_size, color='black')
+
+    # Add the UR_Top text at the top right of the block
+    ax.text(x + 0.9*width, y + 0.9*height, UR_Top, ha='center', va='center', fontsize = small_font_size, color='black')
+
+    # Add the UR_Right text at the top right of the block
+    ax.text(x + 0.9*width, y + 0.85*height, UR_Right, ha='center', va='center', fontsize = small_font_size, color='black')
 
 
 png_size = (16, 12)
@@ -55,7 +68,7 @@ i = 2
 
 for block in range(total_block_number):
     ss = f[i].split(" ")
-    draw_block(ax, int(ss[1]), int(ss[2]), int(ss[3]), int(ss[4]), int(ss[0]))
+    draw_block(ax, int(ss[1]), int(ss[2]), int(ss[3]), int(ss[4]), int(ss[0]), str(ss[5]), str(ss[6]), str(ss[7]), str(ss[8]))
     i += 1
 
 # plt.savefig(str(sys.argv[1])[:-4]+".png")
