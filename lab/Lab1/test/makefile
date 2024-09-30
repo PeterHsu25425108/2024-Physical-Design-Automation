@@ -47,9 +47,13 @@ clean:
 # Define a pattern rule for run targets
 run_%: $(EXEC)
 	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
+
+test_%: $(EXEC)
+	./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
 	
 run_valgrind_%: $(EXEC)
 	valgrind --leak-check=full --log-file=memory.log ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
+	cat memory.log
 
 plot: draw_block_layout.py
 	./plot.sh
@@ -63,7 +67,7 @@ run_all: $(EXEC)
 
 # Check a specific testcase by number
 check_case%:
-	diff -b $(OUT_DIR)/case$*_out.txt $(ANS_DIR)/output$*.txt;
+	diff -b $(OUT_DIR)/case$*_out.txt $(ANS_DIR)/output$*.txt > check_out.txt;
 
 # Check all testcases
 check_all:

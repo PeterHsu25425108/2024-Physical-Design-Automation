@@ -11,5 +11,5 @@ do
     filename=$(basename -- "$file")
     filename="${filename%.*}"
     # plot the file and save it in /drawing
-    python3 draw_block_layout.py $file ../drawing/$filename.png
+    python3 draw_block_layout.py $file ../drawing/$filename.svg
 done

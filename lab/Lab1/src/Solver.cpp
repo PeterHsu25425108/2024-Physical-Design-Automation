@@ -1448,8 +1448,8 @@ void Solver::InsertCellBlock(Block &block)
     }
 
     // print the outline
-    string plot_name = "../layout/Insert_" + to_string(CellBlockPtr.size()) + "th.txt";
-    outputPlot(plot_name);
+    /*string plot_name = "../layout/Insert_" + to_string(CellBlockPtr.size()) + "th.txt";
+    outputPlot(plot_name);*/
 }
 
 // Find the neighbors of the block

@@ -27,8 +27,8 @@ def draw_block(ax, x, y, width, height, id, LL_Left, LL_Bottom, UR_Top, UR_Right
     center_y = y + height / 2
 
     # Calculate the font size
-    font_size = 14
-    small_font_size = 8
+    font_size = 8
+    small_font_size = 3
 
     # Add the id text at the center of the block
     ax.text(center_x, center_y, str(id), ha='center', va='center', fontsize=font_size, color='black')
