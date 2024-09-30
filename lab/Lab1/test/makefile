@@ -47,7 +47,6 @@ clean:
 # Define a pattern rule for run targets
 run_%: $(EXEC)
 	timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
-	./plot.sh
 	
 run_valgrind_%: $(EXEC)
 	valgrind --leak-check=full --log-file=memory.log ./$(EXEC) $(TESTCASE_DIR)/$*.txt $(OUT_DIR)/$*_out.txt > cmd_out.txt
@@ -59,7 +58,7 @@ plot: draw_block_layout.py
 run_all: $(EXEC)
 	@$(foreach file,$(basename $(notdir $(TESTCASE_FILES))), \
 		echo "Running $(file)"; \
-		timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$(file).txt $(OUT_DIR)/$(file)_out.txt; \
+		timeout 60 ./$(EXEC) $(TESTCASE_DIR)/$(file).txt $(OUT_DIR)/$(file)_out.txt> cmd_out.txt; \
 		printf "Finished running $(file)\n\n";)
 
 # Check a specific testcase by number
@@ -70,5 +69,6 @@ check_case%:
 check_all:
 	@$(foreach file,$(basename $(notdir $(TESTCASE_FILES))), \
 		echo "Checking $(file)"; \
+		num=$$(echo $(file) | sed 's/^case//'); \
 		diff -b $(OUT_DIR)/$(file)_out.txt $(ANS_DIR)/output$(file).txt; \
 		printf "Finished checking $(file)\n\n";)

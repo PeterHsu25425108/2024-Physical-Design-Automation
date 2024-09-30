@@ -27,23 +27,23 @@ def draw_block(ax, x, y, width, height, id, LL_Left, LL_Bottom, UR_Top, UR_Right
     center_y = y + height / 2
 
     # Calculate the font size
-    font_size = 5#14
+    font_size = 14
     small_font_size = 8
 
     # Add the id text at the center of the block
     ax.text(center_x, center_y, str(id), ha='center', va='center', fontsize=font_size, color='black')
 
-    # # Add the LL_Left text at the bottom left of the block
-    # ax.text(x+0.1*width, center_y, LL_Left, ha='center', va='center', fontsize = small_font_size, color='black')
+    # Add the LL_Left text at the bottom left of the block
+    ax.text(x+0.1*width, center_y, LL_Left, ha='center', va='center', fontsize = small_font_size, color='black')
 
-    # # Add the LL_Bottom text at the bottom left of the block
-    # ax.text(x+0.15*width, y+0.1*height, LL_Bottom, ha='center', va='center', fontsize = small_font_size, color='black')
+    # Add the LL_Bottom text at the bottom left of the block
+    ax.text(x+0.15*width, y+0.1*height, LL_Bottom, ha='center', va='center', fontsize = small_font_size, color='black')
 
-    # # Add the UR_Top text at the top right of the block
-    # ax.text(x + 0.9*width, y + 0.9*height, UR_Top, ha='center', va='center', fontsize = small_font_size, color='black')
+    # Add the UR_Top text at the top right of the block
+    ax.text(x + 0.9*width, y + 0.9*height, UR_Top, ha='center', va='center', fontsize = small_font_size, color='black')
 
-    # # Add the UR_Right text at the top right of the block
-    # ax.text(x + 0.9*width, center_y, UR_Right, ha='center', va='center', fontsize = small_font_size, color='black')
+    # Add the UR_Right text at the top right of the block
+    ax.text(x + 0.9*width, center_y, UR_Right, ha='center', va='center', fontsize = small_font_size, color='black')
 
 
 png_size = (16, 12)

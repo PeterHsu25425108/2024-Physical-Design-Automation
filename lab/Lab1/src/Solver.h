@@ -73,7 +73,7 @@ public:
     void SplitSpace_Hori(Block &block, int split_Y, bool original_on_top);
     void SplitSpace_Vert(Block &cell_block, Block &Top_Blcok, Block &Bottom_Block);
 
-    void MergeSpace(vector<Block *> &space_blocks);
+    void MergeSpace(list<Block *> &space_blocks);
 
     void deleteSpaceBlock(Block *block);
 
