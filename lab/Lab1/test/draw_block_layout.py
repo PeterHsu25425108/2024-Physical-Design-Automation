@@ -9,7 +9,7 @@ def draw_block(ax, x, y, width, height, id, LL_Left, LL_Bottom, UR_Top, UR_Right
         # if id == block_id, set the color green
         if block_id == None:
             color = "#FCC"
-        elif id == int(block_id):
+        elif id == 19:#int(block_id):
             color = "#CFC"
         else:
             color = "#FCC"

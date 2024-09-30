@@ -1038,7 +1038,8 @@ void Solver::MergeSpace(list<Block *> &space_blocks)
         bool edge_aligned = ((*it)->getLeftX() == merge_group.back()->getLeftX() && (*it)->getRightX() == merge_group.back()->getRightX());
         // bool common_neighPtr = ((*it)->LL_Left == merge_group.back()->LL_Left && (*it)->UR_Right == merge_group.back()->UR_Right);
         bool same_width = (*it)->width == merge_group.back()->width;
-        bool mergeable = edge_aligned && same_width; // common_neighPtr;
+        bool y_aligned = (*it)->getBottomY() == merge_group.back()->getTopY();
+        bool mergeable = edge_aligned && same_width && y_aligned;
 
         if (DEBUG_INSERT)
         {
@@ -1398,7 +1399,7 @@ void Solver::InsertCellBlock(Block &block)
 
     SplitSpace_Vert(block, *Top_Block, *Bottom_Block);
 
-    if ((DEBUG_INSERT || DEBUG_INSERTSTEP) && block.block_id == 800)
+    if ((DEBUG_INSERT || DEBUG_INSERTSTEP) /*&& block.block_id == 800*/)
     {
         cout << endl
              << "===== After Inserting Block: " << block.block_id << " ======" << endl;
@@ -1494,6 +1495,16 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
     }
     else if (block.UR_Top != &Void)
     {
+
+        if (Id2CellBlockPtr.find(block.UR_Top->block_id) == Id2CellBlockPtr.end() && Id2SpaceBlockPtr.find(block.UR_Top->block_id) == Id2SpaceBlockPtr.end())
+        {
+            cerr << "The UR_Top pointer of the block is not found in the Id2CellBlockPtr or Id2SpaceBlockPtr" << endl;
+            cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+            cerr << "UR_Top: " << block.UR_Top->block_id << " LL: " << block.UR_Top->LL.first << " " << block.UR_Top->LL.second << endl;
+            cerr << "space block count = " << space_block_accumulate << endl;
+            exit(1);
+        }
+
         // Search the top edge of the block, go along the LL_Left pointer
         // Stop when the b->RightX <= block.LeftX
         Block *b = block.UR_Top;
@@ -1501,7 +1512,16 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         {
 
             top_edge_neighbors.push_back(b);
+            Block *prev_b = b;
             b = b->LL_Left;
+
+            if (b == nullptr)
+            {
+                cerr << "The LL_Left pointer of the block is a nullptr" << endl;
+                cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+                cerr << "prev_b: " << prev_b->block_id << " LL: " << prev_b->LL.first << " " << prev_b->LL.second << endl;
+                exit(1);
+            }
         }
     }
 
@@ -1514,6 +1534,16 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
     }
     else if (block.UR_Right != &Void)
     {
+
+        if (Id2CellBlockPtr.find(block.UR_Right->block_id) == Id2CellBlockPtr.end() && Id2SpaceBlockPtr.find(block.UR_Right->block_id) == Id2SpaceBlockPtr.end())
+        {
+            cerr << "The UR_Right pointer of the block is not found in the Id2CellBlockPtr or Id2SpaceBlockPtr" << endl;
+            cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+            cerr << "UR_Right: " << block.UR_Right->block_id << " LL: " << block.UR_Right->LL.first << " " << block.UR_Right->LL.second << endl;
+            cerr << "space block count = " << space_block_accumulate << endl;
+            exit(1);
+        }
+
         // Search the right edge of the block, go along the LL_Bottom pointer
         // Stop when the b->TopY <= block.BottomY
         Block *b = block.UR_Right;
@@ -1527,7 +1557,15 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
             }
 
             right_edge_neighbors.push_back(b);
+            Block *prev_b = b;
             b = b->LL_Bottom;
+            if (b == nullptr)
+            {
+                cerr << "The LL_Bottom pointer of the block is a nullptr" << endl;
+                cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+                cerr << "prev_b: " << prev_b->block_id << " LL: " << prev_b->LL.first << " " << prev_b->LL.second << endl;
+                exit(1);
+            }
         }
     }
 
@@ -1540,6 +1578,16 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
     }
     else if (block.LL_Bottom != &Void)
     {
+
+        if (Id2CellBlockPtr.find(block.LL_Bottom->block_id) == Id2CellBlockPtr.end() && Id2SpaceBlockPtr.find(block.LL_Bottom->block_id) == Id2SpaceBlockPtr.end())
+        {
+            cerr << "The LL_Bottom pointer of the block is not found in the Id2CellBlockPtr or Id2SpaceBlockPtr" << endl;
+            cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+            cerr << "LL_Bottom: " << block.LL_Bottom->block_id << " LL: " << block.LL_Bottom->LL.first << " " << block.LL_Bottom->LL.second << endl;
+            cerr << "space block count = " << space_block_accumulate << endl;
+            exit(1);
+        }
+
         // Search the bottom edge of the block, go along the UR_Right pointer
         // Stop when the b->LeftX >= block.RightX
         Block *b = block.LL_Bottom;
@@ -1553,7 +1601,15 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
             }
 
             bottom_edge_neighbors.push_back(b);
+            Block *prev_b = b;
             b = b->UR_Right;
+            if (b == nullptr)
+            {
+                cerr << "The UR_Right pointer of the block is a nullptr" << endl;
+                cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+                cerr << "prev_b: " << prev_b->block_id << " LL: " << prev_b->LL.first << " " << prev_b->LL.second << endl;
+                exit(1);
+            }
         }
     }
 
@@ -1566,6 +1622,16 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
     }
     else if (block.LL_Left != &Void)
     {
+
+        if (Id2CellBlockPtr.find(block.LL_Left->block_id) == Id2CellBlockPtr.end() && Id2SpaceBlockPtr.find(block.LL_Left->block_id) == Id2SpaceBlockPtr.end())
+        {
+            cerr << "The LL_Left pointer of the block is not found in the Id2CellBlockPtr or Id2SpaceBlockPtr" << endl;
+            cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+            cerr << "LL_Left: " << block.LL_Left->block_id << " LL: " << block.LL_Left->LL.first << " " << block.LL_Left->LL.second << endl;
+            cerr << "space block count = " << space_block_accumulate << endl;
+            exit(1);
+        }
+
         // Search the left edge of the block, go along the UR_Top pointer
         // Stop when the b->BottomY >= block.TopY
         Block *b = block.LL_Left;
@@ -1579,7 +1645,15 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
             }
 
             left_edge_neighbors.push_back(b);
+            Block *prev_b = b;
             b = b->UR_Top;
+            if (b == nullptr)
+            {
+                cerr << "The UR_Top pointer of the block is a nullptr" << endl;
+                cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
+                cerr << "prev_b: " << prev_b->block_id << " LL: " << prev_b->LL.first << " " << prev_b->LL.second << endl;
+                exit(1);
+            }
         }
     }
 
