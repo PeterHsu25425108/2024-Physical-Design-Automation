@@ -21,6 +21,12 @@ int main(int argc, char *argv[])
         solver.writeOutput(cout);
     }
 
+    if (PLOT_FINAL)
+    {
+        string plot_name = "../layout/Finallayout.txt";
+        solver.outputPlot(plot_name);
+    }
+
     in_file.close();
     out_file.close();
 

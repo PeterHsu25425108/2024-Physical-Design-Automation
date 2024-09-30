@@ -542,12 +542,12 @@ void Solver::SplitSpace_Vert(Block &cell_block_in, Block &Top_Block, Block &Bott
                         }
                         else if (neighbor->getLeftX() < cell_block.getLeftX())
                         {
-                            if (new_left)
+                            if (new_left && neighbor->LL_Bottom == space_blocks[i])
                                 neighbor->LL_Bottom = new_space_blocks[i].first;
                         }
                         else
                         {
-                            if (new_right)
+                            if (new_right && neighbor->LL_Bottom == space_blocks[i])
                                 neighbor->LL_Bottom = new_space_blocks[i].second;
                         }
 
@@ -692,14 +692,14 @@ void Solver::SplitSpace_Vert(Block &cell_block_in, Block &Top_Block, Block &Bott
                         {
                             neighbor->UR_Top = &cell_block;
                         }
-                        else if (neighbor->getRightX() <= cell_block.getLeftX())
+                        else if (neighbor->getRightX() <= cell_block.getLeftX() && neighbor->UR_Top == space_blocks[i])
                         {
                             if (new_left)
                                 neighbor->UR_Top = new_space_blocks[i].first;
                         }
                         else
                         {
-                            if (new_right)
+                            if (new_right && neighbor->UR_Top == space_blocks[i])
                                 neighbor->UR_Top = new_space_blocks[i].second;
                         }
 
@@ -733,6 +733,44 @@ void Solver::SplitSpace_Vert(Block &cell_block_in, Block &Top_Block, Block &Bott
             right_merge_space_blocks.push_back(new_space_blocks[i].second);
         }
     }
+
+    // Include the space blocks that are on top of the last space block in the left and right merge space blocks
+    // and have the same LeftX and RightX into the left and right merge space blocks
+    /*if (!left_merge_space_blocks.empty())
+    {
+        Block *left_top = left_merge_space_blocks.back()->UR_Top;
+        Block *left_bottom = left_merge_space_blocks[0]->LL_Bottom;
+
+        while (left_top != &Void && left_top->getLeftX() == left_merge_space_blocks.back()->getLeftX() && left_top->getRightX() == left_merge_space_blocks.back()->getRightX())
+        {
+            left_merge_space_blocks.push_back(left_top);
+            left_top = left_top->UR_Top;
+        }
+
+        while (left_bottom != &Void && left_bottom->getLeftX() == left_merge_space_blocks[0]->getLeftX() && left_bottom->getRightX() == left_merge_space_blocks[0]->getRightX())
+        {
+            left_merge_space_blocks.push_back(left_bottom);
+            left_bottom = left_bottom->LL_Bottom;
+        }
+    }
+
+    if (!right_merge_space_blocks.empty())
+    {
+        Block *right_bottom = right_merge_space_blocks[0]->LL_Bottom;
+        Block *right_top = right_merge_space_blocks.back()->UR_Top;
+
+        while (right_bottom != &Void && right_bottom->getLeftX() == right_merge_space_blocks[0]->getLeftX() && right_bottom->getRightX() == right_merge_space_blocks[0]->getRightX())
+        {
+            right_merge_space_blocks.push_back(right_bottom);
+            right_bottom = right_bottom->LL_Bottom;
+        }
+
+        while (right_top != &Void && right_top->getLeftX() == right_merge_space_blocks.back()->getLeftX() && right_top->getRightX() == right_merge_space_blocks.back()->getRightX())
+        {
+            right_merge_space_blocks.push_back(right_top);
+            right_top = right_top->UR_Top;
+        }
+    }*/
 
     // merge the space blocks on the left and right of the cell block
     if (DEBUG_INSERT)
@@ -937,8 +975,9 @@ void Solver::MergeSpace(vector<Block *> &space_blocks)
     {
         // if *it->width == merged_block->width, merge the blocks
         bool edge_aligned = ((*it)->getLeftX() == merge_group.back()->getLeftX() && (*it)->getRightX() == merge_group.back()->getRightX());
-        bool common_neighPtr = ((*it)->LL_Left == merge_group.back()->LL_Left && (*it)->UR_Right == merge_group.back()->UR_Right);
-        bool mergeable = edge_aligned && common_neighPtr;
+        // bool common_neighPtr = ((*it)->LL_Left == merge_group.back()->LL_Left && (*it)->UR_Right == merge_group.back()->UR_Right);
+        bool same_width = (*it)->width == merge_group.back()->width;
+        bool mergeable = edge_aligned && same_width; // common_neighPtr;
 
         if (DEBUG_INSERT)
         {
@@ -1136,7 +1175,7 @@ void Solver::InsertCellBlock(Block &block)
     // then no need to split the bottom block
     else if (Bottom_Block == &Void)
     {
-        cerr << "The Bottom_CheckPoint is not found in any block, but it should be" << endl;
+        cerr << "The Bottom_CheckPoint (" << Bottom_CheckPoint.first << ", " << Bottom_CheckPoint.second << ") is not found in any block, but it should be" << endl;
         cerr << "while inserting Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
         exit(1);
     }
@@ -1194,22 +1233,25 @@ void Solver::InsertCellBlock(Block &block)
         }
         SplitSpace_Hori(*Bottom_Block, block_BottomY, true);
 
-        cout << endl
-             << "blocks after Splitting the bottom block" << endl;
-        for (Block &b : blocks)
+        if (DEBUG_INSERT)
         {
-            cout << b;
-            if (b.block_id == Bottom_Block->block_id)
+            cout << endl
+                 << "blocks after Splitting the bottom block" << endl;
+            for (Block &b : blocks)
             {
-                cout << " <-- Bottom_Block";
+                cout << b;
+                if (b.block_id == Bottom_Block->block_id)
+                {
+                    cout << " <-- Bottom_Block";
+                }
+                if (b.block_id == Top_Block->block_id)
+                {
+                    cout << " <-- Top_Block";
+                }
+                cout << endl;
             }
-            if (b.block_id == Top_Block->block_id)
-            {
-                cout << " <-- Top_Block";
-            }
-            cout << endl;
+            cout << "======================================" << endl;
         }
-        cout << "======================================" << endl;
     }
 
     // find the space blocks stacked in between the top and bottom blocks
@@ -1306,13 +1348,6 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         Block *b = block.UR_Top;
         while (b->getRightX() > block.getLeftX() && b != &Void)
         {
-            if (DEBUG_FINDNEIGH)
-            {
-                if (b->block_type == CELL)
-                {
-                    cerr << "top edge: cell neighbor" << b->block_id << endl;
-                }
-            }
 
             neighbors.push_back(b);
             b = b->LL_Left;
@@ -1338,17 +1373,6 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
                 cerr << "The right edge search is out of the outline" << endl;
                 cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
                 exit(1);
-            }
-
-            if (DEBUG_FINDNEIGH)
-            {
-                Block *b_nxt = b->LL_Bottom;
-
-                if (b_nxt != nullptr && b_nxt->block_type == CELL)
-                {
-                    cerr << "right edge: cell neighbor" << b_nxt->block_id << endl;
-                    cerr << "previous block(LL_bottom = cell neighbor): " << b->block_id << endl;
-                }
             }
 
             neighbors.push_back(b);
@@ -1377,14 +1401,6 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
                 exit(1);
             }
 
-            if (DEBUG_FINDNEIGH)
-            {
-                if (b->block_type == CELL)
-                {
-                    cerr << "bottom edge: cell neighbor" << b->block_id << endl;
-                }
-            }
-
             neighbors.push_back(b);
             b = b->UR_Right;
         }
@@ -1409,14 +1425,6 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
                 cerr << "The left edge search is out of the outline" << endl;
                 cerr << "Block id: " << block.block_id << " LL: " << block.LL.first << " " << block.LL.second << endl;
                 exit(1);
-            }
-
-            if (DEBUG_FINDNEIGH)
-            {
-                if (b->block_type == CELL)
-                {
-                    cerr << "left edge: cell neighbor" << b->block_id << endl;
-                }
             }
 
             neighbors.push_back(b);
@@ -1465,17 +1473,28 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         exit(1);
     }*/
 
-    bool allow_top = point.second >= outlineHeight;
+    /*bool allow_top = point.second >= outlineHeight;
     bool allow_right = point.first >= outlineWidth;
 
     allow_top = false;
-    allow_right = false;
+    allow_right = false;*/
+
+    if (point.second >= outlineHeight)
+    {
+        if (DEBUG_INSERT || DEBUG_POINTFINDING)
+        {
+            cout << "The point is on the top edge of the outline" << endl;
+        }
+
+        return const_cast<Block &>(Void);
+    }
 
     const Block *last_element_ptr = /*(ignore_new_block) ? prev(&blocks.back()) : */ &blocks.back();
 
     // Pick the front block in the outline
     Block *block = rand() % 2 ? const_cast<Block *>(&blocks.front()) : const_cast<Block *>(last_element_ptr);
     Block *prev_block = nullptr;
+    Block *nxt_block;
 
     if (block == nullptr)
     {
@@ -1494,7 +1513,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
     {
         cout << "PointFinding Start" << endl;
         cout << "Point: " << point.first << " " << point.second << endl;
-        cout << "Block: " << block->LL.first << " " << block->LL.second << endl;
+        cout << "Starting Block: " << block->block_id << "x range: " << block->getLeftX() << "<= x <" << block->getRightX() << " y range: " << block->getBottomY() << "<= y <" << block->getTopY() << endl;
     }
 
     // Traverse the outline to find the block that contains the point
@@ -1503,7 +1522,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
 
     while (block != &Void && block != nullptr)
     {
-        Block *nxt_block;
+
         bool inf_loop = false;
 
         if (DEBUG_POINTFINDING)
@@ -1512,7 +1531,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
             cout << "Block id: " << block->block_id << "x range: " << block->getLeftX() << "<= x <" << block->getRightX() << " y range: " << block->getBottomY() << "<= y <" << block->getTopY() << endl;
         }
 
-        if (block->PointInBlock(point, allow_right, allow_top))
+        if (block->PointInBlock(point /*, allow_right, allow_top)*/))
         {
             // The point is found
             return *block;
@@ -1521,7 +1540,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         // chances are the point is in the next block
         else if (point.second == block->getTopY() && block->UR_Top != &Void && block->UR_Right != nullptr)
         {
-            if (block->UR_Top->PointInBlock(point, allow_right, allow_top))
+            if (block->UR_Top->PointInBlock(point /*, allow_right, allow_top*/))
             {
                 return *(block->UR_Top);
             }
@@ -1529,6 +1548,9 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
             nxt_block = block->UR_Top;
             if (nxt_block == prev_block)
             {
+                cerr << "1. Previous Block id: " << prev_block->block_id << endl;
+                cerr << "Next Block id: " << nxt_block->block_id << endl;
+                cerr << "Current Block id: " << block->block_id << endl;
                 inf_loop = true;
             }
 
@@ -1537,7 +1559,7 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         }
         else if (point.first == block->getRightX() && block->UR_Right != &Void && block->UR_Right != nullptr)
         {
-            if (block->UR_Right->PointInBlock(point, allow_right, allow_top))
+            if (block->UR_Right->PointInBlock(point /*, allow_right, allow_top*/))
             {
                 return *(block->UR_Right);
             }
@@ -1545,6 +1567,9 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
             nxt_block = block->UR_Right;
             if (nxt_block == prev_block)
             {
+                cerr << "2. Previous Block id: " << prev_block->block_id << endl;
+                cerr << "Next Block id: " << nxt_block->block_id << endl;
+                cerr << "Current Block id: " << block->block_id << endl;
                 inf_loop = true;
             }
 
@@ -1567,6 +1592,9 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
                     nxt_block = block->UR_Right;
                     if (nxt_block == prev_block)
                     {
+                        cerr << "3. Previous Block id: " << prev_block->block_id << endl;
+                        cerr << "Next Block id: " << nxt_block->block_id << endl;
+                        cerr << "Current Block id: " << block->block_id << endl;
                         inf_loop = true;
                     }
 
@@ -1575,9 +1603,12 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
                 }
                 else
                 {
-                    nxt_block = block->UR_Top;
+                    nxt_block = block->LL_Left;
                     if (nxt_block == prev_block)
                     {
+                        cerr << "4. Previous Block id: " << prev_block->block_id << endl;
+                        cerr << "Next Block id: " << nxt_block->block_id << endl;
+                        cerr << "Current Block id: " << block->block_id << endl;
                         inf_loop = true;
                     }
 
@@ -1594,6 +1625,9 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
                     nxt_block = block->UR_Top;
                     if (nxt_block == prev_block)
                     {
+                        cerr << "5. Previous Block id: " << prev_block->block_id << endl;
+                        cerr << "Next Block id: " << nxt_block->block_id << endl;
+                        cerr << "Current Block id: " << block->block_id << endl;
                         inf_loop = true;
                     }
 
@@ -1602,9 +1636,12 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
                 }
                 else
                 {
-                    nxt_block = block->UR_Right;
+                    nxt_block = block->LL_Bottom;
                     if (nxt_block == prev_block)
                     {
+                        cerr << "6. Previous Block id: " << prev_block->block_id << endl;
+                        cerr << "Next Block id: " << nxt_block->block_id << endl;
+                        cerr << "Current Block id: " << block->block_id << endl;
                         inf_loop = true;
                     }
 
@@ -1620,8 +1657,9 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         {
             cerr << "PointFinding stuck in an infinite loop" << endl;
             cerr << "Point: " << point.first << " " << point.second << endl;
-            cerr << "Previous Block id: " << prev_block->block_id << endl;
-            cerr << "Current Block id: " << block->block_id << endl;
+            /*cerr << "Previous Block id: " << prev_block->block_id << endl;
+            cerr << "Next Block id: " << nxt_block->block_id << endl;
+            cerr << "Current Block id: " << block->block_id << endl;*/
             exit(1);
         }
     }
@@ -1634,6 +1672,12 @@ Block &Solver::PointFinding(pair<int, int> point /*, bool ignore_new_block*/) co
         cerr << "Previous Block x range: " << prev_block->getLeftX() << "<= x <" << prev_block->getRightX() << endl;
         cerr << "Previous Block y range: " << prev_block->getBottomY() << "<= y <" << prev_block->getTopY() << endl;
         exit(1);*/
+
+        if (DEBUG_INSERT || DEBUG_POINTFINDING)
+        {
+            cout << "The point is not in the block" << endl;
+            cout << "Previous Block: " << *prev_block << endl;
+        }
 
         return const_cast<Block &>(Void);
     }

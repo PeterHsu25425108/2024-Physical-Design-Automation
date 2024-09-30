@@ -65,6 +65,11 @@ public:
     {
     }
 
+    int getCellBlockNum() const
+    {
+        return CellBlockPtr.size();
+    }
+
     void SplitSpace_Hori(Block &block, int split_Y, bool original_on_top);
     void SplitSpace_Vert(Block &cell_block, Block &Top_Blcok, Block &Bottom_Block);
 
