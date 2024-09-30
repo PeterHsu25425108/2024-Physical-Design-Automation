@@ -896,104 +896,119 @@ void Solver::SplitSpace_Hori(Block &space_block, int split_Y, bool original_on_t
         cout << endl;
     }
 
-    if (original_on_top)
+    // if (original_on_top)
+    // {
+
+    int b_new_topY = split_Y;
+    int b_new_bottomY = space_block.getBottomY();
+    int b_new_height = b_new_topY - b_new_bottomY;
+    pair<int, int> b_new_LL = make_pair(space_block.LL.first, b_new_bottomY);
+
+    space_block.height = space_block.getTopY() - split_Y;
+    space_block.LL.second = split_Y;
+
+    Block *b_new_LL_Bottom = space_block.LL_Bottom;
+    Block *b_new_UR_Top = &space_block;
+    Block *b_new_LL_Left = space_block.LL_Left;
+
+    // update the LL_Left space_block and UR_Right of the new space block
+    // Block *b_new_UR_Right = space_block.UR_Right;
+    b = space_block.UR_Right;
+    while (b != &Void && b->getBottomY() >= split_Y)
     {
-
-        int b_new_topY = split_Y;
-        int b_new_bottomY = space_block.getBottomY();
-        int b_new_height = b_new_topY - b_new_bottomY;
-        pair<int, int> b_new_LL = make_pair(space_block.LL.first, b_new_bottomY);
-
-        space_block.height = space_block.getTopY() - split_Y;
-        space_block.LL.second = split_Y;
-
-        Block *b_new_LL_Bottom = space_block.LL_Bottom;
-        Block *b_new_LL_Left = space_block.LL_Left;
-        Block *b_new_UR_Top = &space_block;
-        Block *b_new_UR_Right = space_block.UR_Right;
-
-        Block *b_new = addBlock(Block(b_new_LL, space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
-
-        space_block.LL_Bottom = b_new;
-
-        // update the UR_Top of the bottom edge neighbors
-        for (Block *b : bottom_edge_neighbors)
-        {
-            b->UR_Top = b_new;
-        }
-
-        // update the LL_Bottom of the top edge neighbors
-        for (Block *b : top_edge_neighbors)
-        {
-            b->LL_Bottom = &space_block;
-        }
-
-        // update the LL_Left of the right edge neighbors
-        for (Block *b : right_edge_neighbors)
-        {
-            b->LL_Left = (b->getBottomY() >= split_Y) ? &space_block : b_new;
-        }
-
-        // update the UR_Right of the left edge neighbors
-        for (Block *b : left_edge_neighbors)
-        {
-            b->UR_Right = (b->getTopY() <= split_Y) ? b_new : &space_block;
-        }
-
-        /*Block *right_edge_neighbor = space_block.UR_Right;
-        if (right_edge_neighbor != &Void && right_edge_neighbor->LL_Left == &space_block)
-        {
-            right_edge_neighbor->LL_Left = b_new;
-        }*/
+        b = b->LL_Bottom;
     }
-    else
+    Block *b_new_UR_Right = b;
+
+    b = space_block.LL_Left;
+    while (b != &Void && b->getTopY() <= split_Y)
     {
-
-        int b_new_bottomY = split_Y;
-        int b_new_topY = space_block.getTopY();
-        int b_new_height = b_new_topY - b_new_bottomY;
-        space_block.height = split_Y - space_block.getBottomY();
-
-        Block *b_new_LL_Bottom = &space_block;
-        Block *b_new_LL_Left = space_block.LL_Left;
-        Block *b_new_UR_Top = space_block.UR_Top;
-        Block *b_new_UR_Right = space_block.UR_Right;
-
-        Block *b_new = addBlock(Block(make_pair(space_block.LL.first, b_new_bottomY), space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
-        // Block *b_new = &blocks.back();
-
-        space_block.UR_Top = b_new;
-
-        // update the UR_Top of the bottom edge neighbors
-        for (Block *b : bottom_edge_neighbors)
-        {
-            b->UR_Top = &space_block;
-        }
-
-        // update the LL_Bottom of the top edge neighbors
-        for (Block *b : top_edge_neighbors)
-        {
-            b->LL_Bottom = b_new;
-        }
-
-        // update the UR_Right of the left edge neighbors
-        /*Block *left_edge_neighbor = space_block.LL_Left;
-        if (left_edge_neighbor != &Void && left_edge_neighbor->UR_Right == &space_block)
-        {
-            left_edge_neighbor->UR_Right = &space_block;
-        }*/
-        // update the LL_Left of the right edge neighbors
-        for (Block *b : right_edge_neighbors)
-        {
-            b->LL_Left = (b->getBottomY() >= split_Y) ? b_new : &space_block;
-        }
-
-        // update the UR_Right of the left edge neighbors
-        for (Block *b : left_edge_neighbors)
-        {
-            b->UR_Right = (b->getTopY() <= split_Y) ? &space_block : b_new;
-        }
+        b = b->UR_Top;
     }
+    space_block.LL_Left = b;
+
+    Block *b_new = addBlock(Block(b_new_LL, space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
+
+    space_block.LL_Bottom = b_new;
+
+    // update the UR_Top of the bottom edge neighbors
+    for (Block *b : bottom_edge_neighbors)
+    {
+        b->UR_Top = b_new;
+    }
+
+    // update the LL_Bottom of the top edge neighbors
+    for (Block *b : top_edge_neighbors)
+    {
+        b->LL_Bottom = &space_block;
+    }
+
+    // update the LL_Left of the right edge neighbors
+    for (Block *b : right_edge_neighbors)
+    {
+        b->LL_Left = (b->getBottomY() >= split_Y) ? &space_block : b_new;
+    }
+
+    // update the UR_Right of the left edge neighbors
+    for (Block *b : left_edge_neighbors)
+    {
+        b->UR_Right = (b->getTopY() <= split_Y) ? b_new : &space_block;
+    }
+
+    /*Block *right_edge_neighbor = space_block.UR_Right;
+    if (right_edge_neighbor != &Void && right_edge_neighbor->LL_Left == &space_block)
+    {
+        right_edge_neighbor->LL_Left = b_new;
+    }*/
+    //}
+    // else
+    // {
+
+    //     int b_new_bottomY = split_Y;
+    //     int b_new_topY = space_block.getTopY();
+    //     int b_new_height = b_new_topY - b_new_bottomY;
+    //     space_block.height = split_Y - space_block.getBottomY();
+
+    //     Block *b_new_LL_Bottom = &space_block;
+    //     Block *b_new_LL_Left = space_block.LL_Left;
+    //     Block *b_new_UR_Top = space_block.UR_Top;
+    //     Block *b_new_UR_Right = space_block.UR_Right;
+
+    //     Block *b_new = addBlock(Block(make_pair(space_block.LL.first, b_new_bottomY), space_block.width, b_new_height, SPACE, -1, b_new_LL_Bottom, b_new_LL_Left, b_new_UR_Top, b_new_UR_Right));
+    //     // Block *b_new = &blocks.back();
+
+    //     space_block.UR_Top = b_new;
+
+    //     // update the UR_Top of the bottom edge neighbors
+    //     for (Block *b : bottom_edge_neighbors)
+    //     {
+    //         b->UR_Top = &space_block;
+    //     }
+
+    //     // update the LL_Bottom of the top edge neighbors
+    //     for (Block *b : top_edge_neighbors)
+    //     {
+    //         b->LL_Bottom = b_new;
+    //     }
+
+    //     // update the UR_Right of the left edge neighbors
+    //     /*Block *left_edge_neighbor = space_block.LL_Left;
+    //     if (left_edge_neighbor != &Void && left_edge_neighbor->UR_Right == &space_block)
+    //     {
+    //         left_edge_neighbor->UR_Right = &space_block;
+    //     }*/
+    //     // update the LL_Left of the right edge neighbors
+    //     for (Block *b : right_edge_neighbors)
+    //     {
+    //         b->LL_Left = (b->getBottomY() >= split_Y) ? b_new : &space_block;
+    //     }
+
+    //     // update the UR_Right of the left edge neighbors
+    //     for (Block *b : left_edge_neighbors)
+    //     {
+    //         b->UR_Right = (b->getTopY() <= split_Y) ? &space_block : b_new;
+    //     }
+    // }
 
     if (DEBUG_INSERT)
     {
@@ -1383,7 +1398,7 @@ void Solver::InsertCellBlock(Block &block)
 
     SplitSpace_Vert(block, *Top_Block, *Bottom_Block);
 
-    if (DEBUG_INSERT)
+    if ((DEBUG_INSERT || DEBUG_INSERTSTEP) && block.block_id == 800)
     {
         cout << endl
              << "===== After Inserting Block: " << block.block_id << " ======" << endl;
@@ -1448,8 +1463,12 @@ void Solver::InsertCellBlock(Block &block)
     }
 
     // print the outline
-    /*string plot_name = "../layout/Insert_" + to_string(CellBlockPtr.size()) + "th.txt";
-    outputPlot(plot_name);*/
+
+    if (DEBUG_OUTPUTPLOT)
+    {
+        string plot_name = "../layout/Insert_" + to_string(block.block_id) + ".txt";
+        outputPlot(plot_name);
+    }
 }
 
 // Find the neighbors of the block
@@ -1478,7 +1497,7 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         // Search the top edge of the block, go along the LL_Left pointer
         // Stop when the b->RightX <= block.LeftX
         Block *b = block.UR_Top;
-        while (b->getRightX() > block.getLeftX() && b != &Void)
+        while (b != &Void && b->getRightX() > block.getLeftX())
         {
 
             top_edge_neighbors.push_back(b);
@@ -1498,7 +1517,7 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         // Search the right edge of the block, go along the LL_Bottom pointer
         // Stop when the b->TopY <= block.BottomY
         Block *b = block.UR_Right;
-        while (b->getTopY() > block.getBottomY() && b != &Void)
+        while (b != &Void && b->getTopY() > block.getBottomY())
         {
             if (b == &Void)
             {
@@ -1524,7 +1543,7 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         // Search the bottom edge of the block, go along the UR_Right pointer
         // Stop when the b->LeftX >= block.RightX
         Block *b = block.LL_Bottom;
-        while (b->getLeftX() < block.getRightX() && b != &Void)
+        while (b != &Void && b->getLeftX() < block.getRightX())
         {
             if (b == &Void)
             {
@@ -1550,7 +1569,7 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         // Search the left edge of the block, go along the UR_Top pointer
         // Stop when the b->BottomY >= block.TopY
         Block *b = block.LL_Left;
-        while (b->getBottomY() < block.getTopY() && b != &Void)
+        while (b != &Void && b->getBottomY() < block.getTopY())
         {
             if (b == &Void)
             {
@@ -1591,22 +1610,66 @@ vector<Block *> Solver::findNeighbors(const Block &block) const
         cout << "***** left edge neighbors: *****" << endl;
         for (Block *b : left_edge_neighbors)
         {
-            cout << *b << endl;
+            if (b == nullptr)
+            {
+                cout << "nullptr" << endl;
+            }
+            else if (b == &Void)
+            {
+                cout << "Void" << endl;
+            }
+            else
+            {
+                cout << *b << endl;
+            }
         }
         cout << "***** right edge neighbors: *****" << endl;
         for (Block *b : right_edge_neighbors)
         {
-            cout << *b << endl;
+            if (b == nullptr)
+            {
+                cout << "nullptr" << endl;
+            }
+            else if (b == &Void)
+            {
+                cout << "Void" << endl;
+            }
+            else
+            {
+                cout << *b << endl;
+            }
         }
         cout << "***** top edge neighbors: *****" << endl;
         for (Block *b : top_edge_neighbors)
         {
-            cout << *b << endl;
+            if (b == nullptr)
+            {
+                cout << "nullptr" << endl;
+            }
+            else if (b == &Void)
+            {
+                cout << "Void" << endl;
+            }
+            else
+            {
+                cout << *b << endl;
+            }
         }
         cout << "***** bottom edge neighbors: *****" << endl;
         for (Block *b : bottom_edge_neighbors)
         {
-            cout << *b << endl;
+            if (b == nullptr)
+            {
+                cout << "nullptr" << endl;
+            }
+            else if (b == &Void)
+            {
+                cout << "Void" << endl;
+            }
+            else
+            {
+                cout << *b << endl;
+            }
         }
         cout << "********************************" << endl;
     }

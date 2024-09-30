@@ -42,7 +42,8 @@ $(OBJ_DIR):
 clean:
 	rm -rf $(EXEC) $(OBJ_DIR)/*.o
 	rm ../layout/*.txt
-	rm ../drawing/*.png
+	rm ../drawing/*.svg
+	
 
 # Define a pattern rule for run targets
 run_%: $(EXEC)
@@ -57,6 +58,12 @@ run_valgrind_%: $(EXEC)
 
 plot: draw_block_layout.py
 	./plot.sh
+
+plot_final: draw_block_layout.py
+	python3 draw_block_layout.py ../layout/Finallayout.txt ../drawing/Finallayout.svg
+
+plot_%: draw_block_layout.py
+	python3 draw_block_layout.py ../layout/Insert_$*.txt ../drawing/Insert_$*.svg
 
 # Run all testcases
 run_all: $(EXEC)
