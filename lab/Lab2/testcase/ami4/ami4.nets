@@ -1,0 +1,11 @@
+NumNets: 2
+NetDegree: 4
+GND
+A
+C
+D
+NetDegree: 4
+VDD
+GND
+B
+D
