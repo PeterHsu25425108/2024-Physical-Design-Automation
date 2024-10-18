@@ -3,11 +3,10 @@ BIN_DIR = ../bin
 OBJ_DIR = ../obj
 CFLAGS = -std=c++11 -g -c
 LDFLAGS = -std=c++11 -g
-EXEC = $(BIN_DIR)/Lab1
+EXEC = $(BIN_DIR)/Lab2
 OUT_DIR = ../output
 DRAW_DIR = ../draw
 TESTCASE_DIR = ../testcase
-ANS_DIR = ../answer
 
 # Get all .cpp files in the source directory
 SRC_FILES = $(wildcard $(SOURCE_DIR)/*.cpp)
@@ -17,9 +16,6 @@ OBJ_FILES = $(patsubst $(SOURCE_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRC_FILES))
 
 # Get all .txt files in the testcase directory
 TESTCASE_FILES = $(wildcard $(TESTCASE_DIR)/*.txt)
-
-# Get all .txt files in the answer directory
-ANS_FILES = $(wildcard $(ANS_DIR)/*.txt)
 
 all: $(EXEC)
 
