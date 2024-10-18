@@ -36,6 +36,8 @@ public:
     ~Block() { ; }
     // Block(const Block &);
 
+    void Rotate(Block *block);
+
     void setParent(Block *parent);
 
     void setLeft(Block *left);

@@ -63,6 +63,13 @@ void Block::setHeight(int height)
     this->height = height;
 }
 
+void Block::Rotate(Block *block)
+{
+    int temp = block->width;
+    block->width = block->height;
+    block->height = temp;
+}
+
 CHILD_TYPE Block::getChildType() const
 {
     if (parent == nullptr)
