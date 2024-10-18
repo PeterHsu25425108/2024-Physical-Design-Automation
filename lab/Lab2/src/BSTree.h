@@ -47,6 +47,8 @@ private:
 
     // update the contour list and the boundary width and height
     void updateContour();
+    // the recursive helper function for updateContour
+    void updateContour(Block *curr);
 
     // Cost function realted functions
     void calcTotHPWL();
@@ -92,8 +94,13 @@ public:
     // 3 operations for SA, the randomness is in SA
     // the only function that will change the tree structure
     void SwapBlock(string block1, string block2);
-    void MoveBlock(Block *future_parent, bool left_child);
     void RotateBlock(Block *block);
+    bool MoveBlock(Block *block1, Block *block2);
+    // a helper function for MoveBlock that will decide who will be the parent
+    // return false if the move is invalid, which means
+    // 1. block1 and block2 are adjacent
+    // 2. block1 and block2 both have left and right child
+    bool WhoIsParent(const Block *block1, const Block *block2, Block *&parent, Block *&child, bool &become_left_child);
 
     // Return the val needed for cost evaluation
     double getTotHPWL() const { return tot_HPWL; }

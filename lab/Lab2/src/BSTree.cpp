@@ -190,7 +190,7 @@ void BSTree::SwapBlock(string block1, string block2)
     {
         block1_parent->setLeft(block2_ptr);
     }
-    else
+    else if (block1_ptr->getChildType() == RIGHT_CHILD)
     {
         block1_parent->setRight(block2_ptr);
     }
@@ -199,7 +199,7 @@ void BSTree::SwapBlock(string block1, string block2)
     {
         block2_parent->setLeft(block1_ptr);
     }
-    else
+    else if (block1_ptr->getChildType() == RIGHT_CHILD)
     {
         block2_parent->setRight(block1_ptr);
     }
@@ -238,6 +238,274 @@ void BSTree::SwapBlock(string block1, string block2)
     updateContour();
     // prepare for cost evaluation in SA
     prepareForCost();
+}
+
+bool BSTree::MoveBlock(Block *block1, Block *block2)
+{
+    if (block1 == nullptr)
+    {
+        cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because block1 is nullptr" << endl;
+        exit(1);
+    }
+    if (block2 == nullptr)
+    {
+        cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because block2 is nullptr" << endl;
+        exit(1);
+    }
+
+    Block *future_parent, *future_child;
+    CHILD_TYPE child_type;
+    bool become_left_child;
+
+    if (!WhoIsParent(block1, block2, future_parent, future_child, become_left_child))
+    {
+        return false;
+    }
+
+    // future_child should not be root
+    CHILD_TYPE child_type = future_child->getChildType();
+    if (child_type == ROOT)
+    {
+        cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_child is root" << endl;
+    }
+
+    // if (become_left_child)
+    //{
+    //  check if the future_parent has left child
+    if (become_left_child && future_parent->getLeft() != nullptr)
+    {
+        cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_parent already has left child" << endl;
+        cerr << "future_parent: " << future_parent->getName() << " future_child: " << future_child->getName() << endl;
+        cerr << "block1: " << block1->getName() << " block2: " << block2->getName() << endl;
+        exit(1);
+    }
+
+    // check if the future_parent has right child
+    if (!become_left_child && future_parent->getRight() != nullptr)
+    {
+        cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_parent already has right child" << endl;
+        cerr << "future_parent: " << future_parent->getName() << " future_child: " << future_child->getName() << endl;
+        cerr << "block1: " << block1->getName() << " block2: " << block2->getName() << endl;
+        exit(1);
+    }
+
+    if (become_left_child)
+    {
+        future_parent->setLeft(future_child);
+    }
+    else
+    {
+        future_parent->setRight(future_child);
+    }
+
+    // update the future_child's parent and handle the future_child's children
+    // case1: future_child has no child
+    if (future_child->getLeft() == nullptr && future_child->getRight() == nullptr)
+    {
+        future_child->setParent(future_parent);
+    }
+    // case2: future_child has left child
+    else if (future_child->getLeft() == nullptr)
+    {
+        // replace future_child with its left child
+        Block *original_child_left = future_child->getLeft();
+        Block *original_parent = future_child->getParent();
+
+        original_child_left->setParent(original_parent);
+        if (future_child->getChildType() == LEFT_CHILD)
+        {
+            original_parent->setLeft(original_child_left);
+        }
+        else if (future_child->getChildType() == RIGHT_CHILD)
+        {
+            original_parent->setRight(original_child_left);
+        }
+        else
+        {
+            cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_child is root" << endl;
+            cerr << "case: become_left_child, future_child has left child" << endl;
+            exit(1);
+        }
+
+        future_child->setParent(future_parent);
+    }
+    // case3: future_child has right child
+    else if (future_child->getRight() == nullptr)
+    {
+        Block *original_child_right = future_child->getRight();
+        Block *original_parent = future_child->getParent();
+
+        original_child_right->setParent(original_parent);
+        if (future_child->getChildType() == LEFT_CHILD)
+        {
+            original_parent->setLeft(original_child_right);
+        }
+        else if (future_child->getChildType() == RIGHT_CHILD)
+        {
+            original_parent->setRight(original_child_right);
+        }
+        else
+        {
+            cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_child is root" << endl;
+            cerr << "case: become_left_child, future_child has right child" << endl;
+            exit(1);
+        }
+
+        future_child->setParent(future_parent);
+    }
+    //}
+    /*else
+    {
+        // check if future_parent has right child
+        if (future_parent->getRight() != nullptr)
+        {
+            cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_parent already has right child" << endl;
+            cerr << "future_parent: " << future_parent->getName() << " child: " << future_child->getName() << endl;
+            cerr << "block1: " << block1->getName() << " block2: " << block2->getName() << endl;
+            exit(1);
+        }
+
+        future_parent->setRight(future_child);
+
+        // case1: future_child has no child
+        if (future_child->getLeft() == nullptr && future_child->getRight() == nullptr)
+        {
+            future_child->setParent(future_parent);
+        }
+
+    }*/
+
+    // Move success
+    return true;
+}
+
+bool BSTree::WhoIsParent(const Block *block1, const Block *block2, Block *&parent, Block *&child, bool &become_left_child)
+{
+    if (block1 == nullptr || block2 == nullptr)
+    {
+        if (block1 == nullptr)
+        {
+            cerr << "ERROR: BSTree::WhoIsParent(block1, block2) failed because block1 is nullptr" << endl;
+        }
+        if (block2 == nullptr)
+        {
+            cerr << "ERROR: BSTree::WhoIsParent(block1, block2) failed because block2 is nullptr" << endl;
+        }
+        exit(1);
+    }
+
+    // check if the block1 and block2 are adjacent
+    if (block1->getLeft() == block2 || block1->getRight() == block2)
+    {
+        return false;
+    }
+    if (block2->getLeft() == block1 || block2->getRight() == block1)
+    {
+        return false;
+    }
+
+    // special case when root is one of the block
+    // Note: root cannot be the child, if a root is passed in, it will be the parent if it has < 2 children
+    if (root == block1)
+    {
+        if (root->getLeft() != nullptr && root->getRight() != nullptr)
+        {
+            return false;
+        }
+
+        parent = const_cast<Block *>(block1);
+        child = const_cast<Block *>(block2);
+
+        // decide whether the child is the left or right child
+        if (parent->getRight() != nullptr)
+        {
+            // parent has only left child left unassigned
+            become_left_child = true;
+        }
+        // parent has only right child
+        else if (parent->getLeft() != nullptr)
+        {
+            become_left_child = false;
+        }
+        else
+        {
+            // parent has both left and right child
+            become_left_child = rand() % 2;
+        }
+        return true;
+    }
+    else if (root == block2)
+    {
+        if (root->getLeft() != nullptr && root->getRight() != nullptr)
+        {
+            return false;
+        }
+
+        parent = const_cast<Block *>(block2);
+        child = const_cast<Block *>(block1);
+
+        // decide whether the child is the left or right child
+        if (parent->getRight() != nullptr)
+        {
+            // parent has only left child left unassigned
+            become_left_child = true;
+        }
+        // parent has only right child
+        else if (parent->getLeft() != nullptr)
+        {
+            become_left_child = false;
+        }
+        else
+        {
+            // parent has both left and right child
+            become_left_child = rand() % 2;
+        }
+        return true;
+    }
+
+    bool block1_can_be_parent = (block1->getLeft() != block2 && block1->getRight() != block2);
+    bool block2_can_be_parent = (block2->getLeft() != block1 && block2->getRight() != block1);
+    if (block1_can_be_parent && block2_can_be_parent)
+    {
+        // decide who will be the parent
+        bool block1_is_parent = rand() % 2;
+        parent = const_cast<Block *>(block1_is_parent ? block1 : block2);
+        child = const_cast<Block *>(block1_is_parent ? block2 : block1);
+    }
+    else if (block1_can_be_parent)
+    {
+        parent = const_cast<Block *>(block1);
+        child = const_cast<Block *>(block2);
+    }
+    else if (block2_can_be_parent)
+    {
+        parent = const_cast<Block *>(block2);
+        child = const_cast<Block *>(block1);
+    }
+    else
+    {
+        return false;
+    }
+
+    // We have decided the parent and child, and the parent should have at least one child
+    // decide whether the child is the left or right child
+    if (parent->getRight() != nullptr)
+    {
+        // parent has only left child left unassigned
+        become_left_child = true;
+    }
+    // parent has only right child
+    else if (parent->getLeft() != nullptr)
+    {
+        become_left_child = false;
+    }
+    else
+    {
+        // parent has both left and right child
+        become_left_child = rand() % 2;
+    }
+
+    return true;
 }
 
 void BSTree::calcBoundArea()
