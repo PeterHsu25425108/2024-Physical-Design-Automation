@@ -119,6 +119,8 @@ void BSTree::insertBlock(string name, int width, int height)
         }
     }
     updateContour();
+    // prepare for cost evaluation in SA
+    prepareForCost();
 }
 
 void BSTree::updateContour()
@@ -152,7 +154,10 @@ void BSTree::RotateBlock(Block *block)
     block->setWidth(temp_height);
     block->setHeight(temp_width);
 
+    // Update the contour
     updateContour();
+    // prepare for cost evaluation in SA
+    prepareForCost();
 }
 
 // Swap the position of two blocks by swapping their parent, left, right
@@ -231,4 +236,26 @@ void BSTree::SwapBlock(string block1, string block2)
 
     // Update the contour
     updateContour();
+    // prepare for cost evaluation in SA
+    prepareForCost();
+}
+
+void BSTree::calcBoundArea()
+{
+    bounding_area = BoundaryWidth * BoundaryHeight;
+}
+
+void BSTree::calcAspectRatio()
+{
+    aspect_ratio = (double)BoundaryWidth / (double)BoundaryHeight;
+}
+
+void BSTree::calcTotHPWL()
+{
+    tot_HPWL = 0;
+    for (Net &net : netlist)
+    {
+        net.calcHPWL();
+        tot_HPWL += net.getHPWL();
+    }
 }

@@ -40,6 +40,27 @@ private:
     int numTerms;
     int BoundaryWidth, BoundaryHeight;
 
+    double tot_HPWL;
+    double bounding_area;
+    double aspect_ratio;
+    double outOfBoundArea;
+
+    // update the contour list and the boundary width and height
+    void updateContour();
+
+    // Cost function realted functions
+    void calcTotHPWL();
+    void calcBoundArea();
+    void calcAspectRatio();
+    // void calcOutOfBoundArea(int outline_width, int outline_height);
+    // prepare for cost evaluation in SA
+    void prepareForCost()
+    {
+        calcTotHPWL();
+        calcBoundArea();
+        calcAspectRatio();
+    }
+
 public:
     BSTree();
     ~BSTree();
@@ -62,7 +83,6 @@ public:
     void addNet(Net net);
     void addTerminal(string name, int x, int y);
     void insertBlock(string name, int width, int height);
-    void updateContour();
 
     // Picking a random block from the tree
     Block *pickRandBlock() const;
@@ -70,9 +90,16 @@ public:
     pair<Block *, Block *> pickRandPair() const;
 
     // 3 operations for SA, the randomness is in SA
+    // the only function that will change the tree structure
     void SwapBlock(string block1, string block2);
     void MoveBlock(Block *future_parent, bool left_child);
     void RotateBlock(Block *block);
+
+    // Return the val needed for cost evaluation
+    double getTotHPWL() const { return tot_HPWL; }
+    double getBoundingArea() const { return bounding_area; }
+    double getAspectRatio() const { return aspect_ratio; }
+    // double getOutOfBoundArea() const { return outOfBoundArea; }
 };
 
 #endif
