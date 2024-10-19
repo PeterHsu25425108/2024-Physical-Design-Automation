@@ -32,6 +32,8 @@ private:
 public:
     Block();
 
+    Block(const Block &block);
+
     Block(string name, int width, int height);
     ~Block() { ; }
     // Block(const Block &);
@@ -45,6 +47,9 @@ public:
     void setRight(Block *right);
 
     void setBL(Point BL);
+
+    void setBLX(int x) { BL.x = x; }
+    void setBLY(int y) { BL.y = y; }
 
     void setWidth(int width);
 
@@ -101,8 +106,11 @@ public:
     ~Net() { ; }
     Net(BSTree *BSTreePtr) : BSTreePtr(BSTreePtr) { ; }
     int getHPWL() const { return HPWL; }
-    void addPin(Pin pin) { pins.push_back(pin); }
+    int getNetSize() const { return pins.size(); }
     vector<Pin> getPins() const { return pins; }
+
+    void addPin(string pin_name);
+
     void calcHPWL();
 };
 

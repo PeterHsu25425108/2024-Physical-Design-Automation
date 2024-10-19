@@ -33,22 +33,22 @@ Block::Block(string name, int width, int height)
     this->height = height;
 }
 
-void Block::Block::setParent(Block *parent)
+void Block::setParent(Block *parent)
 {
     this->parent = parent;
 }
 
-void Block::Block::setLeft(Block *left)
+void Block::setLeft(Block *left)
 {
     this->left = left;
 }
 
-void Block::Block::setRight(Block *right)
+void Block::setRight(Block *right)
 {
     this->right = right;
 }
 
-void Block::Block::setBL(Point BL)
+void Block::setBL(Point BL)
 {
     this->BL = BL;
 }
@@ -113,7 +113,7 @@ Block *Block::getRight() const
     return right;
 }
 
-Point Block::Block::getBL() const
+Point Block::getBL() const
 {
     return BL;
 }
@@ -133,12 +133,12 @@ int Block::getArea() const
     return width * height;
 }
 
-Point Block::Block::getTR() const
+Point Block::getTR() const
 {
     return {BL.x + width, BL.y + height};
 }
 
-Point Block::Block::getPinLoc() const
+Point Block::getPinLoc() const
 {
     return {BL.x + width / 2, BL.y + height / 2};
 }
@@ -181,4 +181,22 @@ void Net::calcHPWL()
     }
 
     HPWL = (x_max - x_min) + (y_max - y_min);
+}
+
+void Net::addPin(string pin_name)
+{
+    // check if the pin is a block pin or a terminal pin
+    if (BSTreePtr->findBlock(pin_name) != nullptr)
+    {
+        pins.push_back({BLOCKPIN, pin_name});
+    }
+    else if (BSTreePtr->getTermLoc(pin_name).x != -1)
+    {
+        pins.push_back({TERMINAL, pin_name});
+    }
+    else
+    {
+        cerr << "ERROR: Net::addPin(" << pin_name << ") failed because " << pin_name << " is neither a block nor a terminal" << endl;
+        exit(1);
+    }
 }

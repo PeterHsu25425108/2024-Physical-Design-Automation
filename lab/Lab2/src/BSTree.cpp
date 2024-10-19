@@ -24,6 +24,70 @@ BSTree::~BSTree()
     }
 }
 
+BSTree::BSTree(const BSTree &copied_tree)
+{
+    numBlocks = copied_tree.numBlocks;
+    numNets = copied_tree.numNets;
+    BoundaryWidth = copied_tree.BoundaryWidth;
+    BoundaryHeight = copied_tree.BoundaryHeight;
+    TermName2Loc = copied_tree.TermName2Loc;
+    netlist = copied_tree.netlist;
+    block_names = copied_tree.block_names;
+    term_names = copied_tree.term_names;
+    contour_list = copied_tree.contour_list;
+
+    // BlockName2Ptr and root(and the entire tree) should be deep copied
+    // first deep copy the BlockName2Ptr
+    for (auto &pair : copied_tree.BlockName2Ptr)
+    {
+        Block *new_block = new Block(*pair.second);
+        BlockName2Ptr[pair.first] = new_block;
+    }
+    // use the BlockName2Ptr to deep copy the tree structure,
+    // namely assign the parent, left, right of each block in *this to the corresponding block in BlockName2Ptr
+    copyTreeNode(copied_tree.root);
+}
+
+void BSTree::copyTreeNode(Block *copied_block)
+{
+    if (copied_block == nullptr)
+    {
+        return;
+    }
+
+    string name = copied_block->getName();
+    Block *copied_parent = copied_block->getParent();
+    if (copied_parent != nullptr)
+    {
+        string parent_name = copied_parent->getName();
+        Block *parent = BlockName2Ptr[parent_name];
+        BlockName2Ptr[name]->setParent(parent);
+    }
+    else
+    {
+        root = BlockName2Ptr[name];
+    }
+
+    Block *copied_left = copied_block->getLeft();
+    if (copied_left != nullptr)
+    {
+        string left_name = copied_left->getName();
+        Block *left = BlockName2Ptr[left_name];
+        BlockName2Ptr[name]->setLeft(left);
+    }
+
+    Block *copied_right = copied_block->getRight();
+    if (copied_right != nullptr)
+    {
+        string right_name = copied_right->getName();
+        Block *right = BlockName2Ptr[right_name];
+        BlockName2Ptr[name]->setRight(right);
+    }
+
+    copyTreeNode(copied_block->getLeft());
+    copyTreeNode(copied_block->getRight());
+}
+
 Block *BSTree::findBlock(string BlockName) const
 {
     if (BlockName2Ptr.find(BlockName) == BlockName2Ptr.end())
@@ -55,6 +119,19 @@ void BSTree::addNet(Net net)
 {
     netlist.push_back(net);
     numNets++;
+}
+
+Block::Block(const Block &block)
+{
+    name = block.name;
+    width = block.width;
+    height = block.height;
+    BL = block.BL;
+
+    // leave the parent, left, right to be nullptr
+    parent = nullptr;
+    left = nullptr;
+    right = nullptr;
 }
 
 void BSTree::insertBlock(string name, int width, int height)
@@ -117,16 +194,135 @@ void BSTree::insertBlock(string name, int width, int height)
         {
             curr->setRight(new_block);
         }
+        new_block->setParent(curr);
     }
-    updateContour();
-    // prepare for cost evaluation in SA
-    prepareForCost();
+
+    // update the contour list and the boundary width and height
+    // the new_block should be a leaf node
+
+    // check if the new_block is a leaf node
+    if (new_block->getLeft() != nullptr || new_block->getRight() != nullptr)
+    {
+        cerr << "ERROR: BSTree::insertBlock(" << name << ", " << width << ", " << height << ") failed because the new_block is not a leaf node" << endl;
+        exit(1);
+    }
+    // this should take constant time since the new_block is a leaf node
+    updateContour(new_block);
 }
 
+// update the contour list and the boundary width and height
 void BSTree::updateContour()
 {
     // clear the contour list
     contour_list.clear();
+    // update the contour list and the boundary width and height
+    updateContour(root);
+}
+
+// the recursive helper function for updateContour
+// the boundary width and height,contour_list, the LB of each block will be updated
+void BSTree::updateContour(Block *curr)
+{
+    // stop condition
+    if (curr == nullptr)
+    {
+        return;
+    }
+    else if (curr->getChildType() == ROOT)
+    {
+        curr->setBL({0, 0});
+        contour_list.push_back(Contour(0, curr->getWidth(), curr->getHeight()));
+        BoundaryWidth = curr->getWidth();
+        BoundaryHeight = curr->getHeight();
+        // contour_xleft.insert(SetElement(&contour_list.back()));
+    }
+    else
+    {
+        int x = (curr->getChildType() == RIGHT_CHILD) ? curr->getParent()->getBL().x : curr->getParent()->getBL().x + curr->getParent()->getWidth();
+        curr->setBLX(x);
+        BoundaryWidth = max(BoundaryWidth, x + curr->getWidth());
+
+        auto list_it = contour_list.begin();
+        while (list_it->x_right <= x && list_it != contour_list.end())
+        {
+            list_it = next(list_it);
+        }
+
+        curr->setBLY(list_it->y_top);
+        // the iterator where the new contour should be inserted
+        // the new contour will be inserted before the insert_pos
+        list<Contour>::iterator insert_pos = list_it;
+        // update contour_list and the boundary width and height of the LB of the block
+        while (list_it != contour_list.end() && list_it->x_left < x + curr->getWidth())
+        {
+            curr->setBLY(max(curr->getBL().y, list_it->y_top));
+            BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
+
+            // handle the contour list
+            int blockXleft = x;
+            int blockXright = x + curr->getWidth();
+            // case 1: the contour is completely covered by the block
+            // remove the contour
+            if (list_it->x_left >= blockXleft && list_it->x_right <= blockXleft)
+            {
+                list_it = contour_list.erase(list_it);
+            }
+            // case 2: the right side of the contour is covered by the block, but the left side is not
+            else if (list_it->x_left < blockXleft && list_it->x_right <= blockXleft)
+            {
+                // shrink the x_right of list_it
+                list_it->x_right = blockXleft;
+                // the new contour will be inserted at the back of list_it
+                insert_pos = next(list_it);
+            }
+            // case 3: the left side of the contour is covered by the block, but the right side is not
+            else if (list_it->x_left >= blockXright && list_it->x_right > blockXright)
+            {
+                // shrink the x_left of list_it
+                list_it->x_left = blockXright;
+                // the new contour will be inserted at the front of list_it
+                insert_pos = list_it;
+            }
+            // case 4: both sides stick out
+            else if (list_it->x_left < blockXleft && list_it->x_right > blockXright)
+            {
+                // split the contour into two, while the new contour will be inserted between the two
+                Contour new_contour_right(blockXright, list_it->x_right, list_it->y_top);
+                list_it->x_right = blockXleft;
+                // insert the new contour
+                contour_list.insert(next(list_it), new_contour_right);
+                // the new contour will be inserted at the back of list_it
+                insert_pos = next(list_it);
+            }
+            else
+            {
+                cerr << "ERROR: BSTree::updateContour() failed because the contour x doesn't overlap with the block" << endl;
+                cerr << "block: " << curr->getName() << "blockXleft: " << blockXleft << " blockXright: " << blockXright << endl;
+                cerr << "contour: x_left: " << list_it->x_left << " x_right: " << list_it->x_right
+                     << "y_top: " << list_it->y_top << endl;
+                exit(1);
+            }
+
+            // insert the new contour
+            Contour new_contour(blockXleft, blockXright, curr->getTR().y);
+            contour_list.insert(insert_pos, new_contour);
+
+            list_it = next(list_it);
+        }
+
+        // Find the first contour that has x_left >= x
+        /*auto it = contour_xleft.lower_bound(SetElement(nullptr));
+        Contour *firstToUpdate = it->contour_ptr;
+        while (firstToUpdate->x_left < x && it != contour_xleft.begin())
+        {
+            it--;
+            firstToUpdate = it->contour_ptr;
+        }*/
+    }
+
+    // update the contour list in preorder
+    updateContour(curr->getLeft());
+    updateContour(curr->getRight());
 }
 
 Block *BSTree::pickRandBlock() const
@@ -254,7 +450,6 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
     }
 
     Block *future_parent, *future_child;
-    CHILD_TYPE child_type;
     bool become_left_child;
 
     if (!WhoIsParent(block1, block2, future_parent, future_child, become_left_child))
@@ -269,8 +464,6 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
         cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_child is root" << endl;
     }
 
-    // if (become_left_child)
-    //{
     //  check if the future_parent has left child
     if (become_left_child && future_parent->getLeft() != nullptr)
     {
@@ -353,27 +546,6 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
 
         future_child->setParent(future_parent);
     }
-    //}
-    /*else
-    {
-        // check if future_parent has right child
-        if (future_parent->getRight() != nullptr)
-        {
-            cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_parent already has right child" << endl;
-            cerr << "future_parent: " << future_parent->getName() << " child: " << future_child->getName() << endl;
-            cerr << "block1: " << block1->getName() << " block2: " << block2->getName() << endl;
-            exit(1);
-        }
-
-        future_parent->setRight(future_child);
-
-        // case1: future_child has no child
-        if (future_child->getLeft() == nullptr && future_child->getRight() == nullptr)
-        {
-            future_child->setParent(future_parent);
-        }
-
-    }*/
 
     // Move success
     return true;
@@ -526,4 +698,100 @@ void BSTree::calcTotHPWL()
         net.calcHPWL();
         tot_HPWL += net.getHPWL();
     }
+}
+
+ostream &operator<<(ostream &os, const BSTree &tree)
+{
+    os << "BSTree: " << endl;
+    os << "numBlocks: " << tree.numBlocks << endl;
+    os << "numNets: " << tree.numNets << endl;
+    os << "numTerms: " << tree.numTerms << endl;
+    os << "BoundaryWidth: " << tree.BoundaryWidth << endl;
+    os << "BoundaryHeight: " << tree.BoundaryHeight << endl;
+    os << "BlockName2Ptr: " << endl;
+
+    for (auto &pair : tree.BlockName2Ptr)
+    {
+        cout << "BlockName: " << pair.first << " BlockPtr->name: " << pair.second->getName() << endl;
+    }
+    os << "TermName2Loc: " << endl;
+    for (auto &pair : tree.TermName2Loc)
+    {
+        os << "TermName: " << pair.first << " Loc: " << pair.second << endl;
+    }
+    os << "netlist: " << endl;
+    for (const Net &net : tree.netlist)
+    {
+        os << "pins: " << endl;
+        for (const Pin &pin : net.getPins())
+        {
+            os << "pin_type: " << pin.pin_type << " name: " << pin.name << endl;
+        }
+        os << "HPWL: " << net.getHPWL() << endl;
+    }
+    os << "block_names: " << endl;
+    for (const string &name : tree.block_names)
+    {
+        os << name << " ";
+    }
+    os << endl;
+    os << "term_names: " << endl;
+    for (const string &name : tree.term_names)
+    {
+        os << name << " ";
+    }
+    os << endl;
+    os << "contour_list: " << endl;
+    for (const Contour &contour : tree.contour_list)
+    {
+        os << "x_left: " << contour.x_left << " x_right: " << contour.x_right << " y_top: " << contour.y_top << endl;
+    }
+
+    // print the tree structure
+    // print the name of each block and the name of its parent, left, right, if not nullptr
+    os << " Tree Structure: " << endl;
+    for (auto &pair : tree.BlockName2Ptr)
+    {
+        if (pair.second == nullptr)
+        {
+            os << "Key: " << pair.first << " Value: nullptr" << endl;
+            continue;
+        }
+        else
+        {
+            os << "Key: " << pair.first << " ";
+        }
+
+        Block *curr = pair.second;
+        os << "Block: " << curr->getName() << " Parent: ";
+        if (curr->getParent() != nullptr)
+        {
+            os << curr->getParent()->getName() << " ";
+        }
+        else
+        {
+            os << "nullptr ";
+        }
+        os << "Left: ";
+        if (curr->getLeft() != nullptr)
+        {
+            os << curr->getLeft()->getName() << " ";
+        }
+        else
+        {
+            os << "nullptr ";
+        }
+        os << "Right: ";
+        if (curr->getRight() != nullptr)
+        {
+            os << curr->getRight()->getName() << " ";
+        }
+        else
+        {
+            os << "nullptr ";
+        }
+        os << endl;
+    }
+
+    return os;
 }
