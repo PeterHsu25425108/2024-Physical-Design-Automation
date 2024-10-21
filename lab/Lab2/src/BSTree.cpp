@@ -24,6 +24,44 @@ BSTree::~BSTree()
     }
 }
 
+BSTree &BSTree::operator=(const BSTree &copied_tree)
+{
+    if (this == &copied_tree)
+    {
+        return *this;
+    }
+
+    // delete the old tree
+    for (auto &pair : BlockName2Ptr)
+    {
+        delete pair.second;
+    }
+    BlockName2Ptr.clear();
+    root = nullptr;
+    numBlocks = 0;
+    numNets = 0;
+    BoundaryWidth = 0;
+    BoundaryHeight = 0;
+    TermName2Loc = copied_tree.TermName2Loc;
+    netlist = copied_tree.netlist;
+    block_names = copied_tree.block_names;
+    term_names = copied_tree.term_names;
+    contour_list = copied_tree.contour_list;
+
+    // BlockName2Ptr and root(and the entire tree) should be deep copied
+    // first deep copy the BlockName2Ptr
+    for (auto &pair : copied_tree.BlockName2Ptr)
+    {
+        Block *new_block = new Block(*pair.second);
+        BlockName2Ptr[pair.first] = new_block;
+    }
+    // use the BlockName2Ptr to deep copy the tree structure,
+    // namely assign the parent, left, right of each block in *this to the corresponding block in BlockName2Ptr
+    copyTreeNode(copied_tree.root);
+
+    return *this;
+}
+
 BSTree::BSTree(const BSTree &copied_tree)
 {
     numBlocks = copied_tree.numBlocks;
@@ -136,6 +174,12 @@ Block::Block(const Block &block)
 
 void BSTree::insertBlock(string name, int width, int height)
 {
+
+    if (DEBUG_INSERT)
+    {
+        cout << "Inserting block: " << name << " width: " << width << " height: " << height << endl;
+    }
+
     Block *new_block = new Block(name, width, height);
     BlockName2Ptr[name] = new_block;
     block_names.push_back(name);

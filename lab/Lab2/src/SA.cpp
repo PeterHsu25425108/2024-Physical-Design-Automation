@@ -10,6 +10,64 @@ using namespace std;
 
 void SA::solve()
 {
+
+    bs_tree.prepareForCost();
+    double cost = finalCost();
+    double best_cost = cost;
+    BSTree best_tree(bs_tree);
+
+    int iter = 0;
+    while (T > T_min)
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            BSTree new_tree(bs_tree);
+            // randomly pick a move from the 3 moves
+            // SwapBlock, RotateBlock, MoveBlock
+            int move = rand() % 3;
+            switch (move)
+            {
+            case 0:
+            {
+                pair<Block *, Block *> blocks = bs_tree.pickRandPair();
+                new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
+                break;
+            }
+            case 1:
+            {
+                Block *block = bs_tree.pickRandBlock();
+                new_tree.RotateBlock(block);
+                break;
+            }
+            case 2:
+            {
+                pair<Block *, Block *> blocks = bs_tree.pickRandPair();
+                new_tree.MoveBlock(blocks.first, blocks.second);
+                break;
+            }
+            default:
+                break;
+            }
+
+            new_tree.prepareForCost();
+            double new_cost = finalCost();
+            double delta = new_cost - cost;
+
+            if (delta < 0 || exp(-delta / T) > (double)rand() / RAND_MAX)
+            {
+                bs_tree = new_tree;
+                cost = new_cost;
+                if (cost < best_cost)
+                {
+                    best_cost = cost;
+                    best_tree = bs_tree;
+                }
+            }
+        }
+        T *= t_decay;
+        iter++;
+    }
+    bs_tree = best_tree;
 }
 
 void SA::parseBlock(ifstream &block_file)

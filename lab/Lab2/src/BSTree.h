@@ -83,7 +83,11 @@ private:
 public:
     BSTree();
     ~BSTree();
+
     BSTree(const BSTree &copied_tree);
+    // assignment operator
+    BSTree &operator=(const BSTree &copied_tree);
+
     friend ostream &operator<<(ostream &os, const BSTree &tree);
     // ostream &printNode(ostream &os, const Block *curr);
 
