@@ -35,16 +35,28 @@ Block::Block(string name, int width, int height)
 
 void Block::setParent(Block *parent)
 {
+    if (DEBUG_INSERT)
+    {
+        cout << "Setting parent of " << name << " to " << parent->name << endl;
+    }
     this->parent = parent;
 }
 
 void Block::setLeft(Block *left)
 {
+    if (DEBUG_INSERT)
+    {
+        cout << "Setting left child of " << name << " to " << left->name << endl;
+    }
     this->left = left;
 }
 
 void Block::setRight(Block *right)
 {
+    if (DEBUG_INSERT)
+    {
+        cout << "Setting right child of " << name << " to " << right->name << endl;
+    }
     this->right = right;
 }
 
@@ -185,6 +197,19 @@ void Net::calcHPWL()
 
 void Net::addPin(string pin_name)
 {
+    if (DEBUG_PARSE)
+    {
+        if (BSTreePtr == nullptr)
+        {
+            cout << "BSTreePtr is nullptr" << endl;
+        }
+        cout << "Adding pin: " << pin_name << endl;
+        BSTreePtr->findBlock(pin_name);
+        cout << "test findBlock" << endl;
+        BSTreePtr->getTermLoc(pin_name);
+        cout << "test getTermLoc" << endl;
+    }
+
     // check if the pin is a block pin or a terminal pin
     if (BSTreePtr->findBlock(pin_name) != nullptr)
     {

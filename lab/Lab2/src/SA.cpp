@@ -82,12 +82,31 @@ void SA::parseBlock(ifstream &block_file)
     block_file >> temp;
     block_file >> numTerms;
 
+    if (DEBUG_PARSE)
+    {
+        cout << " == Parsing block file == " << endl;
+        cout << "Outline width: " << outlineWidth << " Outline height: " << outlineHeight << endl;
+        cout << "Number of blocks: " << numBlocks << endl;
+        cout << "Number of terms: " << numTerms << endl;
+    }
+
     for (int i = 0; i < numBlocks; i++)
     {
         string name;
         int width, height;
         block_file >> name >> width >> height;
+        if (DEBUG_PARSE)
+        {
+
+            cout << "block name: " << name << " width: " << width << " height: " << height << endl;
+        }
         bs_tree.insertBlock(name, width, height);
+
+        if (DEBUG_INSERT)
+        {
+            cout << "bs tree after insert block: " << endl;
+            cout << bs_tree << endl;
+        }
     }
 
     for (int i = 0; i < numTerms; i++)
@@ -96,26 +115,73 @@ void SA::parseBlock(ifstream &block_file)
         int x, y;
         block_file >> name >> temp >> x >> y;
         bs_tree.addTerminal(name, x, y);
+
+        if (DEBUG_PARSE)
+        {
+            cout << "Inserting terminal: " << name << " x: " << x << " y: " << y << endl;
+        }
+    }
+
+    if (DEBUG_PARSE)
+    {
+        cout << " == Parsing block file done == " << endl
+             << endl;
     }
 }
 
 void SA::parseNet(ifstream &net_file)
 {
+
+    if (DEBUG_INSERT)
+    {
+        cout << "bs tree before parse net: " << endl;
+        cout << bs_tree << endl;
+    }
+
     string temp;
     net_file >> temp;
     net_file >> numNets;
     for (int i = 0; i < numNets; i++)
     {
-        Net net;
+        Net net(&bs_tree);
         int netDegree;
         net_file >> temp >> netDegree;
+
+        if (DEBUG_PARSE)
+        {
+            cout << "Inserting net: " << endl
+                 << " degree: " << netDegree << endl;
+        }
+
         for (int j = 0; j < netDegree; j++)
         {
             string pin_name;
             net_file >> pin_name;
+            if (DEBUG_PARSE)
+            {
+                cout << "pin name: " << pin_name << endl;
+            }
             net.addPin(pin_name);
+            if (DEBUG_PARSE)
+            {
+                cout << "addPin done" << endl;
+            }
+        }
+        if (DEBUG_PARSE)
+        {
+            cout << "addNet" << endl;
         }
         bs_tree.addNet(net);
+        if (DEBUG_PARSE)
+        {
+            cout << "addNet done" << endl;
+        }
+    }
+
+    if (DEBUG_PARSE)
+    {
+        cout << " == Parsing net file done == " << endl
+             << endl;
     }
 }
 

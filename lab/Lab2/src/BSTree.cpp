@@ -9,11 +9,18 @@ using namespace std;
 
 BSTree::BSTree()
 {
+
+    if (DEBUG_INSERT)
+    {
+        cout << "BSTree constructor" << endl;
+    }
+
     root = nullptr;
     numBlocks = 0;
     numNets = 0;
     BoundaryWidth = 0;
     BoundaryHeight = 0;
+    numTerms = 0;
 }
 
 BSTree::~BSTree()
@@ -128,22 +135,19 @@ void BSTree::copyTreeNode(Block *copied_block)
 
 Block *BSTree::findBlock(string BlockName) const
 {
-    if (BlockName2Ptr.find(BlockName) == BlockName2Ptr.end())
-    {
-        cerr << "ERROR: BSTree::findBlock(" << BlockName << ") failed because " << BlockName << " does not exist in BlockName2Ptr" << endl;
-        exit(1);
-    }
-    return BlockName2Ptr.at(BlockName);
+
+    if (BlockName2Ptr.empty() || BlockName2Ptr.find(BlockName) == BlockName2Ptr.end())
+        return nullptr;
+    else
+        return BlockName2Ptr.at(BlockName);
 }
 
 Point BSTree::getTermLoc(string TermName) const
 {
     if (TermName2Loc.find(TermName) == TermName2Loc.end())
-    {
-        cerr << "ERROR: BSTree::getTermLoc(" << TermName << ") failed because " << TermName << " does not exist in TermName2Loc" << endl;
-        exit(1);
-    }
-    return TermName2Loc.at(TermName);
+        return {-1, -1};
+    else
+        return TermName2Loc.at(TermName);
 }
 
 void BSTree::addTerminal(string name, int x, int y)
@@ -195,6 +199,10 @@ void BSTree::insertBlock(string name, int width, int height)
     {
         // Randonly pick a Block to insert
         int rand_name_idx = rand() % numBlocks;
+        while (block_names[rand_name_idx] == name)
+        {
+            rand_name_idx = rand() % numBlocks;
+        }
         Block *curr = BlockName2Ptr[block_names[rand_name_idx]];
 
         int iter = 0;
@@ -746,6 +754,16 @@ void BSTree::calcTotHPWL()
 
 ostream &operator<<(ostream &os, const BSTree &tree)
 {
+    os << " ------- BSTree ------- " << endl;
+    os << "root: ";
+    if (tree.root != nullptr)
+    {
+        os << tree.root->getName() << endl;
+    }
+    else
+    {
+        os << "nullptr" << endl;
+    }
     os << "BSTree: " << endl;
     os << "numBlocks: " << tree.numBlocks << endl;
     os << "numNets: " << tree.numNets << endl;
@@ -836,6 +854,7 @@ ostream &operator<<(ostream &os, const BSTree &tree)
         }
         os << endl;
     }
+    os << " ---------------------- " << endl;
 
     return os;
 }
