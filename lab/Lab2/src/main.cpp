@@ -21,11 +21,11 @@ int main(int argc, char *argv[])
     sa_solver.parseBlock(block_file);
     sa_solver.parseNet(net_file);
 
-    sa_solver.solve();
+    /*sa_solver.solve();
     auto end = high_resolution_clock::now();
     // calculate the elapsed time in seconds
     double time_taken = duration_cast<seconds>(end - start).count();
-    sa_solver.writeOutput(out_file, time_taken);
+    sa_solver.writeOutput(out_file, time_taken);*/
 
     block_file.close();
     net_file.close();

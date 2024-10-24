@@ -275,12 +275,19 @@ void BSTree::updateContour()
 // the boundary width and height,contour_list, the LB of each block will be updated
 void BSTree::updateContour(Block *curr)
 {
+
     // stop condition
     if (curr == nullptr)
     {
         return;
     }
-    else if (curr->getChildType() == ROOT)
+
+    if (DEBUG_CONTOUR)
+    {
+        cout << "***** updateContour: " << curr->getName() << " width: " << curr->getWidth() << ", height: " << curr->getHeight() << " *****" << endl;
+    }
+
+    if (curr->getChildType() == ROOT)
     {
         curr->setBL({0, 0});
         contour_list.push_back(Contour(0, curr->getWidth(), curr->getHeight()));
@@ -295,9 +302,19 @@ void BSTree::updateContour(Block *curr)
         BoundaryWidth = max(BoundaryWidth, x + curr->getWidth());
 
         auto list_it = contour_list.begin();
-        while (list_it->x_right <= x && list_it != contour_list.end())
+        while (list_it->x_right <= x && list_it != prev(contour_list.end()))
         {
+            if (DEBUG_CONTOUR)
+            {
+                cout << "list_it: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+            }
             list_it = next(list_it);
+        }
+
+        if (DEBUG_CONTOUR)
+        {
+            cout << "first contour elemet: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+            cout << "curr block: " << curr->getName() << " x: " << x << " y: " << curr->getBL().y << endl;
         }
 
         curr->setBLY(list_it->y_top);
@@ -307,29 +324,59 @@ void BSTree::updateContour(Block *curr)
         // update contour_list and the boundary width and height of the LB of the block
         while (list_it != contour_list.end() && list_it->x_left < x + curr->getWidth())
         {
+
+            if (DEBUG_CONTOUR)
+            {
+                cout << "list_it: " << "x_left: " << list_it->x_left << " x_right: " << list_it->x_right << " y_top: " << list_it->y_top << endl;
+            }
+
             curr->setBLY(max(curr->getBL().y, list_it->y_top));
             BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
 
             // handle the contour list
             int blockXleft = x;
             int blockXright = x + curr->getWidth();
+
+            if (DEBUG_CONTOUR)
+            {
+                cout << "blockXleft: " << blockXleft << " blockXright: " << blockXright << endl;
+            }
+
             // case 1: the contour is completely covered by the block
             // remove the contour
-            if (list_it->x_left >= blockXleft && list_it->x_right <= blockXleft)
+            if (list_it->x_left >= blockXleft && list_it->x_right <= blockXright)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "remove contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                }
                 list_it = contour_list.erase(list_it);
             }
             // case 2: the right side of the contour is covered by the block, but the left side is not
-            else if (list_it->x_left < blockXleft && list_it->x_right <= blockXleft)
+            else if (list_it->x_left < blockXleft && list_it->x_right > blockXleft &&
+                     list_it->x_right <= blockXright)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "shrink the x_right of contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                    cout << "to " << blockXleft << endl;
+                }
+
                 // shrink the x_right of list_it
                 list_it->x_right = blockXleft;
                 // the new contour will be inserted at the back of list_it
                 insert_pos = next(list_it);
             }
             // case 3: the left side of the contour is covered by the block, but the right side is not
-            else if (list_it->x_left >= blockXright && list_it->x_right > blockXright)
+            else if (list_it->x_left < blockXright && list_it->x_right > blockXright &&
+                     list_it->x_left >= blockXleft)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "shrink the x_left of contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                    cout << "to " << blockXright << endl;
+                }
+
                 // shrink the x_left of list_it
                 list_it->x_left = blockXright;
                 // the new contour will be inserted at the front of list_it
@@ -338,6 +385,13 @@ void BSTree::updateContour(Block *curr)
             // case 4: both sides stick out
             else if (list_it->x_left < blockXleft && list_it->x_right > blockXright)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "split the contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                    cout << "to be: " << list_it->x_left << " " << blockXleft << " " << list_it->y_top << endl;
+                    cout << "and: " << blockXright << " " << list_it->x_right << " " << list_it->y_top << endl;
+                }
+
                 // split the contour into two, while the new contour will be inserted between the two
                 Contour new_contour_right(blockXright, list_it->x_right, list_it->y_top);
                 list_it->x_right = blockXleft;
@@ -345,6 +399,12 @@ void BSTree::updateContour(Block *curr)
                 contour_list.insert(next(list_it), new_contour_right);
                 // the new contour will be inserted at the back of list_it
                 insert_pos = next(list_it);
+            }
+            else if (blockXleft == list_it->x_right)
+            {
+            }
+            else if (blockXright == list_it->x_left)
+            {
             }
             else
             {
@@ -359,6 +419,11 @@ void BSTree::updateContour(Block *curr)
             Contour new_contour(blockXleft, blockXright, curr->getTR().y);
             contour_list.insert(insert_pos, new_contour);
 
+            if (DEBUG_CONTOUR)
+            {
+                cout << "insert contour: " << new_contour.x_left << " " << new_contour.x_right << " " << new_contour.y_top << endl;
+            }
+
             list_it = next(list_it);
         }
 
@@ -372,9 +437,32 @@ void BSTree::updateContour(Block *curr)
         }*/
     }
 
+    if (DEBUG_CONTOUR)
+    {
+        // print the cooridnates of the block
+        cout << "Block: " << curr->getName() << " x: " << curr->getBL().x << " y: " << curr->getBL().y << endl;
+    }
+
     // update the contour list in preorder
+    // check if the left is the same as curr node
+    if (curr->getLeft() == curr)
+    {
+        cerr << "ERROR: BSTree::updateContour() failed because the left child is the same as the current node" << endl;
+        exit(1);
+    }
     updateContour(curr->getLeft());
+    if (curr->getRight() == curr)
+    {
+        cerr << "ERROR: BSTree::updateContour() failed because the right child is the same as the current node" << endl;
+        exit(1);
+    }
     updateContour(curr->getRight());
+
+    if (DEBUG_CONTOUR)
+    {
+        cout << "***** updateContour return *****" << endl
+             << endl;
+    }
 }
 
 Block *BSTree::pickRandBlock() const
@@ -787,7 +875,7 @@ ostream &operator<<(ostream &os, const BSTree &tree)
         os << "pins: " << endl;
         for (const Pin &pin : net.getPins())
         {
-            os << "pin_type: " << pin.pin_type << " name: " << pin.name << endl;
+            os << "pin_type: " << (pin.pin_type == BLOCKPIN ? "block," : "terminal,") << " name: " << pin.name << endl;
         }
         os << "HPWL: " << net.getHPWL() << endl;
     }
@@ -816,19 +904,21 @@ ostream &operator<<(ostream &os, const BSTree &tree)
     {
         if (pair.second == nullptr)
         {
-            os << "Key: " << pair.first << " Value: nullptr" << endl;
+            os << "Key: " << pair.first << " Value: nullptr ";
+
+            os << endl;
             continue;
         }
         else
         {
-            os << "Key: " << pair.first << " ";
+            os << "Key: " << pair.first << ", ";
         }
 
         Block *curr = pair.second;
         os << "Block: " << curr->getName() << " Parent: ";
         if (curr->getParent() != nullptr)
         {
-            os << curr->getParent()->getName() << " ";
+            os << curr->getParent()->getName() << ", ";
         }
         else
         {
@@ -837,7 +927,7 @@ ostream &operator<<(ostream &os, const BSTree &tree)
         os << "Left: ";
         if (curr->getLeft() != nullptr)
         {
-            os << curr->getLeft()->getName() << " ";
+            os << curr->getLeft()->getName() << ", ";
         }
         else
         {
@@ -851,6 +941,11 @@ ostream &operator<<(ostream &os, const BSTree &tree)
         else
         {
             os << "nullptr ";
+        }
+
+        if (pair.second->getParent() == nullptr)
+        {
+            os << "<-- root";
         }
         os << endl;
     }

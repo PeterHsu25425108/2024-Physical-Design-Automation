@@ -37,5 +37,5 @@ $(OBJ_DIR):
 
 clean:
 	rm -rf $(EXEC) $(OBJ_DIR)/*.o
-	rm ../layout/*.txt
-	rm ../drawing/*.svg
+	rm -rf $(OUT_DIR)/*
+	rm -rf $(BIN_DIR)/*

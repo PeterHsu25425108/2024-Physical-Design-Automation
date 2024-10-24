@@ -10,9 +10,16 @@ using namespace std;
 
 void SA::solve()
 {
+    ofstream SA_cost_file("SA_cost.txt");
 
     bs_tree.prepareForCost();
     double cost = finalCost();
+
+    if (DEBUG_SA)
+    {
+        SA_cost_file << "Initial cost: " << cost << endl;
+    }
+
     double best_cost = cost;
     BSTree best_tree(bs_tree);
 
@@ -29,24 +36,55 @@ void SA::solve()
             {
             case 0:
             {
+
+                if (DEBUG_SA)
+                {
+                    cout << "Swapping blocks" << endl;
+                }
+
                 pair<Block *, Block *> blocks = bs_tree.pickRandPair();
+
+                if (DEBUG_SA)
+                {
+                    cout << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+                }
+
                 new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
                 break;
             }
             case 1:
             {
+
+                if (DEBUG_SA)
+                {
+                    cout << "Rotating blocks" << endl;
+                }
+
                 Block *block = bs_tree.pickRandBlock();
                 new_tree.RotateBlock(block);
                 break;
             }
             case 2:
             {
+
+                if (DEBUG_SA)
+                {
+                    cout << "Moving blocks" << endl;
+                }
                 pair<Block *, Block *> blocks = bs_tree.pickRandPair();
                 new_tree.MoveBlock(blocks.first, blocks.second);
                 break;
             }
             default:
+                cerr << "Invalid move type: " << move << endl;
+                exit(1);
                 break;
+            }
+
+            if (DEBUG_SA)
+            {
+                cout << "new tree after move: " << endl;
+                cout << new_tree << endl;
             }
 
             new_tree.prepareForCost();
@@ -65,9 +103,17 @@ void SA::solve()
             }
         }
         T *= t_decay;
+
+        if (DEBUG_SA)
+        {
+            SA_cost_file << "Iteration: " << iter << " cost: " << cost << endl;
+        }
+
         iter++;
     }
     bs_tree = best_tree;
+
+    SA_cost_file.close();
 }
 
 void SA::parseBlock(ifstream &block_file)
@@ -102,7 +148,16 @@ void SA::parseBlock(ifstream &block_file)
         }
         bs_tree.insertBlock(name, width, height);
 
-        if (DEBUG_INSERT)
+        if (DEBUG_CONTOUR)
+        {
+            cout << "Contour list after insert block: " << endl;
+            for (auto &contour : bs_tree.getContourList())
+            {
+                cout << "x_left: " << contour.x_left << " x_right: " << contour.x_right << " y_top: " << contour.y_top << endl;
+            }
+        }
+
+        if (DEBUG_INSERT || DEBUG_CONTOUR)
         {
             cout << "bs tree after insert block: " << endl;
             cout << bs_tree << endl;
@@ -182,6 +237,12 @@ void SA::parseNet(ifstream &net_file)
     {
         cout << " == Parsing net file done == " << endl
              << endl;
+    }
+
+    if (DEBUG_PARSE)
+    {
+        cout << " tree structure after parsing block and net file: " << endl;
+        cout << bs_tree << endl;
     }
 }
 
