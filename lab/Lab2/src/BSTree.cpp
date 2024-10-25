@@ -317,12 +317,16 @@ void BSTree::updateContour(Block *curr)
             cout << "curr block: " << curr->getName() << " x: " << x << " y: " << curr->getBL().y << endl;
         }
 
-        curr->setBLY(list_it->y_top);
-        // the iterator where the new contour should be inserted
-        // the new contour will be inserted before the insert_pos
+        // curr->setBLY(list_it->y_top);
+        //  the iterator where the new contour should be inserted
+        //  the new contour will be inserted before the insert_pos
         list<Contour>::iterator insert_pos = list_it;
+
+        int blockXleft = x;
+        int blockXright = x + curr->getWidth();
+
         // update contour_list and the boundary width and height of the LB of the block
-        while (list_it != contour_list.end() && list_it->x_left < x + curr->getWidth())
+        while (list_it != contour_list.end() && list_it->x_left <= x + curr->getWidth())
         {
 
             if (DEBUG_CONTOUR)
@@ -330,12 +334,7 @@ void BSTree::updateContour(Block *curr)
                 cout << "list_it: " << "x_left: " << list_it->x_left << " x_right: " << list_it->x_right << " y_top: " << list_it->y_top << endl;
             }
 
-            curr->setBLY(max(curr->getBL().y, list_it->y_top));
-            BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
-
             // handle the contour list
-            int blockXleft = x;
-            int blockXright = x + curr->getWidth();
 
             if (DEBUG_CONTOUR)
             {
@@ -346,16 +345,27 @@ void BSTree::updateContour(Block *curr)
             // remove the contour
             if (list_it->x_left >= blockXleft && list_it->x_right <= blockXright)
             {
+
+                curr->setBLY(max(curr->getBL().y, list_it->y_top));
+                BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
                 if (DEBUG_CONTOUR)
                 {
                     cout << "remove contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
                 }
                 list_it = contour_list.erase(list_it);
+                if (list_it == contour_list.end())
+                {
+                    insert_pos = contour_list.end();
+                }
             }
             // case 2: the right side of the contour is covered by the block, but the left side is not
             else if (list_it->x_left < blockXleft && list_it->x_right > blockXleft &&
                      list_it->x_right <= blockXright)
             {
+
+                curr->setBLY(max(curr->getBL().y, list_it->y_top));
+                BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
+
                 if (DEBUG_CONTOUR)
                 {
                     cout << "shrink the x_right of contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
@@ -365,12 +375,18 @@ void BSTree::updateContour(Block *curr)
                 // shrink the x_right of list_it
                 list_it->x_right = blockXleft;
                 // the new contour will be inserted at the back of list_it
-                insert_pos = next(list_it);
+                // insert_pos = next(list_it);
+                if (next(list_it) == contour_list.end())
+                {
+                    insert_pos = contour_list.end();
+                }
             }
             // case 3: the left side of the contour is covered by the block, but the right side is not
             else if (list_it->x_left < blockXright && list_it->x_right > blockXright &&
                      list_it->x_left >= blockXleft)
             {
+                curr->setBLY(max(curr->getBL().y, list_it->y_top));
+                BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
                 if (DEBUG_CONTOUR)
                 {
                     cout << "shrink the x_left of contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
@@ -385,6 +401,8 @@ void BSTree::updateContour(Block *curr)
             // case 4: both sides stick out
             else if (list_it->x_left < blockXleft && list_it->x_right > blockXright)
             {
+                curr->setBLY(max(curr->getBL().y, list_it->y_top));
+                BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
                 if (DEBUG_CONTOUR)
                 {
                     cout << "split the contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
@@ -400,11 +418,23 @@ void BSTree::updateContour(Block *curr)
                 // the new contour will be inserted at the back of list_it
                 insert_pos = next(list_it);
             }
+            // case 5: the contour is right on the right side of the block
             else if (blockXleft == list_it->x_right)
             {
+                /*curr->setBLY(max(curr->getBL().y, list_it->y_top));
+                BoundaryHeight = max(BoundaryHeight, curr->getTR().y);*/
+
+                if (next(list_it) == contour_list.end())
+                {
+                    insert_pos = contour_list.end();
+                }
             }
+            // case 6: the contour is right on the left side of the block
             else if (blockXright == list_it->x_left)
             {
+                /*curr->setBLY(max(curr->getBL().y, list_it->y_top));
+                BoundaryHeight = max(BoundaryHeight, curr->getTR().y);*/
+                insert_pos = list_it;
             }
             else
             {
@@ -416,15 +446,24 @@ void BSTree::updateContour(Block *curr)
             }
 
             // insert the new contour
-            Contour new_contour(blockXleft, blockXright, curr->getTR().y);
+            /*Contour new_contour(blockXleft, blockXright, curr->getTR().y);
             contour_list.insert(insert_pos, new_contour);
 
             if (DEBUG_CONTOUR)
             {
                 cout << "insert contour: " << new_contour.x_left << " " << new_contour.x_right << " " << new_contour.y_top << endl;
-            }
+            }*/
 
             list_it = next(list_it);
+        }
+
+        // insert the new contour
+        Contour new_contour(blockXleft, blockXright, curr->getTR().y);
+        contour_list.insert(insert_pos, new_contour);
+
+        if (DEBUG_CONTOUR)
+        {
+            cout << "insert contour: " << new_contour.x_left << " " << new_contour.x_right << " " << new_contour.y_top << endl;
         }
 
         // Find the first contour that has x_left >= x

@@ -32,29 +32,13 @@ first contour elemet: 0 40 50
 curr block: B x: 40 y: 0
 list_it: x_left: 0 x_right: 40 y_top: 50
 blockXleft: 40 blockXright: 100
-shrink the x_right of contour: 0 40 50
-to 40
-insert contour: 40 100 100
-list_it: x_left: 40 x_right: 100 y_top: 100
-blockXleft: 40 blockXright: 100
-remove contour: 40 100 100
-insert contour: 40 100 150
-list_it: x_left: 0 x_right: 40 y_top: 50
-blockXleft: 40 blockXright: 100
-shrink the x_right of contour: 0 40 50
-to 40
-insert contour: 40 100 150
-list_it: x_left: 40 x_right: 100 y_top: 150
-blockXleft: 40 blockXright: 100
-remove contour: 40 100 150
-insert contour: 40 100 200
-Block: B x: 40 y: 150
+insert contour: 40 100 50
+Block: B x: 40 y: 0
 ***** updateContour return *****
 
 Contour list after insert block: 
 x_left: 0 x_right: 40 y_top: 50
-x_left: 40 x_right: 100 y_top: 200
-x_left: 40 x_right: 100 y_top: 150
+x_left: 40 x_right: 100 y_top: 50
 bs tree after insert block: 
  ------- BSTree ------- 
 root: A
@@ -63,7 +47,7 @@ numBlocks: 2
 numNets: 0
 numTerms: 0
 BoundaryWidth: 100
-BoundaryHeight: 200
+BoundaryHeight: 50
 BlockName2Ptr: 
 BlockName: B BlockPtr->name: B
 BlockName: A BlockPtr->name: A
@@ -75,8 +59,7 @@ term_names:
 
 contour_list: 
 x_left: 0 x_right: 40 y_top: 50
-x_left: 40 x_right: 100 y_top: 200
-x_left: 40 x_right: 100 y_top: 150
+x_left: 40 x_right: 100 y_top: 50
  Tree Structure: 
 Key: B, Block: B Parent: A, Left: nullptr Right: nullptr 
 Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
@@ -84,46 +67,18 @@ Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
 
 ***** updateContour: C width: 60, height: 50 *****
 list_it: 0 40 50
-list_it: 40 100 200
-first contour elemet: 40 100 150
+first contour elemet: 40 100 50
 curr block: C x: 100 y: 0
-list_it: x_left: 40 x_right: 100 y_top: 150
+list_it: x_left: 40 x_right: 100 y_top: 50
 blockXleft: 100 blockXright: 160
-shrink the x_right of contour: 40 100 150
-to 100
-insert contour: 100 160 200
-list_it: x_left: 100 x_right: 160 y_top: 200
-blockXleft: 100 blockXright: 160
-remove contour: 100 160 200
-insert contour: 100 160 250
-list_it: x_left: 0 x_right: 40 y_top: 50
-blockXleft: 100 blockXright: 160
-shrink the x_right of contour: 0 40 50
-to 100
-insert contour: 100 160 250
-list_it: x_left: 100 x_right: 160 y_top: 250
-blockXleft: 100 blockXright: 160
-remove contour: 100 160 250
-insert contour: 100 160 300
-list_it: x_left: 40 x_right: 100 y_top: 150
-blockXleft: 100 blockXright: 160
-shrink the x_right of contour: 40 100 150
-to 100
-insert contour: 100 160 300
-list_it: x_left: 100 x_right: 160 y_top: 300
-blockXleft: 100 blockXright: 160
-remove contour: 100 160 300
-insert contour: 100 160 350
-Block: C x: 100 y: 300
+insert contour: 100 160 50
+Block: C x: 100 y: 0
 ***** updateContour return *****
 
 Contour list after insert block: 
-x_left: 0 x_right: 100 y_top: 50
-x_left: 100 x_right: 160 y_top: 300
-x_left: 40 x_right: 100 y_top: 200
-x_left: 40 x_right: 100 y_top: 150
-x_left: 100 x_right: 160 y_top: 350
-x_left: 100 x_right: 160 y_top: 250
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
 bs tree after insert block: 
  ------- BSTree ------- 
 root: A
@@ -132,7 +87,7 @@ numBlocks: 3
 numNets: 0
 numTerms: 0
 BoundaryWidth: 160
-BoundaryHeight: 350
+BoundaryHeight: 50
 BlockName2Ptr: 
 BlockName: B BlockPtr->name: B
 BlockName: C BlockPtr->name: C
@@ -144,12 +99,9 @@ A B C
 term_names: 
 
 contour_list: 
-x_left: 0 x_right: 100 y_top: 50
-x_left: 100 x_right: 160 y_top: 300
-x_left: 40 x_right: 100 y_top: 200
-x_left: 40 x_right: 100 y_top: 150
-x_left: 100 x_right: 160 y_top: 350
-x_left: 100 x_right: 160 y_top: 250
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
  Tree Structure: 
 Key: B, Block: B Parent: A, Left: C, Right: nullptr 
 Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
@@ -157,47 +109,23 @@ Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
  ---------------------- 
 
 ***** updateContour: D width: 40, height: 50 *****
-list_it: 0 100 50
-first contour elemet: 100 160 300
+list_it: 0 40 50
+list_it: 40 100 50
+first contour elemet: 100 160 50
 curr block: D x: 100 y: 0
-list_it: x_left: 100 x_right: 160 y_top: 300
+list_it: x_left: 100 x_right: 160 y_top: 50
 blockXleft: 100 blockXright: 140
-shrink the x_left of contour: 100 160 300
+shrink the x_left of contour: 100 160 50
 to 140
-insert contour: 100 140 350
-list_it: x_left: 40 x_right: 100 y_top: 200
-blockXleft: 100 blockXright: 140
-shrink the x_right of contour: 40 100 200
-to 100
-insert contour: 100 140 350
-list_it: x_left: 100 x_right: 140 y_top: 350
-blockXleft: 100 blockXright: 140
-remove contour: 100 140 350
-insert contour: 100 140 400
-list_it: x_left: 100 x_right: 160 y_top: 350
-blockXleft: 100 blockXright: 140
-shrink the x_left of contour: 100 160 350
-to 140
-insert contour: 100 140 400
-list_it: x_left: 100 x_right: 160 y_top: 250
-blockXleft: 100 blockXright: 140
-shrink the x_left of contour: 100 160 250
-to 140
-insert contour: 100 140 400
-Block: D x: 100 y: 350
+insert contour: 100 140 100
+Block: D x: 100 y: 50
 ***** updateContour return *****
 
 Contour list after insert block: 
-x_left: 0 x_right: 100 y_top: 50
-x_left: 100 x_right: 140 y_top: 350
-x_left: 140 x_right: 160 y_top: 300
-x_left: 40 x_right: 100 y_top: 200
-x_left: 100 x_right: 140 y_top: 400
-x_left: 40 x_right: 100 y_top: 150
-x_left: 100 x_right: 140 y_top: 400
-x_left: 140 x_right: 160 y_top: 350
-x_left: 100 x_right: 140 y_top: 400
-x_left: 140 x_right: 160 y_top: 250
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
 bs tree after insert block: 
  ------- BSTree ------- 
 root: A
@@ -206,7 +134,7 @@ numBlocks: 4
 numNets: 0
 numTerms: 0
 BoundaryWidth: 160
-BoundaryHeight: 400
+BoundaryHeight: 100
 BlockName2Ptr: 
 BlockName: B BlockPtr->name: B
 BlockName: D BlockPtr->name: D
@@ -219,16 +147,10 @@ A B C D
 term_names: 
 
 contour_list: 
-x_left: 0 x_right: 100 y_top: 50
-x_left: 100 x_right: 140 y_top: 350
-x_left: 140 x_right: 160 y_top: 300
-x_left: 40 x_right: 100 y_top: 200
-x_left: 100 x_right: 140 y_top: 400
-x_left: 40 x_right: 100 y_top: 150
-x_left: 100 x_right: 140 y_top: 400
-x_left: 140 x_right: 160 y_top: 350
-x_left: 100 x_right: 140 y_top: 400
-x_left: 140 x_right: 160 y_top: 250
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
  Tree Structure: 
 Key: B, Block: B Parent: A, Left: C, Right: nullptr 
 Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
