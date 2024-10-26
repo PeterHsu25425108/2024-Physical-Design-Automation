@@ -6,14 +6,18 @@
 #include "SA.h"
 #include <vector>
 #include <cmath>
+#include <chrono>
 using namespace std;
+using namespace std::chrono;
 
 void SA::solve()
 {
+    start = high_resolution_clock::now();
+
     ofstream SA_cost_file("SA_cost.txt");
 
     bs_tree.prepareForCost();
-    double cost = finalCost();
+    double cost = finalCost(bs_tree);
 
     if (DEBUG_SA)
     {
@@ -22,96 +26,185 @@ void SA::solve()
 
     double best_cost = cost;
     BSTree best_tree(bs_tree);
+    BSTree new_tree(bs_tree);
+
+    if (PLOT_ITER)
+    {
+        ofstream init_plot_file("../draw/text/init_plot.txt");
+        new_tree.writePlotFile(init_plot_file, outlineWidth, outlineHeight);
+        init_plot_file.close();
+    }
 
     int iter = 0;
     while (T > T_min)
     {
-        for (int i = 0; i < 100; i++)
+        if (DEBUG_SA)
         {
-            BSTree new_tree(bs_tree);
-            // randomly pick a move from the 3 moves
-            // SwapBlock, RotateBlock, MoveBlock
-            int move = rand() % 3;
-            switch (move)
-            {
-            case 0:
-            {
+            cout << endl
+                 << "Iteration: " << iter + 1 << endl;
+            SA_cost_file << "Iteration: " << iter + 1 << endl;
+        }
 
-                if (DEBUG_SA)
-                {
-                    cout << "Swapping blocks" << endl;
-                }
+        // randomly pick a move from the 3 moves
+        // SwapBlock, RotateBlock, MoveBlock
 
-                pair<Block *, Block *> blocks = bs_tree.pickRandPair();
-
-                if (DEBUG_SA)
-                {
-                    cout << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
-                }
-
-                new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
-                break;
-            }
-            case 1:
-            {
-
-                if (DEBUG_SA)
-                {
-                    cout << "Rotating blocks" << endl;
-                }
-
-                Block *block = bs_tree.pickRandBlock();
-                new_tree.RotateBlock(block);
-                break;
-            }
-            case 2:
-            {
-
-                if (DEBUG_SA)
-                {
-                    cout << "Moving blocks" << endl;
-                }
-                pair<Block *, Block *> blocks = bs_tree.pickRandPair();
-                new_tree.MoveBlock(blocks.first, blocks.second);
-                break;
-            }
-            default:
-                cerr << "Invalid move type: " << move << endl;
-                exit(1);
-                break;
-            }
+        int move = rand() % 3;
+        switch (move)
+        {
+        case 0:
+        {
 
             if (DEBUG_SA)
             {
-                cout << "new tree after move: " << endl;
+                cout << "Swapping blocks" << endl;
+            }
+
+            pair<Block *, Block *> blocks = new_tree.pickRandPair();
+            SA_cost_file << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+
+            if (DEBUG_SA)
+            {
+                cout << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+            }
+
+            new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
+            break;
+        }
+        case 1:
+        {
+
+            if (DEBUG_SA)
+            {
+                cout << "Rotating blocks" << endl;
+            }
+
+            Block *block = new_tree.pickRandBlock();
+            SA_cost_file << "Rotating " << block->getName() << endl;
+
+            if (DEBUG_SA)
+            {
+                cout << "Rotating " << block->getName() << endl;
+            }
+            new_tree.RotateBlock(block);
+            break;
+        }
+        case 2:
+        {
+
+            if (DEBUG_SA)
+            {
+                cout << "Moving blocks" << endl;
+            }
+            pair<Block *, Block *> blocks = new_tree.pickRandPair();
+            SA_cost_file << "Moving " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+
+            if (DEBUG_SA)
+            {
+                cout << "Moving " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+            }
+            new_tree.MoveBlock(blocks.first, blocks.second);
+            break;
+        }
+        default:
+            cerr << "Invalid move type: " << move << endl;
+            exit(1);
+            break;
+        }
+
+        // write the new tree to a plot file
+        // the file name is "iter"+iter+"_plot.txt"
+        if (PLOT_ITER)
+        {
+            ofstream plot_file("../draw/text/iter" + to_string(iter + 1) + "_plot.txt");
+            new_tree.writePlotFile(plot_file, outlineWidth, outlineHeight);
+            plot_file.close();
+        }
+
+        new_tree.prepareForCost();
+        if (DEBUG_SA)
+        {
+            cout << "new tree after the operation: " << endl;
+            cout << new_tree << endl;
+        }
+        double new_cost = finalCost(new_tree);
+        double delta = new_cost - cost;
+
+        if (DEBUG_SA)
+        {
+            cout << "Bound area: " << new_tree.getBoundingArea() << endl;
+            cout << "HPWL: " << new_tree.getTotHPWL() << endl;
+
+            cout << "new cost: " << new_cost << endl;
+            cout << "current cost: " << cost << endl;
+            cout << "best cost: " << best_cost << endl;
+        }
+
+        if (delta < 0 || exp(-delta / T) > (double)rand() / RAND_MAX)
+        {
+            if (DEBUG_SA)
+            {
+                cout << "Accept the new tree" << endl;
+                cout << "new tree structure: " << endl;
                 cout << new_tree << endl;
             }
-
-            new_tree.prepareForCost();
-            double new_cost = finalCost();
-            double delta = new_cost - cost;
-
-            if (delta < 0 || exp(-delta / T) > (double)rand() / RAND_MAX)
+            bs_tree = new_tree;
+            cost = new_cost;
+            if (cost < best_cost && fitInOutline(new_tree))
             {
-                bs_tree = new_tree;
-                cost = new_cost;
-                if (cost < best_cost)
+                if (DEBUG_SA)
                 {
-                    best_cost = cost;
-                    best_tree = bs_tree;
+                    cout << "Updating best tree cuz it's better" << endl;
                 }
+
+                best_cost = cost;
+                best_tree = bs_tree;
             }
         }
+        /*else if (!fitInOutline(best_tree) && fitInOutline(new_tree))
+        {
+            if (DEBUG_SA)
+            {
+                cout << "Updating best tree cuz new_tree is the 1st feasible sol" << endl;
+            }
+            best_tree = new_tree;
+            best_cost = new_cost;
+        }*/
+
         T *= t_decay;
 
         if (DEBUG_SA)
         {
-            SA_cost_file << "Iteration: " << iter << " cost: " << cost << endl;
+            SA_cost_file << " cost: " << cost << endl;
+        }
+
+        if (DEBUG_BREAK && iter >= DEBUG_MAXITER)
+        {
+            break;
+        }
+
+        if (duration_cast<seconds>(high_resolution_clock::now() - start).count() > 300 * 0.95)
+        {
+            break;
         }
 
         iter++;
+        if (PLOT_FINAL)
+        {
+            ofstream final_plot_file("../draw/text/final_plot.txt");
+            best_tree.writePlotFile(final_plot_file, outlineWidth, outlineHeight);
+            final_plot_file.close();
+        }
     }
     bs_tree = best_tree;
+
+    if (PLOT_FINAL)
+    {
+        ofstream final_plot_file("../draw/text/final_plot.txt");
+        best_tree.writePlotFile(final_plot_file, outlineWidth, outlineHeight);
+        final_plot_file.close();
+    }
+
+    end = high_resolution_clock::now();
 
     SA_cost_file.close();
 }
@@ -239,18 +332,18 @@ void SA::parseNet(ifstream &net_file)
              << endl;
     }
 
-    if (DEBUG_PARSE)
+    if (DEBUG_PARSE || DEBUG_NET)
     {
         cout << " tree structure after parsing block and net file: " << endl;
         cout << bs_tree << endl;
     }
 }
 
-void SA::writeOutput(ostream &out, double time_taken)
+void SA::writeOutput(ostream &out)
 {
     // bs_tree.prepareForCost();
 
-    double final_cost = finalCost();
+    double final_cost = finalCost(this->bs_tree);
     out << final_cost << endl;
 
     // print bounding area
@@ -259,6 +352,7 @@ void SA::writeOutput(ostream &out, double time_taken)
     // print bounding width and height
     out << bs_tree.getBoundaryWidth() << " " << bs_tree.getBoundaryHeight() << endl;
 
+    double time_taken = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
     // print program running time
     out << time_taken << endl;
 

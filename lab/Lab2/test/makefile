@@ -6,6 +6,7 @@ LDFLAGS = -std=c++11 -g
 EXEC = $(BIN_DIR)/Lab2
 OUT_DIR = ../output
 DRAW_DIR = ../draw
+DRAW_TEXT_DIR = ../draw/text
 TESTCASE_DIR = ../testcase
 
 # Get all .cpp files in the source directory
@@ -39,3 +40,18 @@ clean:
 	rm -rf $(EXEC) $(OBJ_DIR)/*.o
 	rm -rf $(OUT_DIR)/*
 	rm -rf $(BIN_DIR)/*
+	rm -rf $(DRAW_TEXT_DIR)/*
+	rm -rf $(DRAW_DIR)/png/*
+	rm -rf $(DRAW_DIR)/svg/*
+
+# run ../draw/plot.py to plot all .txt files in the DRAW_TEXT_DIR
+plot_all:
+	python3 $(DRAW_DIR)/plot_all.py $(DRAW_TEXT_DIR)
+
+plot_iter%: $(DRAW_TEXT_DIR)/iter%_plot.txt
+	python3 $(DRAW_DIR)/plot.py $(DRAW_TEXT_DIR)/iter$(subst plot_iter,,$@)_plot.txt
+
+plot_init: $(DRAW_TEXT_DIR)/init_plot.txt
+	python3 $(DRAW_DIR)/plot.py $(DRAW_TEXT_DIR)/init_plot.txt
+plot_final: $(DRAW_TEXT_DIR)/final_plot.txt
+	python3 $(DRAW_DIR)/plot.py $(DRAW_TEXT_DIR)/final_plot.txt

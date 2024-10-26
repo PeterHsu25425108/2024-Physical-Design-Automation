@@ -1,0 +1,11 @@
+NumBlocks: 4
+A 0 40 40 50 D nullptr C
+C 110 50 60 50 B nullptr nullptr
+D 0 0 50 40 nullptr B A
+B 50 0 60 50 D C nullptr
+NumContours: 4
+0 40 90
+40 50 40
+50 110 50
+110 170 100
+Outline: 120 120 170 100

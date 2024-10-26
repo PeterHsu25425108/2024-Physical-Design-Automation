@@ -33,8 +33,22 @@ BSTree::~BSTree()
 
 BSTree &BSTree::operator=(const BSTree &copied_tree)
 {
+
+    if (DEBUG_SA)
+    {
+        cout << "BSTree assignment operator" << endl;
+        cout << "BSTree before assignment" << endl;
+        cout << *this << endl;
+        cout << "copied_tree" << endl;
+        cout << copied_tree << endl;
+    }
+
     if (this == &copied_tree)
     {
+        if (DEBUG_SA)
+        {
+            cout << "BSTree assignment operator self assignment" << endl;
+        }
         return *this;
     }
 
@@ -45,10 +59,10 @@ BSTree &BSTree::operator=(const BSTree &copied_tree)
     }
     BlockName2Ptr.clear();
     root = nullptr;
-    numBlocks = 0;
-    numNets = 0;
-    BoundaryWidth = 0;
-    BoundaryHeight = 0;
+    numBlocks = copied_tree.numBlocks;
+    numNets = copied_tree.numNets;
+    BoundaryWidth = copied_tree.BoundaryWidth;
+    BoundaryHeight = copied_tree.BoundaryHeight;
     TermName2Loc = copied_tree.TermName2Loc;
     netlist = copied_tree.netlist;
     block_names = copied_tree.block_names;
@@ -66,11 +80,23 @@ BSTree &BSTree::operator=(const BSTree &copied_tree)
     // namely assign the parent, left, right of each block in *this to the corresponding block in BlockName2Ptr
     copyTreeNode(copied_tree.root);
 
+    if (DEBUG_SA)
+    {
+        cout << "BSTree after assignment" << endl;
+        cout << *this << endl;
+    }
+
     return *this;
 }
 
 BSTree::BSTree(const BSTree &copied_tree)
 {
+
+    if (DEBUG_SA)
+    {
+        cout << "BSTree copy constructor" << endl;
+    }
+
     numBlocks = copied_tree.numBlocks;
     numNets = copied_tree.numNets;
     BoundaryWidth = copied_tree.BoundaryWidth;
@@ -299,6 +325,7 @@ void BSTree::updateContour(Block *curr)
     {
         int x = (curr->getChildType() == RIGHT_CHILD) ? curr->getParent()->getBL().x : curr->getParent()->getBL().x + curr->getParent()->getWidth();
         curr->setBLX(x);
+        curr->setBLY(0);
         BoundaryWidth = max(BoundaryWidth, x + curr->getWidth());
 
         auto list_it = contour_list.begin();
@@ -326,12 +353,18 @@ void BSTree::updateContour(Block *curr)
         int blockXright = x + curr->getWidth();
 
         // update contour_list and the boundary width and height of the LB of the block
-        while (list_it != contour_list.end() && list_it->x_left <= x + curr->getWidth())
+        while (list_it != contour_list.end() && list_it->x_left <= blockXright)
         {
 
             if (DEBUG_CONTOUR)
             {
                 cout << "list_it: " << "x_left: " << list_it->x_left << " x_right: " << list_it->x_right << " y_top: " << list_it->y_top << endl;
+                cout << "whole contour list: " << endl;
+                for (auto &contour : contour_list)
+                {
+                    cout << "(x_left: " << contour.x_left << " x_right: " << contour.x_right << " y_top: " << contour.y_top << ") ";
+                }
+                cout << endl;
             }
 
             // handle the contour list
@@ -345,24 +378,67 @@ void BSTree::updateContour(Block *curr)
             // remove the contour
             if (list_it->x_left >= blockXleft && list_it->x_right <= blockXright)
             {
-
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "case 1" << endl;
+                }
                 curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
                 if (DEBUG_CONTOUR)
                 {
                     cout << "remove contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
                 }
+
+                // cerr << "size before erase: " << contour_list.size() << endl;
+                // cerr << "erase" << endl;
                 list_it = contour_list.erase(list_it);
+                if (DEBUG_CONTOUR)
+                {
+
+                    if (list_it == contour_list.end())
+                    {
+                        cout << "list_it is at the end" << endl;
+                    }
+                    else
+                    {
+                        cout << "return val of erase: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                        if (list_it == contour_list.begin())
+                            cout << "list_it is at the begin" << endl;
+                    }
+                }
+                if (list_it != contour_list.end() && list_it != contour_list.begin())
+                    list_it = prev(list_it);
+                // cerr << "size after erase: " << contour_list.size() << endl;
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "list_it after erase: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                }
                 if (list_it == contour_list.end())
                 {
                     insert_pos = contour_list.end();
+                    if (DEBUG_CONTOUR)
+                    {
+                        cout << "insert_pos: end" << endl;
+                    }
+                }
+
+                if (list_it == contour_list.begin())
+                {
+                    if (DEBUG_CONTOUR)
+                    {
+                        cout << "list_it is at the begin, so continue" << endl;
+                    }
+                    continue;
                 }
             }
             // case 2: the right side of the contour is covered by the block, but the left side is not
             else if (list_it->x_left < blockXleft && list_it->x_right > blockXleft &&
                      list_it->x_right <= blockXright)
             {
-
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "case 2" << endl;
+                }
                 curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
 
@@ -385,6 +461,11 @@ void BSTree::updateContour(Block *curr)
             else if (list_it->x_left < blockXright && list_it->x_right > blockXright &&
                      list_it->x_left >= blockXleft)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "case 3" << endl;
+                    cout << "curr->getBL().y: " << curr->getBL().y << " list_it->y_top: " << list_it->y_top << endl;
+                }
                 curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
                 if (DEBUG_CONTOUR)
@@ -401,6 +482,10 @@ void BSTree::updateContour(Block *curr)
             // case 4: both sides stick out
             else if (list_it->x_left < blockXleft && list_it->x_right > blockXright)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "case 4" << endl;
+                }
                 curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);
                 if (DEBUG_CONTOUR)
@@ -421,20 +506,50 @@ void BSTree::updateContour(Block *curr)
             // case 5: the contour is right on the right side of the block
             else if (blockXleft == list_it->x_right)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "case 5" << endl;
+                }
                 /*curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);*/
 
                 if (next(list_it) == contour_list.end())
                 {
+                    if (DEBUG_CONTOUR)
+                    {
+                        cout << "next(list_it) == contour_list.end()" << endl;
+                        cout << "set block " << curr->getName() << " BLY to 0" << endl;
+                    }
                     insert_pos = contour_list.end();
+                    curr->setBLY(0);
+                    if (DEBUG_CONTOUR)
+                    {
+                        cout << "block " << curr->getName() << " BL: " << curr->getBL().x << " " << curr->getBL().y << endl;
+                    }
                 }
             }
             // case 6: the contour is right on the left side of the block
             else if (blockXright == list_it->x_left)
             {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "case 6" << endl;
+                }
                 /*curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);*/
                 insert_pos = list_it;
+                if (list_it == contour_list.begin())
+                {
+                    if (DEBUG_CONTOUR)
+                    {
+                        cout << "set block " << curr->getName() << " BLY to 0" << endl;
+                    }
+                    curr->setBLY(0);
+                    if (DEBUG_CONTOUR)
+                    {
+                        cout << "block " << curr->getName() << " BL: " << curr->getBL().x << " " << curr->getBL().y << endl;
+                    }
+                }
             }
             else
             {
@@ -454,7 +569,33 @@ void BSTree::updateContour(Block *curr)
                 cout << "insert contour: " << new_contour.x_left << " " << new_contour.x_right << " " << new_contour.y_top << endl;
             }*/
 
+            if (list_it == contour_list.end())
+            {
+                if (DEBUG_CONTOUR)
+                {
+                    cout << "break" << endl;
+                }
+                break;
+            }
+
             list_it = next(list_it);
+
+            if (DEBUG_CONTOUR)
+            {
+                if (list_it == contour_list.end())
+                {
+                    cout << "last contour" << endl;
+                }
+                else
+                {
+                    cout << "next contour: " << list_it->x_left << " " << list_it->x_right << " " << list_it->y_top << endl;
+                }
+            }
+        }
+        if (DEBUG_CONTOUR)
+        {
+            cout << "insert contour: " << blockXleft << " " << blockXright << " " << curr->getTR().y << endl;
+            cout << "the insert pos: " << insert_pos->x_left << " " << insert_pos->x_right << " " << insert_pos->y_top << endl;
         }
 
         // insert the new contour
@@ -486,6 +627,8 @@ void BSTree::updateContour(Block *curr)
     // check if the left is the same as curr node
     if (curr->getLeft() == curr)
     {
+        cerr << "current node: " << curr->getName() << endl
+             << " curr->getLeft(): " << curr->getLeft()->getName() << endl;
         cerr << "ERROR: BSTree::updateContour() failed because the left child is the same as the current node" << endl;
         exit(1);
     }
@@ -506,12 +649,31 @@ void BSTree::updateContour(Block *curr)
 
 Block *BSTree::pickRandBlock() const
 {
+
+    if (numBlocks == 0)
+    {
+        cerr << "ERROR: BSTree::pickRandBlock() failed because the number of blocks is 0" << endl;
+        cerr << "tree structure: " << endl;
+        cerr << *this << endl;
+        exit(1);
+    }
+
     int rand_name_idx = rand() % numBlocks;
     return BlockName2Ptr.at(block_names[rand_name_idx]);
 }
 
 pair<Block *, Block *> BSTree::pickRandPair() const
 {
+
+    if (numBlocks < 2)
+    {
+        cerr << "ERROR: BSTree::pickRandPair() failed because the number of blocks is less than 2" << endl;
+        cerr << "numBlocks: " << numBlocks << endl;
+        cerr << "tree structure: " << endl;
+        cerr << *this << endl;
+        exit(1);
+    }
+
     int rand_name_idx0 = rand() % numBlocks;
     int rand_name_idx1 = rand() % numBlocks;
     while (rand_name_idx1 == rand_name_idx0)
@@ -540,6 +702,12 @@ void BSTree::RotateBlock(Block *block)
 // 1. If the block is the root, then set the root to the other block
 void BSTree::SwapBlock(string block1, string block2)
 {
+
+    if (DEBUG_SWAP)
+    {
+        cout << "block1: " << block1 << " block2: " << block2 << endl;
+    }
+
     Block *block1_ptr = findBlock(block1);
     Block *block2_ptr = findBlock(block2);
 
@@ -560,54 +728,138 @@ void BSTree::SwapBlock(string block1, string block2)
         root = block1_ptr;
     }
 
-    // Update the left/right of the parent
-    if (block1_ptr->getChildType() == LEFT_CHILD)
+    if (block1_parent == block2_ptr || block2_parent == block1_ptr)
     {
-        block1_parent->setLeft(block2_ptr);
-    }
-    else if (block1_ptr->getChildType() == RIGHT_CHILD)
-    {
-        block1_parent->setRight(block2_ptr);
-    }
+        if (DEBUG_SWAP)
+        {
+            cout << "swap adjacent blocks" << endl;
+        }
 
-    if (block2_ptr->getChildType() == LEFT_CHILD)
-    {
-        block2_parent->setLeft(block1_ptr);
-    }
-    else if (block1_ptr->getChildType() == RIGHT_CHILD)
-    {
-        block2_parent->setRight(block1_ptr);
-    }
+        Block *parent_block = block1_parent == block2_ptr ? block1_parent : block2_parent;
+        Block *child_block = block1_parent == block2_ptr ? block1_ptr : block2_ptr;
 
-    // Update the parent of the left child and right child
-    if (block1_left != nullptr)
-    {
-        block1_left->setParent(block2_ptr);
-    }
-    if (block1_right != nullptr)
-    {
-        block1_right->setParent(block2_ptr);
-    }
-    if (block2_left != nullptr)
-    {
-        block2_left->setParent(block1_ptr);
-    }
-    if (block2_right != nullptr)
-    {
-        block2_right->setParent(block1_ptr);
-    }
+        Block *grand_parent = parent_block->getParent();
+        Block *sibling = child_block->getChildType() == LEFT_CHILD ? parent_block->getRight() : parent_block->getLeft();
+        Block *left_grand_child = child_block->getLeft();
+        Block *right_grand_child = child_block->getRight();
+        CHILD_TYPE child_type = child_block->getChildType();
+        CHILD_TYPE parent_type = parent_block->getChildType();
 
-    // Swapt the parent
-    block1_ptr->setParent(block2_parent);
-    block2_ptr->setParent(block1_parent);
+        // Update the left/right of the grand parent
+        if (parent_type == LEFT_CHILD)
+        {
+            grand_parent->setLeft(child_block);
+        }
+        else if (parent_type == RIGHT_CHILD)
+        {
+            grand_parent->setRight(child_block);
+        }
 
-    // Swap the left
-    block1_ptr->setLeft(block2_left);
-    block2_ptr->setLeft(block1_left);
+        // update the parent of the cousin
+        if (sibling != nullptr)
+        {
+            sibling->setParent(child_block);
+        }
 
-    // Swap the right
-    block1_ptr->setRight(block2_right);
-    block2_ptr->setRight(block1_right);
+        // Update the parent of the left and right grand child
+        if (left_grand_child != nullptr)
+        {
+            left_grand_child->setParent(parent_block);
+        }
+        if (right_grand_child != nullptr)
+        {
+            right_grand_child->setParent(parent_block);
+        }
+
+        // Swap the parent
+        child_block->setParent(grand_parent);
+        parent_block->setParent(child_block);
+
+        // update the left and right child of the parent
+        parent_block->setLeft(left_grand_child);
+        parent_block->setRight(right_grand_child);
+
+        // update the left and right child of the child
+        if (child_type == LEFT_CHILD)
+        {
+            child_block->setLeft(parent_block);
+            child_block->setRight(sibling);
+        }
+        else if (child_type == RIGHT_CHILD)
+        {
+            child_block->setLeft(sibling);
+            child_block->setRight(parent_block);
+        }
+    }
+    else
+    {
+        if (DEBUG_SWAP)
+        {
+            cout << "swap non-adjacent blocks" << endl;
+        }
+
+        CHILD_TYPE block1_child_type = block1_ptr->getChildType();
+        CHILD_TYPE block2_child_type = block2_ptr->getChildType();
+
+        // Update the left/right of the parent
+        if (block1_child_type == LEFT_CHILD)
+        {
+            block1_parent->setLeft(block2_ptr);
+        }
+        else if (block1_child_type == RIGHT_CHILD)
+        {
+            block1_parent->setRight(block2_ptr);
+        }
+
+        if (DEBUG_SWAP)
+        {
+            cout << "update the left/right of the parent of " << block1_ptr->getName() << endl;
+        }
+
+        if (block2_child_type == LEFT_CHILD)
+        {
+            block2_parent->setLeft(block1_ptr);
+        }
+        else if (block2_child_type == RIGHT_CHILD)
+        {
+            block2_parent->setRight(block1_ptr);
+        }
+
+        if (DEBUG_SWAP)
+        {
+            cout << "update the left/right of the parent of " << block2_ptr->getName() << endl;
+        }
+
+        // Update the parent of the left child and right child
+        if (block1_left != nullptr)
+        {
+            block1_left->setParent(block2_ptr);
+        }
+        if (block1_right != nullptr)
+        {
+            block1_right->setParent(block2_ptr);
+        }
+        if (block2_left != nullptr)
+        {
+            block2_left->setParent(block1_ptr);
+        }
+        if (block2_right != nullptr)
+        {
+            block2_right->setParent(block1_ptr);
+        }
+
+        // Swap the parent
+        block1_ptr->setParent(block2_parent);
+        block2_ptr->setParent(block1_parent);
+
+        // Swap the left
+        block1_ptr->setLeft(block2_left);
+        block2_ptr->setLeft(block1_left);
+
+        // Swap the right
+        block1_ptr->setRight(block2_right);
+        block2_ptr->setRight(block1_right);
+    }
 
     // Update the contour
     updateContour();
@@ -636,11 +888,90 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
         return false;
     }
 
+    if (DEBUG_MOVE)
+    {
+        cout << "future_parent: ";
+        if (future_parent != nullptr)
+        {
+            cout << future_parent->getName() << endl;
+        }
+        else
+        {
+            cout << "nullptr" << endl;
+        }
+
+        cout << "future_child: ";
+        if (future_child != nullptr)
+        {
+            cout << future_child->getName() << endl;
+        }
+        else
+        {
+            cout << "nullptr" << endl;
+        }
+    }
+
     // future_child should not be root
     CHILD_TYPE child_type = future_child->getChildType();
     if (child_type == ROOT)
     {
         cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_child is root" << endl;
+        // print the parent, left, right of the block
+        cerr << "future_child.parent: ";
+        if (future_child->getParent() != nullptr)
+        {
+            cerr << future_child->getParent()->getName() << endl;
+        }
+        else
+        {
+            cerr << "nullptr" << endl;
+        }
+        cerr << "future_child.left: ";
+        if (future_child->getLeft() != nullptr)
+        {
+            cerr << future_child->getLeft()->getName() << endl;
+        }
+        else
+        {
+            cerr << "nullptr" << endl;
+        }
+        cerr << "future_child.right: ";
+        if (future_child->getRight() != nullptr)
+        {
+            cerr << future_child->getRight()->getName() << endl;
+        }
+        else
+        {
+            cerr << "nullptr" << endl;
+        }
+
+        // print the parent, left, right of the future_child.parent if it is not nullptr
+        if (future_child->getParent() != nullptr)
+        {
+            cerr << "future_child.parent.left: ";
+            if (future_child->getParent()->getLeft() != nullptr)
+            {
+                cerr << future_child->getParent()->getLeft()->getName() << endl;
+            }
+            else
+            {
+                cerr << "nullptr" << endl;
+            }
+            cerr << "future_child.parent.right: ";
+            if (future_child->getParent()->getRight() != nullptr)
+            {
+                cerr << future_child->getParent()->getRight()->getName() << endl;
+            }
+            else
+            {
+                cerr << "nullptr" << endl;
+            }
+        }
+
+        cerr << "tree structure: " << endl;
+        cerr << *this << endl;
+
+        exit(1);
     }
 
     //  check if the future_parent has left child
@@ -674,21 +1005,37 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
     // case1: future_child has no child
     if (future_child->getLeft() == nullptr && future_child->getRight() == nullptr)
     {
+        // disconnect future_child from its parent
+        Block *original_parent = future_child->getParent();
+        if (child_type == LEFT_CHILD)
+        {
+            original_parent->setLeft(nullptr);
+        }
+        else if (child_type == RIGHT_CHILD)
+        {
+            original_parent->setRight(nullptr);
+        }
+        else
+        {
+            cerr << "ERROR: BSTree::MoveBlock(future_parent, left_child) failed because future_child is root" << endl;
+            cerr << "case: become_left_child, future_child has no child" << endl;
+            exit(1);
+        }
         future_child->setParent(future_parent);
     }
     // case2: future_child has left child
-    else if (future_child->getLeft() == nullptr)
+    else if (future_child->getLeft() != nullptr)
     {
         // replace future_child with its left child
         Block *original_child_left = future_child->getLeft();
         Block *original_parent = future_child->getParent();
 
         original_child_left->setParent(original_parent);
-        if (future_child->getChildType() == LEFT_CHILD)
+        if (child_type == LEFT_CHILD)
         {
             original_parent->setLeft(original_child_left);
         }
-        else if (future_child->getChildType() == RIGHT_CHILD)
+        else if (child_type == RIGHT_CHILD)
         {
             original_parent->setRight(original_child_left);
         }
@@ -702,17 +1049,17 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
         future_child->setParent(future_parent);
     }
     // case3: future_child has right child
-    else if (future_child->getRight() == nullptr)
+    else if (future_child->getRight() != nullptr)
     {
         Block *original_child_right = future_child->getRight();
         Block *original_parent = future_child->getParent();
 
         original_child_right->setParent(original_parent);
-        if (future_child->getChildType() == LEFT_CHILD)
+        if (child_type == LEFT_CHILD)
         {
             original_parent->setLeft(original_child_right);
         }
-        else if (future_child->getChildType() == RIGHT_CHILD)
+        else if (child_type == RIGHT_CHILD)
         {
             original_parent->setRight(original_child_right);
         }
@@ -725,6 +1072,9 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
 
         future_child->setParent(future_parent);
     }
+
+    // update the contour
+    updateContour();
 
     // Move success
     return true;
@@ -991,4 +1341,31 @@ ostream &operator<<(ostream &os, const BSTree &tree)
     os << " ---------------------- " << endl;
 
     return os;
+}
+
+void BSTree::writePlotFile(ostream &out, int OutlineWidth, int OutlineHeight) const
+{
+    // Print the BL and width, height of each block
+    out << "NumBlocks: " << numBlocks << endl;
+    for (auto &pair : BlockName2Ptr)
+    {
+        Block *curr = pair.second;
+        // order: name, x, y, width, height, parent, left, right
+        out << curr->getName() << " ";
+        out << curr->getBL().x << " " << curr->getBL().y << " " << curr->getWidth() << " " << curr->getHeight();
+        out << " " << (curr->getParent() == nullptr ? "nullptr" : curr->getParent()->getName());
+        out << " " << (curr->getLeft() == nullptr ? "nullptr" : curr->getLeft()->getName());
+        out << " " << (curr->getRight() == nullptr ? "nullptr" : curr->getRight()->getName());
+        out << endl;
+    }
+
+    // Print the contour list
+    out << "NumContours: " << contour_list.size() << endl;
+    for (list<Contour>::const_iterator it = contour_list.begin(); it != contour_list.end(); it++)
+    {
+        out << it->x_left << " " << it->x_right << " " << it->y_top << endl;
+    }
+
+    // Print the outline of the bounding box
+    out << "Outline: " << OutlineWidth << " " << OutlineHeight << " " << BoundaryWidth << " " << BoundaryHeight << endl;
 }

@@ -91,6 +91,8 @@ public:
     friend ostream &operator<<(ostream &os, const BSTree &tree);
     // ostream &printNode(ostream &os, const Block *curr);
 
+    void writePlotFile(ostream &out, int OutlineWidth, int OutlineHeight) const;
+
     // basic getter and setter
     Block *getRoot() const { return root; }
     int getNumBlocks() const { return numBlocks; }

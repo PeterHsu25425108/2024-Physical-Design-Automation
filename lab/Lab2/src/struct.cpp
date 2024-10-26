@@ -101,6 +101,72 @@ CHILD_TYPE Block::getChildType() const
         // print block name
         cerr << "ERROR: Block::getChildType() failed" << endl;
         cerr << "Block name: " << name << endl;
+        // print the parent, left, right of the block
+        cerr << name << ".parent: ";
+        if (parent == nullptr)
+        {
+            cerr << "nullptr" << endl;
+        }
+        else
+        {
+            cerr << parent->name << endl;
+        }
+        cerr << name << ".left: ";
+        if (left == nullptr)
+        {
+            cerr << "nullptr" << endl;
+        }
+        else
+        {
+            cerr << left->name << endl;
+        }
+        cerr << name << ".right: ";
+        if (right == nullptr)
+        {
+            cerr << "nullptr" << endl;
+        }
+        else
+        {
+            cerr << right->name << endl;
+        }
+
+        cerr << endl
+             << "Parent name: ";
+        if (parent == nullptr)
+        {
+            cerr << "nullptr" << endl;
+        }
+        else
+        {
+            cerr << parent->name << endl;
+            cerr << parent->name << ".parent: ";
+            if (parent->parent == nullptr)
+            {
+                cerr << "nullptr" << endl;
+            }
+            else
+            {
+                cerr << parent->parent->name << endl;
+            }
+            cerr << parent->name << ".left: ";
+            if (parent->left == nullptr)
+            {
+                cerr << "nullptr" << endl;
+            }
+            else
+            {
+                cerr << parent->left->name << endl;
+            }
+            cerr << parent->name << ".right: ";
+            if (parent->right == nullptr)
+            {
+                cerr << "nullptr" << endl;
+            }
+            else
+            {
+                cerr << parent->right->name << endl;
+            }
+        }
         exit(1);
     }
 }

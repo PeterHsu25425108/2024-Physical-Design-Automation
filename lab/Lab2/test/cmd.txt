@@ -31,7 +31,16 @@ Key: A, Block: A Parent: nullptr Left: nullptr Right: nullptr <-- root
 first contour elemet: 0 40 50
 curr block: B x: 40 y: 0
 list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) 
 blockXleft: 40 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 40 0
+last contour
+insert contour: 40 100 50
+the insert pos: 1 0 81671072
 insert contour: 40 100 50
 Block: B x: 40 y: 0
 ***** updateContour return *****
@@ -70,7 +79,16 @@ list_it: 0 40 50
 first contour elemet: 40 100 50
 curr block: C x: 100 y: 0
 list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) 
 blockXleft: 100 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 160 50
+the insert pos: 2 0 81671072
 insert contour: 100 160 50
 Block: C x: 100 y: 0
 ***** updateContour return *****
@@ -114,9 +132,16 @@ list_it: 40 100 50
 first contour elemet: 100 160 50
 curr block: D x: 100 y: 0
 list_it: x_left: 100 x_right: 160 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 160 y_top: 50) 
 blockXleft: 100 blockXright: 140
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
 shrink the x_left of contour: 100 160 50
 to 140
+last contour
+insert contour: 100 140 100
+the insert pos: 140 160 50
 insert contour: 100 140 100
 Block: D x: 100 y: 50
 ***** updateContour return *****
@@ -158,3 +183,5115 @@ Key: C, Block: C Parent: B, Left: nullptr Right: D
 Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
  ---------------------- 
 
+ tree structure after parsing block and net file: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: -16780576
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: -16780576
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+ ---------------------- 
+
+BSTree copy constructor
+BSTree copy constructor
+
+Iteration: 1
+Swapping blocks
+Swapping B and C
+block1: B block2: C
+swap adjacent blocks
+***** updateContour: A width: 40, height: 50 *****
+Block: A x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 40 50
+curr block: C x: 40 y: 0
+list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) 
+blockXleft: 40 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 40 0
+last contour
+insert contour: 40 100 50
+the insert pos: 1 0 81700304
+insert contour: 40 100 50
+Block: C x: 40 y: 0
+***** updateContour: B width: 60, height: 50 *****
+list_it: 0 40 50
+first contour elemet: 40 100 50
+curr block: B x: 100 y: 0
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) 
+blockXleft: 100 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 100 0
+last contour
+insert contour: 100 160 50
+the insert pos: 2 0 81700304
+insert contour: 100 160 50
+Block: B x: 100 y: 0
+***** updateContour: D width: 40, height: 50 *****
+list_it: 0 40 50
+list_it: 40 100 50
+first contour elemet: 100 160 50
+curr block: D x: 100 y: 0
+list_it: x_left: 100 x_right: 160 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 160 y_top: 50) 
+blockXleft: 100 blockXright: 140
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 100 160 50
+to 140
+last contour
+insert contour: 100 140 100
+the insert pos: 140 160 50
+insert contour: 100 140 100
+Block: D x: 100 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 220
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+Bound area: 16000
+HPWL: 425
+new cost: 8212.5
+current cost: 8212.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 220
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 220
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 220
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 220
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+
+Iteration: 2
+Moving blocks
+Moving D and C
+future_parent: C
+future_child: D
+***** updateContour: A width: 40, height: 50 *****
+Block: A x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 40 50
+curr block: C x: 40 y: 0
+list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) 
+blockXleft: 40 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 40 0
+last contour
+insert contour: 40 100 50
+the insert pos: 1 0 81700304
+insert contour: 40 100 50
+Block: C x: 40 y: 0
+***** updateContour: B width: 60, height: 50 *****
+list_it: 0 40 50
+first contour elemet: 40 100 50
+curr block: B x: 100 y: 0
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) 
+blockXleft: 100 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 100 0
+last contour
+insert contour: 100 160 50
+the insert pos: 2 0 81700304
+insert contour: 100 160 50
+Block: B x: 100 y: 0
+***** updateContour return *****
+
+***** updateContour: D width: 40, height: 50 *****
+list_it: 0 40 50
+first contour elemet: 40 100 50
+curr block: D x: 40 y: 0
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 160 y_top: 50) 
+blockXleft: 40 blockXright: 80
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 40 100 50
+to 80
+next contour: 100 160 50
+insert contour: 40 80 100
+the insert pos: 80 100 50
+insert contour: 40 80 100
+Block: D x: 40 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 195
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 80 y_top: 100
+x_left: 80 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 16000
+HPWL: 425
+new cost: 8212.5
+current cost: 8212.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 195
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 80 y_top: 100
+x_left: 80 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 220
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 140 y_top: 100
+x_left: 140 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 195
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 80 y_top: 100
+x_left: 80 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 195
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 80 y_top: 100
+x_left: 80 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+
+Iteration: 3
+Rotating blocks
+Rotating A
+***** updateContour: A width: 50, height: 40 *****
+Block: A x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81700304
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: B width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: B x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 110 0
+last contour
+insert contour: 110 170 50
+the insert pos: 2 0 81700304
+insert contour: 110 170 50
+Block: B x: 110 y: 0
+***** updateContour return *****
+
+***** updateContour: D width: 40, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: D x: 50 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 50 blockXright: 90
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 50 110 50
+to 90
+next contour: 110 170 50
+insert contour: 50 90 100
+the insert pos: 90 110 50
+insert contour: 50 90 100
+Block: D x: 50 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 145
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 90 y_top: 100
+x_left: 90 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 375
+new cost: 8687.5
+current cost: 8212.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 145
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 90 y_top: 100
+x_left: 90 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 195
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 80 y_top: 100
+x_left: 80 x_right: 100 y_top: 50
+x_left: 100 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 145
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 90 y_top: 100
+x_left: 90 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 145
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 90 y_top: 100
+x_left: 90 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+
+Iteration: 4
+Moving blocks
+Moving D and B
+future_parent: B
+future_child: D
+***** updateContour: A width: 50, height: 40 *****
+Block: A x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81700304
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: B width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: B x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 110 0
+last contour
+insert contour: 110 170 50
+the insert pos: 2 0 81700304
+insert contour: 110 170 50
+Block: B x: 110 y: 0
+***** updateContour: D width: 40, height: 50 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 170 50
+curr block: D x: 110 y: 0
+list_it: x_left: 110 x_right: 170 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 110 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 110 170 50
+to 150
+last contour
+insert contour: 110 150 100
+the insert pos: 150 170 50
+insert contour: 110 150 100
+Block: D x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 155
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 395
+new cost: 8697.5
+current cost: 8687.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 155
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 145
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 230
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 90 y_top: 100
+x_left: 90 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: D 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 155
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 155
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+
+Iteration: 5
+Rotating blocks
+Rotating D
+***** updateContour: A width: 50, height: 40 *****
+Block: A x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81700304
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: B width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: B x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 110 0
+last contour
+insert contour: 110 170 50
+the insert pos: 2 0 81700304
+insert contour: 110 170 50
+Block: B x: 110 y: 0
+***** updateContour: D width: 50, height: 40 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 170 50
+curr block: D x: 110 y: 0
+list_it: x_left: 110 x_right: 170 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 110 blockXright: 160
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 110 170 50
+to 160
+last contour
+insert contour: 110 160 90
+the insert pos: 160 170 50
+insert contour: 110 160 90
+Block: D x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 90
+x_left: 160 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+Bound area: 15300
+HPWL: 445
+new cost: 7872.5
+current cost: 8697.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 90
+x_left: 160 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 155
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 90
+x_left: 160 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 170
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 90
+x_left: 160 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+
+Iteration: 6
+Rotating blocks
+Rotating B
+***** updateContour: A width: 50, height: 40 *****
+Block: A x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81700304
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: B width: 50, height: 60 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: B x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 110 0
+last contour
+insert contour: 110 160 60
+the insert pos: 2 0 81700304
+insert contour: 110 160 60
+Block: B x: 110 y: 0
+***** updateContour: D width: 50, height: 40 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 160 60
+curr block: D x: 110 y: 0
+list_it: x_left: 110 x_right: 160 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 160 y_top: 60) 
+blockXleft: 110 blockXright: 160
+case 1
+remove contour: 110 160 60
+list_it is at the end
+list_it after erase: 2 0 81700304
+insert_pos: end
+break
+insert contour: 110 160 100
+the insert pos: 2 0 81700304
+insert contour: 110 160 100
+Block: D x: 110 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+ ---------------------- 
+
+Bound area: 16000
+HPWL: 445
+new cost: 8222.5
+current cost: 7872.5
+best cost: 8212.5
+
+Iteration: 7
+Swapping blocks
+Swapping C and B
+block1: C block2: B
+swap adjacent blocks
+***** updateContour: A width: 50, height: 40 *****
+Block: A x: 0 y: 0
+***** updateContour: B width: 50, height: 60 *****
+first contour elemet: 0 50 40
+curr block: B x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 50 0
+last contour
+insert contour: 50 100 60
+the insert pos: 1 0 81700304
+insert contour: 50 100 60
+Block: B x: 50 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 100 60
+curr block: C x: 100 y: 0
+list_it: x_left: 50 x_right: 100 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 100 y_top: 60) 
+blockXleft: 100 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 160 50
+the insert pos: 2 0 81700304
+insert contour: 100 160 50
+Block: C x: 100 y: 0
+***** updateContour: D width: 50, height: 40 *****
+list_it: 0 50 40
+list_it: 50 100 60
+first contour elemet: 100 160 50
+curr block: D x: 100 y: 0
+list_it: x_left: 100 x_right: 160 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 100 y_top: 60) (x_left: 100 x_right: 160 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 100 160 50
+to 150
+last contour
+insert contour: 100 150 90
+the insert pos: 150 160 50
+insert contour: 100 150 90
+Block: D x: 100 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 60
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 14400
+HPWL: 445
+new cost: 7422.5
+current cost: 7872.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 60
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 170
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 90
+x_left: 160 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: C, Left: nullptr Right: D 
+Key: D, Block: D Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: B, Right: nullptr 
+Key: A, Block: A Parent: nullptr Left: C, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 60
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 60
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+ ---------------------- 
+
+
+Iteration: 8
+Swapping blocks
+Swapping B and A
+block1: B block2: A
+swap adjacent blocks
+***** updateContour: B width: 50, height: 60 *****
+Block: B x: 0 y: 0
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 50 60
+curr block: A x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) 
+blockXleft: 50 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 50 0
+last contour
+insert contour: 50 100 40
+the insert pos: 1 0 81699312
+insert contour: 50 100 40
+Block: A x: 50 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 60
+first contour elemet: 50 100 40
+curr block: C x: 100 y: 0
+list_it: x_left: 50 x_right: 100 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) (x_left: 50 x_right: 100 y_top: 40) 
+blockXleft: 100 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 160 50
+the insert pos: 2 0 81699312
+insert contour: 100 160 50
+Block: C x: 100 y: 0
+***** updateContour: D width: 50, height: 40 *****
+list_it: 0 50 60
+list_it: 50 100 40
+first contour elemet: 100 160 50
+curr block: D x: 100 y: 0
+list_it: x_left: 100 x_right: 160 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) (x_left: 50 x_right: 100 y_top: 40) (x_left: 100 x_right: 160 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 100 160 50
+to 150
+last contour
+insert contour: 100 150 90
+the insert pos: 150 160 50
+insert contour: 100 150 90
+Block: D x: 100 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 60
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: A, Right: nullptr <-- root
+ ---------------------- 
+
+Bound area: 14400
+HPWL: 425
+new cost: 7412.5
+current cost: 7422.5
+best cost: 8212.5
+Accept the new tree
+new tree structure: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 60
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: A, Right: nullptr <-- root
+ ---------------------- 
+
+BSTree assignment operator
+BSTree before assignment
+ ------- BSTree ------- 
+root: A
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 205
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 240
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 60
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: A, Left: C, Right: nullptr 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: B, Left: nullptr Right: D 
+Key: A, Block: A Parent: nullptr Left: B, Right: nullptr <-- root
+ ---------------------- 
+
+copied_tree
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 60
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: A, Right: nullptr <-- root
+ ---------------------- 
+
+BSTree after assignment
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 2
+BoundaryWidth: 160
+BoundaryHeight: 90
+BlockName2Ptr: 
+BlockName: B BlockPtr->name: B
+BlockName: D BlockPtr->name: D
+BlockName: C BlockPtr->name: C
+BlockName: A BlockPtr->name: A
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 60
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 90
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: B, Block: B Parent: nullptr Left: A, Right: nullptr <-- root
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: D 
+Key: A, Block: A Parent: B, Left: C, Right: nullptr 
+ ---------------------- 
+
+
+Iteration: 9
+Rotating blocks
+Rotating C
+***** updateContour: B width: 50, height: 60 *****
+Block: B x: 0 y: 0
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 50 60
+curr block: A x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) 
+blockXleft: 50 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 50 0
+last contour
+insert contour: 50 100 40
+the insert pos: 1 0 81699312
+insert contour: 50 100 40
+Block: A x: 50 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 60
+first contour elemet: 50 100 40
+curr block: C x: 100 y: 0
+list_it: x_left: 50 x_right: 100 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) (x_left: 50 x_right: 100 y_top: 40) 
+blockXleft: 100 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 150 60
+the insert pos: 2 0 81699312
+insert contour: 100 150 60
+Block: C x: 100 y: 0
+***** updateContour: D width: 50, height: 40 *****
+list_it: 0 50 60
+list_it: 50 100 40
+first contour elemet: 100 150 60
+curr block: D x: 100 y: 0
+list_it: x_left: 100 x_right: 150 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) (x_left: 50 x_right: 100 y_top: 40) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 100 blockXright: 150
+case 1
+remove contour: 100 150 60
+list_it is at the end
+list_it after erase: 2 0 81699312
+insert_pos: end
+break
+insert contour: 100 150 100
+the insert pos: 2 0 81699312
+insert contour: 100 150 100
+Block: D x: 100 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 60
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: D 
+Key: D, Block: D Parent: C, Left: nullptr Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: A, Right: nullptr <-- root
+ ---------------------- 
+
+Bound area: 15000
+HPWL: 425
+new cost: 7712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 10
+Swapping blocks
+Swapping B and D
+block1: B block2: D
+swap non-adjacent blocks
+update the left/right of the parent of B
+update the left/right of the parent of D
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 50 40
+curr block: A x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 50 0
+last contour
+insert contour: 50 100 40
+the insert pos: 1 0 81699760
+insert contour: 50 100 40
+Block: A x: 50 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 40
+first contour elemet: 50 100 40
+curr block: C x: 100 y: 0
+list_it: x_left: 50 x_right: 100 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 100 y_top: 40) 
+blockXleft: 100 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 150 60
+the insert pos: 2 0 81699760
+insert contour: 100 150 60
+Block: C x: 100 y: 0
+***** updateContour: B width: 50, height: 60 *****
+list_it: 0 50 40
+list_it: 50 100 40
+first contour elemet: 100 150 60
+curr block: B x: 100 y: 0
+list_it: x_left: 100 x_right: 150 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 100 y_top: 40) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 100 blockXright: 150
+case 1
+remove contour: 100 150 60
+list_it is at the end
+list_it after erase: 2 0 81699760
+insert_pos: end
+break
+insert contour: 100 150 120
+the insert pos: 2 0 81699760
+insert contour: 100 150 120
+Block: B x: 100 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: B 
+Key: D, Block: D Parent: nullptr Left: A, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 11
+Rotating blocks
+Rotating C
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 50 40
+curr block: A x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 50 0
+last contour
+insert contour: 50 100 40
+the insert pos: 1 0 81699760
+insert contour: 50 100 40
+Block: A x: 50 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 100 40
+curr block: C x: 100 y: 0
+list_it: x_left: 50 x_right: 100 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 100 y_top: 40) 
+blockXleft: 100 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 160 50
+the insert pos: 2 0 81699760
+insert contour: 100 160 50
+Block: C x: 100 y: 0
+***** updateContour: B width: 50, height: 60 *****
+list_it: 0 50 40
+list_it: 50 100 40
+first contour elemet: 100 160 50
+curr block: B x: 100 y: 0
+list_it: x_left: 100 x_right: 160 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 100 y_top: 40) (x_left: 100 x_right: 160 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 100 160 50
+to 150
+last contour
+insert contour: 100 150 110
+the insert pos: 150 160 50
+insert contour: 100 150 110
+Block: B x: 100 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 110
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 110
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: B 
+Key: D, Block: D Parent: nullptr Left: A, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 17600
+HPWL: 425
+new cost: 9012.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 12
+Moving blocks
+Moving C and B
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 110
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 100 y_top: 40
+x_left: 100 x_right: 150 y_top: 110
+x_left: 150 x_right: 160 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: B 
+Key: D, Block: D Parent: nullptr Left: A, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 17600
+HPWL: 425
+new cost: 9012.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 13
+Rotating blocks
+Rotating A
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: A width: 40, height: 50 *****
+first contour elemet: 0 50 40
+curr block: A x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 90
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 50 0
+last contour
+insert contour: 50 90 50
+the insert pos: 1 0 81699760
+insert contour: 50 90 50
+Block: A x: 50 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 90 50
+curr block: C x: 90 y: 0
+list_it: x_left: 50 x_right: 90 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 90 y_top: 50) 
+blockXleft: 90 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 90 0
+last contour
+insert contour: 90 150 50
+the insert pos: 2 0 81699760
+insert contour: 90 150 50
+Block: C x: 90 y: 0
+***** updateContour: B width: 50, height: 60 *****
+list_it: 0 50 40
+list_it: 50 90 50
+first contour elemet: 90 150 50
+curr block: B x: 90 y: 0
+list_it: x_left: 90 x_right: 150 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 90 y_top: 50) (x_left: 90 x_right: 150 y_top: 50) 
+blockXleft: 90 blockXright: 140
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 90 150 50
+to 140
+last contour
+insert contour: 90 140 110
+the insert pos: 140 150 50
+insert contour: 90 140 110
+Block: B x: 90 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 110
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 90 y_top: 50
+x_left: 90 x_right: 140 y_top: 110
+x_left: 140 x_right: 150 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: C, Right: nullptr 
+Key: C, Block: C Parent: A, Left: nullptr Right: B 
+Key: D, Block: D Parent: nullptr Left: A, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 16500
+HPWL: 425
+new cost: 8462.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 14
+Swapping blocks
+Swapping C and A
+block1: C block2: A
+swap adjacent blocks
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: A width: 40, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: A x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 110 0
+last contour
+insert contour: 110 150 50
+the insert pos: 2 0 81699760
+insert contour: 110 150 50
+Block: A x: 110 y: 0
+***** updateContour: B width: 50, height: 60 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 150 50
+curr block: B x: 110 y: 0
+list_it: x_left: 110 x_right: 150 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 150 y_top: 50) 
+blockXleft: 110 blockXright: 160
+case 1
+remove contour: 110 150 50
+list_it is at the end
+list_it after erase: 2 0 81699760
+insert_pos: end
+break
+insert contour: 110 160 110
+the insert pos: 2 0 81699760
+insert contour: 110 160 110
+Block: B x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 110
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 110
+ Tree Structure: 
+Key: A, Block: A Parent: C, Left: nullptr Right: B 
+Key: C, Block: C Parent: D, Left: A, Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: C, Right: nullptr <-- root
+Key: B, Block: B Parent: A, Left: nullptr Right: nullptr 
+ ---------------------- 
+
+Bound area: 17600
+HPWL: 425
+new cost: 9012.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 15
+Swapping blocks
+Swapping B and A
+block1: B block2: A
+swap adjacent blocks
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: B width: 50, height: 60 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: B x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 110 0
+last contour
+insert contour: 110 160 60
+the insert pos: 2 0 81699760
+insert contour: 110 160 60
+Block: B x: 110 y: 0
+***** updateContour: A width: 40, height: 50 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 160 60
+curr block: A x: 110 y: 0
+list_it: x_left: 110 x_right: 160 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 160 y_top: 60) 
+blockXleft: 110 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 60
+shrink the x_left of contour: 110 160 60
+to 150
+last contour
+insert contour: 110 150 110
+the insert pos: 150 160 60
+insert contour: 110 150 110
+Block: A x: 110 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 110
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 110
+x_left: 150 x_right: 160 y_top: 60
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: D, Left: B, Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: C, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: A 
+ ---------------------- 
+
+Bound area: 17600
+HPWL: 425
+new cost: 9012.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 16
+Moving blocks
+Moving B and C
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 110
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 110
+x_left: 150 x_right: 160 y_top: 60
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: D, Left: B, Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: C, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: A 
+ ---------------------- 
+
+Bound area: 17600
+HPWL: 425
+new cost: 9012.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 17
+Rotating blocks
+Rotating B
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: C width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: C x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: C x: 50 y: 0
+***** updateContour: B width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: B x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 110 0
+last contour
+insert contour: 110 170 50
+the insert pos: 2 0 81699760
+insert contour: 110 170 50
+Block: B x: 110 y: 0
+***** updateContour: A width: 40, height: 50 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 170 50
+curr block: A x: 110 y: 0
+list_it: x_left: 110 x_right: 170 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 110 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 110 170 50
+to 150
+last contour
+insert contour: 110 150 100
+the insert pos: 150 170 50
+insert contour: 110 150 100
+Block: A x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: D, Left: B, Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: C, Right: nullptr <-- root
+Key: B, Block: B Parent: C, Left: nullptr Right: A 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 18
+Swapping blocks
+Swapping C and B
+block1: C block2: B
+swap adjacent blocks
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: B width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: B x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: B x: 50 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: C x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 110 0
+last contour
+insert contour: 110 170 50
+the insert pos: 2 0 81699760
+insert contour: 110 170 50
+Block: C x: 110 y: 0
+***** updateContour: A width: 40, height: 50 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 170 50
+curr block: A x: 110 y: 0
+list_it: x_left: 110 x_right: 170 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 110 blockXright: 150
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 110 170 50
+to 150
+last contour
+insert contour: 110 150 100
+the insert pos: 150 170 50
+insert contour: 110 150 100
+Block: A x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 150 y_top: 100
+x_left: 150 x_right: 170 y_top: 50
+ Tree Structure: 
+Key: A, Block: A Parent: C, Left: nullptr Right: nullptr 
+Key: C, Block: C Parent: B, Left: nullptr Right: A 
+Key: D, Block: D Parent: nullptr Left: B, Right: nullptr <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 19
+Swapping blocks
+Swapping C and A
+block1: C block2: A
+swap adjacent blocks
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: B width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: B x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: B x: 50 y: 0
+***** updateContour: A width: 40, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: A x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block A BLY to 0
+block A BL: 110 0
+last contour
+insert contour: 110 150 50
+the insert pos: 2 0 81699760
+insert contour: 110 150 50
+Block: A x: 110 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 40
+list_it: 50 110 50
+first contour elemet: 110 150 50
+curr block: C x: 110 y: 0
+list_it: x_left: 110 x_right: 150 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 150 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 1
+remove contour: 110 150 50
+list_it is at the end
+list_it after erase: 2 0 81699760
+insert_pos: end
+break
+insert contour: 110 170 100
+the insert pos: 2 0 81699760
+insert contour: 110 170 100
+Block: C x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: C 
+Key: C, Block: C Parent: A, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: nullptr <-- root
+Key: B, Block: B Parent: D, Left: A, Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 20
+Moving blocks
+Moving D and A
+future_parent: D
+future_child: A
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: B width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: B x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: B x: 50 y: 0
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: C x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 110 0
+last contour
+insert contour: 110 170 50
+the insert pos: 2 0 81699760
+insert contour: 110 170 50
+Block: C x: 110 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 40, height: 50 *****
+first contour elemet: 0 50 40
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 0 blockXright: 40
+case 3
+curr->getBL().y: 0 list_it->y_top: 40
+shrink the x_left of contour: 0 50 40
+to 40
+next contour: 50 110 50
+insert contour: 0 40 90
+the insert pos: 40 50 40
+insert contour: 0 40 90
+Block: A x: 0 y: 40
+***** updateContour: C width: 60, height: 50 *****
+list_it: 0 40 90
+list_it: 40 50 40
+list_it: 50 110 50
+first contour elemet: 110 170 50
+curr block: C x: 110 y: 0
+list_it: x_left: 110 x_right: 170 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 90) (x_left: 40 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 170 y_top: 50) 
+blockXleft: 110 blockXright: 170
+case 1
+remove contour: 110 170 50
+list_it is at the end
+list_it after erase: 3 0 81699760
+insert_pos: end
+break
+insert contour: 110 170 100
+the insert pos: 3 0 81699760
+insert contour: 110 170 100
+Block: C x: 110 y: 50
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 90
+x_left: 40 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 21
+Moving blocks
+Moving A and D
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 90
+x_left: 40 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 22
+Moving blocks
+Moving D and A
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 90
+x_left: 40 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 23
+Moving blocks
+Moving A and D
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 170
+BoundaryHeight: 100
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 90
+x_left: 40 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 170 y_top: 100
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 17000
+HPWL: 425
+new cost: 8712.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 24
+Rotating blocks
+Rotating C
+***** updateContour: D width: 50, height: 40 *****
+Block: D x: 0 y: 0
+***** updateContour: B width: 60, height: 50 *****
+first contour elemet: 0 50 40
+curr block: B x: 50 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) 
+blockXleft: 50 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 50 0
+last contour
+insert contour: 50 110 50
+the insert pos: 1 0 81699760
+insert contour: 50 110 50
+Block: B x: 50 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 40
+first contour elemet: 50 110 50
+curr block: C x: 110 y: 0
+list_it: x_left: 50 x_right: 110 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) 
+blockXleft: 110 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 110 0
+last contour
+insert contour: 110 160 60
+the insert pos: 2 0 81699760
+insert contour: 110 160 60
+Block: C x: 110 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 40, height: 50 *****
+first contour elemet: 0 50 40
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 160 y_top: 60) 
+blockXleft: 0 blockXright: 40
+case 3
+curr->getBL().y: 0 list_it->y_top: 40
+shrink the x_left of contour: 0 50 40
+to 40
+next contour: 50 110 50
+insert contour: 0 40 90
+the insert pos: 40 50 40
+insert contour: 0 40 90
+Block: A x: 0 y: 40
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 40 90
+list_it: 40 50 40
+list_it: 50 110 50
+first contour elemet: 110 160 60
+curr block: C x: 110 y: 0
+list_it: x_left: 110 x_right: 160 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 90) (x_left: 40 x_right: 50 y_top: 40) (x_left: 50 x_right: 110 y_top: 50) (x_left: 110 x_right: 160 y_top: 60) 
+blockXleft: 110 blockXright: 160
+case 1
+remove contour: 110 160 60
+list_it is at the end
+list_it after erase: 3 0 81699760
+insert_pos: end
+break
+insert contour: 110 160 120
+the insert pos: 3 0 81699760
+insert contour: 110 160 120
+Block: C x: 110 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 90
+x_left: 40 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 19200
+HPWL: 425
+new cost: 9812.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 25
+Moving blocks
+Moving D and C
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 90
+x_left: 40 x_right: 50 y_top: 40
+x_left: 50 x_right: 110 y_top: 50
+x_left: 110 x_right: 160 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 19200
+HPWL: 425
+new cost: 9812.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 26
+Rotating blocks
+Rotating D
+***** updateContour: D width: 40, height: 50 *****
+Block: D x: 0 y: 0
+***** updateContour: B width: 60, height: 50 *****
+first contour elemet: 0 40 50
+curr block: B x: 40 y: 0
+list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) 
+blockXleft: 40 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 40 0
+last contour
+insert contour: 40 100 50
+the insert pos: 1 0 81699760
+insert contour: 40 100 50
+Block: B x: 40 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 40 50
+first contour elemet: 40 100 50
+curr block: C x: 100 y: 0
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 150 60
+the insert pos: 2 0 81699760
+insert contour: 100 150 60
+Block: C x: 100 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 40, height: 50 *****
+first contour elemet: 0 40 50
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 0 blockXright: 40
+case 1
+remove contour: 0 40 50
+return val of erase: 40 100 50
+list_it is at the begin
+list_it after erase: 40 100 50
+list_it is at the begin, so continue
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 0 blockXright: 40
+case 6
+set block A BLY to 0
+block A BL: 0 0
+next contour: 100 150 60
+insert contour: 0 40 50
+the insert pos: 40 100 50
+insert contour: 0 40 50
+Block: A x: 0 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 40 50
+list_it: 40 100 50
+first contour elemet: 100 150 60
+curr block: C x: 100 y: 0
+list_it: x_left: 100 x_right: 150 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 100 blockXright: 150
+case 1
+remove contour: 100 150 60
+list_it is at the end
+list_it after erase: 2 0 81699760
+insert_pos: end
+break
+insert contour: 100 150 120
+the insert pos: 2 0 81699760
+insert contour: 100 150 120
+Block: C x: 100 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 27
+Moving blocks
+Moving C and B
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 40 y_top: 50
+x_left: 40 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 28
+Rotating blocks
+Rotating A
+***** updateContour: D width: 40, height: 50 *****
+Block: D x: 0 y: 0
+***** updateContour: B width: 60, height: 50 *****
+first contour elemet: 0 40 50
+curr block: B x: 40 y: 0
+list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) 
+blockXleft: 40 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block B BLY to 0
+block B BL: 40 0
+last contour
+insert contour: 40 100 50
+the insert pos: 1 0 81699760
+insert contour: 40 100 50
+Block: B x: 40 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 40 50
+first contour elemet: 40 100 50
+curr block: C x: 100 y: 0
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 150 60
+the insert pos: 2 0 81699760
+insert contour: 100 150 60
+Block: C x: 100 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 40 50
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 40 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 40 y_top: 50) (x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 0 blockXright: 50
+case 1
+remove contour: 0 40 50
+return val of erase: 40 100 50
+list_it is at the begin
+list_it after erase: 40 100 50
+list_it is at the begin, so continue
+list_it: x_left: 40 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 40 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 0 blockXright: 50
+case 3
+curr->getBL().y: 50 list_it->y_top: 50
+shrink the x_left of contour: 40 100 50
+to 50
+next contour: 100 150 60
+insert contour: 0 50 90
+the insert pos: 50 100 50
+insert contour: 0 50 90
+Block: A x: 0 y: 50
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 90
+list_it: 50 100 50
+first contour elemet: 100 150 60
+curr block: C x: 100 y: 0
+list_it: x_left: 100 x_right: 150 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 90) (x_left: 50 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 100 blockXright: 150
+case 1
+remove contour: 100 150 60
+list_it is at the end
+list_it after erase: 2 0 81699760
+insert_pos: end
+break
+insert contour: 100 150 120
+the insert pos: 2 0 81699760
+insert contour: 100 150 120
+Block: C x: 100 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 29
+Moving blocks
+Moving C and B
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 30
+Moving blocks
+Moving A and D
+new tree after the operation: 
+ ------- BSTree ------- 
+root: D
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: nullptr Left: B, Right: A <-- root
+Key: B, Block: B Parent: D, Left: C, Right: nullptr 
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 31
+Swapping blocks
+Swapping D and B
+block1: D block2: B
+swap adjacent blocks
+***** updateContour: B width: 60, height: 50 *****
+Block: B x: 0 y: 0
+***** updateContour: D width: 40, height: 50 *****
+first contour elemet: 0 60 50
+curr block: D x: 60 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) 
+blockXleft: 60 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block D BLY to 0
+block D BL: 60 0
+last contour
+insert contour: 60 100 50
+the insert pos: 1 0 81699312
+insert contour: 60 100 50
+Block: D x: 60 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 60 50
+first contour elemet: 60 100 50
+curr block: C x: 100 y: 0
+list_it: x_left: 60 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 150 60
+the insert pos: 2 0 81699312
+insert contour: 100 150 60
+Block: C x: 100 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 60 50
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 0 blockXright: 50
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 0 60 50
+to 50
+next contour: 60 100 50
+insert contour: 0 50 90
+the insert pos: 50 60 50
+insert contour: 0 50 90
+Block: A x: 0 y: 50
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 90
+list_it: 50 60 50
+list_it: 60 100 50
+first contour elemet: 100 150 60
+curr block: C x: 100 y: 0
+list_it: x_left: 100 x_right: 150 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 90) (x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 100 blockXright: 150
+case 1
+remove contour: 100 150 60
+list_it is at the end
+list_it after erase: 3 0 81699312
+insert_pos: end
+break
+insert contour: 100 150 120
+the insert pos: 3 0 81699312
+insert contour: 100 150 120
+Block: C x: 100 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 60 y_top: 50
+x_left: 60 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: C 
+Key: C, Block: C Parent: D, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: B, Left: C, Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: D, Right: A <-- root
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 32
+Moving blocks
+Moving B and D
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 60 y_top: 50
+x_left: 60 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: C 
+Key: C, Block: C Parent: D, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: B, Left: C, Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: D, Right: A <-- root
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 33
+Rotating blocks
+Rotating D
+***** updateContour: B width: 60, height: 50 *****
+Block: B x: 0 y: 0
+***** updateContour: D width: 50, height: 40 *****
+first contour elemet: 0 60 50
+curr block: D x: 60 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) 
+blockXleft: 60 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block D BLY to 0
+block D BL: 60 0
+last contour
+insert contour: 60 110 40
+the insert pos: 1 0 81699312
+insert contour: 60 110 40
+Block: D x: 60 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 60 50
+first contour elemet: 60 110 40
+curr block: C x: 110 y: 0
+list_it: x_left: 60 x_right: 110 y_top: 40
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 40) 
+blockXleft: 110 blockXright: 160
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 110 0
+last contour
+insert contour: 110 160 60
+the insert pos: 2 0 81699312
+insert contour: 110 160 60
+Block: C x: 110 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 60 50
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 40) (x_left: 110 x_right: 160 y_top: 60) 
+blockXleft: 0 blockXright: 50
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 0 60 50
+to 50
+next contour: 60 110 40
+insert contour: 0 50 90
+the insert pos: 50 60 50
+insert contour: 0 50 90
+Block: A x: 0 y: 50
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 90
+list_it: 50 60 50
+list_it: 60 110 40
+first contour elemet: 110 160 60
+curr block: C x: 110 y: 0
+list_it: x_left: 110 x_right: 160 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 90) (x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 40) (x_left: 110 x_right: 160 y_top: 60) 
+blockXleft: 110 blockXright: 160
+case 1
+remove contour: 110 160 60
+list_it is at the end
+list_it after erase: 3 0 81699312
+insert_pos: end
+break
+insert contour: 110 160 120
+the insert pos: 3 0 81699312
+insert contour: 110 160 120
+Block: C x: 110 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 60 y_top: 50
+x_left: 60 x_right: 110 y_top: 40
+x_left: 110 x_right: 160 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: C 
+Key: C, Block: C Parent: D, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: B, Left: C, Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: D, Right: A <-- root
+ ---------------------- 
+
+Bound area: 19200
+HPWL: 425
+new cost: 9812.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 34
+Moving blocks
+Moving B and C
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 160
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 60 y_top: 50
+x_left: 60 x_right: 110 y_top: 40
+x_left: 110 x_right: 160 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: C 
+Key: C, Block: C Parent: D, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: B, Left: C, Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: D, Right: A <-- root
+ ---------------------- 
+
+Bound area: 19200
+HPWL: 425
+new cost: 9812.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 35
+Rotating blocks
+Rotating D
+***** updateContour: B width: 60, height: 50 *****
+Block: B x: 0 y: 0
+***** updateContour: D width: 40, height: 50 *****
+first contour elemet: 0 60 50
+curr block: D x: 60 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) 
+blockXleft: 60 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block D BLY to 0
+block D BL: 60 0
+last contour
+insert contour: 60 100 50
+the insert pos: 1 0 81699312
+insert contour: 60 100 50
+Block: D x: 60 y: 0
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 60 50
+first contour elemet: 60 100 50
+curr block: C x: 100 y: 0
+list_it: x_left: 60 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) 
+blockXleft: 100 blockXright: 150
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 100 0
+last contour
+insert contour: 100 150 60
+the insert pos: 2 0 81699312
+insert contour: 100 150 60
+Block: C x: 100 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: A width: 50, height: 40 *****
+first contour elemet: 0 60 50
+curr block: A x: 0 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 0 blockXright: 50
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 0 60 50
+to 50
+next contour: 60 100 50
+insert contour: 0 50 90
+the insert pos: 50 60 50
+insert contour: 0 50 90
+Block: A x: 0 y: 50
+***** updateContour: C width: 50, height: 60 *****
+list_it: 0 50 90
+list_it: 50 60 50
+list_it: 60 100 50
+first contour elemet: 100 150 60
+curr block: C x: 100 y: 0
+list_it: x_left: 100 x_right: 150 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 90) (x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) (x_left: 100 x_right: 150 y_top: 60) 
+blockXleft: 100 blockXright: 150
+case 1
+remove contour: 100 150 60
+list_it is at the end
+list_it after erase: 3 0 81699312
+insert_pos: end
+break
+insert contour: 100 150 120
+the insert pos: 3 0 81699312
+insert contour: 100 150 120
+Block: C x: 100 y: 60
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 150
+BoundaryHeight: 120
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 90
+x_left: 50 x_right: 60 y_top: 50
+x_left: 60 x_right: 100 y_top: 50
+x_left: 100 x_right: 150 y_top: 120
+ Tree Structure: 
+Key: A, Block: A Parent: B, Left: nullptr Right: C 
+Key: C, Block: C Parent: D, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: B, Left: C, Right: nullptr 
+Key: B, Block: B Parent: nullptr Left: D, Right: A <-- root
+ ---------------------- 
+
+Bound area: 18000
+HPWL: 425
+new cost: 9212.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 36
+Moving blocks
+Moving A and D
+future_parent: D
+future_child: A
+***** updateContour: B width: 60, height: 50 *****
+Block: B x: 0 y: 0
+***** updateContour: D width: 40, height: 50 *****
+first contour elemet: 0 60 50
+curr block: D x: 60 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) 
+blockXleft: 60 blockXright: 100
+case 5
+next(list_it) == contour_list.end()
+set block D BLY to 0
+block D BL: 60 0
+last contour
+insert contour: 60 100 50
+the insert pos: 1 0 81699312
+insert contour: 60 100 50
+Block: D x: 60 y: 0
+***** updateContour: C width: 50, height: 60 *****
+first contour elemet: 0 60 50
+curr block: C x: 0 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) 
+blockXleft: 0 blockXright: 50
+case 3
+curr->getBL().y: 0 list_it->y_top: 50
+shrink the x_left of contour: 0 60 50
+to 50
+next contour: 60 100 50
+insert contour: 0 50 110
+the insert pos: 50 60 50
+insert contour: 0 50 110
+Block: C x: 0 y: 50
+***** updateContour return *****
+
+***** updateContour: A width: 50, height: 40 *****
+list_it: 0 50 110
+list_it: 50 60 50
+first contour elemet: 60 100 50
+curr block: A x: 60 y: 0
+list_it: x_left: 60 x_right: 100 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 110) (x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 100 y_top: 50) 
+blockXleft: 60 blockXright: 110
+case 1
+remove contour: 60 100 50
+list_it is at the end
+list_it after erase: 2 0 81699312
+insert_pos: end
+break
+insert contour: 60 110 90
+the insert pos: 2 0 81699312
+insert contour: 60 110 90
+Block: A x: 60 y: 50
+***** updateContour: C width: 50, height: 60 *****
+first contour elemet: 0 50 110
+curr block: C x: 0 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 110
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 110) (x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 90) 
+blockXleft: 0 blockXright: 50
+case 1
+remove contour: 0 50 110
+return val of erase: 50 60 50
+list_it is at the begin
+list_it after erase: 50 60 50
+list_it is at the begin, so continue
+list_it: x_left: 50 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 90) 
+blockXleft: 0 blockXright: 50
+case 6
+set block C BLY to 0
+block C BL: 0 0
+next contour: 60 110 90
+insert contour: 0 50 60
+the insert pos: 50 60 50
+insert contour: 0 50 60
+Block: C x: 0 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour return *****
+
+***** updateContour: C width: 50, height: 60 *****
+first contour elemet: 0 50 60
+curr block: C x: 0 y: 0
+list_it: x_left: 0 x_right: 50 y_top: 60
+whole contour list: 
+(x_left: 0 x_right: 50 y_top: 60) (x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 90) 
+blockXleft: 0 blockXright: 50
+case 1
+remove contour: 0 50 60
+return val of erase: 50 60 50
+list_it is at the begin
+list_it after erase: 50 60 50
+list_it is at the begin, so continue
+list_it: x_left: 50 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 50 x_right: 60 y_top: 50) (x_left: 60 x_right: 110 y_top: 90) 
+blockXleft: 0 blockXright: 50
+case 6
+set block C BLY to 0
+block C BL: 0 0
+next contour: 60 110 90
+insert contour: 0 50 60
+the insert pos: 50 60 50
+insert contour: 0 50 60
+Block: C x: 0 y: 0
+***** updateContour return *****
+
+***** updateContour return *****
+
+new tree after the operation: 
+ ------- BSTree ------- 
+root: B
+BSTree: 
+numBlocks: 4
+numNets: 2
+numTerms: 81685128
+BoundaryWidth: 110
+BoundaryHeight: 170
+BlockName2Ptr: 
+BlockName: A BlockPtr->name: A
+BlockName: C BlockPtr->name: C
+BlockName: D BlockPtr->name: D
+BlockName: B BlockPtr->name: B
+TermName2Loc: 
+TermName: VDD Loc: (100, 100)
+TermName: GND Loc: (0, 0)
+netlist: 
+pins: 
+pin_type: terminal, name: GND
+pin_type: block, name: A
+pin_type: block, name: C
+pin_type: block, name: D
+HPWL: 200
+pins: 
+pin_type: terminal, name: VDD
+pin_type: terminal, name: GND
+pin_type: block, name: B
+pin_type: block, name: D
+HPWL: 225
+block_names: 
+A B C D 
+term_names: 
+GND VDD 
+contour_list: 
+x_left: 0 x_right: 50 y_top: 60
+x_left: 50 x_right: 60 y_top: 50
+x_left: 60 x_right: 110 y_top: 90
+ Tree Structure: 
+Key: A, Block: A Parent: D, Left: nullptr Right: C 
+Key: C, Block: C Parent: B, Left: nullptr Right: nullptr 
+Key: D, Block: D Parent: B, Left: C, Right: A 
+Key: B, Block: B Parent: nullptr Left: D, Right: C <-- root
+ ---------------------- 
+
+Bound area: 18700
+HPWL: 425
+new cost: 9562.5
+current cost: 7412.5
+best cost: 8212.5
+
+Iteration: 37
+Swapping blocks
+Swapping D and C
+block1: D block2: C
+swap non-adjacent blocks
+update the left/right of the parent of D
+update the left/right of the parent of C
+***** updateContour: B width: 60, height: 50 *****
+Block: B x: 0 y: 0
+***** updateContour: C width: 50, height: 60 *****
+first contour elemet: 0 60 50
+curr block: C x: 60 y: 0
+list_it: x_left: 0 x_right: 60 y_top: 50
+whole contour list: 
+(x_left: 0 x_right: 60 y_top: 50) 
+blockXleft: 60 blockXright: 110
+case 5
+next(list_it) == contour_list.end()
+set block C BLY to 0
+block C BL: 60 0
+last contour
+insert contour: 60 110 60
+the insert pos: 1 0 81699312
+insert contour: 60 110 60
+Block: C x: 60 y: 0

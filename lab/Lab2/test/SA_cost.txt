@@ -1,1 +1,111 @@
-Initial cost: 8.16835e+07
+Initial cost: 8212.5
+Iteration: 1
+Swapping B and C
+ cost: 8212.5
+Iteration: 2
+Moving D and C
+ cost: 8212.5
+Iteration: 3
+Rotating A
+ cost: 8687.5
+Iteration: 4
+Moving D and B
+ cost: 8697.5
+Iteration: 5
+Rotating D
+ cost: 7872.5
+Iteration: 6
+Rotating B
+ cost: 7872.5
+Iteration: 7
+Swapping C and B
+ cost: 7422.5
+Iteration: 8
+Swapping B and A
+ cost: 7412.5
+Iteration: 9
+Rotating C
+ cost: 7412.5
+Iteration: 10
+Swapping B and D
+ cost: 7412.5
+Iteration: 11
+Rotating C
+ cost: 7412.5
+Iteration: 12
+Moving C and B
+ cost: 7412.5
+Iteration: 13
+Rotating A
+ cost: 7412.5
+Iteration: 14
+Swapping C and A
+ cost: 7412.5
+Iteration: 15
+Swapping B and A
+ cost: 7412.5
+Iteration: 16
+Moving B and C
+ cost: 7412.5
+Iteration: 17
+Rotating B
+ cost: 7412.5
+Iteration: 18
+Swapping C and B
+ cost: 7412.5
+Iteration: 19
+Swapping C and A
+ cost: 7412.5
+Iteration: 20
+Moving D and A
+ cost: 7412.5
+Iteration: 21
+Moving A and D
+ cost: 7412.5
+Iteration: 22
+Moving D and A
+ cost: 7412.5
+Iteration: 23
+Moving A and D
+ cost: 7412.5
+Iteration: 24
+Rotating C
+ cost: 7412.5
+Iteration: 25
+Moving D and C
+ cost: 7412.5
+Iteration: 26
+Rotating D
+ cost: 7412.5
+Iteration: 27
+Moving C and B
+ cost: 7412.5
+Iteration: 28
+Rotating A
+ cost: 7412.5
+Iteration: 29
+Moving C and B
+ cost: 7412.5
+Iteration: 30
+Moving A and D
+ cost: 7412.5
+Iteration: 31
+Swapping D and B
+ cost: 7412.5
+Iteration: 32
+Moving B and D
+ cost: 7412.5
+Iteration: 33
+Rotating D
+ cost: 7412.5
+Iteration: 34
+Moving B and C
+ cost: 7412.5
+Iteration: 35
+Rotating D
+ cost: 7412.5
+Iteration: 36
+Moving A and D
+ cost: 7412.5
+Iteration: 37
+Swapping D and C
