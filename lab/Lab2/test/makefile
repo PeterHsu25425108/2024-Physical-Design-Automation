@@ -9,6 +9,10 @@ DRAW_DIR = ../draw
 DRAW_TEXT_DIR = ../draw/text
 TESTCASE_DIR = ../testcase
 
+# Define variables for flexibility
+CASE_NAME ?= testcase_name  # Set a default case if not provided
+ALPHA ?= 1.0                # Set a default alpha value if not provided
+
 # Get all .cpp files in the source directory
 SRC_FILES = $(wildcard $(SOURCE_DIR)/*.cpp)
 
@@ -41,8 +45,12 @@ clean:
 	rm -rf $(OUT_DIR)/*
 	rm -rf $(BIN_DIR)/*
 	rm -rf $(DRAW_TEXT_DIR)/*
+
+clean_plot:
 	rm -rf $(DRAW_DIR)/png/*
 	rm -rf $(DRAW_DIR)/svg/*
+clean_text:
+	rm -rf $(DRAW_TEXT_DIR)/*
 
 # run ../draw/plot.py to plot all .txt files in the DRAW_TEXT_DIR
 plot_all:
@@ -55,3 +63,12 @@ plot_init: $(DRAW_TEXT_DIR)/init_plot.txt
 	python3 $(DRAW_DIR)/plot.py $(DRAW_TEXT_DIR)/init_plot.txt
 plot_final: $(DRAW_TEXT_DIR)/final_plot.txt
 	python3 $(DRAW_DIR)/plot.py $(DRAW_TEXT_DIR)/final_plot.txt
+
+# Pattern rule to run [case_name] testcase with alpha = [alpha] using valgrind
+run_valgrind: $(EXEC)
+	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt > cmd.txt
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt
+
+run: $(EXEC)
+	./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt > cmd.txt
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt

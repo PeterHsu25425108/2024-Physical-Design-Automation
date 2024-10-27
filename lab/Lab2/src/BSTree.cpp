@@ -538,7 +538,7 @@ void BSTree::updateContour(Block *curr)
                 /*curr->setBLY(max(curr->getBL().y, list_it->y_top));
                 BoundaryHeight = max(BoundaryHeight, curr->getTR().y);*/
                 insert_pos = list_it;
-                if (list_it == contour_list.begin())
+                /*if (list_it == contour_list.begin())
                 {
                     if (DEBUG_CONTOUR)
                     {
@@ -549,7 +549,7 @@ void BSTree::updateContour(Block *curr)
                     {
                         cout << "block " << curr->getName() << " BL: " << curr->getBL().x << " " << curr->getBL().y << endl;
                     }
-                }
+                }*/
             }
             else
             {
@@ -632,13 +632,39 @@ void BSTree::updateContour(Block *curr)
         cerr << "ERROR: BSTree::updateContour() failed because the left child is the same as the current node" << endl;
         exit(1);
     }
-    updateContour(curr->getLeft());
+
     if (curr->getRight() == curr)
     {
         cerr << "ERROR: BSTree::updateContour() failed because the right child is the same as the current node" << endl;
         exit(1);
     }
+
+    updateContour(curr->getLeft());
     updateContour(curr->getRight());
+
+    /*int BlockXright = curr->getBL().x + curr->getWidth();
+    int BlockYtop = curr->getBL().y + curr->getHeight();
+    if (curr->getLeft() == nullptr || curr->getRight() == nullptr)
+    {
+        updateContour(curr->getRight());
+        updateContour(curr->getLeft());
+    }
+    else
+    {
+        int left_exceed_height = curr->getLeft()->getTR().y - BlockYtop;
+        int right_exceed_width = curr->getRight()->getBL().x - BlockXright;
+
+        if (left_exceed_height < right_exceed_width)
+        {
+            updateContour(curr->getLeft());
+            updateContour(curr->getRight());
+        }
+        else
+        {
+            updateContour(curr->getLeft());
+            updateContour(curr->getRight());
+        }
+    }*/
 
     if (DEBUG_CONTOUR)
     {
@@ -909,6 +935,15 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
         {
             cout << "nullptr" << endl;
         }
+
+        if (become_left_child)
+        {
+            cout << future_child->getName() << " become left child of " << future_parent->getName() << endl;
+        }
+        else
+        {
+            cout << future_child->getName() << " become right child of " << future_parent->getName() << endl;
+        }
     }
 
     // future_child should not be root
@@ -1047,6 +1082,7 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
         }
 
         future_child->setParent(future_parent);
+        future_child->setLeft(nullptr);
     }
     // case3: future_child has right child
     else if (future_child->getRight() != nullptr)
@@ -1071,7 +1107,10 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
         }
 
         future_child->setParent(future_parent);
+        future_child->setRight(nullptr);
     }
+    // future_child->setLeft(nullptr);
+    // future_child->setRight(nullptr);
 
     // update the contour
     updateContour();
@@ -1082,6 +1121,12 @@ bool BSTree::MoveBlock(Block *block1, Block *block2)
 
 bool BSTree::WhoIsParent(const Block *block1, const Block *block2, Block *&parent, Block *&child, bool &become_left_child)
 {
+
+    if (DEBUG_MOVE)
+    {
+        cout << "block1 name: " << block1->getName() << " block2 name: " << block2->getName() << endl;
+    }
+
     if (block1 == nullptr || block2 == nullptr)
     {
         if (block1 == nullptr)
@@ -1164,8 +1209,52 @@ bool BSTree::WhoIsParent(const Block *block1, const Block *block2, Block *&paren
         return true;
     }
 
-    bool block1_can_be_parent = (block1->getLeft() != block2 && block1->getRight() != block2);
-    bool block2_can_be_parent = (block2->getLeft() != block1 && block2->getRight() != block1);
+    bool block1_can_be_parent = (block1->getLeft() == nullptr && block1->getRight() == nullptr);
+    if (DEBUG_MOVE)
+    {
+        cout << block1->getName() << " can be parent: " << block1_can_be_parent << endl;
+        cout << "block1->getLeft(): ";
+        if (block1->getLeft() != nullptr)
+        {
+            cout << block1->getLeft()->getName() << endl;
+        }
+        else
+        {
+            cout << "nullptr" << endl;
+        }
+        cout << "block1->getRight(): ";
+        if (block1->getRight() != nullptr)
+        {
+            cout << block1->getRight()->getName() << endl;
+        }
+        else
+        {
+            cout << "nullptr" << endl;
+        }
+    }
+    bool block2_can_be_parent = (block2->getLeft() == nullptr && block2->getRight() == nullptr);
+    if (DEBUG_MOVE)
+    {
+        cout << block2->getName() << " can be parent: " << block2_can_be_parent << endl;
+        cout << "block2->getLeft(): ";
+        if (block2->getLeft() != nullptr)
+        {
+            cout << block2->getLeft()->getName() << endl;
+        }
+        else
+        {
+            cout << "nullptr" << endl;
+        }
+        cout << "block2->getRight(): ";
+        if (block2->getRight() != nullptr)
+        {
+            cout << block2->getRight()->getName() << endl;
+        }
+        else
+        {
+            cout << "nullptr" << endl;
+        }
+    }
     if (block1_can_be_parent && block2_can_be_parent)
     {
         // decide who will be the parent
@@ -1184,6 +1273,12 @@ bool BSTree::WhoIsParent(const Block *block1, const Block *block2, Block *&paren
         child = const_cast<Block *>(block1);
     }
     else
+    {
+        return false;
+    }
+
+    // child must have < 2 children
+    if (child->getLeft() != nullptr && child->getRight() != nullptr)
     {
         return false;
     }

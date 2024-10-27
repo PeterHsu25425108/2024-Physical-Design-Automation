@@ -1,111 +1,3000 @@
-Initial cost: 8212.5
+Initial cost: 9.90454e+10
 Iteration: 1
-Swapping B and C
- cost: 8212.5
+Swapping bk11 and bk5b
+ cost: 9.90454e+10
 Iteration: 2
-Moving D and C
- cost: 8212.5
+Swapping bk14c and bk18
+ cost: 7.31011e+10
 Iteration: 3
-Rotating A
- cost: 8687.5
+Moving bk4 and bk5b
+ cost: 7.31011e+10
 Iteration: 4
-Moving D and B
- cost: 8697.5
+Swapping bk3 and bk14a
+ cost: 7.31011e+10
 Iteration: 5
-Rotating D
- cost: 7872.5
+Swapping bk3 and bk17b
+ cost: 7.31011e+10
 Iteration: 6
-Rotating B
- cost: 7872.5
+Swapping bk9d and bk17b
+ cost: 7.31011e+10
 Iteration: 7
-Swapping C and B
- cost: 7422.5
+Swapping bk9b and bk3
+ cost: 7.31011e+10
 Iteration: 8
-Swapping B and A
- cost: 7412.5
+Rotating bk11
+ cost: 7.31011e+10
 Iteration: 9
-Rotating C
- cost: 7412.5
+Swapping bk8a and bk3
+ cost: 7.31011e+10
 Iteration: 10
-Swapping B and D
- cost: 7412.5
+Rotating bk14b
+ cost: 7.31011e+10
 Iteration: 11
-Rotating C
- cost: 7412.5
+Moving bk20 and bk7
+ cost: 7.31011e+10
 Iteration: 12
-Moving C and B
- cost: 7412.5
+Swapping bk19 and bk5b
+ cost: 7.31011e+10
 Iteration: 13
-Rotating A
- cost: 7412.5
+Moving bk14b and bk5a
+ cost: 7.31011e+10
 Iteration: 14
-Swapping C and A
- cost: 7412.5
+Moving bk21 and bk3
+ cost: 7.31011e+10
 Iteration: 15
-Swapping B and A
- cost: 7412.5
+Swapping bk6 and bk4
+ cost: 7.31011e+10
 Iteration: 16
-Moving B and C
- cost: 7412.5
+Swapping bk10b and bk4
+ cost: 4.63071e+10
 Iteration: 17
-Rotating B
- cost: 7412.5
+Rotating bk4
+ cost: 4.63071e+10
 Iteration: 18
-Swapping C and B
- cost: 7412.5
+Moving bk8a and bk4
+ cost: 4.63071e+10
 Iteration: 19
-Swapping C and A
- cost: 7412.5
+Rotating bk17b
+ cost: 4.63071e+10
 Iteration: 20
-Moving D and A
- cost: 7412.5
+Moving bk15a and bk8a
+ cost: 4.63071e+10
 Iteration: 21
-Moving A and D
- cost: 7412.5
+Moving bk4 and bk7
+ cost: 4.63071e+10
 Iteration: 22
-Moving D and A
- cost: 7412.5
+Rotating bk9a
+ cost: 4.63071e+10
 Iteration: 23
-Moving A and D
- cost: 7412.5
+Swapping bk20 and bk7
+ cost: 4.63071e+10
 Iteration: 24
-Rotating C
- cost: 7412.5
+Rotating bk12
+ cost: 4.63071e+10
 Iteration: 25
-Moving D and C
- cost: 7412.5
+Rotating bk7
+ cost: 4.63071e+10
 Iteration: 26
-Rotating D
- cost: 7412.5
+Rotating bk14b
+ cost: 4.63071e+10
 Iteration: 27
-Moving C and B
- cost: 7412.5
+Rotating bk9a
+ cost: 4.63071e+10
 Iteration: 28
-Rotating A
- cost: 7412.5
+Rotating bk15b
+ cost: 4.63071e+10
 Iteration: 29
-Moving C and B
- cost: 7412.5
+Swapping bk21 and bk7
+ cost: 4.63071e+10
 Iteration: 30
-Moving A and D
- cost: 7412.5
+Swapping bk18 and bk10b
+ cost: 4.63071e+10
 Iteration: 31
-Swapping D and B
- cost: 7412.5
+Swapping bk8b and bk14a
+ cost: 4.63071e+10
 Iteration: 32
-Moving B and D
- cost: 7412.5
+Moving bk6 and bk17b
+ cost: 4.63071e+10
 Iteration: 33
-Rotating D
- cost: 7412.5
+Swapping bk21 and bk3
+ cost: 4.63071e+10
 Iteration: 34
-Moving B and C
- cost: 7412.5
+Moving bk21 and bk9b
+ cost: 4.63071e+10
 Iteration: 35
-Rotating D
- cost: 7412.5
+Swapping bk20 and bk18
+ cost: 4.63071e+10
 Iteration: 36
-Moving A and D
- cost: 7412.5
+Moving bk14a and bk15a
+ cost: 4.63071e+10
 Iteration: 37
-Swapping D and C
+Moving bk17b and bk7
+ cost: 4.63071e+10
+Iteration: 38
+Rotating bk10a
+ cost: 4.63071e+10
+Iteration: 39
+Swapping bk4 and bk1
+ cost: 4.63071e+10
+Iteration: 40
+Swapping bk14b and bk4
+ cost: 4.63071e+10
+Iteration: 41
+Moving bk5b and bk9a
+ cost: 4.63071e+10
+Iteration: 42
+Swapping bk10b and bk7
+ cost: 4.63071e+10
+Iteration: 43
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 44
+Swapping bk7 and bk21
+ cost: 4.63071e+10
+Iteration: 45
+Swapping bk17a and bk5b
+ cost: 4.63071e+10
+Iteration: 46
+Moving bk1 and bk9d
+ cost: 4.63071e+10
+Iteration: 47
+Rotating bk5b
+ cost: 4.63071e+10
+Iteration: 48
+Rotating bk15b
+ cost: 4.63071e+10
+Iteration: 49
+Swapping bk10a and bk17a
+ cost: 4.63071e+10
+Iteration: 50
+Rotating bk7
+ cost: 4.63071e+10
+Iteration: 51
+Moving bk21 and bk14c
+ cost: 4.63071e+10
+Iteration: 52
+Moving bk2 and bk5a
+ cost: 4.63071e+10
+Iteration: 53
+Moving bk7 and bk1
+ cost: 4.63071e+10
+Iteration: 54
+Moving bk9b and bk8a
+ cost: 4.63071e+10
+Iteration: 55
+Swapping bk17a and bk3
+ cost: 4.63071e+10
+Iteration: 56
+Swapping bk9a and bk16
+ cost: 4.63071e+10
+Iteration: 57
+Rotating bk5b
+ cost: 4.63071e+10
+Iteration: 58
+Swapping bk19 and bk7
+ cost: 4.63071e+10
+Iteration: 59
+Rotating bk1
+ cost: 4.63071e+10
+Iteration: 60
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 61
+Rotating bk3
+ cost: 4.63071e+10
+Iteration: 62
+Moving bk1 and bk9c
+ cost: 4.63071e+10
+Iteration: 63
+Swapping bk20 and bk21
+ cost: 4.63071e+10
+Iteration: 64
+Swapping bk17a and bk16
+ cost: 4.63071e+10
+Iteration: 65
+Moving bk10a and bk8b
+ cost: 4.63071e+10
+Iteration: 66
+Moving bk7 and bk9b
+ cost: 4.63071e+10
+Iteration: 67
+Swapping bk17a and bk8a
+ cost: 4.63071e+10
+Iteration: 68
+Rotating bk3
+ cost: 4.63071e+10
+Iteration: 69
+Swapping bk17b and bk9c
+ cost: 4.63071e+10
+Iteration: 70
+Moving bk5b and bk9a
+ cost: 4.63071e+10
+Iteration: 71
+Moving bk3 and bk4
+ cost: 4.63071e+10
+Iteration: 72
+Swapping bk21 and bk14a
+ cost: 4.63071e+10
+Iteration: 73
+Moving bk21 and bk10c
+ cost: 4.63071e+10
+Iteration: 74
+Rotating bk1
+ cost: 4.63071e+10
+Iteration: 75
+Moving bk8b and bk18
+ cost: 4.63071e+10
+Iteration: 76
+Moving bk12 and bk9d
+ cost: 4.63071e+10
+Iteration: 77
+Swapping bk9d and bk5b
+ cost: 4.63071e+10
+Iteration: 78
+Swapping bk9c and bk13
+ cost: 4.63071e+10
+Iteration: 79
+Moving bk10a and bk5b
+ cost: 4.63071e+10
+Iteration: 80
+Swapping bk12 and bk14c
+ cost: 4.63071e+10
+Iteration: 81
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 82
+Rotating bk8b
+ cost: 4.63071e+10
+Iteration: 83
+Moving bk6 and bk10b
+ cost: 4.63071e+10
+Iteration: 84
+Rotating bk12
+ cost: 4.63071e+10
+Iteration: 85
+Swapping bk14a and bk21
+ cost: 4.63071e+10
+Iteration: 86
+Moving bk12 and bk6
+ cost: 4.63071e+10
+Iteration: 87
+Swapping bk8a and bk15a
+ cost: 4.63071e+10
+Iteration: 88
+Swapping bk1 and bk14c
+ cost: 4.63071e+10
+Iteration: 89
+Swapping bk15a and bk17b
+ cost: 4.63071e+10
+Iteration: 90
+Rotating bk15a
+ cost: 4.63071e+10
+Iteration: 91
+Swapping bk20 and bk17a
+ cost: 4.63071e+10
+Iteration: 92
+Moving bk5c and bk14b
+ cost: 4.63071e+10
+Iteration: 93
+Swapping bk17b and bk7
+ cost: 4.63071e+10
+Iteration: 94
+Rotating bk9c
+ cost: 4.63071e+10
+Iteration: 95
+Moving bk12 and bk6
+ cost: 4.63071e+10
+Iteration: 96
+Swapping bk14b and bk15a
+ cost: 4.63071e+10
+Iteration: 97
+Moving bk20 and bk1
+ cost: 4.63071e+10
+Iteration: 98
+Moving bk20 and bk10c
+ cost: 4.63071e+10
+Iteration: 99
+Moving bk19 and bk17b
+ cost: 4.63071e+10
+Iteration: 100
+Rotating bk3
+ cost: 4.63071e+10
+Iteration: 101
+Swapping bk10a and bk15a
+ cost: 4.63071e+10
+Iteration: 102
+Moving bk13 and bk14c
+ cost: 4.63071e+10
+Iteration: 103
+Moving bk5c and bk6
+ cost: 4.63071e+10
+Iteration: 104
+Moving bk17b and bk10a
+ cost: 4.63071e+10
+Iteration: 105
+Swapping bk1 and bk3
+ cost: 4.63071e+10
+Iteration: 106
+Swapping bk9a and bk8b
+ cost: 4.63071e+10
+Iteration: 107
+Rotating bk13
+ cost: 4.63071e+10
+Iteration: 108
+Rotating bk5b
+ cost: 4.63071e+10
+Iteration: 109
+Swapping bk9d and bk14a
+ cost: 4.63071e+10
+Iteration: 110
+Moving bk17b and bk4
+ cost: 4.63071e+10
+Iteration: 111
+Rotating bk16
+ cost: 4.63071e+10
+Iteration: 112
+Swapping bk16 and bk2
+ cost: 4.63071e+10
+Iteration: 113
+Moving bk9b and bk8a
+ cost: 4.63071e+10
+Iteration: 114
+Swapping bk16 and bk18
+ cost: 4.63071e+10
+Iteration: 115
+Moving bk4 and bk14b
+ cost: 4.63071e+10
+Iteration: 116
+Rotating bk19
+ cost: 4.63071e+10
+Iteration: 117
+Moving bk5b and bk16
+ cost: 4.63071e+10
+Iteration: 118
+Rotating bk11
+ cost: 4.63071e+10
+Iteration: 119
+Swapping bk4 and bk10a
+ cost: 4.63071e+10
+Iteration: 120
+Swapping bk9c and bk14c
+ cost: 4.63071e+10
+Iteration: 121
+Moving bk6 and bk18
+ cost: 4.63071e+10
+Iteration: 122
+Moving bk8b and bk15a
+ cost: 4.63071e+10
+Iteration: 123
+Moving bk19 and bk13
+ cost: 4.63071e+10
+Iteration: 124
+Moving bk9b and bk14b
+ cost: 4.63071e+10
+Iteration: 125
+Moving bk9d and bk5b
+ cost: 4.63071e+10
+Iteration: 126
+Swapping bk14c and bk11
+ cost: 4.63071e+10
+Iteration: 127
+Rotating bk10a
+ cost: 4.63071e+10
+Iteration: 128
+Moving bk9b and bk13
+ cost: 4.63071e+10
+Iteration: 129
+Moving bk18 and bk9c
+ cost: 4.63071e+10
+Iteration: 130
+Swapping bk17b and bk1
+ cost: 4.63071e+10
+Iteration: 131
+Moving bk3 and bk17b
+ cost: 4.63071e+10
+Iteration: 132
+Swapping bk16 and bk21
+ cost: 4.63071e+10
+Iteration: 133
+Swapping bk16 and bk19
+ cost: 4.63071e+10
+Iteration: 134
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 135
+Swapping bk10b and bk19
+ cost: 4.63071e+10
+Iteration: 136
+Swapping bk10c and bk17a
+ cost: 4.63071e+10
+Iteration: 137
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 138
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 139
+Rotating bk6
+ cost: 4.63071e+10
+Iteration: 140
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 141
+Moving bk8b and bk12
+ cost: 4.63071e+10
+Iteration: 142
+Moving bk2 and bk19
+ cost: 4.63071e+10
+Iteration: 143
+Swapping bk10a and bk15b
+ cost: 4.63071e+10
+Iteration: 144
+Swapping bk10b and bk9d
+ cost: 4.63071e+10
+Iteration: 145
+Rotating bk10a
+ cost: 4.63071e+10
+Iteration: 146
+Rotating bk18
+ cost: 4.63071e+10
+Iteration: 147
+Moving bk9c and bk5b
+ cost: 4.63071e+10
+Iteration: 148
+Swapping bk14c and bk16
+ cost: 4.63071e+10
+Iteration: 149
+Rotating bk18
+ cost: 4.63071e+10
+Iteration: 150
+Rotating bk9d
+ cost: 4.63071e+10
+Iteration: 151
+Swapping bk1 and bk7
+ cost: 4.63071e+10
+Iteration: 152
+Swapping bk11 and bk20
+ cost: 4.63071e+10
+Iteration: 153
+Moving bk19 and bk7
+ cost: 4.63071e+10
+Iteration: 154
+Swapping bk2 and bk20
+ cost: 4.63071e+10
+Iteration: 155
+Moving bk14c and bk7
+ cost: 4.63071e+10
+Iteration: 156
+Moving bk16 and bk10a
+ cost: 4.63071e+10
+Iteration: 157
+Swapping bk10b and bk9b
+ cost: 4.63071e+10
+Iteration: 158
+Moving bk14a and bk5b
+ cost: 4.63071e+10
+Iteration: 159
+Swapping bk5b and bk19
+ cost: 4.63071e+10
+Iteration: 160
+Swapping bk4 and bk9a
+ cost: 4.63071e+10
+Iteration: 161
+Moving bk14c and bk12
+ cost: 4.63071e+10
+Iteration: 162
+Swapping bk3 and bk7
+ cost: 4.63071e+10
+Iteration: 163
+Moving bk7 and bk9b
+ cost: 4.63071e+10
+Iteration: 164
+Moving bk9a and bk5a
+ cost: 4.63071e+10
+Iteration: 165
+Rotating bk3
+ cost: 4.63071e+10
+Iteration: 166
+Moving bk8a and bk17a
+ cost: 4.63071e+10
+Iteration: 167
+Rotating bk16
+ cost: 4.63071e+10
+Iteration: 168
+Moving bk10a and bk7
+ cost: 4.63071e+10
+Iteration: 169
+Swapping bk10b and bk4
+ cost: 4.63071e+10
+Iteration: 170
+Swapping bk14a and bk13
+ cost: 4.63071e+10
+Iteration: 171
+Rotating bk9d
+ cost: 4.63071e+10
+Iteration: 172
+Swapping bk10b and bk8a
+ cost: 4.63071e+10
+Iteration: 173
+Swapping bk7 and bk17a
+ cost: 4.63071e+10
+Iteration: 174
+Rotating bk12
+ cost: 4.63071e+10
+Iteration: 175
+Swapping bk5c and bk1
+ cost: 4.63071e+10
+Iteration: 176
+Swapping bk9a and bk2
+ cost: 4.63071e+10
+Iteration: 177
+Swapping bk18 and bk20
+ cost: 4.63071e+10
+Iteration: 178
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 179
+Moving bk7 and bk11
+ cost: 4.63071e+10
+Iteration: 180
+Swapping bk14a and bk1
+ cost: 4.63071e+10
+Iteration: 181
+Rotating bk9c
+ cost: 4.63071e+10
+Iteration: 182
+Moving bk20 and bk19
+ cost: 4.63071e+10
+Iteration: 183
+Rotating bk13
+ cost: 4.63071e+10
+Iteration: 184
+Moving bk9b and bk14c
+ cost: 4.63071e+10
+Iteration: 185
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 186
+Moving bk4 and bk9d
+ cost: 4.63071e+10
+Iteration: 187
+Moving bk14c and bk8a
+ cost: 4.63071e+10
+Iteration: 188
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 189
+Swapping bk8a and bk4
+ cost: 4.63071e+10
+Iteration: 190
+Moving bk13 and bk5c
+ cost: 4.63071e+10
+Iteration: 191
+Moving bk9b and bk15a
+ cost: 4.63071e+10
+Iteration: 192
+Rotating bk21
+ cost: 4.63071e+10
+Iteration: 193
+Moving bk13 and bk4
+ cost: 4.63071e+10
+Iteration: 194
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 195
+Swapping bk18 and bk21
+ cost: 4.63071e+10
+Iteration: 196
+Swapping bk18 and bk15b
+ cost: 4.63071e+10
+Iteration: 197
+Moving bk14c and bk9d
+ cost: 4.63071e+10
+Iteration: 198
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 199
+Swapping bk18 and bk11
+ cost: 4.63071e+10
+Iteration: 200
+Swapping bk9a and bk8b
+ cost: 4.63071e+10
+Iteration: 201
+Moving bk1 and bk21
+ cost: 4.63071e+10
+Iteration: 202
+Rotating bk12
+ cost: 4.63071e+10
+Iteration: 203
+Moving bk5a and bk18
+ cost: 4.63071e+10
+Iteration: 204
+Moving bk10a and bk1
+ cost: 4.63071e+10
+Iteration: 205
+Swapping bk20 and bk2
+ cost: 4.63071e+10
+Iteration: 206
+Rotating bk5c
+ cost: 4.63071e+10
+Iteration: 207
+Moving bk9a and bk3
+ cost: 4.63071e+10
+Iteration: 208
+Moving bk19 and bk9b
+ cost: 4.63071e+10
+Iteration: 209
+Swapping bk13 and bk21
+ cost: 4.63071e+10
+Iteration: 210
+Swapping bk11 and bk14a
+ cost: 4.63071e+10
+Iteration: 211
+Moving bk16 and bk21
+ cost: 4.63071e+10
+Iteration: 212
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 213
+Rotating bk10b
+ cost: 4.63071e+10
+Iteration: 214
+Swapping bk5c and bk2
+ cost: 4.63071e+10
+Iteration: 215
+Swapping bk11 and bk21
+ cost: 4.63071e+10
+Iteration: 216
+Swapping bk19 and bk9c
+ cost: 4.63071e+10
+Iteration: 217
+Rotating bk16
+ cost: 4.63071e+10
+Iteration: 218
+Swapping bk8b and bk19
+ cost: 4.63071e+10
+Iteration: 219
+Swapping bk14c and bk20
+ cost: 4.63071e+10
+Iteration: 220
+Moving bk20 and bk5b
+ cost: 4.63071e+10
+Iteration: 221
+Moving bk2 and bk17b
+ cost: 4.63071e+10
+Iteration: 222
+Swapping bk14c and bk10a
+ cost: 4.63071e+10
+Iteration: 223
+Moving bk3 and bk9c
+ cost: 4.63071e+10
+Iteration: 224
+Swapping bk9a and bk1
+ cost: 4.63071e+10
+Iteration: 225
+Swapping bk18 and bk1
+ cost: 4.63071e+10
+Iteration: 226
+Moving bk10a and bk5c
+ cost: 4.63071e+10
+Iteration: 227
+Moving bk20 and bk1
+ cost: 4.63071e+10
+Iteration: 228
+Swapping bk19 and bk2
+ cost: 4.63071e+10
+Iteration: 229
+Swapping bk1 and bk17a
+ cost: 4.63071e+10
+Iteration: 230
+Rotating bk10b
+ cost: 4.63071e+10
+Iteration: 231
+Moving bk1 and bk21
+ cost: 4.63071e+10
+Iteration: 232
+Rotating bk17b
+ cost: 4.63071e+10
+Iteration: 233
+Swapping bk17b and bk10b
+ cost: 4.63071e+10
+Iteration: 234
+Swapping bk9d and bk9c
+ cost: 4.63071e+10
+Iteration: 235
+Moving bk15a and bk10b
+ cost: 4.63071e+10
+Iteration: 236
+Rotating bk1
+ cost: 4.63071e+10
+Iteration: 237
+Rotating bk14c
+ cost: 4.63071e+10
+Iteration: 238
+Moving bk3 and bk17b
+ cost: 4.63071e+10
+Iteration: 239
+Rotating bk16
+ cost: 4.63071e+10
+Iteration: 240
+Moving bk10a and bk17a
+ cost: 4.63071e+10
+Iteration: 241
+Swapping bk14b and bk2
+ cost: 4.63071e+10
+Iteration: 242
+Moving bk15b and bk3
+ cost: 4.63071e+10
+Iteration: 243
+Rotating bk14c
+ cost: 4.63071e+10
+Iteration: 244
+Moving bk2 and bk9a
+ cost: 4.63071e+10
+Iteration: 245
+Swapping bk12 and bk14c
+ cost: 4.63071e+10
+Iteration: 246
+Swapping bk4 and bk9a
+ cost: 4.63071e+10
+Iteration: 247
+Rotating bk14b
+ cost: 4.63071e+10
+Iteration: 248
+Moving bk14b and bk15a
+ cost: 4.63071e+10
+Iteration: 249
+Moving bk20 and bk10b
+ cost: 4.63071e+10
+Iteration: 250
+Moving bk16 and bk10c
+ cost: 4.63071e+10
+Iteration: 251
+Rotating bk12
+ cost: 4.63071e+10
+Iteration: 252
+Moving bk2 and bk17a
+ cost: 4.63071e+10
+Iteration: 253
+Moving bk7 and bk10c
+ cost: 4.63071e+10
+Iteration: 254
+Swapping bk8a and bk5a
+ cost: 4.63071e+10
+Iteration: 255
+Moving bk16 and bk9b
+ cost: 4.63071e+10
+Iteration: 256
+Moving bk12 and bk17b
+ cost: 4.63071e+10
+Iteration: 257
+Moving bk15a and bk18
+ cost: 4.63071e+10
+Iteration: 258
+Rotating bk2
+ cost: 4.63071e+10
+Iteration: 259
+Swapping bk3 and bk12
+ cost: 4.63071e+10
+Iteration: 260
+Rotating bk21
+ cost: 4.63071e+10
+Iteration: 261
+Rotating bk15a
+ cost: 4.63071e+10
+Iteration: 262
+Moving bk10b and bk8b
+ cost: 4.63071e+10
+Iteration: 263
+Moving bk1 and bk8b
+ cost: 4.63071e+10
+Iteration: 264
+Moving bk3 and bk7
+ cost: 4.63071e+10
+Iteration: 265
+Moving bk2 and bk14a
+ cost: 4.63071e+10
+Iteration: 266
+Moving bk8b and bk4
+ cost: 4.63071e+10
+Iteration: 267
+Rotating bk13
+ cost: 4.63071e+10
+Iteration: 268
+Moving bk15a and bk9b
+ cost: 4.63071e+10
+Iteration: 269
+Moving bk12 and bk5a
+ cost: 4.63071e+10
+Iteration: 270
+Swapping bk10a and bk19
+ cost: 4.63071e+10
+Iteration: 271
+Rotating bk4
+ cost: 4.63071e+10
+Iteration: 272
+Rotating bk10c
+ cost: 4.63071e+10
+Iteration: 273
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 274
+Moving bk4 and bk7
+ cost: 4.63071e+10
+Iteration: 275
+Rotating bk19
+ cost: 4.63071e+10
+Iteration: 276
+Swapping bk12 and bk14a
+ cost: 4.63071e+10
+Iteration: 277
+Moving bk16 and bk17b
+ cost: 4.63071e+10
+Iteration: 278
+Moving bk9a and bk7
+ cost: 4.63071e+10
+Iteration: 279
+Swapping bk10b and bk14b
+ cost: 4.63071e+10
+Iteration: 280
+Rotating bk21
+ cost: 4.63071e+10
+Iteration: 281
+Rotating bk4
+ cost: 4.63071e+10
+Iteration: 282
+Swapping bk5c and bk13
+ cost: 4.63071e+10
+Iteration: 283
+Moving bk10b and bk7
+ cost: 4.63071e+10
+Iteration: 284
+Swapping bk9c and bk18
+ cost: 4.63071e+10
+Iteration: 285
+Moving bk5c and bk9a
+ cost: 4.63071e+10
+Iteration: 286
+Rotating bk2
+ cost: 4.63071e+10
+Iteration: 287
+Rotating bk10c
+ cost: 4.63071e+10
+Iteration: 288
+Swapping bk15a and bk14a
+ cost: 4.63071e+10
+Iteration: 289
+Moving bk14a and bk15a
+ cost: 4.63071e+10
+Iteration: 290
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 291
+Moving bk13 and bk4
+ cost: 4.63071e+10
+Iteration: 292
+Swapping bk17b and bk9c
+ cost: 4.63071e+10
+Iteration: 293
+Rotating bk4
+ cost: 4.63071e+10
+Iteration: 294
+Swapping bk5b and bk10c
+ cost: 4.63071e+10
+Iteration: 295
+Swapping bk8b and bk17a
+ cost: 4.63071e+10
+Iteration: 296
+Swapping bk4 and bk12
+ cost: 4.63071e+10
+Iteration: 297
+Moving bk15a and bk3
+ cost: 4.63071e+10
+Iteration: 298
+Moving bk17b and bk14a
+ cost: 4.63071e+10
+Iteration: 299
+Moving bk12 and bk2
+ cost: 4.63071e+10
+Iteration: 300
+Moving bk18 and bk10a
+ cost: 4.63071e+10
+Iteration: 301
+Rotating bk5c
+ cost: 4.63071e+10
+Iteration: 302
+Swapping bk15b and bk9b
+ cost: 4.63071e+10
+Iteration: 303
+Moving bk20 and bk17b
+ cost: 4.63071e+10
+Iteration: 304
+Swapping bk9c and bk5a
+ cost: 4.63071e+10
+Iteration: 305
+Moving bk6 and bk5c
+ cost: 4.63071e+10
+Iteration: 306
+Rotating bk15b
+ cost: 4.63071e+10
+Iteration: 307
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 308
+Swapping bk14c and bk2
+ cost: 4.63071e+10
+Iteration: 309
+Moving bk2 and bk10a
+ cost: 4.63071e+10
+Iteration: 310
+Moving bk15b and bk19
+ cost: 4.63071e+10
+Iteration: 311
+Swapping bk10a and bk4
+ cost: 4.63071e+10
+Iteration: 312
+Moving bk2 and bk19
+ cost: 4.63071e+10
+Iteration: 313
+Moving bk14a and bk8b
+ cost: 4.63071e+10
+Iteration: 314
+Moving bk12 and bk15a
+ cost: 4.63071e+10
+Iteration: 315
+Moving bk5c and bk16
+ cost: 4.63071e+10
+Iteration: 316
+Swapping bk13 and bk2
+ cost: 4.63071e+10
+Iteration: 317
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 318
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 319
+Moving bk17b and bk5c
+ cost: 4.63071e+10
+Iteration: 320
+Swapping bk19 and bk9a
+ cost: 4.63071e+10
+Iteration: 321
+Moving bk15a and bk9d
+ cost: 4.63071e+10
+Iteration: 322
+Swapping bk1 and bk20
+ cost: 4.63071e+10
+Iteration: 323
+Moving bk2 and bk5b
+ cost: 4.63071e+10
+Iteration: 324
+Moving bk18 and bk14b
+ cost: 4.63071e+10
+Iteration: 325
+Moving bk7 and bk6
+ cost: 4.63071e+10
+Iteration: 326
+Moving bk2 and bk9d
+ cost: 4.63071e+10
+Iteration: 327
+Rotating bk15b
+ cost: 4.63071e+10
+Iteration: 328
+Moving bk14b and bk10b
+ cost: 4.63071e+10
+Iteration: 329
+Moving bk5b and bk14a
+ cost: 4.63071e+10
+Iteration: 330
+Rotating bk8a
+ cost: 4.63071e+10
+Iteration: 331
+Swapping bk11 and bk2
+ cost: 4.63071e+10
+Iteration: 332
+Rotating bk5c
+ cost: 4.63071e+10
+Iteration: 333
+Rotating bk2
+ cost: 4.63071e+10
+Iteration: 334
+Rotating bk12
+ cost: 4.63071e+10
+Iteration: 335
+Moving bk14b and bk20
+ cost: 4.63071e+10
+Iteration: 336
+Moving bk14b and bk8b
+ cost: 4.63071e+10
+Iteration: 337
+Rotating bk16
+ cost: 4.63071e+10
+Iteration: 338
+Rotating bk2
+ cost: 4.63071e+10
+Iteration: 339
+Moving bk5a and bk14c
+ cost: 4.63071e+10
+Iteration: 340
+Moving bk17a and bk4
+ cost: 4.63071e+10
+Iteration: 341
+Swapping bk14a and bk11
+ cost: 4.63071e+10
+Iteration: 342
+Swapping bk20 and bk1
+ cost: 4.63071e+10
+Iteration: 343
+Moving bk14b and bk1
+ cost: 4.63071e+10
+Iteration: 344
+Moving bk14b and bk15a
+ cost: 4.63071e+10
+Iteration: 345
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 346
+Swapping bk11 and bk15b
+ cost: 4.63071e+10
+Iteration: 347
+Rotating bk17b
+ cost: 4.63071e+10
+Iteration: 348
+Swapping bk10b and bk12
+ cost: 4.63071e+10
+Iteration: 349
+Moving bk15a and bk7
+ cost: 4.63071e+10
+Iteration: 350
+Rotating bk15b
+ cost: 4.63071e+10
+Iteration: 351
+Swapping bk12 and bk18
+ cost: 4.63071e+10
+Iteration: 352
+Moving bk12 and bk10c
+ cost: 4.63071e+10
+Iteration: 353
+Moving bk7 and bk2
+ cost: 4.63071e+10
+Iteration: 354
+Moving bk4 and bk13
+ cost: 4.63071e+10
+Iteration: 355
+Moving bk2 and bk17a
+ cost: 4.63071e+10
+Iteration: 356
+Moving bk20 and bk9a
+ cost: 4.63071e+10
+Iteration: 357
+Rotating bk10b
+ cost: 4.63071e+10
+Iteration: 358
+Moving bk14c and bk1
+ cost: 4.63071e+10
+Iteration: 359
+Rotating bk7
+ cost: 4.63071e+10
+Iteration: 360
+Moving bk8a and bk21
+ cost: 4.63071e+10
+Iteration: 361
+Swapping bk13 and bk14b
+ cost: 4.63071e+10
+Iteration: 362
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 363
+Swapping bk20 and bk16
+ cost: 4.63071e+10
+Iteration: 364
+Moving bk9b and bk8b
+ cost: 4.63071e+10
+Iteration: 365
+Swapping bk7 and bk9c
+ cost: 4.63071e+10
+Iteration: 366
+Swapping bk9a and bk2
+ cost: 4.63071e+10
+Iteration: 367
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 368
+Rotating bk5c
+ cost: 4.63071e+10
+Iteration: 369
+Rotating bk8b
+ cost: 4.63071e+10
+Iteration: 370
+Swapping bk19 and bk11
+ cost: 4.63071e+10
+Iteration: 371
+Swapping bk9a and bk1
+ cost: 4.63071e+10
+Iteration: 372
+Moving bk9d and bk5c
+ cost: 4.63071e+10
+Iteration: 373
+Moving bk17b and bk14a
+ cost: 4.63071e+10
+Iteration: 374
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 375
+Rotating bk12
+ cost: 4.63071e+10
+Iteration: 376
+Swapping bk16 and bk8a
+ cost: 4.63071e+10
+Iteration: 377
+Swapping bk18 and bk15a
+ cost: 4.63071e+10
+Iteration: 378
+Rotating bk21
+ cost: 4.63071e+10
+Iteration: 379
+Swapping bk9d and bk8a
+ cost: 4.63071e+10
+Iteration: 380
+Moving bk21 and bk9d
+ cost: 4.63071e+10
+Iteration: 381
+Rotating bk20
+ cost: 4.63071e+10
+Iteration: 382
+Moving bk10b and bk9b
+ cost: 4.63071e+10
+Iteration: 383
+Moving bk10b and bk5a
+ cost: 4.63071e+10
+Iteration: 384
+Swapping bk10a and bk5a
+ cost: 4.63071e+10
+Iteration: 385
+Moving bk11 and bk15a
+ cost: 4.63071e+10
+Iteration: 386
+Swapping bk20 and bk8a
+ cost: 4.63071e+10
+Iteration: 387
+Rotating bk5c
+ cost: 4.63071e+10
+Iteration: 388
+Swapping bk20 and bk8b
+ cost: 4.63071e+10
+Iteration: 389
+Swapping bk2 and bk12
+ cost: 4.63071e+10
+Iteration: 390
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 391
+Rotating bk14c
+ cost: 4.63071e+10
+Iteration: 392
+Moving bk14b and bk12
+ cost: 4.63071e+10
+Iteration: 393
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 394
+Swapping bk18 and bk13
+ cost: 4.63071e+10
+Iteration: 395
+Swapping bk8b and bk6
+ cost: 4.63071e+10
+Iteration: 396
+Moving bk14b and bk9a
+ cost: 4.63071e+10
+Iteration: 397
+Swapping bk8b and bk18
+ cost: 4.63071e+10
+Iteration: 398
+Swapping bk13 and bk10c
+ cost: 4.63071e+10
+Iteration: 399
+Rotating bk14b
+ cost: 4.63071e+10
+Iteration: 400
+Rotating bk15b
+ cost: 4.63071e+10
+Iteration: 401
+Swapping bk6 and bk18
+ cost: 4.63071e+10
+Iteration: 402
+Rotating bk8b
+ cost: 4.63071e+10
+Iteration: 403
+Moving bk14b and bk9c
+ cost: 4.63071e+10
+Iteration: 404
+Swapping bk16 and bk9d
+ cost: 4.63071e+10
+Iteration: 405
+Moving bk14c and bk17b
+ cost: 4.63071e+10
+Iteration: 406
+Swapping bk11 and bk15a
+ cost: 4.63071e+10
+Iteration: 407
+Rotating bk10a
+ cost: 4.63071e+10
+Iteration: 408
+Rotating bk1
+ cost: 4.63071e+10
+Iteration: 409
+Rotating bk14b
+ cost: 4.63071e+10
+Iteration: 410
+Swapping bk4 and bk5b
+ cost: 4.63071e+10
+Iteration: 411
+Moving bk5c and bk2
+ cost: 4.63071e+10
+Iteration: 412
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 413
+Rotating bk1
+ cost: 4.63071e+10
+Iteration: 414
+Rotating bk17b
+ cost: 4.63071e+10
+Iteration: 415
+Swapping bk19 and bk11
+ cost: 4.63071e+10
+Iteration: 416
+Swapping bk11 and bk18
+ cost: 4.63071e+10
+Iteration: 417
+Moving bk9d and bk5c
+ cost: 4.63071e+10
+Iteration: 418
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 419
+Swapping bk14b and bk10c
+ cost: 4.63071e+10
+Iteration: 420
+Rotating bk5c
+ cost: 4.63071e+10
+Iteration: 421
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 422
+Moving bk3 and bk5c
+ cost: 4.63071e+10
+Iteration: 423
+Swapping bk8a and bk21
+ cost: 4.63071e+10
+Iteration: 424
+Moving bk14b and bk21
+ cost: 4.63071e+10
+Iteration: 425
+Rotating bk4
+ cost: 4.63071e+10
+Iteration: 426
+Moving bk9b and bk7
+ cost: 4.63071e+10
+Iteration: 427
+Swapping bk10c and bk21
+ cost: 4.63071e+10
+Iteration: 428
+Rotating bk21
+ cost: 4.63071e+10
+Iteration: 429
+Rotating bk6
+ cost: 4.63071e+10
+Iteration: 430
+Swapping bk12 and bk14c
+ cost: 4.63071e+10
+Iteration: 431
+Moving bk15a and bk15b
+ cost: 4.63071e+10
+Iteration: 432
+Moving bk15b and bk10b
+ cost: 4.63071e+10
+Iteration: 433
+Moving bk15a and bk10a
+ cost: 4.63071e+10
+Iteration: 434
+Moving bk15a and bk12
+ cost: 4.63071e+10
+Iteration: 435
+Rotating bk5a
+ cost: 4.63071e+10
+Iteration: 436
+Swapping bk14b and bk15a
+ cost: 4.63071e+10
+Iteration: 437
+Rotating bk8b
+ cost: 4.63071e+10
+Iteration: 438
+Rotating bk10b
+ cost: 4.63071e+10
+Iteration: 439
+Rotating bk16
+ cost: 4.63071e+10
+Iteration: 440
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 441
+Swapping bk14c and bk13
+ cost: 4.63071e+10
+Iteration: 442
+Moving bk14a and bk9b
+ cost: 4.63071e+10
+Iteration: 443
+Rotating bk14a
+ cost: 4.63071e+10
+Iteration: 444
+Moving bk21 and bk17b
+ cost: 4.63071e+10
+Iteration: 445
+Moving bk3 and bk17a
+ cost: 4.63071e+10
+Iteration: 446
+Rotating bk14c
+ cost: 4.63071e+10
+Iteration: 447
+Swapping bk14c and bk6
+ cost: 4.63071e+10
+Iteration: 448
+Moving bk7 and bk10c
+ cost: 4.63071e+10
+Iteration: 449
+Moving bk9d and bk7
+ cost: 4.63071e+10
+Iteration: 450
+Moving bk9d and bk14b
+ cost: 4.63071e+10
+Iteration: 451
+Swapping bk17b and bk9a
+ cost: 4.63071e+10
+Iteration: 452
+Swapping bk14b and bk5c
+ cost: 4.63071e+10
+Iteration: 453
+Moving bk11 and bk17a
+ cost: 4.63071e+10
+Iteration: 454
+Moving bk18 and bk10a
+ cost: 4.63071e+10
+Iteration: 455
+Moving bk21 and bk13
+ cost: 4.63071e+10
+Iteration: 456
+Rotating bk9a
+ cost: 4.63071e+10
+Iteration: 457
+Rotating bk8b
+ cost: 4.63071e+10
+Iteration: 458
+Rotating bk15a
+ cost: 4.63071e+10
+Iteration: 459
+Rotating bk17b
+ cost: 4.63071e+10
+Iteration: 460
+Swapping bk14b and bk9b
+ cost: 4.63071e+10
+Iteration: 461
+Moving bk21 and bk20
+ cost: 4.63071e+10
+Iteration: 462
+Swapping bk4 and bk1
+ cost: 4.63071e+10
+Iteration: 463
+Moving bk21 and bk18
+ cost: 4.63071e+10
+Iteration: 464
+Swapping bk21 and bk8b
+ cost: 4.63071e+10
+Iteration: 465
+Moving bk14a and bk14c
+ cost: 4.63071e+10
+Iteration: 466
+Swapping bk11 and bk5c
+ cost: 4.63071e+10
+Iteration: 467
+Rotating bk21
+ cost: 4.63071e+10
+Iteration: 468
+Swapping bk12 and bk9b
+ cost: 4.63071e+10
+Iteration: 469
+Moving bk6 and bk4
+ cost: 4.63071e+10
+Iteration: 470
+Moving bk14a and bk15a
+ cost: 2.7092e+10
+Iteration: 471
+Rotating bk17a
+ cost: 2.7092e+10
+Iteration: 472
+Rotating bk12
+ cost: 2.7092e+10
+Iteration: 473
+Moving bk2 and bk9d
+ cost: 2.7092e+10
+Iteration: 474
+Swapping bk5a and bk15a
+ cost: 2.7092e+10
+Iteration: 475
+Swapping bk9d and bk10a
+ cost: 2.7092e+10
+Iteration: 476
+Swapping bk17a and bk8b
+ cost: 2.7092e+10
+Iteration: 477
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 478
+Rotating bk18
+ cost: 2.7092e+10
+Iteration: 479
+Swapping bk5a and bk21
+ cost: 2.7092e+10
+Iteration: 480
+Swapping bk21 and bk15a
+ cost: 2.7092e+10
+Iteration: 481
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 482
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 483
+Swapping bk10c and bk17b
+ cost: 2.7092e+10
+Iteration: 484
+Swapping bk17a and bk4
+ cost: 2.7092e+10
+Iteration: 485
+Moving bk15a and bk10a
+ cost: 2.7092e+10
+Iteration: 486
+Swapping bk20 and bk10b
+ cost: 2.7092e+10
+Iteration: 487
+Rotating bk4
+ cost: 2.7092e+10
+Iteration: 488
+Moving bk13 and bk9b
+ cost: 2.7092e+10
+Iteration: 489
+Moving bk9a and bk9c
+ cost: 2.7092e+10
+Iteration: 490
+Swapping bk14b and bk8b
+ cost: 2.7092e+10
+Iteration: 491
+Rotating bk12
+ cost: 2.7092e+10
+Iteration: 492
+Moving bk20 and bk18
+ cost: 2.7092e+10
+Iteration: 493
+Moving bk6 and bk7
+ cost: 2.7092e+10
+Iteration: 494
+Rotating bk21
+ cost: 2.7092e+10
+Iteration: 495
+Swapping bk13 and bk18
+ cost: 2.7092e+10
+Iteration: 496
+Swapping bk15a and bk11
+ cost: 2.7092e+10
+Iteration: 497
+Swapping bk10b and bk8a
+ cost: 2.7092e+10
+Iteration: 498
+Rotating bk3
+ cost: 2.7092e+10
+Iteration: 499
+Rotating bk6
+ cost: 2.7092e+10
+Iteration: 500
+Rotating bk15b
+ cost: 2.7092e+10
+Iteration: 501
+Moving bk11 and bk5b
+ cost: 2.7092e+10
+Iteration: 502
+Moving bk14a and bk12
+ cost: 2.7092e+10
+Iteration: 503
+Moving bk10a and bk9d
+ cost: 2.7092e+10
+Iteration: 504
+Moving bk7 and bk14c
+ cost: 2.7092e+10
+Iteration: 505
+Swapping bk8b and bk9b
+ cost: 2.7092e+10
+Iteration: 506
+Moving bk14a and bk13
+ cost: 2.7092e+10
+Iteration: 507
+Swapping bk9d and bk7
+ cost: 2.7092e+10
+Iteration: 508
+Moving bk5a and bk6
+ cost: 2.7092e+10
+Iteration: 509
+Swapping bk13 and bk16
+ cost: 2.7092e+10
+Iteration: 510
+Moving bk5b and bk15b
+ cost: 2.7092e+10
+Iteration: 511
+Rotating bk13
+ cost: 2.7092e+10
+Iteration: 512
+Swapping bk19 and bk15b
+ cost: 2.7092e+10
+Iteration: 513
+Moving bk13 and bk14a
+ cost: 2.7092e+10
+Iteration: 514
+Swapping bk9d and bk12
+ cost: 2.7092e+10
+Iteration: 515
+Moving bk9c and bk19
+ cost: 2.7092e+10
+Iteration: 516
+Swapping bk14b and bk18
+ cost: 2.7092e+10
+Iteration: 517
+Swapping bk6 and bk19
+ cost: 2.7092e+10
+Iteration: 518
+Swapping bk6 and bk9d
+ cost: 2.7092e+10
+Iteration: 519
+Rotating bk21
+ cost: 2.7092e+10
+Iteration: 520
+Swapping bk9c and bk8a
+ cost: 2.7092e+10
+Iteration: 521
+Moving bk9d and bk16
+ cost: 2.7092e+10
+Iteration: 522
+Moving bk15b and bk10b
+ cost: 2.7092e+10
+Iteration: 523
+Rotating bk14b
+ cost: 2.7092e+10
+Iteration: 524
+Rotating bk17b
+ cost: 2.7092e+10
+Iteration: 525
+Rotating bk7
+ cost: 2.7092e+10
+Iteration: 526
+Moving bk18 and bk9b
+ cost: 2.7092e+10
+Iteration: 527
+Swapping bk9d and bk20
+ cost: 2.7092e+10
+Iteration: 528
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 529
+Rotating bk2
+ cost: 2.7092e+10
+Iteration: 530
+Rotating bk9a
+ cost: 2.7092e+10
+Iteration: 531
+Moving bk12 and bk8a
+ cost: 2.7092e+10
+Iteration: 532
+Swapping bk6 and bk19
+ cost: 2.7092e+10
+Iteration: 533
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 534
+Moving bk5a and bk5b
+ cost: 2.7092e+10
+Iteration: 535
+Moving bk16 and bk17b
+ cost: 2.7092e+10
+Iteration: 536
+Swapping bk15a and bk9c
+ cost: 2.7092e+10
+Iteration: 537
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 538
+Moving bk17b and bk11
+ cost: 2.7092e+10
+Iteration: 539
+Rotating bk14b
+ cost: 2.7092e+10
+Iteration: 540
+Swapping bk2 and bk18
+ cost: 2.7092e+10
+Iteration: 541
+Moving bk6 and bk18
+ cost: 2.7092e+10
+Iteration: 542
+Rotating bk11
+ cost: 2.7092e+10
+Iteration: 543
+Swapping bk11 and bk15b
+ cost: 2.7092e+10
+Iteration: 544
+Rotating bk7
+ cost: 2.7092e+10
+Iteration: 545
+Swapping bk5b and bk12
+ cost: 2.7092e+10
+Iteration: 546
+Swapping bk17b and bk10a
+ cost: 2.7092e+10
+Iteration: 547
+Rotating bk9b
+ cost: 2.7092e+10
+Iteration: 548
+Swapping bk20 and bk16
+ cost: 2.7092e+10
+Iteration: 549
+Rotating bk9d
+ cost: 2.7092e+10
+Iteration: 550
+Swapping bk17b and bk19
+ cost: 2.7092e+10
+Iteration: 551
+Moving bk16 and bk4
+ cost: 2.7092e+10
+Iteration: 552
+Rotating bk10c
+ cost: 2.7092e+10
+Iteration: 553
+Rotating bk9b
+ cost: 2.7092e+10
+Iteration: 554
+Moving bk9a and bk1
+ cost: 2.7092e+10
+Iteration: 555
+Swapping bk15a and bk13
+ cost: 2.7092e+10
+Iteration: 556
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 557
+Moving bk12 and bk14b
+ cost: 2.7092e+10
+Iteration: 558
+Moving bk9b and bk11
+ cost: 2.7092e+10
+Iteration: 559
+Swapping bk4 and bk14b
+ cost: 2.7092e+10
+Iteration: 560
+Moving bk9b and bk14b
+ cost: 2.7092e+10
+Iteration: 561
+Moving bk17b and bk13
+ cost: 2.7092e+10
+Iteration: 562
+Moving bk1 and bk17a
+ cost: 2.7092e+10
+Iteration: 563
+Swapping bk4 and bk2
+ cost: 2.7092e+10
+Iteration: 564
+Moving bk18 and bk9b
+ cost: 2.7092e+10
+Iteration: 565
+Moving bk10c and bk3
+ cost: 2.7092e+10
+Iteration: 566
+Rotating bk9a
+ cost: 2.7092e+10
+Iteration: 567
+Swapping bk11 and bk18
+ cost: 2.7092e+10
+Iteration: 568
+Swapping bk4 and bk5c
+ cost: 2.7092e+10
+Iteration: 569
+Swapping bk9b and bk5b
+ cost: 2.7092e+10
+Iteration: 570
+Swapping bk10a and bk6
+ cost: 2.7092e+10
+Iteration: 571
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 572
+Moving bk14a and bk2
+ cost: 2.7092e+10
+Iteration: 573
+Moving bk19 and bk14a
+ cost: 2.7092e+10
+Iteration: 574
+Swapping bk14a and bk10a
+ cost: 2.7092e+10
+Iteration: 575
+Moving bk19 and bk14c
+ cost: 2.7092e+10
+Iteration: 576
+Rotating bk10b
+ cost: 2.7092e+10
+Iteration: 577
+Moving bk9b and bk18
+ cost: 2.7092e+10
+Iteration: 578
+Rotating bk10c
+ cost: 2.7092e+10
+Iteration: 579
+Moving bk6 and bk16
+ cost: 2.7092e+10
+Iteration: 580
+Rotating bk17b
+ cost: 2.7092e+10
+Iteration: 581
+Moving bk3 and bk10b
+ cost: 2.7092e+10
+Iteration: 582
+Rotating bk18
+ cost: 2.7092e+10
+Iteration: 583
+Rotating bk5a
+ cost: 2.7092e+10
+Iteration: 584
+Moving bk8a and bk5a
+ cost: 2.7092e+10
+Iteration: 585
+Moving bk21 and bk11
+ cost: 2.7092e+10
+Iteration: 586
+Swapping bk12 and bk9a
+ cost: 2.7092e+10
+Iteration: 587
+Swapping bk13 and bk14c
+ cost: 2.7092e+10
+Iteration: 588
+Rotating bk5c
+ cost: 2.7092e+10
+Iteration: 589
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 590
+Swapping bk10c and bk20
+ cost: 2.7092e+10
+Iteration: 591
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 592
+Swapping bk21 and bk9c
+ cost: 2.7092e+10
+Iteration: 593
+Swapping bk5a and bk21
+ cost: 2.7092e+10
+Iteration: 594
+Moving bk10c and bk9b
+ cost: 2.7092e+10
+Iteration: 595
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 596
+Rotating bk15a
+ cost: 2.7092e+10
+Iteration: 597
+Rotating bk9d
+ cost: 2.7092e+10
+Iteration: 598
+Swapping bk14b and bk8a
+ cost: 2.7092e+10
+Iteration: 599
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 600
+Moving bk14c and bk10c
+ cost: 2.7092e+10
+Iteration: 601
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 602
+Moving bk5b and bk16
+ cost: 2.7092e+10
+Iteration: 603
+Moving bk17b and bk21
+ cost: 2.7092e+10
+Iteration: 604
+Moving bk11 and bk17b
+ cost: 2.7092e+10
+Iteration: 605
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 606
+Swapping bk9a and bk10a
+ cost: 2.7092e+10
+Iteration: 607
+Rotating bk15b
+ cost: 2.7092e+10
+Iteration: 608
+Swapping bk12 and bk7
+ cost: 2.7092e+10
+Iteration: 609
+Swapping bk21 and bk5b
+ cost: 2.7092e+10
+Iteration: 610
+Swapping bk17b and bk10c
+ cost: 2.7092e+10
+Iteration: 611
+Moving bk2 and bk7
+ cost: 2.7092e+10
+Iteration: 612
+Moving bk13 and bk14c
+ cost: 2.7092e+10
+Iteration: 613
+Rotating bk5b
+ cost: 2.7092e+10
+Iteration: 614
+Moving bk21 and bk10a
+ cost: 2.7092e+10
+Iteration: 615
+Swapping bk16 and bk14a
+ cost: 2.7092e+10
+Iteration: 616
+Swapping bk9c and bk10a
+ cost: 2.7092e+10
+Iteration: 617
+Moving bk6 and bk11
+ cost: 2.7092e+10
+Iteration: 618
+Moving bk15a and bk8b
+ cost: 2.7092e+10
+Iteration: 619
+Rotating bk9d
+ cost: 2.7092e+10
+Iteration: 620
+Swapping bk10c and bk8a
+ cost: 2.7092e+10
+Iteration: 621
+Moving bk2 and bk19
+ cost: 2.7092e+10
+Iteration: 622
+Swapping bk17b and bk7
+ cost: 2.7092e+10
+Iteration: 623
+Swapping bk13 and bk20
+ cost: 2.7092e+10
+Iteration: 624
+Rotating bk10b
+ cost: 2.7092e+10
+Iteration: 625
+Swapping bk10c and bk9b
+ cost: 2.7092e+10
+Iteration: 626
+Moving bk7 and bk5a
+ cost: 2.7092e+10
+Iteration: 627
+Moving bk14a and bk5a
+ cost: 2.7092e+10
+Iteration: 628
+Rotating bk11
+ cost: 2.7092e+10
+Iteration: 629
+Moving bk3 and bk7
+ cost: 2.7092e+10
+Iteration: 630
+Swapping bk14a and bk16
+ cost: 2.7092e+10
+Iteration: 631
+Moving bk20 and bk9a
+ cost: 2.7092e+10
+Iteration: 632
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 633
+Swapping bk12 and bk17a
+ cost: 2.7092e+10
+Iteration: 634
+Moving bk5b and bk11
+ cost: 2.7092e+10
+Iteration: 635
+Swapping bk5b and bk21
+ cost: 2.7092e+10
+Iteration: 636
+Rotating bk3
+ cost: 2.7092e+10
+Iteration: 637
+Swapping bk15b and bk10a
+ cost: 2.7092e+10
+Iteration: 638
+Swapping bk17b and bk1
+ cost: 2.7092e+10
+Iteration: 639
+Swapping bk9b and bk21
+ cost: 2.7092e+10
+Iteration: 640
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 641
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 642
+Swapping bk9d and bk18
+ cost: 2.7092e+10
+Iteration: 643
+Swapping bk14a and bk11
+ cost: 2.7092e+10
+Iteration: 644
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 645
+Rotating bk17b
+ cost: 2.7092e+10
+Iteration: 646
+Swapping bk17b and bk9c
+ cost: 2.7092e+10
+Iteration: 647
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 648
+Moving bk8b and bk9b
+ cost: 2.7092e+10
+Iteration: 649
+Moving bk13 and bk5a
+ cost: 2.7092e+10
+Iteration: 650
+Moving bk10b and bk9b
+ cost: 2.7092e+10
+Iteration: 651
+Swapping bk11 and bk18
+ cost: 2.7092e+10
+Iteration: 652
+Moving bk19 and bk9b
+ cost: 2.7092e+10
+Iteration: 653
+Rotating bk20
+ cost: 2.7092e+10
+Iteration: 654
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 655
+Swapping bk18 and bk13
+ cost: 2.7092e+10
+Iteration: 656
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 657
+Moving bk8b and bk10c
+ cost: 2.7092e+10
+Iteration: 658
+Swapping bk15a and bk9c
+ cost: 2.7092e+10
+Iteration: 659
+Swapping bk9b and bk20
+ cost: 2.7092e+10
+Iteration: 660
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 661
+Moving bk2 and bk17b
+ cost: 2.7092e+10
+Iteration: 662
+Swapping bk17b and bk1
+ cost: 2.7092e+10
+Iteration: 663
+Moving bk11 and bk20
+ cost: 2.7092e+10
+Iteration: 664
+Moving bk19 and bk4
+ cost: 2.7092e+10
+Iteration: 665
+Swapping bk9a and bk10a
+ cost: 2.7092e+10
+Iteration: 666
+Rotating bk17b
+ cost: 2.7092e+10
+Iteration: 667
+Rotating bk9b
+ cost: 2.7092e+10
+Iteration: 668
+Swapping bk14b and bk13
+ cost: 2.7092e+10
+Iteration: 669
+Moving bk3 and bk19
+ cost: 2.7092e+10
+Iteration: 670
+Swapping bk8b and bk10c
+ cost: 2.7092e+10
+Iteration: 671
+Swapping bk5a and bk8b
+ cost: 2.7092e+10
+Iteration: 672
+Swapping bk2 and bk10a
+ cost: 2.7092e+10
+Iteration: 673
+Moving bk9c and bk21
+ cost: 2.7092e+10
+Iteration: 674
+Swapping bk10a and bk8a
+ cost: 2.7092e+10
+Iteration: 675
+Moving bk18 and bk3
+ cost: 2.7092e+10
+Iteration: 676
+Swapping bk8a and bk14c
+ cost: 2.7092e+10
+Iteration: 677
+Moving bk21 and bk2
+ cost: 2.7092e+10
+Iteration: 678
+Moving bk14b and bk17b
+ cost: 2.7092e+10
+Iteration: 679
+Swapping bk15a and bk20
+ cost: 2.7092e+10
+Iteration: 680
+Moving bk5c and bk17b
+ cost: 2.7092e+10
+Iteration: 681
+Moving bk10c and bk17b
+ cost: 2.7092e+10
+Iteration: 682
+Rotating bk15b
+ cost: 2.7092e+10
+Iteration: 683
+Moving bk18 and bk7
+ cost: 2.7092e+10
+Iteration: 684
+Moving bk9a and bk21
+ cost: 2.7092e+10
+Iteration: 685
+Swapping bk14a and bk21
+ cost: 2.7092e+10
+Iteration: 686
+Moving bk3 and bk13
+ cost: 2.7092e+10
+Iteration: 687
+Rotating bk5b
+ cost: 2.7092e+10
+Iteration: 688
+Moving bk10b and bk10c
+ cost: 2.7092e+10
+Iteration: 689
+Swapping bk20 and bk14c
+ cost: 2.7092e+10
+Iteration: 690
+Swapping bk17a and bk8b
+ cost: 2.7092e+10
+Iteration: 691
+Swapping bk11 and bk18
+ cost: 2.7092e+10
+Iteration: 692
+Rotating bk15b
+ cost: 2.7092e+10
+Iteration: 693
+Swapping bk5c and bk1
+ cost: 2.7092e+10
+Iteration: 694
+Swapping bk17a and bk17b
+ cost: 2.7092e+10
+Iteration: 695
+Moving bk19 and bk15a
+ cost: 2.7092e+10
+Iteration: 696
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 697
+Rotating bk20
+ cost: 2.7092e+10
+Iteration: 698
+Moving bk14a and bk11
+ cost: 2.7092e+10
+Iteration: 699
+Swapping bk16 and bk6
+ cost: 2.7092e+10
+Iteration: 700
+Swapping bk9b and bk10c
+ cost: 2.7092e+10
+Iteration: 701
+Moving bk15b and bk8b
+ cost: 2.7092e+10
+Iteration: 702
+Rotating bk14b
+ cost: 2.7092e+10
+Iteration: 703
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 704
+Moving bk12 and bk9c
+ cost: 2.7092e+10
+Iteration: 705
+Moving bk1 and bk9d
+ cost: 2.7092e+10
+Iteration: 706
+Moving bk13 and bk12
+ cost: 2.7092e+10
+Iteration: 707
+Swapping bk17b and bk15a
+ cost: 2.7092e+10
+Iteration: 708
+Moving bk15b and bk17b
+ cost: 2.7092e+10
+Iteration: 709
+Rotating bk4
+ cost: 2.7092e+10
+Iteration: 710
+Rotating bk4
+ cost: 2.7092e+10
+Iteration: 711
+Swapping bk7 and bk14b
+ cost: 2.7092e+10
+Iteration: 712
+Swapping bk17a and bk8b
+ cost: 2.7092e+10
+Iteration: 713
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 714
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 715
+Swapping bk13 and bk1
+ cost: 2.7092e+10
+Iteration: 716
+Rotating bk14b
+ cost: 2.7092e+10
+Iteration: 717
+Rotating bk3
+ cost: 2.7092e+10
+Iteration: 718
+Swapping bk6 and bk17a
+ cost: 2.7092e+10
+Iteration: 719
+Moving bk10a and bk20
+ cost: 2.7092e+10
+Iteration: 720
+Moving bk7 and bk8a
+ cost: 2.7092e+10
+Iteration: 721
+Moving bk8b and bk21
+ cost: 2.7092e+10
+Iteration: 722
+Swapping bk10c and bk18
+ cost: 2.7092e+10
+Iteration: 723
+Swapping bk4 and bk6
+ cost: 2.7092e+10
+Iteration: 724
+Swapping bk9c and bk4
+ cost: 2.7092e+10
+Iteration: 725
+Swapping bk17a and bk15b
+ cost: 2.7092e+10
+Iteration: 726
+Moving bk4 and bk17a
+ cost: 2.7092e+10
+Iteration: 727
+Swapping bk7 and bk20
+ cost: 2.7092e+10
+Iteration: 728
+Swapping bk10a and bk10c
+ cost: 2.7092e+10
+Iteration: 729
+Moving bk5a and bk4
+ cost: 2.7092e+10
+Iteration: 730
+Rotating bk9a
+ cost: 2.7092e+10
+Iteration: 731
+Rotating bk4
+ cost: 2.7092e+10
+Iteration: 732
+Moving bk21 and bk16
+ cost: 2.7092e+10
+Iteration: 733
+Moving bk6 and bk9c
+ cost: 2.7092e+10
+Iteration: 734
+Swapping bk2 and bk4
+ cost: 2.7092e+10
+Iteration: 735
+Swapping bk17b and bk8a
+ cost: 2.7092e+10
+Iteration: 736
+Moving bk7 and bk4
+ cost: 2.7092e+10
+Iteration: 737
+Moving bk15a and bk5c
+ cost: 2.7092e+10
+Iteration: 738
+Moving bk9c and bk15a
+ cost: 2.7092e+10
+Iteration: 739
+Swapping bk10a and bk7
+ cost: 2.7092e+10
+Iteration: 740
+Moving bk7 and bk9a
+ cost: 2.7092e+10
+Iteration: 741
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 742
+Rotating bk4
+ cost: 2.7092e+10
+Iteration: 743
+Rotating bk17b
+ cost: 2.7092e+10
+Iteration: 744
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 745
+Rotating bk9b
+ cost: 2.7092e+10
+Iteration: 746
+Moving bk5a and bk10b
+ cost: 2.7092e+10
+Iteration: 747
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 748
+Moving bk5a and bk7
+ cost: 2.7092e+10
+Iteration: 749
+Swapping bk17a and bk10a
+ cost: 2.7092e+10
+Iteration: 750
+Rotating bk10b
+ cost: 2.7092e+10
+Iteration: 751
+Rotating bk5b
+ cost: 2.7092e+10
+Iteration: 752
+Moving bk6 and bk9c
+ cost: 2.7092e+10
+Iteration: 753
+Moving bk10c and bk19
+ cost: 2.7092e+10
+Iteration: 754
+Rotating bk3
+ cost: 2.7092e+10
+Iteration: 755
+Rotating bk10b
+ cost: 2.7092e+10
+Iteration: 756
+Swapping bk8a and bk17b
+ cost: 2.7092e+10
+Iteration: 757
+Moving bk4 and bk9a
+ cost: 2.7092e+10
+Iteration: 758
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 759
+Moving bk14b and bk5a
+ cost: 2.7092e+10
+Iteration: 760
+Rotating bk11
+ cost: 2.7092e+10
+Iteration: 761
+Swapping bk6 and bk9a
+ cost: 2.7092e+10
+Iteration: 762
+Swapping bk5b and bk15b
+ cost: 2.7092e+10
+Iteration: 763
+Rotating bk17a
+ cost: 2.7092e+10
+Iteration: 764
+Moving bk14a and bk21
+ cost: 2.7092e+10
+Iteration: 765
+Rotating bk12
+ cost: 2.7092e+10
+Iteration: 766
+Moving bk8b and bk10c
+ cost: 2.7092e+10
+Iteration: 767
+Rotating bk15b
+ cost: 2.7092e+10
+Iteration: 768
+Swapping bk10a and bk13
+ cost: 2.7092e+10
+Iteration: 769
+Moving bk9a and bk7
+ cost: 2.7092e+10
+Iteration: 770
+Swapping bk2 and bk1
+ cost: 2.7092e+10
+Iteration: 771
+Rotating bk15a
+ cost: 2.7092e+10
+Iteration: 772
+Swapping bk18 and bk6
+ cost: 2.7092e+10
+Iteration: 773
+Swapping bk5a and bk12
+ cost: 2.7092e+10
+Iteration: 774
+Rotating bk7
+ cost: 2.7092e+10
+Iteration: 775
+Rotating bk13
+ cost: 2.7092e+10
+Iteration: 776
+Moving bk14b and bk6
+ cost: 2.7092e+10
+Iteration: 777
+Moving bk17a and bk14a
+ cost: 2.7092e+10
+Iteration: 778
+Rotating bk15a
+ cost: 2.7092e+10
+Iteration: 779
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 780
+Rotating bk10c
+ cost: 2.7092e+10
+Iteration: 781
+Moving bk8b and bk7
+ cost: 2.7092e+10
+Iteration: 782
+Moving bk9a and bk20
+ cost: 2.7092e+10
+Iteration: 783
+Moving bk19 and bk15a
+ cost: 2.7092e+10
+Iteration: 784
+Swapping bk1 and bk10b
+ cost: 2.7092e+10
+Iteration: 785
+Moving bk14b and bk20
+ cost: 2.7092e+10
+Iteration: 786
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 787
+Rotating bk9a
+ cost: 2.7092e+10
+Iteration: 788
+Swapping bk9b and bk11
+ cost: 2.7092e+10
+Iteration: 789
+Moving bk9b and bk18
+ cost: 2.7092e+10
+Iteration: 790
+Swapping bk1 and bk11
+ cost: 2.7092e+10
+Iteration: 791
+Moving bk16 and bk10a
+ cost: 2.7092e+10
+Iteration: 792
+Swapping bk10b and bk17a
+ cost: 2.7092e+10
+Iteration: 793
+Rotating bk21
+ cost: 2.7092e+10
+Iteration: 794
+Rotating bk5c
+ cost: 2.7092e+10
+Iteration: 795
+Swapping bk14b and bk1
+ cost: 2.7092e+10
+Iteration: 796
+Moving bk21 and bk19
+ cost: 2.7092e+10
+Iteration: 797
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 798
+Moving bk18 and bk3
+ cost: 2.7092e+10
+Iteration: 799
+Moving bk9a and bk17b
+ cost: 2.7092e+10
+Iteration: 800
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 801
+Swapping bk19 and bk14c
+ cost: 2.7092e+10
+Iteration: 802
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 803
+Swapping bk9c and bk2
+ cost: 2.7092e+10
+Iteration: 804
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 805
+Moving bk2 and bk17b
+ cost: 2.7092e+10
+Iteration: 806
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 807
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 808
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 809
+Swapping bk4 and bk13
+ cost: 2.7092e+10
+Iteration: 810
+Swapping bk5a and bk8b
+ cost: 2.7092e+10
+Iteration: 811
+Moving bk1 and bk5a
+ cost: 2.7092e+10
+Iteration: 812
+Moving bk13 and bk10a
+ cost: 2.7092e+10
+Iteration: 813
+Moving bk7 and bk14b
+ cost: 2.7092e+10
+Iteration: 814
+Moving bk17a and bk5a
+ cost: 2.7092e+10
+Iteration: 815
+Rotating bk10b
+ cost: 2.7092e+10
+Iteration: 816
+Swapping bk9d and bk5b
+ cost: 2.7092e+10
+Iteration: 817
+Swapping bk14a and bk15a
+ cost: 2.7092e+10
+Iteration: 818
+Rotating bk21
+ cost: 2.7092e+10
+Iteration: 819
+Rotating bk14b
+ cost: 2.7092e+10
+Iteration: 820
+Moving bk16 and bk15a
+ cost: 2.7092e+10
+Iteration: 821
+Swapping bk10a and bk18
+ cost: 2.7092e+10
+Iteration: 822
+Swapping bk7 and bk15a
+ cost: 2.7092e+10
+Iteration: 823
+Moving bk21 and bk9d
+ cost: 2.7092e+10
+Iteration: 824
+Swapping bk9b and bk5c
+ cost: 2.7092e+10
+Iteration: 825
+Rotating bk9b
+ cost: 2.7092e+10
+Iteration: 826
+Moving bk5c and bk18
+ cost: 2.7092e+10
+Iteration: 827
+Moving bk17b and bk20
+ cost: 2.7092e+10
+Iteration: 828
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 829
+Swapping bk6 and bk4
+ cost: 2.7092e+10
+Iteration: 830
+Rotating bk9a
+ cost: 2.7092e+10
+Iteration: 831
+Moving bk7 and bk19
+ cost: 2.7092e+10
+Iteration: 832
+Moving bk14b and bk10a
+ cost: 2.7092e+10
+Iteration: 833
+Moving bk14b and bk10c
+ cost: 2.7092e+10
+Iteration: 834
+Rotating bk8a
+ cost: 2.7092e+10
+Iteration: 835
+Rotating bk11
+ cost: 2.7092e+10
+Iteration: 836
+Swapping bk3 and bk10c
+ cost: 2.7092e+10
+Iteration: 837
+Swapping bk5b and bk14c
+ cost: 2.7092e+10
+Iteration: 838
+Moving bk12 and bk8a
+ cost: 2.7092e+10
+Iteration: 839
+Moving bk14c and bk14a
+ cost: 2.7092e+10
+Iteration: 840
+Rotating bk17b
+ cost: 2.7092e+10
+Iteration: 841
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 842
+Moving bk8b and bk12
+ cost: 2.7092e+10
+Iteration: 843
+Moving bk5a and bk5b
+ cost: 2.7092e+10
+Iteration: 844
+Swapping bk13 and bk5b
+ cost: 2.7092e+10
+Iteration: 845
+Swapping bk9a and bk10b
+ cost: 2.7092e+10
+Iteration: 846
+Rotating bk5c
+ cost: 2.7092e+10
+Iteration: 847
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 848
+Rotating bk10c
+ cost: 2.7092e+10
+Iteration: 849
+Swapping bk18 and bk17b
+ cost: 2.7092e+10
+Iteration: 850
+Moving bk17b and bk9b
+ cost: 2.7092e+10
+Iteration: 851
+Swapping bk17a and bk14c
+ cost: 2.7092e+10
+Iteration: 852
+Rotating bk6
+ cost: 2.7092e+10
+Iteration: 853
+Moving bk19 and bk4
+ cost: 2.7092e+10
+Iteration: 854
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 855
+Moving bk8a and bk8b
+ cost: 2.7092e+10
+Iteration: 856
+Swapping bk14b and bk14a
+ cost: 2.7092e+10
+Iteration: 857
+Swapping bk5b and bk20
+ cost: 2.7092e+10
+Iteration: 858
+Rotating bk9d
+ cost: 2.7092e+10
+Iteration: 859
+Swapping bk18 and bk15b
+ cost: 2.7092e+10
+Iteration: 860
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 861
+Moving bk16 and bk14b
+ cost: 2.7092e+10
+Iteration: 862
+Rotating bk5c
+ cost: 2.7092e+10
+Iteration: 863
+Swapping bk9d and bk10b
+ cost: 2.7092e+10
+Iteration: 864
+Swapping bk9d and bk19
+ cost: 2.7092e+10
+Iteration: 865
+Swapping bk2 and bk9d
+ cost: 2.7092e+10
+Iteration: 866
+Rotating bk11
+ cost: 2.7092e+10
+Iteration: 867
+Moving bk9c and bk10a
+ cost: 2.7092e+10
+Iteration: 868
+Swapping bk10a and bk8b
+ cost: 2.7092e+10
+Iteration: 869
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 870
+Swapping bk20 and bk14b
+ cost: 2.7092e+10
+Iteration: 871
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 872
+Rotating bk14c
+ cost: 2.7092e+10
+Iteration: 873
+Moving bk20 and bk4
+ cost: 2.7092e+10
+Iteration: 874
+Moving bk15a and bk6
+ cost: 2.7092e+10
+Iteration: 875
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 876
+Swapping bk10a and bk20
+ cost: 2.7092e+10
+Iteration: 877
+Moving bk15b and bk5b
+ cost: 2.7092e+10
+Iteration: 878
+Rotating bk12
+ cost: 2.7092e+10
+Iteration: 879
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 880
+Rotating bk2
+ cost: 2.7092e+10
+Iteration: 881
+Moving bk7 and bk20
+ cost: 2.7092e+10
+Iteration: 882
+Moving bk13 and bk8b
+ cost: 2.7092e+10
+Iteration: 883
+Moving bk15a and bk6
+ cost: 2.7092e+10
+Iteration: 884
+Rotating bk7
+ cost: 2.7092e+10
+Iteration: 885
+Swapping bk7 and bk5a
+ cost: 2.7092e+10
+Iteration: 886
+Moving bk9d and bk14c
+ cost: 2.7092e+10
+Iteration: 887
+Moving bk4 and bk14b
+ cost: 2.7092e+10
+Iteration: 888
+Swapping bk13 and bk2
+ cost: 2.7092e+10
+Iteration: 889
+Rotating bk13
+ cost: 2.7092e+10
+Iteration: 890
+Moving bk9d and bk1
+ cost: 2.7092e+10
+Iteration: 891
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 892
+Swapping bk14c and bk21
+ cost: 2.7092e+10
+Iteration: 893
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 894
+Moving bk10c and bk1
+ cost: 2.7092e+10
+Iteration: 895
+Swapping bk8b and bk10b
+ cost: 2.7092e+10
+Iteration: 896
+Rotating bk20
+ cost: 2.7092e+10
+Iteration: 897
+Moving bk10b and bk9a
+ cost: 2.7092e+10
+Iteration: 898
+Swapping bk10c and bk21
+ cost: 2.7092e+10
+Iteration: 899
+Swapping bk6 and bk5b
+ cost: 2.7092e+10
+Iteration: 900
+Swapping bk1 and bk5b
+ cost: 2.7092e+10
+Iteration: 901
+Moving bk16 and bk8a
+ cost: 2.7092e+10
+Iteration: 902
+Swapping bk8b and bk9a
+ cost: 2.7092e+10
+Iteration: 903
+Swapping bk9c and bk10c
+ cost: 2.7092e+10
+Iteration: 904
+Moving bk10c and bk5c
+ cost: 2.7092e+10
+Iteration: 905
+Swapping bk2 and bk3
+ cost: 2.7092e+10
+Iteration: 906
+Swapping bk5c and bk10a
+ cost: 2.7092e+10
+Iteration: 907
+Swapping bk2 and bk10b
+ cost: 2.7092e+10
+Iteration: 908
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 909
+Moving bk4 and bk15a
+ cost: 2.7092e+10
+Iteration: 910
+Rotating bk12
+ cost: 2.7092e+10
+Iteration: 911
+Rotating bk6
+ cost: 2.7092e+10
+Iteration: 912
+Rotating bk15b
+ cost: 2.7092e+10
+Iteration: 913
+Moving bk10b and bk5c
+ cost: 2.7092e+10
+Iteration: 914
+Rotating bk16
+ cost: 2.7092e+10
+Iteration: 915
+Rotating bk10c
+ cost: 2.7092e+10
+Iteration: 916
+Swapping bk19 and bk13
+ cost: 2.7092e+10
+Iteration: 917
+Swapping bk15b and bk17b
+ cost: 2.7092e+10
+Iteration: 918
+Moving bk10b and bk5b
+ cost: 2.7092e+10
+Iteration: 919
+Swapping bk7 and bk9a
+ cost: 2.7092e+10
+Iteration: 920
+Rotating bk7
+ cost: 2.7092e+10
+Iteration: 921
+Swapping bk10a and bk5a
+ cost: 2.7092e+10
+Iteration: 922
+Moving bk15b and bk17b
+ cost: 2.7092e+10
+Iteration: 923
+Moving bk11 and bk4
+ cost: 2.7092e+10
+Iteration: 924
+Swapping bk8a and bk12
+ cost: 2.7092e+10
+Iteration: 925
+Swapping bk2 and bk8b
+ cost: 2.7092e+10
+Iteration: 926
+Rotating bk19
+ cost: 2.7092e+10
+Iteration: 927
+Moving bk14b and bk5a
+ cost: 2.7092e+10
+Iteration: 928
+Swapping bk18 and bk14b
+ cost: 2.7092e+10
+Iteration: 929
+Moving bk9a and bk16
+ cost: 2.7092e+10
+Iteration: 930
+Moving bk15a and bk13
+ cost: 2.7092e+10
+Iteration: 931
+Swapping bk18 and bk10a
+ cost: 2.7092e+10
+Iteration: 932
+Rotating bk2
+ cost: 2.7092e+10
+Iteration: 933
+Swapping bk15a and bk2
+ cost: 2.7092e+10
+Iteration: 934
+Swapping bk14c and bk7
+ cost: 2.7092e+10
+Iteration: 935
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 936
+Moving bk14b and bk13
+ cost: 2.7092e+10
+Iteration: 937
+Rotating bk20
+ cost: 2.7092e+10
+Iteration: 938
+Swapping bk15a and bk14a
+ cost: 2.7092e+10
+Iteration: 939
+Moving bk3 and bk14b
+ cost: 2.7092e+10
+Iteration: 940
+Moving bk12 and bk10c
+ cost: 2.7092e+10
+Iteration: 941
+Rotating bk9b
+ cost: 2.7092e+10
+Iteration: 942
+Moving bk14a and bk3
+ cost: 2.7092e+10
+Iteration: 943
+Swapping bk3 and bk8b
+ cost: 2.7092e+10
+Iteration: 944
+Rotating bk9d
+ cost: 2.7092e+10
+Iteration: 945
+Swapping bk19 and bk10b
+ cost: 2.7092e+10
+Iteration: 946
+Moving bk14c and bk3
+ cost: 2.7092e+10
+Iteration: 947
+Swapping bk2 and bk18
+ cost: 2.7092e+10
+Iteration: 948
+Moving bk20 and bk1
+ cost: 2.7092e+10
+Iteration: 949
+Swapping bk9c and bk5b
+ cost: 2.7092e+10
+Iteration: 950
+Moving bk14c and bk13
+ cost: 2.7092e+10
+Iteration: 951
+Moving bk9d and bk21
+ cost: 2.7092e+10
+Iteration: 952
+Moving bk5b and bk21
+ cost: 2.7092e+10
+Iteration: 953
+Moving bk6 and bk12
+ cost: 2.7092e+10
+Iteration: 954
+Moving bk10b and bk9b
+ cost: 2.7092e+10
+Iteration: 955
+Moving bk15a and bk6
+ cost: 2.7092e+10
+Iteration: 956
+Swapping bk6 and bk9b
+ cost: 2.7092e+10
+Iteration: 957
+Moving bk20 and bk5c
+ cost: 2.7092e+10
+Iteration: 958
+Rotating bk8b
+ cost: 2.7092e+10
+Iteration: 959
+Swapping bk8a and bk2
+ cost: 2.7092e+10
+Iteration: 960
+Rotating bk14b
+ cost: 2.7092e+10
+Iteration: 961
+Rotating bk10a
+ cost: 2.7092e+10
+Iteration: 962
+Moving bk10a and bk9c
+ cost: 2.7092e+10
+Iteration: 963
+Moving bk10c and bk3
+ cost: 2.7092e+10
+Iteration: 964
+Rotating bk20
+ cost: 2.7092e+10
+Iteration: 965
+Moving bk14c and bk11
+ cost: 2.7092e+10
+Iteration: 966
+Swapping bk9a and bk14b
+ cost: 2.7092e+10
+Iteration: 967
+Rotating bk1
+ cost: 2.7092e+10
+Iteration: 968
+Swapping bk5a and bk5c
+ cost: 2.7092e+10
+Iteration: 969
+Swapping bk6 and bk11
+ cost: 2.7092e+10
+Iteration: 970
+Swapping bk1 and bk9d
+ cost: 2.7092e+10
+Iteration: 971
+Rotating bk21
+ cost: 2.7092e+10
+Iteration: 972
+Swapping bk15a and bk5b
+ cost: 2.7092e+10
+Iteration: 973
+Rotating bk17a
+ cost: 2.7092e+10
+Iteration: 974
+Moving bk6 and bk3
+ cost: 2.7092e+10
+Iteration: 975
+Swapping bk16 and bk9d
+ cost: 2.7092e+10
+Iteration: 976
+Swapping bk4 and bk6
+ cost: 2.7092e+10
+Iteration: 977
+Swapping bk2 and bk5c
+ cost: 2.7092e+10
+Iteration: 978
+Rotating bk5c
+ cost: 2.7092e+10
+Iteration: 979
+Swapping bk6 and bk5b
+ cost: 2.7092e+10
+Iteration: 980
+Rotating bk9c
+ cost: 2.7092e+10
+Iteration: 981
+Swapping bk7 and bk19
+ cost: 2.7092e+10
+Iteration: 982
+Swapping bk13 and bk10a
+ cost: 2.7092e+10
+Iteration: 983
+Moving bk3 and bk9b
+ cost: 2.7092e+10
+Iteration: 984
+Swapping bk9c and bk6
+ cost: 2.7092e+10
+Iteration: 985
+Rotating bk10c
+ cost: 2.7092e+10
+Iteration: 986
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 987
+Swapping bk15b and bk6
+ cost: 2.7092e+10
+Iteration: 988
+Moving bk14a and bk15a
+ cost: 2.7092e+10
+Iteration: 989
+Rotating bk14a
+ cost: 2.7092e+10
+Iteration: 990
+Swapping bk4 and bk17b
+ cost: 2.7092e+10
+Iteration: 991
+Moving bk9d and bk10a
+ cost: 2.7092e+10
+Iteration: 992
+Moving bk7 and bk15a
+ cost: 2.7092e+10
+Iteration: 993
+Moving bk12 and bk20
+ cost: 2.7092e+10
+Iteration: 994
+Swapping bk20 and bk17a
+ cost: 2.7092e+10
+Iteration: 995
+Swapping bk15a and bk11
+ cost: 2.7092e+10
+Iteration: 996
+Rotating bk17a
+ cost: 2.7092e+10
+Iteration: 997
+Rotating bk10b
+ cost: 2.7092e+10
+Iteration: 998
+Moving bk9c and bk1
+ cost: 2.7092e+10
+Iteration: 999
+Swapping bk14b and bk1
+ cost: 2.7092e+10
+Iteration: 1000
+Swapping bk5c and bk6

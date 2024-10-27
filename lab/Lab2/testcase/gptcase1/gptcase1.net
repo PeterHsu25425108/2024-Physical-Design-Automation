@@ -1,0 +1,27 @@
+NumNets: 5
+
+NetDegree: 3
+B1
+B3
+T1
+
+NetDegree: 4
+B2
+B5
+B8
+T2
+
+NetDegree: 3
+B4
+B9
+T3
+
+NetDegree: 2
+B7
+T4
+
+NetDegree: 4
+B6
+B10
+B3
+T2

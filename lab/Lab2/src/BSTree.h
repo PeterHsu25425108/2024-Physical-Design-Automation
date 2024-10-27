@@ -129,16 +129,16 @@ public:
 
     // Return the val needed for cost evaluation
     double getTotHPWL() const { return tot_HPWL; }
-    double getBoundingArea() const { return bounding_area; }
-    double getAspectRatio() const { return aspect_ratio; }
+    double getBoundingArea() const { return BoundaryHeight * BoundaryWidth; }
+    double getAspectRatio() const { return BoundaryWidth / BoundaryHeight; }
     // double getOutOfBoundArea() const { return outOfBoundArea; }
 
     // prepare for cost evaluation in SA
     void prepareForCost()
     {
         calcTotHPWL();
-        calcBoundArea();
-        calcAspectRatio();
+        /*calcBoundArea();
+        calcAspectRatio();*/
     }
 
     // print the block names and LB of each block
@@ -147,7 +147,7 @@ public:
         for (const string &name : block_names)
         {
             Block *block = BlockName2Ptr.at(name);
-            out << name << block->getBL().x << " " << block->getBL().y << endl;
+            out << name << " " << block->getBL().x << " " << block->getBL().y << " " << block->getTR().x << " " << block->getTR().y << endl;
         }
     }
 };

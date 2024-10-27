@@ -1,136 +1,33 @@
-==44389== Memcheck, a memory error detector
-==44389== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==44389== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==44389== Command: ./../bin/Lab2 0.5 ../testcase/ami4/ami4.block ../testcase/ami4/ami4.nets output.txt
-==44389== Parent PID: 5711
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998A4E: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x11083D: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1269)
-==44389==    by 0x11F23F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:338)
-==44389==    by 0x11D46F: main (main.cpp:22)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11F04F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:281)
-==44389== 
-==44389== Use of uninitialised value of size 8
-==44389==    at 0x499892B: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x4998A78: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x11083D: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1269)
-==44389==    by 0x11F23F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:338)
-==44389==    by 0x11D46F: main (main.cpp:22)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11F04F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:281)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x499893D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x4998A78: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x11083D: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1269)
-==44389==    by 0x11F23F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:338)
-==44389==    by 0x11D46F: main (main.cpp:22)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11F04F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:281)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998AAE: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x11083D: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1269)
-==44389==    by 0x11F23F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:338)
-==44389==    by 0x11D46F: main (main.cpp:22)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11F04F: SA::parseNet(std::basic_ifstream<char, std::char_traits<char> >&) (SA.cpp:281)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998A4E: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x11E2CD: SA::solve() (SA.cpp:127)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Use of uninitialised value of size 8
-==44389==    at 0x499892B: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x4998A78: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x11E2CD: SA::solve() (SA.cpp:127)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x499893D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x4998A78: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x11E2CD: SA::solve() (SA.cpp:127)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998AAE: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x11E2CD: SA::solve() (SA.cpp:127)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998A4E: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x11E570: SA::solve() (SA.cpp:148)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998AAE: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x11E570: SA::solve() (SA.cpp:148)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998A4E: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x10AB50: BSTree::operator=(BSTree const&) (BSTree.cpp:43)
-==44389==    by 0x11E59B: SA::solve() (SA.cpp:150)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== Conditional jump or move depends on uninitialised value(s)
-==44389==    at 0x4998AAE: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x49A7119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==44389==    by 0x110366: operator<<(std::ostream&, BSTree const&) (BSTree.cpp:1247)
-==44389==    by 0x10AB50: BSTree::operator=(BSTree const&) (BSTree.cpp:43)
-==44389==    by 0x11E59B: SA::solve() (SA.cpp:150)
-==44389==    by 0x11D47E: main (main.cpp:24)
-==44389==  Uninitialised value was created by a stack allocation
-==44389==    at 0x11D981: SA::solve() (SA.cpp:14)
-==44389== 
-==44389== 
-==44389== HEAP SUMMARY:
-==44389==     in use at exit: 39,248 bytes in 69 blocks
-==44389==   total heap usage: 575 allocs, 506 frees, 783,260 bytes allocated
-==44389== 
-==44389== LEAK SUMMARY:
-==44389==    definitely lost: 0 bytes in 0 blocks
-==44389==    indirectly lost: 0 bytes in 0 blocks
-==44389==      possibly lost: 0 bytes in 0 blocks
-==44389==    still reachable: 39,248 bytes in 69 blocks
-==44389==         suppressed: 0 bytes in 0 blocks
-==44389== Reachable blocks (those to which a pointer was found) are not shown.
-==44389== To see them, rerun with: --leak-check=full --show-leak-kinds=all
-==44389== 
-==44389== For lists of detected and suppressed errors, rerun with: -s
-==44389== ERROR SUMMARY: 936 errors from 12 contexts (suppressed: 0 from 0)
+==3201== Memcheck, a memory error detector
+==3201== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3201== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3201== Command: ./../bin/Lab2 0.2 ../testcase/ami33/ami33.block ../testcase/ami33/ami33.nets output.txt
+==3201== Parent PID: 3200
+==3201== 
+==3201== 
+==3201== Process terminating with default action of signal 2 (SIGINT)
+==3201==    at 0x4CB1887: write (write.c:26)
+==3201==    by 0x493ACDC: std::__basic_file<char>::xsputn(char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3201==    by 0x497F1AE: std::basic_filebuf<char, std::char_traits<char> >::_M_convert_to_external(char*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3201==    by 0x497F5F1: std::basic_filebuf<char, std::char_traits<char> >::overflow(int) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3201==    by 0x497D22C: std::basic_filebuf<char, std::char_traits<char> >::sync() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3201==    by 0x49A5E45: std::ostream::flush() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3201==    by 0x10FA69: BSTree::writePlotFile(std::ostream&, int, int) const (BSTree.cpp:1428)
+==3201==    by 0x11C442: SA::solve() (SA.cpp:123)
+==3201==    by 0x11BA70: main (main.cpp:24)
+==3201== 
+==3201== HEAP SUMMARY:
+==3201==     in use at exit: 214,000 bytes in 744 blocks
+==3201==   total heap usage: 11,740 allocs, 10,996 frees, 3,651,815 bytes allocated
+==3201== 
+==3201== LEAK SUMMARY:
+==3201==    definitely lost: 0 bytes in 0 blocks
+==3201==    indirectly lost: 0 bytes in 0 blocks
+==3201==      possibly lost: 0 bytes in 0 blocks
+==3201==    still reachable: 214,000 bytes in 744 blocks
+==3201==         suppressed: 0 bytes in 0 blocks
+==3201== Reachable blocks (those to which a pointer was found) are not shown.
+==3201== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==3201== 
+==3201== For lists of detected and suppressed errors, rerun with: -s
+==3201== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

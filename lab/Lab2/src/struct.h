@@ -78,6 +78,7 @@ public:
     // Return the location of the pin at
     // the center of the block
     Point getPinLoc() const;
+    pair<double, double> getPinLocDouble() const;
 };
 
 enum PIN_TYPE

@@ -7,6 +7,8 @@
 #include "BSTree.h"
 #include <vector>
 #include <chrono>
+#include <ctime>
+#include <cmath>
 using namespace std;
 
 class SA
@@ -25,16 +27,17 @@ private:
     double t_decay;
 
     // Monitoring runtime
-    std::chrono::time_point<std::chrono::high_resolution_clock> start;
-    std::chrono::time_point<std::chrono::high_resolution_clock> end;
+    // std::chrono::time_point<std::chrono::high_resolution_clock> start;
+    /// std::chrono::time_point<std::chrono::high_resolution_clock> end;
 
 public:
     SA() { ; }
-    SA(double alpha, double T = 1000, double T_min = 0.01, double t_decay = 0.9) : alpha(alpha), T(T), T_min(T_min), t_decay(t_decay) { ; }
+    SA(double alpha, double T = 10000, double T_min = 0.000001, double t_decay = 0.7) : alpha(alpha), T(T), T_min(T_min), t_decay(t_decay) { ; }
     ~SA() { ; }
 
     double getAlpha() const { return alpha; }
-    double finalCost(const BSTree &tree) { return alpha * tree.getBoundingArea() + (1 - alpha) * tree.getTotHPWL(); }
+    int finalCost(const BSTree &tree) { return int(alpha * tree.getBoundaryWidth() * tree.getBoundaryHeight() + (1 - alpha) * tree.getTotHPWL()); }
+    double SA_cost(const BSTree &tree) { return finalCost(tree) * tree.getTotHPWL() * (1 + abs(tree.getAspectRatio() - double(outlineWidth) / outlineHeight) / (max(tree.getAspectRatio(), double(outlineWidth) / outlineHeight))); }
 
     void parseBlock(ifstream &block_file);
     void parseNet(ifstream &net_file);

@@ -5,6 +5,7 @@
 #include "struct.h"
 #include <unordered_map>
 #include <limits>
+#include <cmath>
 using namespace std;
 
 void Point::operator=(const Point &p)
@@ -218,7 +219,24 @@ Point Block::getTR() const
 
 Point Block::getPinLoc() const
 {
-    return {BL.x + width / 2, BL.y + height / 2};
+    /*double x_coor = double(BL.x + getTR().x) / 2.0;
+    double y_coor = double(BL.y + getTR().y) / 2.0;*/
+    // round the coordinate to the nearest integer
+    /*int x = int(x_coor);
+    int y = int(y_coor);*/
+
+    int x = (BL.x + getTR().x) / 2;
+    int y = (BL.y + getTR().y) / 2;
+
+    return {x, y};
+}
+
+pair<double, double> Block::getPinLocDouble() const
+{
+    double x_coor = double(BL.x + getTR().x) / 2.0;
+    double y_coor = double(BL.y + getTR().y) / 2.0;
+
+    return {x_coor, y_coor};
 }
 
 void Net::calcHPWL()
@@ -228,9 +246,15 @@ void Net::calcHPWL()
     int y_min = numeric_limits<int>::max();
     int y_max = numeric_limits<int>::min();
 
+    /*double x_min = numeric_limits<double>::max();
+    double x_max = numeric_limits<double>::min();
+    double y_min = numeric_limits<double>::max();
+    double y_max = numeric_limits<double>::min();*/
+
     for (Pin &pin : pins)
     {
         Point loc;
+        // pair<double, double> loc;
         if (pin.pin_type == BLOCKPIN)
         {
             // get the block from the BSTree
@@ -241,10 +265,24 @@ void Net::calcHPWL()
                 exit(1);
             }
             loc = block->getPinLoc();
+            // loc = block->getPinLocDouble();
+
+            if (DEBUG_HPWL)
+            {
+                cout << "Block pin: " << pin.name << " loc: " << loc << endl;
+                // cout << "Block pin: " << pin.name << " loc: " << loc.first << " " << loc.second << endl;
+            }
         }
         else if (pin.pin_type == TERMINAL)
         {
             loc = BSTreePtr->getTermLoc(pin.name);
+            // loc.first = BSTreePtr->getTermLoc(pin.name).x;
+            // loc.second = BSTreePtr->getTermLoc(pin.name).y;
+            if (DEBUG_HPWL)
+            {
+                cout << "Terminal pin: " << pin.name << " loc: " << loc << endl;
+                // cout << "Terminal pin: " << pin.name << " loc: " << loc.first << " " << loc.second << endl;
+            }
         }
         else
         {
@@ -256,9 +294,19 @@ void Net::calcHPWL()
         x_min = min(x_min, loc.x);
         y_max = max(y_max, loc.y);
         y_min = min(y_min, loc.y);
+
+        /*x_max = max(x_max, loc.first);
+        x_min = min(x_min, loc.first);
+        y_max = max(y_max, loc.second);
+        y_min = min(y_min, loc.second);*/
     }
 
-    HPWL = (x_max - x_min) + (y_max - y_min);
+    if (DEBUG_HPWL)
+    {
+        cout << "Net HPWL: " << (x_max - x_min) + (y_max - y_min) << endl;
+    }
+
+    HPWL = (int)((x_max - x_min) + (y_max - y_min));
 }
 
 void Net::addPin(string pin_name)

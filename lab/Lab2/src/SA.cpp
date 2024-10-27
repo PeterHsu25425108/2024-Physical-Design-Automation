@@ -7,22 +7,25 @@
 #include <vector>
 #include <cmath>
 #include <chrono>
+#include <ctime>
+#include <cstdlib>
 using namespace std;
 using namespace std::chrono;
 
 void SA::solve()
 {
-    start = high_resolution_clock::now();
+    // start = high_resolution_clock::now();
 
     ofstream SA_cost_file("SA_cost.txt");
 
     bs_tree.prepareForCost();
-    double cost = finalCost(bs_tree);
+    // double cost = finalCost(bs_tree);
+    double cost = SA_cost(bs_tree);
 
-    if (DEBUG_SA)
-    {
-        SA_cost_file << "Initial cost: " << cost << endl;
-    }
+    // if (DEBUG_SA)
+    //{
+    SA_cost_file << "Initial cost: " << cost << endl;
+    //}
 
     double best_cost = cost;
     BSTree best_tree(bs_tree);
@@ -36,14 +39,19 @@ void SA::solve()
     }
 
     int iter = 0;
-    while (T > T_min)
+    int best_iter = 0;
+
+    int changeTempIter = 1000;
+    int reject = 0;
+
+    while (T > T_min /*true*/)
     {
         if (DEBUG_SA)
         {
             cout << endl
                  << "Iteration: " << iter + 1 << endl;
-            SA_cost_file << "Iteration: " << iter + 1 << endl;
         }
+        SA_cost_file << "Iteration: " << iter + 1 << endl;
 
         // randomly pick a move from the 3 moves
         // SwapBlock, RotateBlock, MoveBlock
@@ -60,12 +68,13 @@ void SA::solve()
             }
 
             pair<Block *, Block *> blocks = new_tree.pickRandPair();
-            SA_cost_file << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
 
             if (DEBUG_SA)
             {
                 cout << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
             }
+
+            SA_cost_file << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
 
             new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
             break;
@@ -102,7 +111,16 @@ void SA::solve()
             {
                 cout << "Moving " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
             }
-            new_tree.MoveBlock(blocks.first, blocks.second);
+            bool success = new_tree.MoveBlock(blocks.first, blocks.second);
+            if (!success)
+            {
+                // swap the blocks if the move is invalid
+                if (DEBUG_SA)
+                {
+                    cout << "Invalid move, swap the blocks" << endl;
+                }
+                new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
+            }
             break;
         }
         default:
@@ -126,7 +144,8 @@ void SA::solve()
             cout << "new tree after the operation: " << endl;
             cout << new_tree << endl;
         }
-        double new_cost = finalCost(new_tree);
+        // double new_cost = finalCost(new_tree);
+        double new_cost = SA_cost(new_tree);
         double delta = new_cost - cost;
 
         if (DEBUG_SA)
@@ -147,6 +166,7 @@ void SA::solve()
                 cout << "new tree structure: " << endl;
                 cout << new_tree << endl;
             }
+
             bs_tree = new_tree;
             cost = new_cost;
             if (cost < best_cost && fitInOutline(new_tree))
@@ -158,9 +178,10 @@ void SA::solve()
 
                 best_cost = cost;
                 best_tree = bs_tree;
+                best_iter = iter;
             }
         }
-        /*else if (!fitInOutline(best_tree) && fitInOutline(new_tree))
+        else if (!fitInOutline(best_tree) && fitInOutline(new_tree))
         {
             if (DEBUG_SA)
             {
@@ -168,32 +189,52 @@ void SA::solve()
             }
             best_tree = new_tree;
             best_cost = new_cost;
-        }*/
-
-        T *= t_decay;
-
-        if (DEBUG_SA)
-        {
-            SA_cost_file << " cost: " << cost << endl;
+            best_iter = iter;
         }
+        else
+        {
+            reject++;
+        }
+
+        if ((iter + 1) % changeTempIter == 0)
+        {
+            T *= t_decay;
+
+            double reject_rate = (double)reject / changeTempIter;
+            if (reject_rate > 0.95)
+            {
+                cout << "iteration: " << iter + 1 << " reject rate: " << reject_rate << endl;
+                cout << "Reject rate is too high, stop the iteration" << endl;
+                break;
+            }
+        }
+
+        // if (DEBUG_SA)
+        //{
+        SA_cost_file << " cost: " << cost << endl;
+        //}
 
         if (DEBUG_BREAK && iter >= DEBUG_MAXITER)
         {
+            cout << "iteration: " << iter + 1 << " cost: " << cost << endl;
+            cout << "Debug break, stop the iteration" << endl;
             break;
         }
 
-        if (duration_cast<seconds>(high_resolution_clock::now() - start).count() > 300 * 0.95)
+        if (((double)clock() / CLOCKS_PER_SEC) > 300 * 0.95)
         {
+            cout << "iteration: " << iter + 1 << " cost: " << cost << endl;
+            cout << "Time limit reached, stop the iteration" << endl;
             break;
         }
 
         iter++;
-        if (PLOT_FINAL)
+        /*if (PLOT_FINAL)
         {
             ofstream final_plot_file("../draw/text/final_plot.txt");
             best_tree.writePlotFile(final_plot_file, outlineWidth, outlineHeight);
             final_plot_file.close();
-        }
+        }*/
     }
     bs_tree = best_tree;
 
@@ -203,8 +244,21 @@ void SA::solve()
         best_tree.writePlotFile(final_plot_file, outlineWidth, outlineHeight);
         final_plot_file.close();
     }
+    if (DEBUG_SA)
+    {
+        cout << "best tree selected at iteration: " << best_iter << endl;
+    }
 
-    end = high_resolution_clock::now();
+    if (fitInOutline(best_tree))
+    {
+        cout << "Best tree fits in the outline" << endl;
+    }
+    else
+    {
+        cout << "Best tree does not fit in the outline" << endl;
+    }
+
+    // end = high_resolution_clock::now();
 
     SA_cost_file.close();
 }
@@ -341,18 +395,22 @@ void SA::parseNet(ifstream &net_file)
 
 void SA::writeOutput(ostream &out)
 {
-    // bs_tree.prepareForCost();
+    bs_tree.prepareForCost();
 
     double final_cost = finalCost(this->bs_tree);
     out << final_cost << endl;
 
+    // total HPWL
+    out << bs_tree.getTotHPWL() << endl;
+
     // print bounding area
-    out << bs_tree.getBoundingArea() << endl;
+    out << bs_tree.getBoundaryWidth() * bs_tree.getBoundaryHeight() << endl;
 
     // print bounding width and height
     out << bs_tree.getBoundaryWidth() << " " << bs_tree.getBoundaryHeight() << endl;
 
-    double time_taken = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+    // double time_taken = std::chrono::duration_cast<std::chrono::seconds>(end - start).count();
+    double time_taken = (double)clock() / CLOCKS_PER_SEC;
     // print program running time
     out << time_taken << endl;
 
