@@ -223,39 +223,61 @@ void BSTree::insertBlock(string name, int width, int height)
     }
     else
     {
-        // Randonly pick a Block to insert
-        int rand_name_idx = rand() % numBlocks;
-        while (block_names[rand_name_idx] == name)
+        if (INSERT_LEFT)
         {
-            rand_name_idx = rand() % numBlocks;
-        }
-        Block *curr = BlockName2Ptr[block_names[rand_name_idx]];
-
-        int iter = 0;
-        while (curr->getLeft() != nullptr && curr->getRight() != nullptr)
-        {
-            bool go_left = rand() % 2;
-
-            if (go_left)
+            // insert the new block to the left most leaf node
+            Block *curr = root;
+            while (curr->getLeft() != nullptr)
             {
                 curr = curr->getLeft();
             }
-            else
-            {
-                curr = curr->getRight();
-            }
-
-            if (iter > numBlocks)
-            {
-                cerr << "ERROR: BSTree::insertBlock(" << name << ", " << width << ", " << height << ") stuck in inf loop" << endl;
-                exit(1);
-            }
+            curr->setLeft(new_block);
+            new_block->setParent(curr);
         }
-
-        if (curr->getLeft() == nullptr && curr->getRight() == nullptr)
+        else
         {
-            bool go_left = rand() % 2;
-            if (go_left)
+            // Randonly pick a Block to insert
+            int rand_name_idx = rand() % numBlocks;
+            while (block_names[rand_name_idx] == name)
+            {
+                rand_name_idx = rand() % numBlocks;
+            }
+            Block *curr = BlockName2Ptr[block_names[rand_name_idx]];
+
+            int iter = 0;
+            while (curr->getLeft() != nullptr && curr->getRight() != nullptr)
+            {
+                bool go_left = rand() % 2;
+
+                if (go_left)
+                {
+                    curr = curr->getLeft();
+                }
+                else
+                {
+                    curr = curr->getRight();
+                }
+
+                if (iter > numBlocks)
+                {
+                    cerr << "ERROR: BSTree::insertBlock(" << name << ", " << width << ", " << height << ") stuck in inf loop" << endl;
+                    exit(1);
+                }
+            }
+
+            if (curr->getLeft() == nullptr && curr->getRight() == nullptr)
+            {
+                bool go_left = rand() % 2;
+                if (go_left)
+                {
+                    curr->setLeft(new_block);
+                }
+                else
+                {
+                    curr->setRight(new_block);
+                }
+            }
+            else if (curr->getLeft() == nullptr)
             {
                 curr->setLeft(new_block);
             }
@@ -263,16 +285,8 @@ void BSTree::insertBlock(string name, int width, int height)
             {
                 curr->setRight(new_block);
             }
+            new_block->setParent(curr);
         }
-        else if (curr->getLeft() == nullptr)
-        {
-            curr->setLeft(new_block);
-        }
-        else
-        {
-            curr->setRight(new_block);
-        }
-        new_block->setParent(curr);
     }
 
     // update the contour list and the boundary width and height

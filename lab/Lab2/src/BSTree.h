@@ -137,8 +137,8 @@ public:
     void prepareForCost()
     {
         calcTotHPWL();
-        /*calcBoundArea();
-        calcAspectRatio();*/
+        calcBoundArea();
+        calcAspectRatio();
     }
 
     // print the block names and LB of each block

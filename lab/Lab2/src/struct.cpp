@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <limits>
 #include <cmath>
+#include <algorithm>
+#include <climits>
 using namespace std;
 
 void Point::operator=(const Point &p)
@@ -225,8 +227,8 @@ Point Block::getPinLoc() const
     /*int x = int(x_coor);
     int y = int(y_coor);*/
 
-    int x = (BL.x + getTR().x) / 2;
-    int y = (BL.y + getTR().y) / 2;
+    int x = BL.x + width / 2; //(BL.x + getTR().x) / 2;
+    int y = BL.y + height / 2; //(BL.y + getTR().y) / 2;
 
     return {x, y};
 }
@@ -241,15 +243,20 @@ pair<double, double> Block::getPinLocDouble() const
 
 void Net::calcHPWL()
 {
-    int x_min = numeric_limits<int>::max();
+    /*int x_min = numeric_limits<int>::max();
     int x_max = numeric_limits<int>::min();
     int y_min = numeric_limits<int>::max();
-    int y_max = numeric_limits<int>::min();
+    int y_max = numeric_limits<int>::min();*/
 
     /*double x_min = numeric_limits<double>::max();
     double x_max = numeric_limits<double>::min();
     double y_min = numeric_limits<double>::max();
     double y_max = numeric_limits<double>::min();*/
+
+    int x_min = INT_MAX;
+    int x_max = INT_MIN;
+    int y_min = INT_MAX;
+    int y_max = INT_MIN;
 
     for (Pin &pin : pins)
     {

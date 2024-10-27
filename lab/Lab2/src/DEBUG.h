@@ -2,7 +2,7 @@
 #define DEBUG_H
 
 #define DEBUG_BREAK 0
-#define DEBUG_MAXITER 1
+#define DEBUG_MAXITER 100
 #define DEBUG_PARSE 0
 #define DEBUG_INSERT 0
 #define DEBUG_SA 0
@@ -12,6 +12,8 @@
 #define DEBUG_MOVE 0
 #define PLOT_ITER 0
 #define PLOT_FINAL 1
-#define DEBUG_HPWL 1
+#define DEBUG_HPWL 0
+#define INSERT_LEFT 1
+#define SA_COST_OUT 1
 
 #endif

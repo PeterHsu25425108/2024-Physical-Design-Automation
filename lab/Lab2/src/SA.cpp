@@ -22,16 +22,16 @@ void SA::solve()
     // double cost = finalCost(bs_tree);
     double cost = SA_cost(bs_tree);
 
-    // if (DEBUG_SA)
-    //{
-    SA_cost_file << "Initial cost: " << cost << endl;
-    //}
+    if (SA_COST_OUT)
+    {
+        SA_cost_file << "Initial cost: " << cost << endl;
+    }
 
     double best_cost = cost;
     BSTree best_tree(bs_tree);
     BSTree new_tree(bs_tree);
 
-    if (PLOT_ITER)
+    if (PLOT_FINAL)
     {
         ofstream init_plot_file("../draw/text/init_plot.txt");
         new_tree.writePlotFile(init_plot_file, outlineWidth, outlineHeight);
@@ -44,14 +44,16 @@ void SA::solve()
     int changeTempIter = 1000;
     int reject = 0;
 
-    while (T > T_min /*true*/)
+    while (/*T > T_min*/ true)
     {
         if (DEBUG_SA)
         {
             cout << endl
                  << "Iteration: " << iter + 1 << endl;
         }
-        SA_cost_file << "Iteration: " << iter + 1 << endl;
+
+        if (SA_COST_OUT)
+            SA_cost_file << "Iteration: " << iter + 1 << endl;
 
         // randomly pick a move from the 3 moves
         // SwapBlock, RotateBlock, MoveBlock
@@ -74,7 +76,8 @@ void SA::solve()
                 cout << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
             }
 
-            SA_cost_file << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+            if (SA_COST_OUT)
+                SA_cost_file << "Swapping " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
 
             new_tree.SwapBlock(blocks.first->getName(), blocks.second->getName());
             break;
@@ -88,7 +91,8 @@ void SA::solve()
             }
 
             Block *block = new_tree.pickRandBlock();
-            SA_cost_file << "Rotating " << block->getName() << endl;
+            if (SA_COST_OUT)
+                SA_cost_file << "Rotating " << block->getName() << endl;
 
             if (DEBUG_SA)
             {
@@ -105,7 +109,8 @@ void SA::solve()
                 cout << "Moving blocks" << endl;
             }
             pair<Block *, Block *> blocks = new_tree.pickRandPair();
-            SA_cost_file << "Moving " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
+            if (SA_COST_OUT)
+                SA_cost_file << "Moving " << blocks.first->getName() << " and " << blocks.second->getName() << endl;
 
             if (DEBUG_SA)
             {
@@ -148,6 +153,21 @@ void SA::solve()
         double new_cost = SA_cost(new_tree);
         double delta = new_cost - cost;
 
+        /*if (delta < 0)
+        {
+            cout << "SA cost decreased by: " << -delta << endl;
+        }*/
+
+        // new_tree.prepareForCost();
+        if (SA_COST_OUT)
+        {
+            SA_cost_file << " SA_cost: " << new_cost << endl;
+            SA_cost_file << "final cost: " << finalCost(new_tree) << endl;
+            SA_cost_file << "HPWL: " << new_tree.getTotHPWL() << endl;
+            SA_cost_file << "Bound area: " << new_tree.getBoundingArea() << endl;
+            SA_cost_file << "acceptance prob: " << exp(-delta / T) << endl;
+        }
+
         if (DEBUG_SA)
         {
             cout << "Bound area: " << new_tree.getBoundingArea() << endl;
@@ -160,6 +180,8 @@ void SA::solve()
 
         if (delta < 0 || exp(-delta / T) > (double)rand() / RAND_MAX)
         {
+            if (SA_COST_OUT)
+                SA_cost_file << "Accept the new tree" << endl;
             if (DEBUG_SA)
             {
                 cout << "Accept the new tree" << endl;
@@ -169,12 +191,13 @@ void SA::solve()
 
             bs_tree = new_tree;
             cost = new_cost;
-            if (cost < best_cost && fitInOutline(new_tree))
+            if (cost < best_cost /* && fitInOutline(new_tree)*/)
             {
-                if (DEBUG_SA)
-                {
-                    cout << "Updating best tree cuz it's better" << endl;
-                }
+                /*if (DEBUG_SA)
+                {*/
+                if (SA_COST_OUT)
+                    SA_cost_file << "Updating best tree cuz it's better" << endl;
+                //}
 
                 best_cost = cost;
                 best_tree = bs_tree;
@@ -183,16 +206,20 @@ void SA::solve()
         }
         else if (!fitInOutline(best_tree) && fitInOutline(new_tree))
         {
-            if (DEBUG_SA)
-            {
-                cout << "Updating best tree cuz new_tree is the 1st feasible sol" << endl;
-            }
+            /*if (DEBUG_SA)
+            {*/
+            if (SA_COST_OUT)
+                SA_cost_file << "Updating best tree cuz new_tree is the 1st feasible sol" << endl;
+            //}
             best_tree = new_tree;
             best_cost = new_cost;
             best_iter = iter;
         }
         else
         {
+            if (SA_COST_OUT)
+                SA_cost_file << "Reject the new tree" << endl;
+            new_tree = bs_tree;
             reject++;
         }
 
@@ -201,30 +228,39 @@ void SA::solve()
             T *= t_decay;
 
             double reject_rate = (double)reject / changeTempIter;
-            if (reject_rate > 0.95)
+            /*if (reject_rate > 0.95)
             {
-                cout << "iteration: " << iter + 1 << " reject rate: " << reject_rate << endl;
-                cout << "Reject rate is too high, stop the iteration" << endl;
+                if (SA_COST_OUT)
+                {
+                    SA_cost_file << "iteration: " << iter + 1 << " reject rate: " << reject_rate << endl;
+                    SA_cost_file << "Reject rate is too high, stop the iteration" << endl;
+                }
                 break;
-            }
+            }*/
         }
 
         // if (DEBUG_SA)
         //{
-        SA_cost_file << " cost: " << cost << endl;
+
         //}
 
         if (DEBUG_BREAK && iter >= DEBUG_MAXITER)
         {
-            cout << "iteration: " << iter + 1 << " cost: " << cost << endl;
-            cout << "Debug break, stop the iteration" << endl;
+            if (SA_COST_OUT)
+            {
+                SA_cost_file << "iteration: " << iter + 1 << " cost: " << cost << endl;
+                SA_cost_file << "Debug break, stop the iteration" << endl;
+            }
             break;
         }
 
         if (((double)clock() / CLOCKS_PER_SEC) > 300 * 0.95)
         {
-            cout << "iteration: " << iter + 1 << " cost: " << cost << endl;
-            cout << "Time limit reached, stop the iteration" << endl;
+            if (SA_COST_OUT)
+            {
+                SA_cost_file << "iteration: " << iter + 1 << " cost: " << cost << endl;
+                SA_cost_file << "Time limit reached, stop the iteration" << endl;
+            }
             break;
         }
 
@@ -237,6 +273,14 @@ void SA::solve()
         }*/
     }
     bs_tree = best_tree;
+
+    if (SA_COST_OUT)
+    {
+        SA_cost_file << "Best SA_cost: " << best_cost << endl;
+        SA_cost_file << "Best final cost: " << finalCost(best_tree) << endl;
+        SA_cost_file << "Best HPWL: " << best_tree.getTotHPWL() << endl;
+        SA_cost_file << "Best bound area: " << best_tree.getBoundingArea() << endl;
+    }
 
     if (PLOT_FINAL)
     {
@@ -398,7 +442,7 @@ void SA::writeOutput(ostream &out)
     bs_tree.prepareForCost();
 
     double final_cost = finalCost(this->bs_tree);
-    out << final_cost << endl;
+    out << (long)final_cost << endl;
 
     // total HPWL
     out << bs_tree.getTotHPWL() << endl;

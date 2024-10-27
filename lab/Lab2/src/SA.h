@@ -32,12 +32,28 @@ private:
 
 public:
     SA() { ; }
-    SA(double alpha, double T = 10000, double T_min = 0.000001, double t_decay = 0.7) : alpha(alpha), T(T), T_min(T_min), t_decay(t_decay) { ; }
+    SA(double alpha, double T = 10000, double T_min = 0.000001, double t_decay = 0.9) : alpha(alpha), T(T), T_min(T_min), t_decay(t_decay) { ; }
     ~SA() { ; }
 
     double getAlpha() const { return alpha; }
-    int finalCost(const BSTree &tree) { return int(alpha * tree.getBoundaryWidth() * tree.getBoundaryHeight() + (1 - alpha) * tree.getTotHPWL()); }
-    double SA_cost(const BSTree &tree) { return finalCost(tree) * tree.getTotHPWL() * (1 + abs(tree.getAspectRatio() - double(outlineWidth) / outlineHeight) / (max(tree.getAspectRatio(), double(outlineWidth) / outlineHeight))); }
+    double finalCost(const BSTree &tree) { return alpha * tree.getBoundaryWidth() * tree.getBoundaryHeight() + (1 - alpha) * tree.getTotHPWL(); }
+    double SA_cost(const BSTree &tree)
+    {
+        double objective = finalCost(tree);
+        double x_error = max(0.0, double(tree.getBoundaryWidth() - outlineWidth));
+        double y_error = max(0.0, double(tree.getBoundaryHeight() - outlineHeight));
+
+        if (x_error + y_error == 0)
+        {
+            return -outlineHeight * outlineWidth * 4 / objective;
+        }
+        else
+        {
+            return 10 * (x_error + y_error);
+        }
+
+        // return finalCost(tree) * tree.getTotHPWL() * (1 + abs(tree.getAspectRatio() - double(outlineWidth) / outlineHeight) / (max(tree.getAspectRatio(), double(outlineWidth) / outlineHeight)));
+    }
 
     void parseBlock(ifstream &block_file);
     void parseNet(ifstream &net_file);
