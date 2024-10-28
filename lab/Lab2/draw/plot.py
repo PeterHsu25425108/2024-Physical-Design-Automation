@@ -196,7 +196,7 @@ def plot_blocks_and_contours(file_path):
         + format
     )
     print(f"Saving plot to {output_file}")
-    plt.savefig(output_file, format="png")
+    plt.savefig(output_file, format=format)
     plt.show()
 
 

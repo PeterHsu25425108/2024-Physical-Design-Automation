@@ -11,7 +11,7 @@
 #define DEBUG_SWAP 0
 #define DEBUG_MOVE 0
 #define PLOT_ITER 0
-#define PLOT_FINAL 0
+#define PLOT_FINAL 1
 #define DEBUG_HPWL 0
 #define INSERT_LEFT 0
 #define SA_COST_OUT 0

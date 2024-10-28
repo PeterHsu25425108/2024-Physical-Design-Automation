@@ -254,7 +254,7 @@ void SA::solve()
             break;
         }
 
-        if (((double)clock() / CLOCKS_PER_SEC) > 300 * 0.8)
+        if (((double)clock() / CLOCKS_PER_SEC) > 300 * 0.95)
         {
             if (SA_COST_OUT)
             {

@@ -70,8 +70,8 @@ run_valgrind: $(EXEC)
 	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
 
 run: $(EXEC)
-	time ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt > cmd.txt
-	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
+	time ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt > cmd.txt
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt
 
 check: $(EXEC)
-	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt
