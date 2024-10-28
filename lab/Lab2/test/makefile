@@ -1,8 +1,8 @@
 SOURCE_DIR = ../src
 BIN_DIR = ../bin
 OBJ_DIR = ../obj
-CFLAGS = -std=c++11 -g -c
-LDFLAGS = -std=c++11 -g
+CFLAGS = -std=c++11  -c
+LDFLAGS = -std=c++11 
 EXEC = $(BIN_DIR)/Lab2
 OUT_DIR = ../output
 DRAW_DIR = ../draw
@@ -25,12 +25,12 @@ TESTCASE_FILES = $(wildcard $(TESTCASE_DIR)/*.txt)
 all: $(EXEC)
 
 $(EXEC): $(OBJ_FILES)
-	g++ $(LDFLAGS) -g -o $@ $^
+	g++ $(LDFLAGS)  -o $@ $^
 
 # Rule to compile .cpp files to .o files
 define compile_rule
 $(OBJ_DIR)/$(1).o: $(SOURCE_DIR)/$(1).cpp $(wildcard $(SOURCE_DIR)/*.h) | $(OBJ_DIR)
-	g++ -c $(CFLAGS) -g -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
+	g++ -c $(CFLAGS)  -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
 endef
 
 # Generate compile rules for each .cpp file
@@ -66,9 +66,12 @@ plot_final: $(DRAW_TEXT_DIR)/final_plot.txt
 
 # Pattern rule to run [case_name] testcase with alpha = [alpha] using valgrind
 run_valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt > cmd.txt
-	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt
+	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt > cmd.txt
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
 
 run: $(EXEC)
-	./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt > cmd.txt
-	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets output.txt
+	time ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt > cmd.txt
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
+
+check: $(EXEC)
+	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
