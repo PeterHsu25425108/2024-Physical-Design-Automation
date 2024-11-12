@@ -3,7 +3,7 @@ BIN_DIR = ../bin
 OBJ_DIR = ../obj
 CFLAGS = -std=c++11  -c
 LDFLAGS = -std=c++11 
-EXEC = $(BIN_DIR)/Lab2
+EXEC = $(BIN_DIR)/Legalizer
 OUT_DIR = ../output
 DRAW_DIR = ../draw
 DRAW_TEXT_DIR = ../draw/text
@@ -43,13 +43,12 @@ clean:
 	rm -rf $(EXEC) $(OBJ_DIR)/*.o
 	rm -rf $(OUT_DIR)/*
 	rm -rf $(BIN_DIR)/*
-	rm -rf $(DRAW_TEXT_DIR)/*
 
-clean_plot:
-	rm -rf $(DRAW_DIR)/png/*
-	rm -rf $(DRAW_DIR)/svg/*
-clean_text:
-	rm -rf $(DRAW_TEXT_DIR)/*
+# clean_plot:
+# 	rm -rf $(DRAW_DIR)/png/*
+# 	rm -rf $(DRAW_DIR)/svg/*
+# clean_text:
+# 	rm -rf $(DRAW_TEXT_DIR)/*
 
 # run ../draw/plot.py to plot all .txt files in the DRAW_TEXT_DIR
 # plot_all:
@@ -65,10 +64,10 @@ clean_text:
 
 # Pattern rule to run [case_name] testcase with alpha = [alpha] using valgrind
 run_valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt > cmd.txt
+	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 run: $(EXEC)
-	time ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt > cmd.txt
+	time ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 check: $(EXEC)
-	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt
+	./Evaluater ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
