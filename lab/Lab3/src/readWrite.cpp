@@ -68,11 +68,14 @@ void Solver::readlg(ifstream &lg_file)
 
             if (head.substr(0, 2) == "FF")
             {
-                // FF instantiation(UNDONE)
+                // FF instantiation
+                ff_onDie.push_back(name);
+                ff_dict[name] = new Inst(name, x, y, width, height, fix);
             }
             else
             {
-                // Cell instantiation(UNDONE)
+                // Cell instantiation
+                gate_dict[name] = new Inst(name, x, y, width, height, fix);
             }
         }
         else if (head == "PlacementRows")
@@ -86,13 +89,38 @@ void Solver::readlg(ifstream &lg_file)
                 cout << "PlacementRows: " << startX << " " << startY << " " << siteWidth << " " << siteHeight << " " << totNumSites << endl;
             }
 
-            // PlacementRows instantiation(UNDONE)
+            // PlacementRows instantiation
+            PlaceRow placeRow(startY);
+            placeRow.setStartX(startX);
+            placeRow.setSiteWidth(siteWidth);
+            placeRow.setSiteHeight(siteHeight);
+            placeRow.setNumSites(totNumSites);
+            placeRows.push_back(placeRow);
         }
         else
         {
             cerr << "Solver::readlg: Unknown keyword: " << head << endl;
             exit(1);
         }
+    }
+
+    // sort placeRows by y coordinate
+    sort(placeRows.begin(), placeRows.end());
+
+    // Put the ff and cells into the placeRows
+    for (auto &it : ff_dict)
+    {
+        Inst *ff = it.second;
+        double x = ff->getX();
+        double y = ff->getY();
+
+        // calculate the row index and site index with the x and y coordinate
+        int rowIdx = (y - placeRows[0].getStartY()) / placeRows[0].getSiteHeight();
+        int siteIdx = (x - placeRows[0].getStartX()) / placeRows[0].getSiteWidth();
+
+        // insert the ff into the placeRows
+        placeRows[rowIdx].insertFF(ff, siteIdx);
+        ff_posOnPLaceRow[ff->getName()] = make_pair(rowIdx, siteIdx);
     }
 
     if (DEBUG_PARSE)
@@ -103,5 +131,18 @@ void Solver::readlg(ifstream &lg_file)
 
 void Solver::writeOutput(ofstream &output_file)
 {
-    // write output(UNDONE)
+    // write output from result
+    for (auto &it : result)
+    {
+        int merged_ff_x = ff_dict[it.first]->getX();
+        int merged_ff_y = ff_dict[it.first]->getY();
+        int num_of_moved_ff = it.second.size();
+
+        output_file << it.first << " " << merged_ff_x << " " << merged_ff_y << endl;
+        output_file << num_of_moved_ff << endl;
+        for (auto &ff_name : it.second)
+        {
+            output_file << ff_name << " " << ff_dict[ff_name]->getX() << " " << ff_dict[ff_name]->getY() << endl;
+        }
+    }
 }
