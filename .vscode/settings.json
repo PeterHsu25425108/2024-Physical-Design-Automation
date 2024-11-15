@@ -52,6 +52,7 @@
         "string_view": "cpp",
         "system_error": "cpp",
         "iomanip": "cpp",
-        "numbers": "cpp"
+        "numbers": "cpp",
+        "unordered_set": "cpp"
     }
 }

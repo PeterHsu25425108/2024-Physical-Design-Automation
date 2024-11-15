@@ -107,6 +107,15 @@ void Solver::readlg(ifstream &lg_file)
     // sort placeRows by y coordinate
     sort(placeRows.begin(), placeRows.end());
 
+    // set the row idx
+    for (int i = 0; i < placeRows.size(); i++)
+    {
+        placeRows[i].setRowIdx(i);
+    }
+
+    // set the lowest placerow y
+    placeRows[0].setLowestPlaceRowY(placeRows[0].getStartY());
+
     // Put the ff and cells into the placeRows
     for (auto &it : ff_dict)
     {

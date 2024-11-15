@@ -13,6 +13,7 @@
 #include <unordered_map>
 #include "Inst.h"
 #include "PlaceRow.h"
+#include <list>
 using namespace std;
 
 class Solver
@@ -41,9 +42,10 @@ private:
     // dict for ffs that are placed on the same row
     // key: ff name, value: pair.first: row index in placeRows, pair.second: index in row.insts
     unordered_map<string, pair<int, int>> ff_posOnPLaceRow;
+
     // names of ffs that are placed on the die
-    // if a ff gets banked, it will be removed from this vector
-    vector<string> ff_onDie;
+    // if a ff gets banked, it will be removed from this list
+    list<string> ff_onDie;
 
     // dict for all gate ever appeared in the layout
     // key: gate name, value: ptr to the gate instance
@@ -52,6 +54,11 @@ private:
     // store the placement rows
     // will be sorted by y coordinate after parsing
     vector<PlaceRow> placeRows;
+
+    // Find the cell whose LL corner is at the given coordinate on the layout
+    // key: the coordinate of LL corner of the cell
+    // value: ptr to the cell instance
+    unordered_map<pair<double, double>, Inst *> cellPos2InstPtr;
 };
 
 #endif
