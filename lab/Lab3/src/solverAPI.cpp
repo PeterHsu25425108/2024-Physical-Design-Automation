@@ -26,9 +26,15 @@ void Solver::addFF_PlaceRows(Inst *ff)
     // this is where the LL corner of the ff is
     int LL_rowIdx = ff_placeRowIdx(ff);
     // the number of rows the ff occupies
-    int occRowCount = (int)ceil((ff->getY() + ff->getHeight() - placeRows[0].getStartY()) / placeRows[0].getSiteHeight());
+    int occRowCount = ceil(ff->getHeight() / placeRows[0].getSiteHeight());
     // the row index of the highest row the ff occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
+
+    if(DEBUG_addFF)
+    {
+        // output the number of rows the ff occupies
+        cout << "Solver::addFF_PlaceRows: " << ff->getName() << " occupies " << occRowCount << " rows." << endl;
+    }
 
     // add the ff to the placeRows
     for (int i = LL_rowIdx; i <= top_rowIdx; i++)
@@ -48,7 +54,7 @@ void Solver::removeFF_PlaceRows(const Inst *ff)
     // this is where the LL corner of the ff is
     int LL_rowIdx = ff_placeRowIdx(ff);
     // the number of rows the ff occupies
-    int occRowCount = (int)ceil((ff->getY() + ff->getHeight() - placeRows[0].getStartY()) / placeRows[0].getSiteHeight());
+    int occRowCount = ceil((ff->getY() + ff->getHeight() - placeRows[0].getStartY()) / placeRows[0].getSiteHeight());
     // the row index of the highest row the ff occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
 

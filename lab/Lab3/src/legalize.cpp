@@ -27,6 +27,12 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
         stringstream ss(temp);
         // remove the "Banking_Cell: " part
         ss >> temp;
+
+        if(DEBUG_PARSE)
+        {
+            cout << "Parsing: " << temp << endl;
+        }
+
         bool isBanked = true;
         vector<string> removed_ffs;
 
@@ -34,6 +40,11 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
         ss >> temp;
         while (temp != "-->")
         {
+            if(DEBUG_PARSE)
+            {
+                cout << "Parsing: " << temp << endl;
+            }
+
             string ff_name = temp;
             removed_ffs.push_back(ff_name);
             ss >> temp;
@@ -44,6 +55,11 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
         double LL_x, LL_y;
         int width, height;
         ss >> new_ff_name >> LL_x >> LL_y >> width >> height;
+
+        if(DEBUG_PARSE)
+        {
+            cout << "Parsing: " << new_ff_name << " " << LL_x << " " << LL_y << " " << width << " " << height << endl;
+        }
 
         // insert the new ff into the layout, but it is not legalized yet
         Inst *new_ff = new Inst(new_ff_name, LL_x, LL_y, width, height, false);

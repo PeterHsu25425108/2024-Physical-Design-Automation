@@ -33,57 +33,112 @@ void PlaceRow::insertFF(Inst *ff, int siteIdx)
     // auto it = free_sites.lower_bound(EmptySite(ff->getX(), numeric_limits<double>::max()));
     auto it = free_sites.lower_bound(ff->getX());
 
-    if (it == free_sites.end())
+    /*if(it->first > ff->getX())
     {
-        cerr << "PlaceRow::insertFF: Cannot find a site for the ff cuz return end." << endl;
-        exit(1);
-    }
-    else if (it->first > ff->getX())
-    {
-        cerr << "PlaceRow::insertFF: Found site x is greater than ff->getX()." << endl;
-        exit(1);
-    }
-    else if (it->first + it->second < ff->getX() + ff->getWidth())
-    {
-        cerr << "PlaceRow::insertFF: Found site's width is less than ff " << ff->getName() << "'s width." << endl;
-        exit(1);
-    }
+        if(it == free_sites.begin())
+        {
+            cerr << "PlaceRow::insertFF: Found site x > ff->getX() but it is the first site." << endl;
+            exit(1);
+        }
+
+        if(DEBUG_PLACEROW)
+        {
+            cout << "(case 2->3) PlaceRow::insertFF: Found site x > ff->getX()." << endl;
+        }
+
+        it = prev(it);
+    }*/
 
     // insert the ff into the site
     // case 1: the site x is equal to ff->getX()
     if (it->first == ff->getX())
     {
+        if(DEBUG_PLACEROW)
+        {
+            cout << "PlaceRow::insertFF: Found site x == ff->getX()." << endl;
+        }
+
         // case 1.1: the site width is equal to ff->getWidth()
         if (it->second == ff->getWidth())
         {
+            if(DEBUG_PLACEROW)
+            {
+                cout <<"case 1.1: the site width is equal to ff->getWidth()"<<endl;
+            }
+
             free_sites.erase(it);
         }
         // case 1.2: the site width is greater than ff->getWidth()
         else
         {
+            if(DEBUG_PLACEROW)
+            {
+                cout <<"case 1.2: the site width is greater than ff->getWidth()"<<endl;
+            }
+
             // EmptySite newSite(ff->getX() + ff->getWidth(), it->width - ff->getWidth());
             free_sites.erase(it);
             free_sites[ff->getX() + ff->getWidth()] = it->second - ff->getWidth();
         }
     }
     // case2: the site x is larger than ff->getX()
-    else
+    else if(it->first > ff->getX())
     {
+        if(DEBUG_PLACEROW)
+        {
+            cout << "PlaceRow::insertFF: case 2: Found site x > ff->getX()." << endl;
+        }
+
         // find the site that has x < ff->getX(), and ensue that the site width >= ff->getWidth()
         it = it == free_sites.begin() ? it : prev(it);
         if (it->second < ff->getWidth())
         {
-            cerr << "PlaceRow::insertFF: Found site's width is less than ff " << ff->getName() << "'s width." << endl;
+            cerr << "(case2) PlaceRow::insertFF: Found site's width is less than ff " << ff->getName() << "'s width." << endl;
             exit(1);
         }
 
-        // cut out the site before the ff(definitely exists cuz site x > ff->getX())
-        it->second -= ff->getX() - it->first;
+
         // cut out the site after the ff if it exists(ff.getX() + ff.getWidth() < site.x + site.width)
         if (it->first + it->second > ff->getX() + ff->getWidth())
         {
             free_sites[ff->getX() + ff->getWidth()] = it->first + it->second - ff->getX() - ff->getWidth();
         }
+
+        // cut out the site before the ff(definitely exists cuz site x > ff->getX())
+        it->second = ff->getX() - it->first;
+    }
+    // case 3: the site x is less than ff->getX()
+    // in this case, all sites have x < ff->getX()
+    // meaning the last site should be able to accommodate the ff
+    else
+    {
+        if(DEBUG_PLACEROW)
+        {
+            cout << "PlaceRow::insertFF: case 3: Found site x < ff->getX()." << endl;
+        }
+
+        auto it_last = prev(free_sites.end());
+        // the last free site can't cover the ff completely
+        if(it_last->first + it_last->second < ff->getX() + ff->getWidth())
+        {
+            cerr << "PlaceRow::insertFF: Found site can't cover ff " << ff->getName() << "." << endl;
+            cerr << "site x: " << it_last->first << " site width: " << it_last->second << endl;
+            cerr <<"ff x " << ff->getX() << " ff width " << ff->getWidth() << endl;
+            
+            exit(1);
+        }
+
+        
+
+        // cut out the site after the ff if it exists(ff.getX() + ff.getWidth() < site.x + site.width)
+        if (it_last->first + it_last->second > ff->getX() + ff->getWidth())
+        {
+            free_sites[ff->getX() + ff->getWidth()] = it_last->first + it_last->second - ff->getX() - ff->getWidth();
+        }
+
+
+        // cut out the site before the ff
+        it_last->second = ff->getX() - it_last->first;
     }
 }
 

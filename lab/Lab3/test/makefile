@@ -40,9 +40,8 @@ $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 
 clean:
-	rm -rf $(EXEC) $(OBJ_DIR)/*.o
-	rm -rf $(OUT_DIR)/*
-	rm -rf $(BIN_DIR)/*
+	rm  $(EXEC) $(OBJ_DIR)/*.o
+#	rm  $(OUT_DIR)/*
 
 # clean_plot:
 # 	rm -rf $(DRAW_DIR)/png/*
@@ -64,13 +63,13 @@ clean:
 
 # Pattern rule to run [case_name] testcase with alpha = [alpha] using valgrind
 run_valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
+	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 run: $(EXEC)
-	time ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
+	./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 run_cmd: $(EXEC)
-	time ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
+	./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
 
 check: $(EXEC)
 	./Evaluater ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg

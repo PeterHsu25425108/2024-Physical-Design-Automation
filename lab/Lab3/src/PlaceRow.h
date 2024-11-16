@@ -29,7 +29,7 @@ using namespace std;
 class PlaceRow
 {
 public:
-    PlaceRow() { ; }
+    PlaceRow() { free_sites[startX] = numSites * siteWidth; }
     ~PlaceRow() { ; }
     PlaceRow(double startY) : startY(startY)
     {
@@ -52,10 +52,12 @@ public:
     void setLowestPlaceRowY(double lowest_placerowY) { this->lowest_placerowY = lowest_placerowY; }
 
     double getStartX() const { return startX; }
+    double getLowestPlaceRowY() const { return lowest_placerowY; }
     double getStartY() const { return startY; }
     int getSiteWidth() const { return siteWidth; }
     int getSiteHeight() const { return siteHeight; }
     int getNumSites() const { return numSites; }
+    map<double, int> getFreeSites() const { return free_sites; }
 
     int getRowIdx() const
     {
@@ -65,13 +67,15 @@ public:
     void insertFF(Inst *ff, int siteIdx);
     void removeFF(const Inst *ff);
 
-private:
+    // public static variables
     static double startX;
     static int numSites, siteWidth, siteHeight;
     // the y coordinate of the lowest placerow,
     // 1. used to calculate the row index of a ff
     // 2. with the x,y coordinate of a ff, the row index can be calculated
     static double lowest_placerowY;
+
+private:
 
     // int rowIdx;
     double startY;

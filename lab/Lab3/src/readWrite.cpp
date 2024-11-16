@@ -15,6 +15,7 @@ using namespace std;
 
 void Solver::readlg(ifstream &lg_file)
 {
+    bool first_placeRow = true;
     string head;
     while (lg_file >> head)
     {
@@ -89,12 +90,18 @@ void Solver::readlg(ifstream &lg_file)
                 cout << "PlacementRows: " << startX << " " << startY << " " << siteWidth << " " << siteHeight << " " << totNumSites << endl;
             }
 
+
             // PlacementRows instantiation
+            
+            if(first_placeRow)
+            {
+                first_placeRow = false;
+                PlaceRow::startX = startX;
+                PlaceRow::siteWidth = siteWidth;
+                PlaceRow::siteHeight = siteHeight;
+                PlaceRow::numSites = totNumSites;
+            }
             PlaceRow placeRow(startY);
-            placeRow.setStartX(startX);
-            placeRow.setSiteWidth(siteWidth);
-            placeRow.setSiteHeight(siteHeight);
-            placeRow.setNumSites(totNumSites);
             placeRows.push_back(placeRow);
         }
         else
@@ -106,6 +113,32 @@ void Solver::readlg(ifstream &lg_file)
 
     // sort placeRows by y coordinate
     sort(placeRows.begin(), placeRows.end());
+
+    if(DEBUG_PARSE)
+    {
+        // print the free sites of the first placerow
+        cout << "Parsing: Printing the free sites of the first placerow." << endl;
+        for (auto &site : placeRows[0].getFreeSites())
+        {
+            cout << "x: " << site.first << " width: " << site.second << endl;
+        }
+        cout << "placeRows[0].getStartX(): " << placeRows[0].getStartX() << endl;
+        cout << "placeRows[0].getStartY(): " << placeRows[0].getStartY() << endl;
+
+        // print the free sites whose one and only one site is the entire row
+        for (auto &placeRow : placeRows)
+        {
+            if(placeRow.getFreeSites().size() != 1 && !(placeRow.getFreeSites().begin()->first == placeRow.getStartX()&& placeRow.getFreeSites().begin()->second == placeRow.getNumSites() * placeRow.getSiteWidth()))
+            {
+                cout << "!! PlaceRow " << placeRow.getStartY() << " has abnormal free sites." << endl;
+                cout <<"rowidx: "<<placeRow.getRowIdx()<<endl;
+                for (auto &site : placeRow.getFreeSites())
+                {
+                    cout << "x: " << site.first << " width: " << site.second << endl;
+                }
+            }
+        }
+    }
 
     // set the row idx
     /*for (int i = 0; i < placeRows.size(); i++)
@@ -131,10 +164,30 @@ void Solver::readlg(ifstream &lg_file)
         if (DEBUG_PARSE)
         {
             cout << "Parsing: Adding " << ff->getName() << " to placerows" << endl;
+
+            cout <<endl;
+            cout << "Free sites before inserting " << ff->getName() << endl;
+            cout <<"ff x: " << x<<" FF y: "<<y<<endl;
+            cout <<"ff width "<<ff->getWidth()<<" ff height "<<ff->getHeight()<<endl;
+            for (auto &site : placeRows[rowIdx].getFreeSites())
+            {
+                cout << "x: " << site.first << " width: " << site.second << endl;
+            }
         }
 
         addFF_PlaceRows(ff);
         // ff_posOnPLaceRow[ff->getName()] = make_pair(rowIdx, siteIdx);
+
+        
+        if(DEBUG_PARSE)
+        {
+            cout <<endl<< "Free sites after inserting " << ff->getName() << endl;
+            for (auto &site : placeRows[rowIdx].getFreeSites())
+            {
+                cout << "x: " << site.first << " width: " << site.second << endl;
+            }
+            cout << endl;
+        }
     }
 
     if (DEBUG_PARSE)
