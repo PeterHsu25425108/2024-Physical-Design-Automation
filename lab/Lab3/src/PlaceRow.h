@@ -66,6 +66,10 @@ public:
 
     void insertFF(Inst *ff, int siteIdx);
     void removeFF(const Inst *ff);
+    // search for the site that can accommodate the ff
+    // if found, return the LL corner of the site which is on this row
+    // else return(-1, -1)
+    pair<double, double> searchFFLL(Inst *ff, vector<PlaceRow> &placeRows);
 
     // public static variables
     static double startX;

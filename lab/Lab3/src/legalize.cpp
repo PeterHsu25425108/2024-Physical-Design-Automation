@@ -16,6 +16,79 @@ using namespace std;
 vector<string> Solver::BruteFindInsertion(Inst *ff)
 {
     vector<string> moved_ff;
+
+    // to place the ff into an empty hole, we need to
+    // 1. find a consecutive empty space that can accommodate the ff
+    // 2. find the best position to place the ff in the empty space
+
+    // find the row that the ff is placed
+    int LL_rowIdx = ff_placeRowIdx(ff);
+    // the number of rows the ff occupies
+    int occRowCount = ceil(ff->getHeight() / placeRows[0].getSiteHeight());
+    // the row index of the highest row the ff occupies
+    int top_rowIdx = LL_rowIdx + occRowCount - 1;
+    
+    bool found_space = false;
+    int numRowVisited = 0;
+    int up_rowIdx = LL_rowIdx;
+    int down_rowIdx = LL_rowIdx;
+    bool go_down;
+
+    if(LL_rowIdx == 0)
+    {
+        go_down = true;
+    }
+    else if(LL_rowIdx == placeRows.size()-1)
+    {
+        go_down = false;
+    }
+    else
+    {
+        go_down = rand()%2;
+    }
+
+    pair<double, double> Void = make_pair(-1, -1);
+    while(numRowVisited < placeRows.size())
+    {
+        int curr_rowIdx = go_down ? down_rowIdx : up_rowIdx;
+        // search the site on the current row
+        PlaceRow &curr_row = placeRows[curr_rowIdx];
+        pair<double, double> LL = curr_row.searchFFLL(ff, placeRows);
+        
+        if(LL != Void)
+        {
+            found_space = true;
+            ff->setX(LL.first);
+            ff->setY(LL.second);
+            addFF_PlaceRows(ff);
+            moved_ff.push_back(ff->getName());
+            break;
+        }
+
+        if(found_space)
+        {
+            break;
+        }
+
+        // row updated when we can't find any free space that acomadate ff on current row
+        if(go_down)
+        {
+            go_down = (down_rowIdx == 0) ? false : true;
+            down_rowIdx = (down_rowIdx == 0) ? 0 : down_rowIdx - 1;
+        }
+        else
+        {
+            go_down = (up_rowIdx == placeRows.size()-1) ? true : false;
+            up_rowIdx = (up_rowIdx == placeRows.size()-1) ? placeRows.size()-1 : up_rowIdx + 1;
+        }
+
+        numRowVisited++;
+        if(numRowVisited == placeRows.size())
+        {
+            break;
+        }
+    }
+
     return moved_ff;
 }
 

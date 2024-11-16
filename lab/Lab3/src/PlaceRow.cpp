@@ -10,6 +10,7 @@
 #include <iomanip>
 #include <unordered_map>
 #include <set>
+#include<queue>
 #include "Inst.h"
 #include "PlaceRow.h"
 using namespace std;
@@ -19,6 +20,222 @@ int PlaceRow::siteWidth = 0.0;
 int PlaceRow::siteHeight = 0.0;
 int PlaceRow::numSites = 0;
 double PlaceRow::lowest_placerowY = numeric_limits<double>::max();
+
+// search for the site that can accommodate the ff
+// if found, return the LL corner of the site which is on this row
+// else return(-1, -1)
+pair<double, double> PlaceRow::searchFFLL(Inst *ff,vector<PlaceRow> &placeRows)
+{
+    if(free_sites.empty())
+    {
+        return make_pair(-1, -1);
+    }
+
+    int LL_rowIdx = (int)((this->startY - PlaceRow::lowest_placerowY) / PlaceRow::siteHeight);
+
+    // the number of rows the ff occupies
+    int occRowCount = ceil(ff->getHeight() / PlaceRow::siteHeight);
+    // the row index of the highest row the ff occupies
+    int top_rowIdx = LL_rowIdx + occRowCount - 1;
+
+    if(top_rowIdx >= placeRows.size())
+    {
+        return make_pair(-1, -1);
+    }
+    
+    // starting from the site where the ff is placed
+    // search for the site in the occRowCount-1 rows above the LL_rowIdx that have overlaped interval
+    // with width >= ff->getWidth()
+    // if the current site can't accommodate the ff, move to the next site, the order if leftward, rightward alternately,
+    // until the end of both direction on the current row are reached
+
+    // search the site on the current row
+    auto it = free_sites.lower_bound(ff->getX());
+    // filter out the sites that cannot accommodate the ff
+    if(it == free_sites.end())
+    {
+        it = prev(it);
+        // if(it->first + it->second < ff->getX() + ff->getWidth())
+        // {
+        //     return make_pair(-1, -1);
+        // }
+    }
+    else if(it->first > ff->getX())
+    {
+        // if(it == free_sites.begin())
+        // {
+        //     return make_pair(-1, -1);
+        // }
+
+        it = (it == free_sites.begin()) ? it : prev(it);
+
+        // if(it->first + it->second < ff->getX() + ff->getWidth())
+        // {
+        //     return make_pair(-1, -1);
+        // }
+    }
+    // else // it->first == ff->getX()
+    // {
+    //     if(it->second < ff->getWidth())
+    //     {
+    //         return make_pair(-1, -1);
+    //     }
+    // }
+
+    auto it_left = it;
+    auto it_right = it;
+    // whether to move leftward or rightward after this iteration completes
+    bool go_left = rand() % 2;
+
+    // define a data structure to store the consecutive intervals
+    struct Interval
+    {
+        double x_left;
+        double width;
+        // records the index of the highest row this interval has gone through
+        int topIdx;
+
+        Interval(double x_left, double width, int topIdx) : x_left(x_left), width(width), topIdx(topIdx) {};
+        Interval() : x_left(0), width(0), topIdx(0) {};
+        ~Interval() {};
+    };
+
+    // search the site on the rows above the current row
+    // the row is iterated using it_left and it_right
+    while(it_left != free_sites.end() || it_right != free_sites.end())
+    {
+        // the x interval of the free site that is being checked
+        auto it_curr = go_left ? it_left : it_right;
+        Interval init_interval(it_curr->first, it_curr->second, LL_rowIdx);
+        queue<Interval> q;
+        q.push(init_interval);
+        // Stores the intervals whose topIdx == top_rowIdx and 
+        vector<Interval> success_Intervals;
+
+        while(!q.empty())
+        {
+            // whoever gets poped from quene has width >= ff->getWidth()
+            Interval curr_interval = q.front();
+            q.pop();
+
+            // if the interval's width isn't enough to accommodate the ff, skip it
+            if(curr_interval.topIdx == top_rowIdx)
+            {
+                success_Intervals.push_back(curr_interval);
+                continue;
+            }
+
+            // find a seq of intervals that overlap with the current interval
+            double xl = curr_interval.x_left;
+            double xr = curr_interval.x_left + curr_interval.width;
+            PlaceRow &above_row = placeRows[curr_interval.topIdx + 1];
+
+            // find the 1st interval that overlaps with the current interval
+            auto left_bound = above_row.free_sites.lower_bound(xl);
+
+            // left_bound->first > xl
+            if(left_bound->first > xl)
+            {
+                // if left_bound is the first site and it doesn't overlap with the current interval
+                if(left_bound == above_row.free_sites.begin() && left_bound->first >= xr)
+                {
+                    continue;
+                }
+
+                auto prev_left_bound = prev(left_bound);
+                // if prev_left_bound overlap with the current interval
+                if(prev_left_bound->first + prev_left_bound->second > xl)
+                {
+                    left_bound = prev_left_bound;
+                }
+                // if left_bound doesn't overlap with the current interval
+                else if(left_bound->first > xr)
+                {
+                    continue;
+                }
+            }
+
+            // find the last interval that overlaps with the current interval
+            // right_bound->first >= xr
+            auto right_bound = above_row.free_sites.lower_bound(xr);
+            // if right_bound doesn't overlap with the current interval and it is the first site
+            if(right_bound == above_row.free_sites.begin())
+            {
+                continue;
+            }
+            else
+            {
+                // right_bound->first <= xr
+                right_bound = prev(right_bound);
+                // if right_bound doesn't overlap with the current interval
+                if(right_bound->first + right_bound->second < xl)
+                {
+                    continue;
+                }
+            }
+
+            // find the intervals with width >= ff->getWidth() within the interval [left_bound, right_bound]
+            for(auto it = left_bound; it != next(right_bound); it++)
+            {
+                // if the interval's width is enough to accommodate the ff
+                if(it->second >= ff->getWidth())
+                {
+                    double x_left = max(xl, it->first);
+                    double x_right = min(xr, it->first + it->second);
+                    Interval new_interval(x_left, x_right - x_left, curr_interval.topIdx + 1);
+                    q.push(new_interval);
+                }
+            }
+        }
+
+        // from all success intervals, find the one that has the smallest displacement from the ff's x
+        if(!success_Intervals.empty())
+        {
+            double min_displacement = numeric_limits<double>::max();
+            Interval best_interval;
+            for(auto &interval : success_Intervals)
+            {
+                // find the closest x to the ff's x
+                double closest_x;
+                if(ff->getX() < interval.x_left)
+                {
+                    closest_x = interval.x_left;
+                }
+                else if(ff->getX() > interval.x_left + interval.width)
+                {
+                    closest_x = interval.x_left + interval.width;
+                }
+                else
+                {
+                    closest_x = ff->getX();
+                }
+
+                double displacement = abs(closest_x - ff->getX()) + abs(this->startY - ff->getY());
+                if(displacement < min_displacement)
+                {
+                    min_displacement = displacement;
+                    best_interval = interval;
+                }
+            }
+
+            return make_pair(best_interval.x_left, this->startY);
+        }
+
+        // update the iterators
+        if(go_left)
+        {
+            it_left = (it_left == free_sites.begin()) ? free_sites.end() : prev(it_left);
+            go_left = (it_right == free_sites.end()) ? true : false;
+        }
+        else
+        {
+            it_right = next(it_right);
+            go_left = (it_left == free_sites.end()) ? false : true;
+        }
+    }
+
+    return make_pair(-1, -1);
+}
 
 // O(logn)
 // assuming the ff can be placed on the row without overlapping,

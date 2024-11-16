@@ -190,7 +190,7 @@ void Solver::readlg(ifstream &lg_file)
         }
     }
 
-    if (DEBUG_PARSE)
+    if (G_DEBUG)
     {
         cout << "Parsing done." << endl;
     }
