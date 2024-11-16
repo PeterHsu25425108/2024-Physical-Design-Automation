@@ -69,5 +69,8 @@ run_valgrind: $(EXEC)
 run: $(EXEC)
 	time ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
+run_cmd: $(EXEC)
+	time ./../bin/$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
+
 check: $(EXEC)
 	./Evaluater ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg

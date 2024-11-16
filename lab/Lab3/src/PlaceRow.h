@@ -48,7 +48,7 @@ public:
     void setSiteWidth(int siteWidth) { this->siteWidth = siteWidth; }
     void setSiteHeight(int siteHeight) { this->siteHeight = siteHeight; }
     void setNumSites(int numSites) { this->numSites = numSites; }
-    void setRowIdx(int rowIdx) { this->rowIdx = rowIdx; }
+    // void setRowIdx(int rowIdx) { this->rowIdx = rowIdx; }
     void setLowestPlaceRowY(double lowest_placerowY) { this->lowest_placerowY = lowest_placerowY; }
 
     double getStartX() const { return startX; }
@@ -57,7 +57,10 @@ public:
     int getSiteHeight() const { return siteHeight; }
     int getNumSites() const { return numSites; }
 
-    int getRowIdx() const { return rowIdx; }
+    int getRowIdx() const
+    {
+        return (int)((startY - lowest_placerowY) / siteHeight);
+    }
 
     void insertFF(Inst *ff, int siteIdx);
     void removeFF(const Inst *ff);
@@ -70,12 +73,16 @@ private:
     // 2. with the x,y coordinate of a ff, the row index can be calculated
     static double lowest_placerowY;
 
-    int rowIdx;
+    // int rowIdx;
     double startY;
 
     // first: x coordinate,
     // second: max allowable width
     map<double, int> free_sites;
+
+    // key: the x coordinate of the LL corner of a cell placed on the row
+    // value : ptr to the cell instance
+    unordered_map<double, Inst *> ff_xPos2Inst;
 };
 
 #endif

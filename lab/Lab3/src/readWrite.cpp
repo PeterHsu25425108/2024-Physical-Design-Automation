@@ -69,7 +69,7 @@ void Solver::readlg(ifstream &lg_file)
             if (head.substr(0, 2) == "FF")
             {
                 // FF instantiation
-                ff_onDie.push_back(name);
+                // ff_onDie.push_back(name);
                 ff_dict[name] = new Inst(name, x, y, width, height, fix);
             }
             else
@@ -108,10 +108,10 @@ void Solver::readlg(ifstream &lg_file)
     sort(placeRows.begin(), placeRows.end());
 
     // set the row idx
-    for (int i = 0; i < placeRows.size(); i++)
+    /*for (int i = 0; i < placeRows.size(); i++)
     {
         placeRows[i].setRowIdx(i);
-    }
+    }*/
 
     // set the lowest placerow y
     placeRows[0].setLowestPlaceRowY(placeRows[0].getStartY());
@@ -128,8 +128,13 @@ void Solver::readlg(ifstream &lg_file)
         int siteIdx = (x - placeRows[0].getStartX()) / placeRows[0].getSiteWidth();
 
         // insert the ff into the placeRows
-        placeRows[rowIdx].insertFF(ff, siteIdx);
-        ff_posOnPLaceRow[ff->getName()] = make_pair(rowIdx, siteIdx);
+        if (DEBUG_PARSE)
+        {
+            cout << "Parsing: Adding " << ff->getName() << " to placerows" << endl;
+        }
+
+        addFF_PlaceRows(ff);
+        // ff_posOnPLaceRow[ff->getName()] = make_pair(rowIdx, siteIdx);
     }
 
     if (DEBUG_PARSE)
@@ -138,20 +143,17 @@ void Solver::readlg(ifstream &lg_file)
     }
 }
 
-void Solver::writeOutput(ofstream &output_file)
+void Solver::writeOutput(ofstream &output_file, Inst *new_ff, vector<string> moved_ff)
 {
-    // write output from result
-    for (auto &it : result)
-    {
-        int merged_ff_x = ff_dict[it.first]->getX();
-        int merged_ff_y = ff_dict[it.first]->getY();
-        int num_of_moved_ff = it.second.size();
+    // write the result of the legalizing operation of new_ff to the output file
 
-        output_file << it.first << " " << merged_ff_x << " " << merged_ff_y << endl;
-        output_file << num_of_moved_ff << endl;
-        for (auto &ff_name : it.second)
-        {
-            output_file << ff_name << " " << ff_dict[ff_name]->getX() << " " << ff_dict[ff_name]->getY() << endl;
-        }
+    // write the new ff x, y
+    output_file << new_ff->getX() << " " << new_ff->getY() << endl;
+    output_file << moved_ff.size() << endl;
+    // output name, x, y of the moved ffs
+    for (auto &ff_name : moved_ff)
+    {
+        Inst *ff = ff_dict[ff_name];
+        output_file << ff->getName() << " " << ff->getX() << " " << ff->getY() << endl;
     }
 }

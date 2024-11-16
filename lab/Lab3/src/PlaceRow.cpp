@@ -25,6 +25,9 @@ double PlaceRow::lowest_placerowY = numeric_limits<double>::max();
 // so a empty site with x<=ff->getX() and x+width>=ff->getX()+ff->getWidth() should be found
 void PlaceRow::insertFF(Inst *ff, int siteIdx)
 {
+    // update ff_xPos2Inst
+    ff_xPos2Inst[ff->getX()] = ff;
+
     // find the site that the ff will be placed
     // return the first site whose x is not less than ff->getX()
     // auto it = free_sites.lower_bound(EmptySite(ff->getX(), numeric_limits<double>::max()));
@@ -86,10 +89,21 @@ void PlaceRow::insertFF(Inst *ff, int siteIdx)
 
 void PlaceRow::removeFF(const Inst *ff)
 {
+    // delete the ff from the ff_xPos2Inst
+    ff_xPos2Inst.erase(ff->getX());
+
     // recover the site
     // insert the site and get the iterator to the inserted site
     free_sites[ff->getX()] = ff->getWidth();
-    auto it_inserted = free_sites.find(ff->getX());
+
+    // find the site whose x <= ff->getX()
+    auto it_inserted = free_sites.lower_bound(ff->getX());
+    if (it_inserted->first > ff->getX())
+    {
+        // since it_inserted is the first site whose x > ff->getX(),
+        // so the site before it_inserted is the site that we want to merge with the inserted site
+        it_inserted = prev(it_inserted);
+    }
 
     // find the site that is before the inserted site
     auto it_before = it_inserted == free_sites.begin() ? it_inserted : prev(it_inserted);

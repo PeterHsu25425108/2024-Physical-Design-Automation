@@ -12,8 +12,7 @@ int main(int argc, char *argv[])
 
     Solver solver;
     solver.readlg(lg_file);
-    /*solver.solve();
-    solver.writeOutput(output_file);*/
+    solver.solve(opt_file, output_file);
 
     lg_file.close();
     opt_file.close();
