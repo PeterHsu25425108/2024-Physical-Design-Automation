@@ -54,5 +54,6 @@
         "iomanip": "cpp",
         "numbers": "cpp",
         "unordered_set": "cpp"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }
