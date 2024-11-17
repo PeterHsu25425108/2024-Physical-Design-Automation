@@ -1,8 +1,8 @@
 SOURCE_DIR = ../src
 BIN_DIR = ../bin
 OBJ_DIR = ../obj
-CFLAGS = -std=c++11  -c
-LDFLAGS = -std=c++11 
+CFLAGS = -std=c++11  -c -g
+LDFLAGS = -std=c++11 -g
 EXEC = $(BIN_DIR)/Legalizer
 OUT_DIR = ../output
 DRAW_DIR = ../draw
@@ -29,7 +29,7 @@ $(EXEC): $(OBJ_FILES)
 # Rule to compile .cpp files to .o files
 define compile_rule
 $(OBJ_DIR)/$(1).o: $(SOURCE_DIR)/$(1).cpp $(wildcard $(SOURCE_DIR)/*.h) | $(OBJ_DIR)
-	g++ -c $(CFLAGS)  -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
+	g++ $(CFLAGS)  -o $(OBJ_DIR)/$(1).o $(SOURCE_DIR)/$(1).cpp
 endef
 
 # Generate compile rules for each .cpp file
@@ -63,7 +63,7 @@ clean:
 
 # Pattern rule to run [case_name] testcase with alpha = [alpha] using valgrind
 run_valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
+	valgrind --log-file=memory.log ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 run: $(EXEC)
 	./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
@@ -72,4 +72,4 @@ run_cmd: $(EXEC)
 	./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
 
 check: $(EXEC)
-	./Evaluater ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
+	./Evaluator ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg

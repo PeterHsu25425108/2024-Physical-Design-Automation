@@ -26,6 +26,19 @@ using namespace std;
     }
 };*/
 
+// define a data structure to store the consecutive intervals
+struct Interval
+{
+    double x_left;
+    double width;
+    // records the index of the highest row this interval has gone through
+    int topIdx;
+
+    Interval(double x_left, double width, int topIdx) : x_left(x_left), width(width), topIdx(topIdx) {};
+    Interval() : x_left(0), width(0), topIdx(0) {};
+    ~Interval() {};
+};
+
 class PlaceRow
 {
 public:
@@ -80,7 +93,6 @@ public:
     static double lowest_placerowY;
 
 private:
-
     // int rowIdx;
     double startY;
 

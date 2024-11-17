@@ -1,1 +1,243 @@
-Parsing done.
+PlaceRow::insertFF: case 3: Found site x < ff->getX().
+PlaceRow::insertFF: case 3: Found site x < ff->getX().
+PlaceRow::insertFF: case 3: Found site x < ff->getX().
+PlaceRow::insertFF: case 3: Found site x < ff->getX().
+Parsing: Banking_Cell:
+Parsing: FF_1_0
+Parsing: FF_1_1
+Parsing: FF_2_0 60 0 10 10
+Solver::solve: FF_2_0 inserted into the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_0 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 0
+Solver::removeFF_PlaceRows: FF_1_0 occupies 1 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 0
+PlaceRow::removeFF: Before removing FF_1_0
+ff left x: 5 ff width: 5 ff right x: 10
+x left: 0 width: 5 x right: 5
+x left: 15 width: 45 x right: 60
+x left: 65 width: 35 x right: 100
+
+merge before
+it_before :x_left: 5x_right: 10
+it_after :x_left: 0x_right: 5
+PlaceRow::removeFF: After removing FF_1_0
+ff left x: 5 ff width: 5 ff right x: 10
+x left: 0 width: 10 x right: 10
+x left: 15 width: 45 x right: 60
+x left: 65 width: 35 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_0 from row 0
+Solver::solve: FF_1_0 removed from the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_1 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 0
+Solver::removeFF_PlaceRows: FF_1_1 occupies 1 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 0
+PlaceRow::removeFF: Before removing FF_1_1
+ff left x: 10 ff width: 5 ff right x: 15
+x left: 0 width: 10 x right: 10
+x left: 15 width: 45 x right: 60
+x left: 65 width: 35 x right: 100
+
+merge before
+it_before :x_left: 10x_right: 15
+it_after :x_left: 0x_right: 10
+merge after
+it_inserted :
+x_left: 0x_right: 15
+it_after :x_left: 15x_right: 60
+PlaceRow::removeFF: After removing FF_1_1
+ff left x: 10 ff width: 5 ff right x: 15
+x left: 0 width: 60 x right: 60
+x left: 65 width: 35 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_1 from row 0
+Solver::solve: FF_1_1 removed from the layout.
+row trait of ff FF_2_0
+ff height: 10 site height: 10
+LL_rowIdx: 0 top_rowIdx: 0 occRowCount: 1
+Solver::BruteFindInsertion: FF_2_0 on row 0
+LL: 0 0 width: 10
+Consecutive sites: 
+Row 0: x: 0 width: 60 
+case 1.2: the site width is greater than ff->getWidth()
+Solver::solve: FF_2_0 legalized.
+Solver::solve: FF_2_0 result written to the output file.
+Parsing: Banking_Cell:
+Parsing: FF_1_2
+Parsing: FF_1_5
+Parsing: FF_2_1 20 20 10 10
+Solver::solve: FF_2_1 inserted into the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_2 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 2
+Solver::removeFF_PlaceRows: FF_1_2 occupies 1 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 2
+PlaceRow::removeFF: Before removing FF_1_2
+ff left x: 10 ff width: 5 ff right x: 15
+x left: 0 width: 10 x right: 10
+x left: 15 width: 25 x right: 40
+x left: 50 width: 20 x right: 70
+x left: 75 width: 25 x right: 100
+
+merge before
+it_before :x_left: 10x_right: 15
+it_after :x_left: 0x_right: 10
+merge after
+it_inserted :
+x_left: 0x_right: 15
+it_after :x_left: 15x_right: 40
+PlaceRow::removeFF: After removing FF_1_2
+ff left x: 10 ff width: 5 ff right x: 15
+x left: 0 width: 40 x right: 40
+x left: 50 width: 20 x right: 70
+x left: 75 width: 25 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_2 from row 2
+Solver::solve: FF_1_2 removed from the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_5 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 0
+Solver::removeFF_PlaceRows: FF_1_5 occupies 1 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 0
+PlaceRow::removeFF: Before removing FF_1_5
+ff left x: 60 ff width: 5 ff right x: 65
+x left: 10 width: 50 x right: 60
+x left: 65 width: 35 x right: 100
+
+merge before
+it_before :x_left: 60x_right: 65
+it_after :x_left: 10x_right: 60
+merge after
+it_inserted :
+x_left: 10x_right: 65
+it_after :x_left: 65x_right: 100
+PlaceRow::removeFF: After removing FF_1_5
+ff left x: 60 ff width: 5 ff right x: 65
+x left: 10 width: 90 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_5 from row 0
+Solver::solve: FF_1_5 removed from the layout.
+row trait of ff FF_2_1
+ff height: 10 site height: 10
+LL_rowIdx: 2 top_rowIdx: 2 occRowCount: 1
+Solver::BruteFindInsertion: FF_2_1 on row 2
+LL: 0 20 width: 10
+Consecutive sites: 
+Row 2: x: 0 width: 40 
+case 1.2: the site width is greater than ff->getWidth()
+Solver::solve: FF_2_1 legalized.
+Solver::solve: FF_2_1 result written to the output file.
+Parsing: Banking_Cell:
+Parsing: FF_1_4
+Parsing: FF_1_6
+Parsing: FF_2_2 60 30 10 10
+Solver::solve: FF_2_2 inserted into the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_4 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 3
+Solver::removeFF_PlaceRows: FF_1_4 occupies 1 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 3
+PlaceRow::removeFF: Before removing FF_1_4
+ff left x: 50 ff width: 10 ff right x: 60
+x left: 0 width: 50 x right: 50
+x left: 60 width: 40 x right: 100
+
+merge before
+it_before :x_left: 50x_right: 60
+it_after :x_left: 0x_right: 50
+merge after
+it_inserted :
+x_left: 0x_right: 60
+it_after :x_left: 60x_right: 100
+PlaceRow::removeFF: After removing FF_1_4
+ff left x: 50 ff width: 10 ff right x: 60
+x left: 0 width: 100 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_4 from row 3
+Solver::solve: FF_1_4 removed from the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_6 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 2
+Solver::removeFF_PlaceRows: FF_1_6 occupies 1 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 2
+PlaceRow::removeFF: Before removing FF_1_6
+ff left x: 70 ff width: 5 ff right x: 75
+x left: 10 width: 30 x right: 40
+x left: 50 width: 20 x right: 70
+x left: 75 width: 25 x right: 100
+
+merge before
+it_before :x_left: 70x_right: 75
+it_after :x_left: 50x_right: 70
+merge after
+it_inserted :
+x_left: 50x_right: 75
+it_after :x_left: 75x_right: 100
+PlaceRow::removeFF: After removing FF_1_6
+ff left x: 70 ff width: 5 ff right x: 75
+x left: 10 width: 30 x right: 40
+x left: 50 width: 50 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_6 from row 2
+Solver::solve: FF_1_6 removed from the layout.
+row trait of ff FF_2_2
+ff height: 10 site height: 10
+LL_rowIdx: 3 top_rowIdx: 3 occRowCount: 1
+Solver::BruteFindInsertion: FF_2_2 on row 3
+LL: 0 30 width: 10
+Consecutive sites: 
+Row 3: x: 0 width: 100 
+case 1.2: the site width is greater than ff->getWidth()
+Solver::solve: FF_2_2 legalized.
+Solver::solve: FF_2_2 result written to the output file.
+Parsing: Banking_Cell:
+Parsing: FF_1_3
+Parsing: FF_2_3 40 10 10 20
+Solver::solve: FF_2_3 inserted into the layout.
+Solver::removeFF_PlaceRows: Removing FF_1_3 from placeRows
+Solver::removeFF_PlaceRows: LL_rowIdx: 1
+Solver::removeFF_PlaceRows: FF_1_3 occupies 2 rows.
+Solver::removeFF_PlaceRows: top_rowIdx: 2
+PlaceRow::removeFF: Before removing FF_1_3
+ff left x: 40 ff width: 10 ff right x: 50
+x left: 0 width: 40 x right: 40
+x left: 50 width: 50 x right: 100
+
+merge before
+it_before :x_left: 40x_right: 50
+it_after :x_left: 0x_right: 40
+merge after
+it_inserted :
+x_left: 0x_right: 50
+it_after :x_left: 50x_right: 100
+PlaceRow::removeFF: After removing FF_1_3
+ff left x: 40 ff width: 10 ff right x: 50
+x left: 0 width: 100 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_3 from row 1
+PlaceRow::removeFF: Before removing FF_1_3
+ff left x: 40 ff width: 10 ff right x: 50
+x left: 10 width: 30 x right: 40
+x left: 50 width: 50 x right: 100
+
+merge before
+it_before :x_left: 40x_right: 50
+it_after :x_left: 10x_right: 40
+merge after
+it_inserted :
+x_left: 10x_right: 50
+it_after :x_left: 50x_right: 100
+PlaceRow::removeFF: After removing FF_1_3
+ff left x: 40 ff width: 10 ff right x: 50
+x left: 10 width: 90 x right: 100
+
+Solver::removeFF_PlaceRows: Removed FF_1_3 from row 2
+Solver::solve: FF_1_3 removed from the layout.
+row trait of ff FF_2_3
+ff height: 20 site height: 10
+LL_rowIdx: 1 top_rowIdx: 2 occRowCount: 2
+Solver::BruteFindInsertion: FF_2_3 on row 1
+LL: 10 10 width: 10
+Consecutive sites: 
+Row 1: x: 0 width: 100 
+Row 2: x: 10 width: 90 
+PlaceRow::insertFF: case 3: Found site x < ff->getX().
+case 1.2: the site width is greater than ff->getWidth()
+Solver::solve: FF_2_3 legalized.
+Solver::solve: FF_2_3 result written to the output file.

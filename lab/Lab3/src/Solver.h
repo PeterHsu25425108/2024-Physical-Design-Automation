@@ -20,7 +20,14 @@ class Solver
 {
 public:
     Solver() {};
-    ~Solver() {};
+    ~Solver()
+    {
+        // delete all the ffs
+        for (auto &it : ff_dict)
+        {
+            delete it.second;
+        }
+    }
 
     // diffrent legalization methods, called in solve(), return the names of the moved cells
     vector<string> BruteFindInsertion(Inst *ff);
