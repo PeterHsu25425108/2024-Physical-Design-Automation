@@ -288,16 +288,16 @@ void Solver::writePlotFile(ofstream &plot_file, vector<string> moved_ff)
         plot_file << *gate << endl;
     }
 
-    // write the placement rows
-    for (auto &placeRow : placeRows)
-    {
-        plot_file << placeRow << endl;
-    }
+    // // write the placement rows
+    // for (auto &placeRow : placeRows)
+    // {
+    //     plot_file << placeRow << endl;
+    // }
 
-    plot_file << "moved ffs ";
-    // write the moved ffs
-    for (auto &ff_name : moved_ff)
-    {
-        plot_file << ff_name << " ";
-    }
+    // plot_file << "moved ffs ";
+    // // write the moved ffs
+    // for (auto &ff_name : moved_ff)
+    // {
+    //     plot_file << ff_name << " ";
+    // }
 }

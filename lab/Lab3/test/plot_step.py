@@ -32,22 +32,22 @@ def read_file(filename):
                 width, height = float(parts[3]), float(parts[4])
                 fixed = parts[5] == "FIX"
                 cells.append((x, y, width, height, fixed, name))
-            elif line.startswith("moved ffs"):
-                # read a consective seq of ff names seperated with space
-                parts = line.split(" ")
-                for i in range(2, len(parts)):
-                    name = parts[i]
-                    moved_ffs.append(name)
-            elif line.startswith("PlacementRows"):
-                parts = line.split(" ")
-                startY = float(parts[1])
-                height = float(parts[2])
-                free_sites = []
-                for i in range(3, len(parts)):
-                    x = parts[i].split(",")[0]
-                    width = parts[i].split(",")[1]
-                    free_sites.append((float(x), float(width)))
-                placeRows.append((startY, height, free_sites))
+            # elif line.startswith("moved ffs"):
+            #     # read a consective seq of ff names seperated with space
+            #     parts = line.split(" ")
+            #     for i in range(2, len(parts)):
+            #         name = parts[i]
+            #         moved_ffs.append(name)
+            # elif line.startswith("PlacementRows"):
+            #     parts = line.split(" ")
+            #     startY = float(parts[1])
+            #     height = float(parts[2])
+            #     free_sites = []
+            #     for i in range(3, len(parts)):
+            #         x = parts[i].split(",")[0]
+            #         width = parts[i].split(",")[1]
+            #         free_sites.append((float(x), float(width)))
+            #     placeRows.append((startY, height, free_sites))
 
     return die_size, cells, placeRows, moved_ffs
 
@@ -117,19 +117,20 @@ def plot_file(
 
     # plot the free sites in placement rows
     # each with lower left corner at (x, startY) and width, plotted as rectangles with purple dashed lines as edges
-    for startY, height, free_sites in placeRows:
-        for x, width in free_sites:
-            ax.add_patch(
-                patches.Rectangle(
-                    (x, startY),
-                    width,
-                    height,
-                    edgecolor="purple",
-                    facecolor="none",
-                    linewidth=1,
-                    linestyle="--",
-                )
-            )
+    # for startY, height, free_sites in placeRows:
+    #     for x, width in free_sites:
+    #         ax.add_patch(
+    #             patches.Rectangle(
+    #                 (x, startY),
+    #                 width,
+    #                 height,
+    #                 edgecolor="purple",
+    #                 facecolor="none",
+    #                 linewidth=1,
+    #                 linestyle="--",
+    #             )
+    #         )
+    print("done adding patches")
 
     # Formatting and saving
     ax.set_xlim(die_size[0], die_size[2])
@@ -158,33 +159,33 @@ if __name__ == "__main__":
     # output_filename_base = sys.argv[1]
     # plot ../draw/text/{CASE_NAME}/{FF_NAME}.txt
     casename = sys.argv[1]
-    # new_ff = sys.argv[2]
-    # output_filename_base = "../draw/plot/" + casename
-    # lg_file = "../draw/text/" + "/" + new_ff + ".txt"
+    new_ff = sys.argv[2]
+    output_filename_base = "../draw/plot/" + casename
+    lg_file = "../draw/text/" + "/" + new_ff + ".txt"
 
-    # # Read and plot the .txt file
-    # die_size, cells, placeRows, moved_ffs = read_file(lg_file)
-    # print("num of cells = ", len(cells))
-    # format = "png"
-    # plot_file(
-    #     die_size, cells, placeRows, moved_ffs, output_filename_base, format, new_ff
-    # )
+    # Read and plot the .txt file
+    die_size, cells, placeRows, moved_ffs = read_file(lg_file)
+    print("num of cells = ", len(cells))
+    format = "png"
+    plot_file(
+        die_size, cells, placeRows, moved_ffs, output_filename_base, format, new_ff
+    )
 
-    # print(f"Plotted {lg_file} to {output_filename_base}.")
+    print(f"Plotted {lg_file} to {output_filename_base}.")
 
-    output_filename_base = sys.argv[1]
-    for filename in os.listdir("../draw/text/"):
-        new_ff = filename.split(".")[0]
-        output_filename_base = "../draw/plot/" + casename
-        print(output_filename_base)
-        print(new_ff)
-        lg_file = "../draw/text/" + filename
+    # output_filename_base = sys.argv[1]
+    # for filename in os.listdir("../draw/text/"):
+    #     new_ff = filename.split(".")[0]
+    #     output_filename_base = "../draw/plot/" + casename
+    #     print(output_filename_base)
+    #     print(new_ff)
+    #     lg_file = "../draw/text/" + filename
 
-        # Read and plot the .txt file
-        die_size, cells, placeRows, moved_ffs = read_file(lg_file)
-        format = "png"
-        plot_file(
-            die_size, cells, placeRows, moved_ffs, output_filename_base, format, new_ff
-        )
+    #     # Read and plot the .txt file
+    #     die_size, cells, placeRows, moved_ffs = read_file(lg_file)
+    #     format = "png"
+    #     plot_file(
+    #         die_size, cells, placeRows, moved_ffs, output_filename_base, format, new_ff
+    #     )
 
-        print(f"Plotted {lg_file} to {output_filename_base}.")
+    #     print(f"Plotted {lg_file} to {output_filename_base}.")
