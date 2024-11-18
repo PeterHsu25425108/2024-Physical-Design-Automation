@@ -43,7 +43,12 @@ class PlaceRow
 {
 public:
     PlaceRow() { free_sites[startX] = numSites * siteWidth; }
-    ~PlaceRow() { ; }
+    ~PlaceRow()
+    {
+        free_sites.clear();
+        ff_xPos2Inst.clear();
+        gate_xPos2Inst.clear();
+    }
     PlaceRow(double startY) : startY(startY)
     {
         // define the entire row as free space

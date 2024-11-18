@@ -110,10 +110,15 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 
     // search the site on the rows above the current row
     // the row is iterated using it_left and it_right
+
+    unordered_map<int, bool> visited_sites;
+
     while (it_left != free_sites.end() || it_right != free_sites.end())
     {
         // the x interval of the free site that is being checked
         auto it_curr = go_left ? it_left : it_right;
+        visited_sites[it_curr->first] = true;
+
         Interval init_interval(it_curr->first, it_curr->second, LL_rowIdx);
         queue<Interval> q;
         q.push(init_interval);
@@ -272,6 +277,22 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
     {
         cout << "searchFFLL: Can't find a site that can accommodate the ff." << endl;
     }
+
+    if (visited_sites.size() != this->free_sites.size())
+    {
+        cout << "searchFFLL: rowIdx: " << this->getRowIdx() << endl;
+        cout << "searchFFLL: Terminated before all sites are visited." << endl;
+        cout << "searchFFLL: Visited row number: " << visited_sites.size() << endl;
+        cout << "searchFFLL: Total row number: " << this->free_sites.size() << endl;
+        // for (auto &site : visited_sites)
+        // {
+        //     cerr << site.first << " ";
+        // }
+        // exit(1);
+    }
+
+    // delete the hash table
+    visited_sites.clear();
 
     return make_pair(-1, -1);
 }
@@ -434,7 +455,7 @@ void PlaceRow::removeFF(const Inst *ff)
     if (it_inserted == free_sites.end())
     {
         cerr << "PlaceRow::removeFF: Can't find the site that is inserted when removing ff " << ff->getName() << endl;
-        exit(1);
+        // exit(1);
     }
 
     // free_sites.lower_bound(ff->getX());

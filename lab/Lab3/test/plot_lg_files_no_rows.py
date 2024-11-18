@@ -97,6 +97,9 @@ if __name__ == "__main__":
     for filename in os.listdir(testcase_folder):
         # print(filename)
 
+        if filename != "FF_4_2525_remove":
+            continue
+
         casename = filename
         # filename = ../testcase/filename/filename.lg
         filename = testcase_folder + filename + "/" + filename + ".lg"
@@ -113,6 +116,7 @@ if __name__ == "__main__":
 
             # Read and plot the .lg file
             die_size, cells = read_lg_file(lg_path)
+            print("done reading")
             plot_lg_file(die_size, cells, output_filename_base)
 
             print(f"Plotted {filename} to {output_filename_base}.png")

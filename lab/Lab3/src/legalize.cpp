@@ -54,6 +54,8 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         go_down = rand() % 2;
     }
 
+    unordered_map<int, int> visited_rows;
+
     pair<double, double> Void = make_pair(-1, -1);
     while (numRowVisited < placeRows.size())
     {
@@ -166,6 +168,10 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         }
 
         numRowVisited++;
+        if (DEBUG_NOTFOUND)
+        {
+            visited_rows[curr_rowIdx] = numRowVisited;
+        }
 
         if (DEBUG_SEARCH)
         {
@@ -181,6 +187,28 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     // not found a space to place the ff
     if (!found_space)
     {
+
+        if (visited_rows.size() < placeRows.size())
+        {
+            cout << "Solver::BruteFindInsertion: Terminated before all rows are visited" << endl;
+            cout << "Solver::BruteFindInsertion: Visited rows: " << endl;
+            cout << "total num of Placerows: " << placeRows.size() << endl;
+
+            // sort the visited rows by the second value
+            vector<pair<int, int>> visited_rows_vec(visited_rows.begin(), visited_rows.end());
+            sort(visited_rows_vec.begin(), visited_rows_vec.end(), [](const pair<int, int> &a, const pair<int, int> &b)
+                 { return a.second < b.second; });
+
+            for (auto &row : visited_rows_vec)
+            {
+                cout << row.first << endl;
+            }
+        }
+        else
+        {
+            cout << "Solver::BruteFindInsertion: Can't find a space to place " << ff->getName() << " in any row" << endl;
+        }
+
         cerr << "Solver::BruteFindInsertion: Can't find a space to place " << ff->getName() << endl;
 
         if (PLOT_FINAL || PLOT_STEP)

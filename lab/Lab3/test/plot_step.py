@@ -2,6 +2,7 @@ import os
 import sys
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from tqdm import tqdm
 
 
 def read_file(filename):
@@ -74,8 +75,9 @@ def plot_file(
             )
         )
 
+    new_ff_patch = None
     # Plot cells
-    for x, y, width, height, fixed, name in cells:
+    for x, y, width, height, fixed, name in tqdm(cells):
         color = None
         if fixed:
             color = "gray"
@@ -87,8 +89,21 @@ def plot_file(
             color = "red"
             alpha = 0.6
         elif name + "_remove" == new_ff:
+            print("find new ff\n")
+            print("x = ", x)
+            print("y = ", y)
             color = "orange"
-            alpha = 0.3
+            alpha = 1
+            new_ff_patch = patches.Rectangle(
+                (x, y),
+                width,
+                height,
+                edgecolor=color,
+                facecolor=color,
+                linewidth=1,
+                alpha=alpha,
+            )
+            continue
         else:
             color = "blue"
             alpha = 0.6
@@ -104,16 +119,20 @@ def plot_file(
                 alpha=alpha,
             )
         )
-        # write the ff name at the center of the cell
-        ax.text(
-            x + width / 2,
-            y + height / 2,
-            name,
-            horizontalalignment="center",
-            verticalalignment="center",
-            fontsize=8,
-            color="black",
-        )
+
+    if new_ff_patch != None:
+        ax.add_patch(new_ff_patch)
+
+        # # write the ff name at the center of the cell
+        # ax.text(
+        #     x + width / 2,
+        #     y + height / 2,
+        #     name,
+        #     horizontalalignment="center",
+        #     verticalalignment="center",
+        #     fontsize=8,
+        #     color="black",
+        # )
 
     # plot the free sites in placement rows
     # each with lower left corner at (x, startY) and width, plotted as rectangles with purple dashed lines as edges

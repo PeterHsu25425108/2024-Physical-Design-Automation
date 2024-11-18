@@ -34,9 +34,9 @@ public:
             delete it.second;
         }
 
-        // ff_dict.clear();
-        // gate_dict.clear();
-        // placeRows.clear();
+        ff_dict.clear();
+        gate_dict.clear();
+        placeRows.clear();
     }
 
     // diffrent legalization methods, called in solve(), return the names of the moved cells
