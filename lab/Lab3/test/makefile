@@ -38,6 +38,21 @@ $(foreach src,$(basename $(notdir $(SRC_FILES))),$(eval $(call compile_rule,$(sr
 # Ensure the object directory exists
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+# Ensure the output directory exists
+$(OUT_DIR):
+	mkdir -p $(OUT_DIR)
+# Ensure the draw directory exists
+$(DRAW_DIR):
+	mkdir -p $(DRAW_DIR)
+# Ensure the draw text directory exists
+$(DRAW_TEXT_DIR):
+	mkdir -p $(DRAW_TEXT_DIR)
+# Ensure the testcase directory exists
+$(TESTCASE_DIR):
+	mkdir -p $(TESTCASE_DIR)
+# Ensure the bin directory exists
+$(BIN_DIR):
+	mkdir -p $(BIN_DIR)
 
 clean:
 	rm  $(EXEC) $(OBJ_DIR)/*.o
