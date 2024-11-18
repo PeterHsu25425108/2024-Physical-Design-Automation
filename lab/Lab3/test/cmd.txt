@@ -1,152 +1,45 @@
 Parsing done.
 Solver::solve: start solving...
 done
-Parsing: Banking_Cell:
-Parsing: FF_1_7590
-Parsing: FF_1_9789
-Parsing: FF_2_0 724200 890400 9180 4200
-legalizing FF_2_0 ... done.
-Parsing: Banking_Cell:
-Parsing: FF_1_19317
-Parsing: FF_1_12413
-Parsing: FF_1_13497
-Parsing: FF_1_13796
-Parsing: FF_4_0 1.03938e+06 915600 8670 8400
-legalizing FF_4_0 ... done.
-Parsing: Banking_Cell:
-Parsing: FF_1_19259
-Parsing: FF_1_6399
-Parsing: FF_1_13066
-Parsing: FF_1_13840
-Parsing: FF_4_1 1.01694e+06 848400 8670 8400
-legalizing FF_4_1 ... done.
-Parsing: Banking_Cell:
-Parsing: FF_1_18802
-Parsing: FF_1_5846
-Parsing: FF_1_14190
-Parsing: FF_1_752
-Parsing: FF_4_2 1.04907e+06 827400 8670 8400
-legalizing FF_4_2 ...Free sites:
-x: 15300 width: 42330
-x: 67320 width: 4080
-x: 86190 width: 2550
-x: 108120 width: 3570
-x: 114750 width: 7650
-x: 125460 width: 510
-x: 131070 width: 4080
-x: 137700 width: 3570
-x: 144330 width: 510
-x: 147900 width: 2550
-x: 156570 width: 3570
-x: 166260 width: 1530
-x: 173910 width: 1020
-x: 177990 width: 510
-x: 181050 width: 510
-x: 184110 width: 510
-x: 190740 width: 1020
-x: 193800 width: 2550
-x: 198390 width: 2040
-x: 207060 width: 1020
-x: 210630 width: 4590
-x: 217770 width: 4080
-x: 224400 width: 1530
-x: 228480 width: 510
-x: 235110 width: 510
-x: 241740 width: 510
-x: 247860 width: 510
-x: 250920 width: 6630
-x: 263670 width: 2550
-x: 267750 width: 510
-x: 270810 width: 3060
-x: 283560 width: 6630
-x: 292230 width: 510
-x: 298860 width: 7140
-x: 327420 width: 4080
-x: 341190 width: 3060
-x: 348840 width: 1020
-x: 357000 width: 510
-x: 360570 width: 1020
-x: 367710 width: 510
-x: 371280 width: 1530
-x: 375360 width: 2550
-x: 393720 width: 8160
-x: 404430 width: 510
-x: 410550 width: 1020
-x: 430950 width: 2550
-x: 439110 width: 510
-x: 461550 width: 3570
-x: 490110 width: 4590
-x: 504390 width: 12240
-x: 526320 width: 3060
-x: 531420 width: 510
-x: 537030 width: 510
-x: 541110 width: 510
-x: 546210 width: 1530
-x: 551310 width: 4080
-x: 557940 width: 8160
-x: 569670 width: 510
-x: 579870 width: 10200
-x: 599760 width: 2550
-x: 612000 width: 1530
-x: 615570 width: 8160
-x: 625770 width: 7650
-x: 636990 width: 510
-x: 647190 width: 5100
-x: 666060 width: 6120
-x: 681870 width: 8670
-x: 700230 width: 510
-x: 703290 width: 4590
-x: 711450 width: 2040
-x: 721140 width: 1020
-x: 728790 width: 510
-x: 733380 width: 6120
-x: 747660 width: 510
-x: 750720 width: 7140
-x: 763980 width: 1530
-x: 769080 width: 1530
-x: 773670 width: 5100
-x: 781830 width: 1020
-x: 787440 width: 2040
-x: 793050 width: 2550
-x: 798660 width: 1020
-x: 804270 width: 4590
-x: 818550 width: 5610
-x: 826200 width: 1020
-x: 836910 width: 510
-x: 850680 width: 7140
-x: 877200 width: 2550
-x: 887910 width: 510
-x: 898110 width: 2040
-x: 901170 width: 510
-x: 904230 width: 3060
-x: 926670 width: 2040
-x: 938400 width: 2040
-x: 942990 width: 10710
-x: 963390 width: 4590
-x: 997050 width: 5610
-x: 1.00368e+06 width: 2550
-x: 1.01592e+06 width: 9180
-x: 1.03479e+06 width: 20400
-x: 1.05774e+06 width: 7140
-x: 1.13832e+06 width: 7140
-x: 1.15515e+06 width: 3570
-x: 1.16127e+06 width: 1020
-x: 1.16433e+06 width: 1530
-x: 1.16892e+06 width: 510
-x: 1.17096e+06 width: 2040
-x: 1.17453e+06 width: 510
-x: 1.17708e+06 width: 510
-x: 1.18218e+06 width: 2040
-x: 1.18677e+06 width: 510
-x: 1.1883e+06 width: 8160
-x: 1.19901e+06 width: 1020
-x: 1.20819e+06 width: 6120
-x: 1.21635e+06 width: 2040
-x: 1.21941e+06 width: 2040
-x: 1.22247e+06 width: 3570
-x: 1.23216e+06 width: 510
-x: 1.24491e+06 width: 2550
-x: 1.25715e+06 width: 1020
-x: 1.26021e+06 width: 7650
-x: 1.27755e+06 width: 7140
-inst x: 328440 inst width: 8670
+legalizing FF_2_0 ...
+------------ Solver::BruteFindInsertion: searching row 0 --------------
+curr_interval: x left 65 width 35 x right 100 topIdx 0
+success interval: x left 65 width 35 x right 100 topIdx 0
+interval: x left 65 width 35 x right 100 0 closest_x: 65
+--------------------------------
+ done.
+legalizing FF_2_1 ...
+------------ Solver::BruteFindInsertion: searching row 2 --------------
+curr_interval: x left 0 width 25 x right 25 topIdx 2
+success interval: x left 0 width 25 x right 25 topIdx 2
+interval: x left 0 width 25 x right 25 2 closest_x: 15
+--------------------------------
+ done.
+legalizing FF_2_2 ...
+------------ Solver::BruteFindInsertion: searching row 2 --------------
+curr_interval: x left 0 width 15 x right 15 topIdx 2
+success interval: x left 0 width 15 x right 15 topIdx 2
+interval: x left 0 width 15 x right 15 2 closest_x: 4
+--------------------------------
+ done.
+legalizing FF_2_3 ...
+------------ Solver::BruteFindInsertion: searching row 1 --------------
+curr_interval: x left 38 width 12 x right 50 topIdx 1
+curr_interval: x left 40 width 10 x right 50 topIdx 2
+success interval: x left 40 width 10 x right 50 topIdx 2
+interval: x left 40 width 10 x right 50 2 closest_x: 40
+--------------------------------
+FF_2_3: 40 10
+Solver::addinst_PlaceRows: LL_rowIdx: 1 top_rowIdx: 2
+ done.
+legalizing FF_2_4 ...
+------------ Solver::BruteFindInsertion: searching row 2 --------------
+curr_interval: x left 14 width 1 x right 15 topIdx 2
+curr_interval: x left 14 width 1 x right 15 topIdx 2
+curr_interval: x left 0 width 4 x right 4 topIdx 2
+curr_interval: x left 35 width 1 x right 36 topIdx 2
+curr_interval: x left 70 width 30 x right 100 topIdx 2
+success interval: x left 70 width 30 x right 100 topIdx 2
+interval: x left 70 width 30 x right 100 2 closest_x: 70
+--------------------------------
+ done.

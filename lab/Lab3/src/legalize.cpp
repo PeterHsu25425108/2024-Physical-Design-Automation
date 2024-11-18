@@ -59,6 +59,12 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     {
         int curr_rowIdx = go_down ? down_rowIdx : up_rowIdx;
 
+        if (DEBUG_SEARCH)
+        {
+            cout << endl
+                 << "------------ Solver::BruteFindInsertion: searching row " << curr_rowIdx << " --------------" << endl;
+        }
+
         if (DEBUG_BRUTEFINDINSERT)
         {
             cout << "----------- searching insertion point for " << ff->getName() << " on row " << curr_rowIdx << " ---------" << endl;
@@ -67,6 +73,11 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         // search the site on the current row
         PlaceRow &curr_row = placeRows[curr_rowIdx];
         pair<double, double> LL = curr_row.searchFFLL(ff, placeRows);
+
+        if (DEBUG_SEARCH)
+        {
+            cout << "--------------------------------" << endl;
+        }
 
         if (LL != Void)
         {
@@ -120,12 +131,15 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
             found_space = true;
             ff->setX(LL.first);
             ff->setY(LL.second);
+
+            if (ff->getName() == "FF_2_3")
+            {
+                cout << "FF_2_3: " << ff->getX() << " " << ff->getY() << endl;
+            }
+
             addInst_PlaceRows(ff);
             // moved_ff.push_back(ff->getName());
-            if (DEBUG_BRUTEFINDINSERT)
-            {
-                cout << "--------------------------------" << endl;
-            }
+
             break;
         }
 
@@ -152,6 +166,12 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         }
 
         numRowVisited++;
+
+        if (DEBUG_SEARCH)
+        {
+            cout << "-------------------------------------------" << endl;
+        }
+
         if (numRowVisited == placeRows.size())
         {
             break;
@@ -261,6 +281,15 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
         {
             cout << "legalizing " << new_ff_name << " ...";
         }
+
+        if (PLOT_REMOVE)
+        {
+            string filename = "../draw/text/" + new_ff_name + "_remove.txt";
+            ofstream plot_file(filename);
+            writePlotFile(plot_file, {});
+            plot_file.close();
+        }
+
         // legalizing the new ff, this is where the legalization method is called
         // the position of the new ff or any other cells displaced and the placerows will be updated
         vector<string> moved_ff = BruteFindInsertion(new_ff);

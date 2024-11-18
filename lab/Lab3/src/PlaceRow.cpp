@@ -28,6 +28,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 {
     if (free_sites.empty())
     {
+        if (DEBUG_SEARCH)
+        {
+            cout << "searchFFLL: No free site on row " << this->getRowIdx() << endl;
+        }
+
         return make_pair(-1, -1);
     }
 
@@ -40,6 +45,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 
     if (top_rowIdx >= placeRows.size())
     {
+        if (DEBUG_SEARCH)
+        {
+            cout << "searchFFLL: The ff " << ff->getName() << " is out of the layout on row " << this->getRowIdx() << endl;
+        }
+
         return make_pair(-1, -1);
     }
 
@@ -67,7 +77,13 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         //     return make_pair(-1, -1);
         // }
 
-        it = (it == free_sites.begin()) ? it : prev(it);
+        // it = (it == free_sites.begin()) ? it : prev(it);
+        if (it != free_sites.begin())
+        {
+            double curr_disp = abs(it->first - ff->getX());
+            double prev_disp = abs((prev(it)->first + prev(it)->second) - (ff->getX() + ff->getWidth()));
+            it = (curr_disp < prev_disp) ? it : prev(it);
+        }
 
         // if(it->first + it->second < ff->getX() + ff->getWidth())
         // {
@@ -110,15 +126,22 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             Interval curr_interval = q.front();
             q.pop();
 
-            if (DEBUG_BRUTEFINDINSERT)
+            if (DEBUG_BRUTEFINDINSERT || DEBUG_SEARCH)
             {
-                cout << "curr_interval: " << curr_interval.x_left << " " << curr_interval.width << " " << curr_interval.topIdx << endl;
+                cout << "curr_interval: " << "x left " << curr_interval.x_left << " width " << curr_interval.width << " x right " << curr_interval.x_left + curr_interval.width << " topIdx " << curr_interval.topIdx << endl;
             }
 
             // if the interval's width isn't enough to accommodate the ff, skip it
             if (curr_interval.topIdx == top_rowIdx)
             {
-                success_Intervals.push_back(curr_interval);
+                if (curr_interval.width >= ff->getWidth())
+                {
+                    success_Intervals.push_back(curr_interval);
+                    if (DEBUG_SEARCH)
+                    {
+                        cout << "success interval: " << "x left " << curr_interval.x_left << " width " << curr_interval.width << " x right " << curr_interval.x_left + curr_interval.width << " topIdx " << curr_interval.topIdx << endl;
+                    }
+                }
                 continue;
             }
 
@@ -190,21 +213,28 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         {
             double min_displacement = numeric_limits<double>::max();
             Interval best_interval;
+
+            double final_x;
             for (auto &interval : success_Intervals)
             {
-                // find the closest x to the ff's x
                 double closest_x;
+                // find the closest x to the ff's x
                 if (ff->getX() < interval.x_left)
                 {
                     closest_x = interval.x_left;
                 }
-                else if (ff->getX() > interval.x_left + interval.width)
+                else if (ff->getX() + ff->getWidth() > interval.x_left + interval.width)
                 {
-                    closest_x = interval.x_left + interval.width;
+                    closest_x = interval.x_left + interval.width - ff->getWidth();
                 }
                 else
                 {
                     closest_x = ff->getX();
+                }
+
+                if (DEBUG_SEARCH)
+                {
+                    cout << "interval: x left " << interval.x_left << " width " << interval.width << " x right " << interval.x_left + interval.width << " " << interval.topIdx << " closest_x: " << closest_x << endl;
                 }
 
                 double displacement = abs(closest_x - ff->getX()) + abs(this->startY - ff->getY());
@@ -212,15 +242,17 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 {
                     min_displacement = displacement;
                     best_interval = interval;
+                    final_x = closest_x;
                 }
             }
 
             if (DEBUG_BRUTEFINDINSERT)
             {
                 cout << "Best interval found: " << best_interval.x_left << " " << best_interval.width << " " << best_interval.topIdx << endl;
+                cout << "Final x: " << final_x << endl;
             }
 
-            return make_pair(best_interval.x_left, this->startY);
+            return make_pair(final_x, this->startY);
         }
 
         // update the iterators
@@ -236,7 +268,7 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         }
     }
 
-    if (DEBUG_BRUTEFINDINSERT)
+    if (DEBUG_BRUTEFINDINSERT || DEBUG_SEARCH)
     {
         cout << "searchFFLL: Can't find a site that can accommodate the ff." << endl;
     }
@@ -251,7 +283,9 @@ void PlaceRow::insertInst(Inst *inst, int siteIdx)
 {
     // update ff_xPos2Inst
     if (inst->getFixed() == false)
+    {
         ff_xPos2Inst[inst->getX()] = inst;
+    }
     else
     {
         gate_xPos2Inst[inst->getX()] = inst;
@@ -342,6 +376,16 @@ void PlaceRow::insertInst(Inst *inst, int siteIdx)
 
         auto it_last = prev(free_sites.end());
         // the last free site can't cover the inst completely
+
+        // if (inst->getName() == "FF_2_3")
+        // {
+        // cout << "insertinst: " << inst->getName() << endl;
+        // cout << "inst x: " << inst->getX() << " inst width: " << inst->getWidth() << endl;
+        // cout << "inst right x " << inst->getX() + inst->getWidth() << endl;
+        // cout << "site x: " << it_last->first << " site width: " << it_last->second << endl;
+        // cout << "site right x " << it_last->first + it_last->second << endl;
+        // }
+
         if (it_last->first + it_last->second < inst->getX() + inst->getWidth())
         {
             cerr << "PlaceRow::insertinst: Found site can't cover inst " << inst->getName() << "." << endl;

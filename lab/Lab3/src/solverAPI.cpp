@@ -30,6 +30,11 @@ void Solver::addInst_PlaceRows(Inst *inst)
     // the row index of the highest row the inst occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
 
+    if (inst->getName() == "FF_2_3")
+    {
+        cout << "Solver::addinst_PlaceRows: " << "LL_rowIdx: " << LL_rowIdx << " top_rowIdx: " << top_rowIdx << endl;
+    }
+
     if (DEBUG_addInst)
     {
         // output the number of rows the inst occupies

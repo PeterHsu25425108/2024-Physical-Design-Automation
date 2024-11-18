@@ -79,12 +79,19 @@ def plot_file(
         color = None
         if fixed:
             color = "gray"
+            alpha = 0.6
         elif name == new_ff:
             color = "green"
+            alpha = 0.6
         elif name in moved_ffs:
             color = "red"
+            alpha = 0.6
+        elif name + "_remove" == new_ff:
+            color = "orange"
+            alpha = 0.3
         else:
             color = "blue"
+            alpha = 0.6
 
         ax.add_patch(
             patches.Rectangle(
@@ -94,7 +101,7 @@ def plot_file(
                 edgecolor=color,
                 facecolor=color,
                 linewidth=1,
-                alpha=0.6,
+                alpha=alpha,
             )
         )
         # write the ff name at the center of the cell
@@ -127,7 +134,10 @@ def plot_file(
     # Formatting and saving
     ax.set_xlim(die_size[0], die_size[2])
     ax.set_ylim(die_size[1], die_size[3])
-    ax.set_title("Legalized Cell " + new_ff)
+    if new_ff.find("remove") == -1:
+        ax.set_title("Legalized Cell " + new_ff)
+    else:
+        ax.set_title(new_ff)
     ax.set_xlabel("X Coordinate")
     ax.set_ylabel("Y Coordinate")
     ax.set_aspect("equal", adjustable="box")
@@ -146,8 +156,23 @@ def plot_file(
 if __name__ == "__main__":
     # the CASE_NAME
     # output_filename_base = sys.argv[1]
-    # plot all files in ../draw/text/casename
+    # plot ../draw/text/{CASE_NAME}/{FF_NAME}.txt
     casename = sys.argv[1]
+    # new_ff = sys.argv[2]
+    # output_filename_base = "../draw/plot/" + casename
+    # lg_file = "../draw/text/" + "/" + new_ff + ".txt"
+
+    # # Read and plot the .txt file
+    # die_size, cells, placeRows, moved_ffs = read_file(lg_file)
+    # print("num of cells = ", len(cells))
+    # format = "png"
+    # plot_file(
+    #     die_size, cells, placeRows, moved_ffs, output_filename_base, format, new_ff
+    # )
+
+    # print(f"Plotted {lg_file} to {output_filename_base}.")
+
+    output_filename_base = sys.argv[1]
     for filename in os.listdir("../draw/text/"):
         new_ff = filename.split(".")[0]
         output_filename_base = "../draw/plot/" + casename
