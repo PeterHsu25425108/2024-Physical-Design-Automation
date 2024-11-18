@@ -77,7 +77,7 @@ public:
         return (int)((startY - lowest_placerowY) / siteHeight);
     }
 
-    void insertFF(Inst *ff, int siteIdx);
+    void insertInst(Inst *inst, int siteIdx);
     void removeFF(const Inst *ff);
     // search for the site that can accommodate the ff
     // if found, return the LL corner of the site which is on this row
@@ -103,6 +103,7 @@ private:
     // key: the x coordinate of the LL corner of a cell placed on the row
     // value : ptr to the cell instance
     unordered_map<double, Inst *> ff_xPos2Inst;
+    unordered_map<double, Inst *> gate_xPos2Inst;
 };
 
 #endif

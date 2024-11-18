@@ -2,6 +2,7 @@ import os
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
+
 def read_lg_file(filename):
     """
     Reads the .lg file and extracts die size and cells.
@@ -14,8 +15,15 @@ def read_lg_file(filename):
             line = line.strip()
             if line.startswith("DieSize"):
                 parts = line.split(" ")
-                die_size = (float(parts[1]), float(parts[2]), float(parts[3]), float(parts[4]))
-            elif line.startswith("FF") or line.startswith("C") or line.startswith("Gate"):
+                die_size = (
+                    float(parts[1]),
+                    float(parts[2]),
+                    float(parts[3]),
+                    float(parts[4]),
+                )
+            elif line.startswith("FF") or line.startswith(
+                "C"
+            ):  # or line.startswith("Gate")
                 parts = line.split(" ")
                 x, y = float(parts[1]), float(parts[2])
                 width, height = float(parts[3]), float(parts[4])
@@ -23,6 +31,7 @@ def read_lg_file(filename):
                 cells.append((x, y, width, height, fixed))
 
     return die_size, cells
+
 
 def plot_lg_file(die_size, cells, output_filename_base):
     """
@@ -40,7 +49,7 @@ def plot_lg_file(die_size, cells, output_filename_base):
                 edgecolor="black",
                 fill=False,
                 linewidth=2,
-                label="Die Boundary"
+                label="Die Boundary",
             )
         )
 
@@ -55,7 +64,7 @@ def plot_lg_file(die_size, cells, output_filename_base):
                 edgecolor=color,
                 facecolor=color,
                 linewidth=1,
-                alpha=0.6
+                alpha=0.6,
             )
         )
 
@@ -69,24 +78,41 @@ def plot_lg_file(die_size, cells, output_filename_base):
     ax.grid(True)
     plt.tight_layout()
 
+    # if ../draw/plot/{output_filename_base} does not exist, create it
+    if not os.path.exists(f"../draw/plot/initial_case_plot/{output_filename_base}"):
+        os.makedirs(f"../draw/plot/initial_case_plot/{output_filename_base}")
+
     # Save both .png and .svg
-    plt.savefig(f"{output_filename_base}.png")
-    plt.savefig(f"{output_filename_base}.svg")
+    plt.savefig(f"../draw/plot/initial_case_plot/{output_filename_base}/init.png")
+    # plt.savefig(f"{output_filename_base}.svg")
     plt.close()
+
 
 if __name__ == "__main__":
     # Set the folder paths
-    testcase_folder = "./testcase"
+    testcase_folder = "../testcase/"
     output_folder = "./"
 
     # Process all .lg files in the testcase folder
     for filename in os.listdir(testcase_folder):
+        # print(filename)
+
+        casename = filename
+        # filename = ../testcase/filename/filename.lg
+        filename = testcase_folder + filename + "/" + filename + ".lg"
+
         if filename.endswith(".lg"):
+            # print(filename)
             lg_path = os.path.join(testcase_folder, filename)
-            output_filename_base = os.path.join(output_folder, f"{os.path.splitext(filename)[0]}_plot")
+            # output_filename_base = os.path.join(
+            #     output_folder, f"{os.path.splitext(filename)[0]}_plot"
+            # )
+            output_filename_base = casename
+
+            print(output_filename_base)
 
             # Read and plot the .lg file
             die_size, cells = read_lg_file(lg_path)
             plot_lg_file(die_size, cells, output_filename_base)
 
-            print(f"Plotted {filename} to {output_filename_base}.png and {output_filename_base}.svg")
+            print(f"Plotted {filename} to {output_filename_base}.png")

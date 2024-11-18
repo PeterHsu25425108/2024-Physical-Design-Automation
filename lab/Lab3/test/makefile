@@ -43,11 +43,11 @@ clean:
 	rm  $(EXEC) $(OBJ_DIR)/*.o
 #	rm  $(OUT_DIR)/*
 
-# clean_plot:
-# 	rm -rf $(DRAW_DIR)/png/*
-# 	rm -rf $(DRAW_DIR)/svg/*
-# clean_text:
-# 	rm -rf $(DRAW_TEXT_DIR)/*
+clean_plot:
+	rm -rf $(DRAW_DIR)/png/*
+	rm -rf $(DRAW_DIR)/svg/*
+clean_text:
+	rm -rf $(DRAW_TEXT_DIR)/*
 
 # run ../draw/plot.py to plot all .txt files in the DRAW_TEXT_DIR
 # plot_all:

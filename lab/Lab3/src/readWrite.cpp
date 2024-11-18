@@ -60,11 +60,11 @@ void Solver::readlg(ifstream &lg_file)
             string temp;
 
             lg_file >> x >> y >> width >> height >> temp;
-            fix = (temp == "FIXED") ? true : false;
+            fix = (temp == "FIX") ? true : false;
 
             if (DEBUG_PARSE)
             {
-                cout << name << " " << x << " " << y << " " << width << " " << height << " " << temp << endl;
+                cout << name << " " << x << " " << y << " " << width << " " << height << " " << (fix ? "FIX" : "NOTFIX") << endl;
             }
 
             if (head.substr(0, 2) == "FF")
@@ -149,7 +149,7 @@ void Solver::readlg(ifstream &lg_file)
     // placeRows[0].setLowestPlaceRowY(placeRows[0].getStartY());
     PlaceRow::lowest_placerowY = placeRows[0].getStartY();
 
-    // Put the ff and cells into the placeRows
+    // Put the ff into the placeRows
     for (auto &it : ff_dict)
     {
         Inst *ff = it.second;
@@ -175,7 +175,7 @@ void Solver::readlg(ifstream &lg_file)
             }
         }
 
-        addFF_PlaceRows(ff);
+        addInst_PlaceRows(ff);
         // ff_posOnPLaceRow[ff->getName()] = make_pair(rowIdx, siteIdx);
 
         if (DEBUG_PARSE)
@@ -188,6 +188,69 @@ void Solver::readlg(ifstream &lg_file)
             }
             cout << endl;
         }
+    }
+
+    // put the gate into the placeRows
+    for (auto &it : gate_dict)
+    {
+        Inst *gate = it.second;
+        double x = gate->getX();
+        double y = gate->getY();
+
+        // calculate the row index and site index with the x and y coordinate
+        int rowIdx = (y - placeRows[0].getStartY()) / placeRows[0].getSiteHeight();
+        int siteIdx = (x - placeRows[0].getStartX()) / placeRows[0].getSiteWidth();
+
+        // insert the gate into the placeRows
+        if (DEBUG_PARSE)
+        {
+            cout << "Parsing: Adding " << gate->getName() << " to placerows" << endl;
+
+            cout << endl;
+            cout << "Free sites before inserting " << gate->getName() << endl;
+            cout << "gate x: " << x << " gate y: " << y << endl;
+            cout << "gate width " << gate->getWidth() << " gate height " << gate->getHeight() << endl;
+            for (auto &site : placeRows[rowIdx].getFreeSites())
+            {
+                cout << "x: " << site.first << " width: " << site.second << endl;
+            }
+        }
+
+        addInst_PlaceRows(gate);
+        // gate_posOnPLaceRow[gate->getName()] = make_pair(rowIdx, siteIdx);
+
+        if (DEBUG_PARSE)
+        {
+            cout << endl
+                 << "Free sites after inserting " << gate->getName() << endl;
+            for (auto &site : placeRows[rowIdx].getFreeSites())
+            {
+                cout << "x: " << site.first << " width: " << site.second << endl;
+            }
+            cout << endl;
+        }
+    }
+
+    if (DEBUG_PARSE)
+    {
+        cout << " ****** PlaceRows ******* " << endl;
+        for (auto &placeRow : placeRows)
+        {
+            cout << "row Idx: " << placeRow.getRowIdx() << endl;
+            cout << "y: " << placeRow.getStartY() << endl;
+            for (auto &site : placeRow.getFreeSites())
+            {
+                cout << "x: " << site.first << " width: " << site.second << endl;
+            }
+        }
+        cout << " ************************ " << endl;
+    }
+
+    if (PLOT_STEP)
+    {
+        ofstream plot_file("../draw/text/parse.txt");
+        writePlotFile(plot_file, {});
+        plot_file.close();
     }
 
     if (G_DEBUG)
@@ -208,5 +271,33 @@ void Solver::writeOutput(ofstream &output_file, Inst *new_ff, vector<string> mov
     {
         Inst *ff = ff_dict[ff_name];
         output_file << ff->getName() << " " << ff->getX() << " " << ff->getY() << endl;
+    }
+}
+
+void Solver::writePlotFile(ofstream &plot_file, vector<string> moved_ff)
+{
+    plot_file << "DieSize " << DieLLX << " " << DieLLY << " " << DieURX << " " << DieURY << endl;
+    for (auto &it : ff_dict)
+    {
+        Inst *ff = it.second;
+        plot_file << *ff << endl;
+    }
+    for (auto &it : gate_dict)
+    {
+        Inst *gate = it.second;
+        plot_file << *gate << endl;
+    }
+
+    // write the placement rows
+    for (auto &placeRow : placeRows)
+    {
+        plot_file << placeRow << endl;
+    }
+
+    plot_file << "moved ffs ";
+    // write the moved ffs
+    for (auto &ff_name : moved_ff)
+    {
+        plot_file << ff_name << " ";
     }
 }

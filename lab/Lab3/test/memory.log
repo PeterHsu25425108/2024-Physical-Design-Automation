@@ -1,29 +1,32 @@
-==48108== Memcheck, a memory error detector
-==48108== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==48108== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==48108== Command: ./../bin/Legalizer ../testcase/testcase1_16900/testcase1_16900.lg ../testcase/testcase1_16900/testcase1_16900.opt ../output/testcase1_16900_post.lg
-==48108== Parent PID: 48107
-==48108== 
-==48108== 
-==48108== Process terminating with default action of signal 2 (SIGINT)
-==48108==    at 0x11017E: std::_Rb_tree_node<std::pair<double const, int> >::_M_valptr() (stl_tree.h:234)
-==48108==    by 0x1154F0: std::_Rb_tree_iterator<std::pair<double const, int> >::operator->() const (stl_tree.h:282)
-==48108==    by 0x11109F: PlaceRow::searchFFLL(Inst*, std::vector<PlaceRow, std::allocator<PlaceRow> >&) (PlaceRow.cpp:183)
-==48108==    by 0x10AC55: Solver::BruteFindInsertion[abi:cxx11](Inst*) (legalize.cpp:56)
-==48108==    by 0x10B422: Solver::solve(std::basic_ifstream<char, std::char_traits<char> >&, std::basic_ofstream<char, std::char_traits<char> >&) (legalize.cpp:165)
-==48108==    by 0x10F21D: main (main.cpp:15)
-==48108== 
-==48108== HEAP SUMMARY:
-==48108==     in use at exit: 184,495,651 bytes in 575,404 blocks
-==48108==   total heap usage: 1,025,780 allocs, 450,376 frees, 217,296,453 bytes allocated
-==48108== 
-==48108== LEAK SUMMARY:
-==48108==    definitely lost: 0 bytes in 0 blocks
-==48108==    indirectly lost: 0 bytes in 0 blocks
-==48108==      possibly lost: 0 bytes in 0 blocks
-==48108==    still reachable: 184,495,651 bytes in 575,404 blocks
-==48108==         suppressed: 0 bytes in 0 blocks
-==48108== Rerun with --leak-check=full to see details of leaked memory
-==48108== 
-==48108== For lists of detected and suppressed errors, rerun with: -s
-==48108== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==16394== Memcheck, a memory error detector
+==16394== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==16394== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==16394== Command: ./../bin/Legalizer ../testcase/testcase1_16900/testcase1_16900.lg ../testcase/testcase1_16900/testcase1_16900.opt ../output/testcase1_16900_post.lg
+==16394== Parent PID: 16393
+==16394== 
+==16394== 
+==16394== Process terminating with default action of signal 2 (SIGINT)
+==16394==    at 0x4CB1887: write (write.c:26)
+==16394==    by 0x493ACDC: std::__basic_file<char>::xsputn(char const*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==16394==    by 0x497F1AE: std::basic_filebuf<char, std::char_traits<char> >::_M_convert_to_external(char*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==16394==    by 0x497F5F1: std::basic_filebuf<char, std::char_traits<char> >::overflow(int) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==16394==    by 0x497D22C: std::basic_filebuf<char, std::char_traits<char> >::sync() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==16394==    by 0x49A5E45: std::ostream::flush() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==16394==    by 0x11BBA6: Solver::writePlotFile(std::basic_ofstream<char, std::char_traits<char> >&, std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (readWrite.cpp:288)
+==16394==    by 0x11B5BA: Solver::readlg(std::basic_ifstream<char, std::char_traits<char> >&) (readWrite.cpp:252)
+==16394==    by 0x111F99: main (main.cpp:14)
+==16394== 
+==16394== HEAP SUMMARY:
+==16394==     in use at exit: 22,840,456 bytes in 394,444 blocks
+==16394==   total heap usage: 859,262 allocs, 464,818 frees, 51,667,666 bytes allocated
+==16394== 
+==16394== LEAK SUMMARY:
+==16394==    definitely lost: 0 bytes in 0 blocks
+==16394==    indirectly lost: 0 bytes in 0 blocks
+==16394==      possibly lost: 0 bytes in 0 blocks
+==16394==    still reachable: 22,840,456 bytes in 394,444 blocks
+==16394==         suppressed: 0 bytes in 0 blocks
+==16394== Rerun with --leak-check=full to see details of leaked memory
+==16394== 
+==16394== For lists of detected and suppressed errors, rerun with: -s
+==16394== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

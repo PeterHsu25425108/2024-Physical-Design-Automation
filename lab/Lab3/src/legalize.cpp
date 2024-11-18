@@ -22,7 +22,7 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     // 2. find the best position to place the ff in the empty space
 
     // find the row that the ff is placed
-    int LL_rowIdx = ff_placeRowIdx(ff);
+    int LL_rowIdx = Inst_placeRowIdx(ff);
     // the number of rows the ff occupies
     int occRowCount = ceil(ff->getHeight() / placeRows[0].getSiteHeight());
     // the row index of the highest row the ff occupies
@@ -58,6 +58,12 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     while (numRowVisited < placeRows.size())
     {
         int curr_rowIdx = go_down ? down_rowIdx : up_rowIdx;
+
+        if (DEBUG_BRUTEFINDINSERT)
+        {
+            cout << "----------- searching insertion point for " << ff->getName() << " on row " << curr_rowIdx << " ---------" << endl;
+        }
+
         // search the site on the current row
         PlaceRow &curr_row = placeRows[curr_rowIdx];
         pair<double, double> LL = curr_row.searchFFLL(ff, placeRows);
@@ -114,8 +120,12 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
             found_space = true;
             ff->setX(LL.first);
             ff->setY(LL.second);
-            addFF_PlaceRows(ff);
+            addInst_PlaceRows(ff);
             // moved_ff.push_back(ff->getName());
+            if (DEBUG_BRUTEFINDINSERT)
+            {
+                cout << "--------------------------------" << endl;
+            }
             break;
         }
 
@@ -134,6 +144,11 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         {
             go_down = (up_rowIdx == placeRows.size() - 1) ? true : false;
             up_rowIdx = (up_rowIdx == placeRows.size() - 1) ? placeRows.size() - 1 : up_rowIdx + 1;
+        }
+
+        if (DEBUG_BRUTEFINDINSERT)
+        {
+            cout << "--------------------------------" << endl;
         }
 
         numRowVisited++;
@@ -155,6 +170,20 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
 
 void Solver::solve(ifstream &opt_file, ofstream &output_file)
 {
+    // plot the initial layout
+    if (PLOT_STEP)
+    {
+        cout << "Solver::solve: Plotting the initial layout....";
+        string filename = "../draw/text/before_solve.txt";
+        ofstream plot_file(filename);
+        for (auto &ff : ff_dict)
+        {
+            writePlotFile(plot_file, {});
+        }
+        plot_file.close();
+        cout << "done" << endl;
+    }
+
     string temp;
     while (getline(opt_file, temp))
     {
@@ -221,9 +250,19 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
                 cout << "Solver::solve: " << ff_name << " removed from the layout." << endl;
             }
         }
+
+        if (G_DEBUG)
+        {
+            cout << "legalizing " << new_ff_name << " ...";
+        }
         // legalizing the new ff, this is where the legalization method is called
         // the position of the new ff or any other cells displaced and the placerows will be updated
         vector<string> moved_ff = BruteFindInsertion(new_ff);
+
+        if (G_DEBUG)
+        {
+            cout << " done." << endl;
+        }
 
         if (DEBUG_SOLVE)
         {
@@ -232,6 +271,15 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
 
         // write the result to the output file
         writeOutput(output_file, new_ff, moved_ff);
+
+        if (PLOT_STEP)
+        {
+            // plot the layout after each step
+            string filename = "../draw/text/" + new_ff_name + ".txt";
+            ofstream plot_file(filename);
+            writePlotFile(plot_file, moved_ff);
+            plot_file.close();
+        }
 
         if (DEBUG_SOLVE)
         {

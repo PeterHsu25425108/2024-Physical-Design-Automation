@@ -82,6 +82,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
     //     }
     // }
 
+    if (DEBUG_BRUTEFINDINSERT)
+    {
+        cout << "The initial site iterator at row " << LL_rowIdx << " is: " << it->first << " " << it->second << endl;
+    }
+
     auto it_left = it;
     auto it_right = it;
     // whether to move leftward or rightward after this iteration completes
@@ -104,6 +109,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             // whoever gets poped from quene has width >= ff->getWidth()
             Interval curr_interval = q.front();
             q.pop();
+
+            if (DEBUG_BRUTEFINDINSERT)
+            {
+                cout << "curr_interval: " << curr_interval.x_left << " " << curr_interval.width << " " << curr_interval.topIdx << endl;
+            }
 
             // if the interval's width isn't enough to accommodate the ff, skip it
             if (curr_interval.topIdx == top_rowIdx)
@@ -205,6 +215,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 }
             }
 
+            if (DEBUG_BRUTEFINDINSERT)
+            {
+                cout << "Best interval found: " << best_interval.x_left << " " << best_interval.width << " " << best_interval.topIdx << endl;
+            }
+
             return make_pair(best_interval.x_left, this->startY);
         }
 
@@ -221,41 +236,35 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         }
     }
 
+    if (DEBUG_BRUTEFINDINSERT)
+    {
+        cout << "searchFFLL: Can't find a site that can accommodate the ff." << endl;
+    }
+
     return make_pair(-1, -1);
 }
 
 // O(logn)
 // assuming the ff can be placed on the row without overlapping,
 // so a empty site with x<=ff->getX() and x+width>=ff->getX()+ff->getWidth() should be found
-void PlaceRow::insertFF(Inst *ff, int siteIdx)
+void PlaceRow::insertInst(Inst *inst, int siteIdx)
 {
     // update ff_xPos2Inst
-    ff_xPos2Inst[ff->getX()] = ff;
+    if (inst->getFixed() == false)
+        ff_xPos2Inst[inst->getX()] = inst;
+    else
+    {
+        gate_xPos2Inst[inst->getX()] = inst;
+    }
 
     // find the site that the ff will be placed
     // return the first site whose x is not less than ff->getX()
     // auto it = free_sites.lower_bound(EmptySite(ff->getX(), numeric_limits<double>::max()));
-    auto it = free_sites.lower_bound(ff->getX());
-
-    /*if(it->first > ff->getX())
-    {
-        if(it == free_sites.begin())
-        {
-            cerr << "PlaceRow::insertFF: Found site x > ff->getX() but it is the first site." << endl;
-            exit(1);
-        }
-
-        if(DEBUG_PLACEROW)
-        {
-            cout << "(case 2->3) PlaceRow::insertFF: Found site x > ff->getX()." << endl;
-        }
-
-        it = prev(it);
-    }*/
+    auto it = free_sites.lower_bound(inst->getX());
 
     // insert the ff into the site
     // case 1: the site x is equal to ff->getX()
-    if (it->first == ff->getX())
+    if (it->first == inst->getX())
     {
         // if (DEBUG_PLACEROW)
         // {
@@ -263,7 +272,7 @@ void PlaceRow::insertFF(Inst *ff, int siteIdx)
         // }
 
         // case 1.1: the site width is equal to ff->getWidth()
-        if (it->second == ff->getWidth())
+        if (it->second == inst->getWidth())
         {
             if (DEBUG_PLACEROW)
             {
@@ -281,21 +290,21 @@ void PlaceRow::insertFF(Inst *ff, int siteIdx)
             }
 
             // EmptySite newSite(ff->getX() + ff->getWidth(), it->width - ff->getWidth());
-            free_sites[ff->getX() + ff->getWidth()] = it->second - ff->getWidth();
+            free_sites[inst->getX() + inst->getWidth()] = it->second - inst->getWidth();
             free_sites.erase(it);
         }
     }
-    // case2: the site x is larger than ff->getX()
-    else if (it->first > ff->getX())
+    // case2: the site x is larger than inst->getX()
+    else if (it->first > inst->getX())
     {
         // if (DEBUG_PLACEROW)
         // {
-        //     cout << "PlaceRow::insertFF: case 2: Found site x > ff->getX()." << endl;
+        //     cout << "PlaceRow::insertinst: case 2: Found site x > inst->getX()." << endl;
         // }
 
-        // find the site that has x < ff->getX(), and ensue that the site width >= ff->getWidth()
+        // find the site that has x < inst->getX(), and ensue that the site width >= inst->getWidth()
         it = it == free_sites.begin() ? it : prev(it);
-        if (it->second < ff->getWidth())
+        if (it->second < inst->getWidth())
         {
             // Print the free sites
             cout << "Free sites:" << endl;
@@ -303,52 +312,52 @@ void PlaceRow::insertFF(Inst *ff, int siteIdx)
             {
                 cout << "x: " << site.first << " width: " << site.second << endl;
             }
-            // print out the ff coordinates
-            cout << "ff x: " << ff->getX() << " ff width: " << ff->getWidth() << endl;
+            // print out the inst coordinates
+            cout << "inst x: " << inst->getX() << " inst width: " << inst->getWidth() << endl;
 
-            cerr << "(case2) PlaceRow::insertFF: Found site's width is less than ff " << ff->getName() << "'s width." << endl;
+            cerr << "(case2) PlaceRow::insertinst: Found site's width is less than inst " << inst->getName() << "'s width." << endl;
             cerr << "site x: " << it->first << " site width: " << it->second << endl;
             exit(1);
         }
 
-        // cut out the site after the ff if it exists(ff.getX() + ff.getWidth() < site.x + site.width)
-        if (it->first + it->second > ff->getX() + ff->getWidth())
+        // cut out the site after the inst if it exists(inst.getX() + inst.getWidth() < site.x + site.width)
+        if (it->first + it->second > inst->getX() + inst->getWidth())
         {
-            free_sites[ff->getX() + ff->getWidth()] = it->first + it->second - ff->getX() - ff->getWidth();
+            free_sites[inst->getX() + inst->getWidth()] = it->first + it->second - inst->getX() - inst->getWidth();
         }
 
-        // cut out the site before the ff(definitely exists cuz site x > ff->getX())
-        it->second = ff->getX() - it->first;
+        // cut out the site before the inst(definitely exists cuz site x > inst->getX())
+        it->second = inst->getX() - it->first;
     }
-    // case 3: the site x is less than ff->getX()
-    // in this case, all sites have x < ff->getX()
-    // meaning the last site should be able to accommodate the ff
+    // case 3: the site x is less than inst->getX()
+    // in this case, all sites have x < inst->getX()
+    // meaning the last site should be able to accommodate the inst
     else
     {
         if (DEBUG_PLACEROW)
         {
-            cout << "PlaceRow::insertFF: case 3: Found site x < ff->getX()." << endl;
+            cout << "PlaceRow::insertinst: case 3: Found site x < inst->getX()." << endl;
         }
 
         auto it_last = prev(free_sites.end());
-        // the last free site can't cover the ff completely
-        if (it_last->first + it_last->second < ff->getX() + ff->getWidth())
+        // the last free site can't cover the inst completely
+        if (it_last->first + it_last->second < inst->getX() + inst->getWidth())
         {
-            cerr << "PlaceRow::insertFF: Found site can't cover ff " << ff->getName() << "." << endl;
+            cerr << "PlaceRow::insertinst: Found site can't cover inst " << inst->getName() << "." << endl;
             cerr << "site x: " << it_last->first << " site width: " << it_last->second << endl;
-            cerr << "ff x " << ff->getX() << " ff width " << ff->getWidth() << endl;
+            cerr << "inst x " << inst->getX() << " inst width " << inst->getWidth() << endl;
 
             exit(1);
         }
 
-        // cut out the site after the ff if it exists(ff.getX() + ff.getWidth() < site.x + site.width)
-        if (it_last->first + it_last->second > ff->getX() + ff->getWidth())
+        // cut out the site after the inst if it exists(inst.getX() + inst.getWidth() < site.x + site.width)
+        if (it_last->first + it_last->second > inst->getX() + inst->getWidth())
         {
-            free_sites[ff->getX() + ff->getWidth()] = it_last->first + it_last->second - ff->getX() - ff->getWidth();
+            free_sites[inst->getX() + inst->getWidth()] = it_last->first + it_last->second - inst->getX() - inst->getWidth();
         }
 
-        // cut out the site before the ff
-        it_last->second = ff->getX() - it_last->first;
+        // cut out the site before the inst
+        it_last->second = inst->getX() - it_last->first;
     }
 }
 
@@ -457,4 +466,19 @@ void PlaceRow::removeFF(const Inst *ff)
         }
         cout << endl;
     }
+}
+
+ostream &operator<<(ostream &os, const PlaceRow &placeRow)
+{
+    os << "PlacementRows ";
+    os << placeRow.startY << " " << PlaceRow::siteHeight;
+    for (auto &site : placeRow.free_sites)
+    {
+        os << " " << site.first << "," << site.second;
+        // if (site != *placeRow.free_sites.rbegin())
+        // {
+        //     os << endl;
+        // }
+    }
+    return os;
 }

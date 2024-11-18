@@ -43,10 +43,10 @@ public:
     // These stupid operations will be encapsulated
 
     // calculate the index of the row on which the ff is placed
-    int ff_placeRowIdx(const Inst *ff);
+    int Inst_placeRowIdx(const Inst *inst);
 
-    // add a ff to the placementrow, all related data structures will be updated
-    void addFF_PlaceRows(Inst *ff);
+    // add a Inst to the placementrow, all related data structures will be updated
+    void addInst_PlaceRows(Inst *inst);
 
     // remove a ff from the placementrow, all related data structures will be updated
     void removeFF_PlaceRows(const Inst *ff);
@@ -79,6 +79,9 @@ private:
     // store the placement rows
     // will be sorted by y coordinate after parsing
     vector<PlaceRow> placeRows;
+
+    // write the text file for plotting
+    void writePlotFile(ofstream &plot_file, vector<string> moved_ff);
 
     // Find the cell whose LL corner is at the given coordinate on the layout
     // key: the coordinate of LL corner of the cell
