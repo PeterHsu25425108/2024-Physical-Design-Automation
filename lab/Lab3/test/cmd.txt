@@ -10,16 +10,22 @@ interval: x left 65 width 35 x right 100 0 closest_x: 65
  done.
 legalizing FF_2_1 ...
 ------------ Solver::BruteFindInsertion: searching row 2 --------------
-curr_interval: x left 0 width 25 x right 25 topIdx 2
-success interval: x left 0 width 25 x right 25 topIdx 2
-interval: x left 0 width 25 x right 25 2 closest_x: 15
+curr_interval: x left 21 width 4 x right 25 topIdx 2
+curr_interval: x left 21 width 4 x right 25 topIdx 2
+curr_interval: x left 0 width 17 x right 17 topIdx 2
+success interval: x left 0 width 17 x right 17 topIdx 2
+interval: x left 0 width 17 x right 17 2 closest_x: 7
 --------------------------------
  done.
 legalizing FF_2_2 ...
 ------------ Solver::BruteFindInsertion: searching row 2 --------------
-curr_interval: x left 0 width 15 x right 15 topIdx 2
-success interval: x left 0 width 15 x right 15 topIdx 2
-interval: x left 0 width 15 x right 15 2 closest_x: 4
+curr_interval: x left 0 width 7 x right 7 topIdx 2
+curr_interval: x left 0 width 7 x right 7 topIdx 2
+curr_interval: x left 21 width 4 x right 25 topIdx 2
+curr_interval: x left 35 width 1 x right 36 topIdx 2
+curr_interval: x left 70 width 10 x right 80 topIdx 2
+success interval: x left 70 width 10 x right 80 topIdx 2
+interval: x left 70 width 10 x right 80 2 closest_x: 70
 --------------------------------
  done.
 legalizing FF_2_3 ...
@@ -34,12 +40,17 @@ Solver::addinst_PlaceRows: LL_rowIdx: 1 top_rowIdx: 2
  done.
 legalizing FF_2_4 ...
 ------------ Solver::BruteFindInsertion: searching row 2 --------------
-curr_interval: x left 14 width 1 x right 15 topIdx 2
-curr_interval: x left 14 width 1 x right 15 topIdx 2
-curr_interval: x left 0 width 4 x right 4 topIdx 2
+curr_interval: x left 21 width 4 x right 25 topIdx 2
+curr_interval: x left 21 width 4 x right 25 topIdx 2
+curr_interval: x left 0 width 7 x right 7 topIdx 2
 curr_interval: x left 35 width 1 x right 36 topIdx 2
-curr_interval: x left 70 width 30 x right 100 topIdx 2
-success interval: x left 70 width 30 x right 100 topIdx 2
-interval: x left 70 width 30 x right 100 2 closest_x: 70
+searchFFLL: Can't find a site that can accommodate the ff.
+--------------------------------
+-------------------------------------------
+
+------------ Solver::BruteFindInsertion: searching row 3 --------------
+curr_interval: x left 0 width 10 x right 10 topIdx 3
+success interval: x left 0 width 10 x right 10 topIdx 3
+interval: x left 0 width 10 x right 10 3 closest_x: 0
 --------------------------------
  done.
