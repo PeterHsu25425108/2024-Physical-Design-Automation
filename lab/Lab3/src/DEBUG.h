@@ -14,6 +14,6 @@
 
 #define PLOT_REMOVE 0
 #define PLOT_STEP 0
-#define PLOT_FINAL 0
+#define PLOT_FINAL 1
 
 #endif

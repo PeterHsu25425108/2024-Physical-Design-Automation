@@ -182,6 +182,15 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     if (!found_space)
     {
         cerr << "Solver::BruteFindInsertion: Can't find a space to place " << ff->getName() << endl;
+
+        if (PLOT_FINAL || PLOT_STEP)
+        {
+            string filename = "../draw/text/" + ff->getName() + "_remove.txt";
+            ofstream plot_file(filename);
+            writePlotFile(plot_file, {});
+            plot_file.close();
+        }
+
         exit(1);
     }
 
