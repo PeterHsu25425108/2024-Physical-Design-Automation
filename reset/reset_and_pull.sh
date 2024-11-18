@@ -1,12 +1,5 @@
 #!/bin/bash
 
-# Ensure the script is run from a Git repository
-echo "Checking if this is a Git repository..."
-if [ ! -d .git ]; then
-  echo "Error: This directory is not a Git repository."
-  exit 1
-fi
-
 # Discard all local changes
 echo "Resetting local changes to last committed state..."
 git reset --hard
