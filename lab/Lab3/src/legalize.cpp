@@ -170,17 +170,23 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
 
 void Solver::solve(ifstream &opt_file, ofstream &output_file)
 {
+    if (G_DEBUG)
+    {
+        cout << "Solver::solve: start solving..." << endl;
+    }
+
     // plot the initial layout
     if (PLOT_STEP)
     {
-        cout << "Solver::solve: Plotting the initial layout....";
+
         string filename = "../draw/text/before_solve.txt";
         ofstream plot_file(filename);
-        for (auto &ff : ff_dict)
-        {
-            writePlotFile(plot_file, {});
-        }
+        writePlotFile(plot_file, {});
         plot_file.close();
+    }
+
+    if (G_DEBUG)
+    {
         cout << "done" << endl;
     }
 

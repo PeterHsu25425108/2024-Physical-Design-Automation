@@ -246,12 +246,12 @@ void Solver::readlg(ifstream &lg_file)
         cout << " ************************ " << endl;
     }
 
-    if (PLOT_STEP)
-    {
-        ofstream plot_file("../draw/text/parse.txt");
-        writePlotFile(plot_file, {});
-        plot_file.close();
-    }
+    // if (PLOT_STEP)
+    // {
+    //     ofstream plot_file("../draw/text/parse.txt");
+    //     writePlotFile(plot_file, {});
+    //     plot_file.close();
+    // }
 
     if (G_DEBUG)
     {

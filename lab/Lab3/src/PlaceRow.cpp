@@ -316,6 +316,7 @@ void PlaceRow::insertInst(Inst *inst, int siteIdx)
             cout << "inst x: " << inst->getX() << " inst width: " << inst->getWidth() << endl;
 
             cerr << "(case2) PlaceRow::insertinst: Found site's width is less than inst " << inst->getName() << "'s width." << endl;
+            cerr << "ff x: " << inst->getX() << " ff width: " << inst->getWidth() << endl;
             cerr << "site x: " << it->first << " site width: " << it->second << endl;
             exit(1);
         }
