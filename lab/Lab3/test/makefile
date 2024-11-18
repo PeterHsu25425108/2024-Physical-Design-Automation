@@ -1,8 +1,8 @@
 SOURCE_DIR = ../src
 BIN_DIR = ../bin
 OBJ_DIR = ../obj
-CFLAGS = -std=c++11  -c -g
-LDFLAGS = -std=c++11 -g
+CFLAGS = -std=c++11  -c
+LDFLAGS = -std=c++11
 EXEC = $(BIN_DIR)/Legalizer
 OUT_DIR = ../output
 DRAW_DIR = ../draw
@@ -66,10 +66,10 @@ run_valgrind: $(EXEC)
 	valgrind --log-file=memory.log ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 run: $(EXEC)
-	./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
+	time ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg > cmd.txt
 
 run_cmd: $(EXEC)
-	./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
+	time ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
 
 check: $(EXEC)
 	./Evaluator ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg

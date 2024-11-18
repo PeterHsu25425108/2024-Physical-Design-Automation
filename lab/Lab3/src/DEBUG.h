@@ -2,7 +2,7 @@
 #define DEBUG_H
 
 // print out parsed input
-#define G_DEBUG 1
+#define G_DEBUG 0
 #define DEBUG_PARSE 0
 #define DEBUG_OPTINPUT 0
 #define DEBUG_addInst 0
