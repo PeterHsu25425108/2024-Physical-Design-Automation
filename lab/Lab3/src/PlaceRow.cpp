@@ -120,6 +120,11 @@ pair<int, int> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
     if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
         cout << " ========== searchFFLL: " << ff->getName() << " on row " << this->getRowIdx() << " y =  " << this->startY << " ==========" << endl;
 
+    int min_displacement = numeric_limits<int>::max();
+    Interval best_interval;
+    int closest_x;
+    bool found_best = false;
+
     while (it_left != free_sites.end() || it_right != free_sites.end())
     {
         // the x interval of the free site that is being checked
@@ -138,7 +143,7 @@ pair<int, int> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         queue<Interval> q;
         q.push(init_interval);
         // Stores the intervals whose topIdx == top_rowIdx and
-        vector<Interval> success_Intervals;
+        // vector<Interval> success_Intervals;
 
         while (!q.empty())
         {
@@ -164,7 +169,9 @@ pair<int, int> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             {
                 if (curr_interval.width >= ff->getWidth())
                 {
-                    success_Intervals.push_back(curr_interval);
+                    // success_Intervals.push_back(curr_interval);
+                    found_best = true;
+                    best_interval = curr_interval;
                     if (DEBUG_SEARCH || (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895"))
                     {
                         cout << "success interval: " << "x left " << curr_interval.x_left << " width " << curr_interval.width << " x right " << curr_interval.x_left + curr_interval.width << " topIdx " << curr_interval.topIdx << endl;
@@ -348,47 +355,44 @@ pair<int, int> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         }
 
         // from all success intervals, find the one that has the smallest displacement from the ff's x
-        if (!success_Intervals.empty())
+        if (found_best /*!success_Intervals.empty()*/)
         {
-            int min_displacement = numeric_limits<int>::max();
-            Interval best_interval;
 
-            int final_x;
-            for (auto &interval : success_Intervals)
+            // for (auto &interval : success_Intervals)
+            // {
+            // int closest_x;
+            // find the closest x to the ff's x
+            if (ff->getX() < best_interval.x_left)
             {
-                int closest_x;
-                // find the closest x to the ff's x
-                if (ff->getX() < interval.x_left)
-                {
-                    closest_x = interval.x_left;
-                }
-                else if (ff->getX() + ff->getWidth() > interval.x_left + interval.width)
-                {
-                    closest_x = interval.x_left + interval.width - ff->getWidth();
-                }
-                else
-                {
-                    closest_x = ff->getX();
-                }
-
-                if (DEBUG_SEARCH)
-                {
-                    cout << "interval: x left " << interval.x_left << " width " << interval.width << " x right " << interval.x_left + interval.width << " " << interval.topIdx << " closest_x: " << closest_x << endl;
-                }
-
-                int displacement = abs(closest_x - ff->getX()) + abs(this->startY - ff->getY());
-                if (displacement < min_displacement)
-                {
-                    min_displacement = displacement;
-                    best_interval = interval;
-                    final_x = closest_x;
-                }
+                closest_x = best_interval.x_left;
             }
+            else if (ff->getX() + ff->getWidth() > best_interval.x_left + best_interval.width)
+            {
+                closest_x = best_interval.x_left + best_interval.width - ff->getWidth();
+            }
+            else
+            {
+                closest_x = ff->getX();
+            }
+
+            if (DEBUG_SEARCH)
+            {
+                cout << "best_interval: x left " << best_interval.x_left << " width " << best_interval.width << " x right " << best_interval.x_left + best_interval.width << " " << best_interval.topIdx << " closest_x: " << closest_x << endl;
+            }
+
+            // int displacement = abs(closest_x - ff->getX()) + abs(this->startY - ff->getY());
+            // if (displacement < min_displacement)
+            // {
+            //     min_displacement = displacement;
+            //     best_interval = interval;
+            //     final_x = closest_x;
+            // }
+            //}
 
             if (DEBUG_BRUTEFINDINSERT)
             {
                 cout << "Best interval found: " << best_interval.x_left << " " << best_interval.width << " " << best_interval.topIdx << endl;
-                cout << "Final x: " << final_x << endl;
+                cout << "closest x: " << closest_x << endl;
             }
 
             if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
@@ -398,7 +402,7 @@ pair<int, int> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 
             // delete the hash table
             visited_sites.clear();
-            return make_pair(final_x, this->startY);
+            return make_pair(closest_x, this->startY);
         }
 
         // bool left_end = it_left == free_sites.begin();
