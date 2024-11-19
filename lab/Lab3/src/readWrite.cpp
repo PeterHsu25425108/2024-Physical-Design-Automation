@@ -55,8 +55,8 @@ void Solver::readlg(ifstream &lg_file)
         {
             string name = head;
             bool fix;
-            double x, y;
-            double width, height;
+            int x, y;
+            int width, height;
             string temp;
 
             lg_file >> x >> y >> width >> height >> temp;
@@ -81,7 +81,7 @@ void Solver::readlg(ifstream &lg_file)
         }
         else if (head == "PlacementRows")
         {
-            double startX, startY, siteWidth, siteHeight;
+            int startX, startY, siteWidth, siteHeight;
             int totNumSites;
             lg_file >> startX >> startY >> siteWidth >> siteHeight >> totNumSites;
 
@@ -153,8 +153,8 @@ void Solver::readlg(ifstream &lg_file)
     for (auto &it : ff_dict)
     {
         Inst *ff = it.second;
-        double x = ff->getX();
-        double y = ff->getY();
+        int x = ff->getX();
+        int y = ff->getY();
 
         // calculate the row index and site index with the x and y coordinate
         int rowIdx = (y - placeRows[0].getStartY()) / placeRows[0].getSiteHeight();
@@ -194,8 +194,8 @@ void Solver::readlg(ifstream &lg_file)
     for (auto &it : gate_dict)
     {
         Inst *gate = it.second;
-        double x = gate->getX();
-        double y = gate->getY();
+        int x = gate->getX();
+        int y = gate->getY();
 
         // calculate the row index and site index with the x and y coordinate
         int rowIdx = (y - placeRows[0].getStartY()) / placeRows[0].getSiteHeight();

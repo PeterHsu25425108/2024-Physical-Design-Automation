@@ -24,7 +24,7 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     // find the row that the ff is placed
     int LL_rowIdx = Inst_placeRowIdx(ff);
     // the number of rows the ff occupies
-    int occRowCount = ceil(ff->getHeight() / placeRows[0].getSiteHeight());
+    int occRowCount = ceil((double)ff->getHeight() / (double)placeRows[0].getSiteHeight());
     // the row index of the highest row the ff occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
 
@@ -60,7 +60,7 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     // unordered_map<int, int> visited_rows;
     vector<int> visited_rows;
 
-    pair<double, double> Void = make_pair(-1, -1);
+    pair<int, int> Void = make_pair(-1, -1);
     while (numRowVisited < placeRows.size())
     {
         int curr_rowIdx = go_down ? down_rowIdx : up_rowIdx;
@@ -79,7 +79,7 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
 
         // search the site on the current row
         PlaceRow &curr_row = placeRows[curr_rowIdx];
-        pair<double, double> LL = curr_row.searchFFLL(ff, placeRows);
+        pair<int, int> LL = curr_row.searchFFLL(ff, placeRows);
 
         if (DEBUG_SEARCH)
         {
@@ -300,7 +300,7 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
 
         // get the new ff name, LL_x,  LL_y, width, height
         string new_ff_name;
-        double LL_x, LL_y;
+        int LL_x, LL_y;
         int width, height;
         ss >> new_ff_name >> LL_x >> LL_y >> width >> height;
 

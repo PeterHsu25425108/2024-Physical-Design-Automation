@@ -15,6 +15,6 @@ using namespace std;
 
 ostream &operator<<(ostream &os, const Inst &inst)
 {
-    os << inst.getName() << " " << (long)inst.getX() << " " << (long)inst.getY() << " " << (long)inst.getWidth() << " " << (long)inst.getHeight() << " " << ((inst.getFixed()) ? "FIX" : "NOTFIX");
+    os << inst.getName() << " " << inst.getX() << " " << inst.getY() << " " << inst.getWidth() << " " << inst.getHeight() << " " << ((inst.getFixed()) ? "FIX" : "NOTFIX");
     return os;
 }

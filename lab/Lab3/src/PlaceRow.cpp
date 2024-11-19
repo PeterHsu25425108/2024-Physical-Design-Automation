@@ -15,16 +15,16 @@
 #include "PlaceRow.h"
 using namespace std;
 
-double PlaceRow::startX = 0.0;
+int PlaceRow::startX = 0.0;
 int PlaceRow::siteWidth = 0.0;
 int PlaceRow::siteHeight = 0.0;
 int PlaceRow::numSites = 0;
-double PlaceRow::lowest_placerowY = numeric_limits<double>::max();
+int PlaceRow::lowest_placerowY = numeric_limits<int>::max();
 
 // search for the site that can accommodate the ff
 // if found, return the LL corner of the site which is on this row
 // else return(-1, -1)
-pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
+pair<int, int> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 {
     if (free_sites.empty())
     {
@@ -39,7 +39,7 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
     int LL_rowIdx = (int)((this->startY - PlaceRow::lowest_placerowY) / PlaceRow::siteHeight);
 
     // the number of rows the ff occupies
-    int occRowCount = ceil(ff->getHeight() / PlaceRow::siteHeight);
+    int occRowCount = ceil((double)ff->getHeight() / (double)PlaceRow::siteHeight);
     // the row index of the highest row the ff occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
 
@@ -83,8 +83,8 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         // it = (it == free_sites.begin()) ? it : prev(it);
         if (it != free_sites.begin())
         {
-            double curr_disp = abs(it->first - ff->getX());
-            double prev_disp = abs((prev(it)->first + prev(it)->second) - (ff->getX() + ff->getWidth()));
+            int curr_disp = abs(it->first - ff->getX());
+            int prev_disp = abs((prev(it)->first + prev(it)->second) - (ff->getX() + ff->getWidth()));
             it = (curr_disp < prev_disp) ? it : prev(it);
         }
 
@@ -180,8 +180,8 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             }
 
             // find a seq of intervals that overlap with the current interval
-            double xl = curr_interval.x_left;
-            double xr = curr_interval.x_left + curr_interval.width;
+            int xl = curr_interval.x_left;
+            int xr = curr_interval.x_left + curr_interval.width;
             PlaceRow &above_row = placeRows[curr_interval.topIdx + 1];
 
             // find the 1st interval that overlaps with the current interval
@@ -204,9 +204,9 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             if (left_bound == above_row.free_sites.end())
             {
                 // find the last site of the above row
-                map<double, int>::iterator last_site = prev(above_row.free_sites.end());
-                double last_site_xl = last_site->first;
-                double last_site_xr = last_site->first + last_site->second;
+                map<int, int>::iterator last_site = prev(above_row.free_sites.end());
+                int last_site_xl = last_site->first;
+                int last_site_xr = last_site->first + last_site->second;
                 bool overlap = max(xl, last_site_xl) < min(xr, last_site_xr);
                 if (!overlap)
                 {
@@ -275,9 +275,9 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 
             if (right_bound == above_row.free_sites.end())
             {
-                map<double, int>::iterator last_site = prev(above_row.free_sites.end());
-                double last_site_xl = last_site->first;
-                double last_site_xr = last_site->first + last_site->second;
+                map<int, int>::iterator last_site = prev(above_row.free_sites.end());
+                int last_site_xl = last_site->first;
+                int last_site_xr = last_site->first + last_site->second;
                 bool overlap = max(xl, last_site_xl) < min(xr, last_site_xr);
                 if (!overlap)
                 {
@@ -335,8 +335,8 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 // if the interval's width is enough to accommodate the ff
                 if (it->second >= ff->getWidth())
                 {
-                    double x_left = max(xl, it->first);
-                    double x_right = min(xr, it->first + it->second);
+                    int x_left = max(xl, it->first);
+                    int x_right = min(xr, it->first + it->second);
                     Interval new_interval(x_left, x_right - x_left, curr_interval.topIdx + 1);
                     q.push(new_interval);
                     if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
@@ -350,13 +350,13 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
         // from all success intervals, find the one that has the smallest displacement from the ff's x
         if (!success_Intervals.empty())
         {
-            double min_displacement = numeric_limits<double>::max();
+            int min_displacement = numeric_limits<int>::max();
             Interval best_interval;
 
-            double final_x;
+            int final_x;
             for (auto &interval : success_Intervals)
             {
-                double closest_x;
+                int closest_x;
                 // find the closest x to the ff's x
                 if (ff->getX() < interval.x_left)
                 {
@@ -376,7 +376,7 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                     cout << "interval: x left " << interval.x_left << " width " << interval.width << " x right " << interval.x_left + interval.width << " " << interval.topIdx << " closest_x: " << closest_x << endl;
                 }
 
-                double displacement = abs(closest_x - ff->getX()) + abs(this->startY - ff->getY());
+                int displacement = abs(closest_x - ff->getX()) + abs(this->startY - ff->getY());
                 if (displacement < min_displacement)
                 {
                     min_displacement = displacement;
@@ -463,7 +463,7 @@ void PlaceRow::insertInst(Inst *inst, int siteIdx)
 
     // find the site that the ff will be placed
     // return the first site whose x is not less than ff->getX()
-    // auto it = free_sites.lower_bound(EmptySite(ff->getX(), numeric_limits<double>::max()));
+    // auto it = free_sites.lower_bound(EmptySite(ff->getX(), numeric_limits<int>::max()));
     auto it = free_sites.lower_bound(inst->getX());
 
     // insert the ff into the site

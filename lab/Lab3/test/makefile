@@ -54,6 +54,9 @@ $(TESTCASE_DIR):
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
+../output_wang:
+	mkdir -p ../output_wang
+
 clean:
 	rm  $(EXEC) $(OBJ_DIR)/*.o
 #	rm  $(OUT_DIR)/*
@@ -86,5 +89,11 @@ run: $(EXEC)
 run_cmd: $(EXEC)
 	time ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
 
-check: $(EXEC)
+run_wang: ../wang_exe/Legalizer
+	time ./../wang_exe/Legalizer ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output_wang/$(CASE_NAME)_post.lg > cmd.txt
+
+check_wang: ../output/$(CASE_NAME)_post.lg
+	./Evaluator ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output_wang/$(CASE_NAME)_post.lg
+
+check: ../output/$(CASE_NAME)_post.lg
 	./Evaluator ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg

@@ -63,7 +63,7 @@ public:
 
 private:
     double Alpha, Beta;
-    double DieLLX, DieLLY, DieURX, DieURY;
+    int DieLLX, DieLLY, DieURX, DieURY;
 
     // for storing the result of the moved cell for each banked ff
     // key: new ff name
@@ -98,7 +98,7 @@ private:
     // Find the cell whose LL corner is at the given coordinate on the layout
     // key: the coordinate of LL corner of the cell
     // value: ptr to the cell instance
-    // unordered_map<pair<double, double>, Inst *> cellPos2InstPtr;
+    // unordered_map<pair<int, int>, Inst *> cellPos2InstPtr;
 };
 
 #endif

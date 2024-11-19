@@ -16,7 +16,7 @@ using namespace std;
 int Solver::Inst_placeRowIdx(const Inst *inst)
 {
     // find the row that the inst is placed
-    double inst_y = inst->getY();
+    int inst_y = inst->getY();
     return (int)((inst_y - placeRows[0].getStartY()) / placeRows[0].getSiteHeight());
 }
 
@@ -26,7 +26,7 @@ void Solver::addInst_PlaceRows(Inst *inst)
     // this is where the LL corner of the inst is
     int LL_rowIdx = Inst_placeRowIdx(inst);
     // the number of rows the inst occupies
-    int occRowCount = ceil(inst->getHeight() / placeRows[0].getSiteHeight());
+    int occRowCount = ceil((double)inst->getHeight() / placeRows[0].getSiteHeight());
     // the row index of the highest row the inst occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
 
@@ -77,7 +77,7 @@ void Solver::removeFF_PlaceRows(const Inst *ff)
     }
 
     // the number of rows the ff occupies
-    int occRowCount = ceil(ff->getHeight() / placeRows[0].getSiteHeight());
+    int occRowCount = ceil((double)ff->getHeight() / placeRows[0].getSiteHeight());
 
     if (DEBUG_removeFF)
     {
