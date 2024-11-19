@@ -46,8 +46,8 @@ public:
     ~PlaceRow()
     {
         free_sites.clear();
-        ff_xPos2Inst.clear();
-        gate_xPos2Inst.clear();
+        // ff_xPos2Inst.clear();
+        // gate_xPos2Inst.clear();
     }
     PlaceRow(double startY) : startY(startY)
     {
@@ -107,8 +107,8 @@ private:
 
     // key: the x coordinate of the LL corner of a cell placed on the row
     // value : ptr to the cell instance
-    unordered_map<double, Inst *> ff_xPos2Inst;
-    unordered_map<double, Inst *> gate_xPos2Inst;
+    // unordered_map<double, Inst *> ff_xPos2Inst;
+    // unordered_map<double, Inst *> gate_xPos2Inst;
 };
 
 #endif

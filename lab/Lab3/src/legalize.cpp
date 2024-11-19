@@ -53,8 +53,8 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
     }
     else
     {
-        go_down = rand() % 2;
-        // go_down = true;
+        // go_down = rand() % 2;
+        go_down = true;
     }
 
     // unordered_map<int, int> visited_rows;
@@ -379,5 +379,13 @@ void Solver::solve(ifstream &opt_file, ofstream &output_file)
         {
             cout << "Solver::solve: " << new_ff_name << " result written to the output file." << endl;
         }
+    }
+
+    if (PLOT_FINAL)
+    {
+        string filename = "../draw/text/final.txt";
+        ofstream plot_file(filename);
+        writePlotFile(plot_file, {});
+        plot_file.close();
     }
 }

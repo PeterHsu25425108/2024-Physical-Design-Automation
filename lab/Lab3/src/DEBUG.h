@@ -11,7 +11,7 @@
 #define DEBUG_removeFF 0
 #define DEBUG_BRUTEFINDINSERT 0
 #define DEBUG_SEARCH 0
-#define DEBUG_NOTFOUND 1
+#define DEBUG_NOTFOUND 0
 
 #define PLOT_REMOVE 0
 #define PLOT_STEP 0

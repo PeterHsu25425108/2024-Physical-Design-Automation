@@ -109,7 +109,8 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
     auto it_left = it;
     auto it_right = it;
     // whether to move leftward or rightward after this iteration completes
-    bool go_left = rand() % 2;
+    // bool go_left = rand() % 2;
+    bool go_left = true;
 
     // search the site on the rows above the current row
     // the row is iterated using it_left and it_right
@@ -450,15 +451,15 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 // so a empty site with x<=ff->getX() and x+width>=ff->getX()+ff->getWidth() should be found
 void PlaceRow::insertInst(Inst *inst, int siteIdx)
 {
-    // update ff_xPos2Inst
-    if (inst->getFixed() == false)
-    {
-        ff_xPos2Inst[inst->getX()] = inst;
-    }
-    else
-    {
-        gate_xPos2Inst[inst->getX()] = inst;
-    }
+    // // update ff_xPos2Inst
+    // if (inst->getFixed() == false)
+    // {
+    //     ff_xPos2Inst[inst->getX()] = inst;
+    // }
+    // else
+    // {
+    //     gate_xPos2Inst[inst->getX()] = inst;
+    // }
 
     // find the site that the ff will be placed
     // return the first site whose x is not less than ff->getX()
@@ -591,7 +592,7 @@ void PlaceRow::removeFF(const Inst *ff)
     }
 
     // delete the ff from the ff_xPos2Inst
-    ff_xPos2Inst.erase(ff->getX());
+    // ff_xPos2Inst.erase(ff->getX());
 
     // recover the site
     // insert the site and get the iterator to the inserted site
