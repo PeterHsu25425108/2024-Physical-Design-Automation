@@ -54,12 +54,14 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         go_down = rand() % 2;
     }
 
-    unordered_map<int, int> visited_rows;
+    // unordered_map<int, int> visited_rows;
+    vector<int> visited_rows;
 
     pair<double, double> Void = make_pair(-1, -1);
     while (numRowVisited < placeRows.size())
     {
         int curr_rowIdx = go_down ? down_rowIdx : up_rowIdx;
+        visited_rows.push_back(curr_rowIdx);
 
         if (DEBUG_SEARCH)
         {
@@ -150,16 +152,19 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
             break;
         }
 
+        bool bottom = down_rowIdx == 0;
+        bool top = up_rowIdx == placeRows.size() - 1;
+
         // row updated when we can't find any free space that acomadate ff on current row
         if (go_down)
         {
-            go_down = (down_rowIdx == 0) ? false : true;
-            down_rowIdx = (down_rowIdx == 0) ? 0 : down_rowIdx - 1;
+            down_rowIdx = bottom ? 0 : down_rowIdx - 1;
+            go_down = top ? true : false;
         }
         else
         {
-            go_down = (up_rowIdx == placeRows.size() - 1) ? true : false;
-            up_rowIdx = (up_rowIdx == placeRows.size() - 1) ? placeRows.size() - 1 : up_rowIdx + 1;
+            up_rowIdx = top ? placeRows.size() - 1 : up_rowIdx + 1;
+            go_down = bottom ? false : true;
         }
 
         if (DEBUG_BRUTEFINDINSERT)
@@ -168,10 +173,10 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
         }
 
         numRowVisited++;
-        if (DEBUG_NOTFOUND)
-        {
-            visited_rows[curr_rowIdx] = numRowVisited;
-        }
+        // if (DEBUG_NOTFOUND)
+        // {
+        //     visited_rows[curr_rowIdx] = numRowVisited;
+        // }
 
         if (DEBUG_SEARCH)
         {
@@ -194,19 +199,28 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
             cout << "Solver::BruteFindInsertion: Visited rows: " << endl;
             cout << "total num of Placerows: " << placeRows.size() << endl;
 
-            // sort the visited rows by the second value
-            vector<pair<int, int>> visited_rows_vec(visited_rows.begin(), visited_rows.end());
-            sort(visited_rows_vec.begin(), visited_rows_vec.end(), [](const pair<int, int> &a, const pair<int, int> &b)
-                 { return a.second < b.second; });
-
-            for (auto &row : visited_rows_vec)
+            for (auto &row : visited_rows)
             {
-                cout << row.first << endl;
+                cout << row << endl;
             }
+
+            // sort the visited rows by the second value
+            // vector<pair<int, int>> visited_rows_vec(visited_rows.begin(), visited_rows.end());
+            // sort(visited_rows_vec.begin(), visited_rows_vec.end(), [](const pair<int, int> &a, const pair<int, int> &b)
+            //      { return a.second < b.second; });
+
+            // for (auto &row : visited_rows_vec)
+            // {
+            //     cout << row.first << endl;
+            // }
         }
         else
         {
             cout << "Solver::BruteFindInsertion: Can't find a space to place " << ff->getName() << " in any row" << endl;
+            for (auto &row : visited_rows)
+            {
+                cout << row << endl;
+            }
         }
 
         cerr << "Solver::BruteFindInsertion: Can't find a space to place " << ff->getName() << endl;

@@ -13,8 +13,8 @@
 #define DEBUG_SEARCH 0
 #define DEBUG_NOTFOUND 1
 
-#define PLOT_REMOVE 0
-#define PLOT_STEP 0
+#define PLOT_REMOVE 1
+#define PLOT_STEP 1
 #define PLOT_FINAL 0
 
 #endif

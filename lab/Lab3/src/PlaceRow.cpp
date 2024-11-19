@@ -257,6 +257,8 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 cout << "Final x: " << final_x << endl;
             }
 
+            // delete the hash table
+            visited_sites.clear();
             return make_pair(final_x, this->startY);
         }
 
