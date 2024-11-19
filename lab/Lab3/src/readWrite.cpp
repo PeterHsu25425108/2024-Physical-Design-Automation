@@ -289,15 +289,24 @@ void Solver::writePlotFile(ofstream &plot_file, vector<string> moved_ff)
     }
 
     // // write the placement rows
+    // for (auto &placeRow : placeRows)
+    // {
+    //     plot_file << placeRow << endl;
+    // }
+
+    // plot_file << "moved ffs ";
+    // // write the moved ffs
+    // for (auto &ff_name : moved_ff)
+    // {
+    //     plot_file << ff_name << " ";
+    // }
+}
+
+void Solver::writePlaceRow(ofstream &plot_file)
+{
+    plot_file << "DieSize " << DieLLX << " " << DieLLY << " " << DieURX << " " << DieURY << endl;
     for (auto &placeRow : placeRows)
     {
         plot_file << placeRow << endl;
-    }
-
-    plot_file << "moved ffs ";
-    // write the moved ffs
-    for (auto &ff_name : moved_ff)
-    {
-        plot_file << ff_name << " ";
     }
 }

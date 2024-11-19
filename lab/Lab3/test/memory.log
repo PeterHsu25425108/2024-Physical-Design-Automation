@@ -1,40 +1,27 @@
-==5477== Memcheck, a memory error detector
-==5477== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==5477== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==5477== Command: ./../bin/Legalizer ../testcase/simpleCase2/simpleCase2.lg ../testcase/simpleCase2/simpleCase2.opt ../output/simpleCase2_post.lg
-==5477== Parent PID: 5476
-==5477== 
-==5477== Invalid read of size 1
-==5477==    at 0x10BC66: Inst::getFixed() const (Inst.h:35)
-==5477==    by 0x122CE5: Solver::removeFF_PlaceRows(Inst const*) (solverAPI.cpp:59)
-==5477==    by 0x10CAB7: Solver::solve(std::basic_ifstream<char, std::char_traits<char> >&, std::basic_ofstream<char, std::char_traits<char> >&) (legalize.cpp:318)
-==5477==    by 0x111B38: main (main.cpp:15)
-==5477==  Address 0x40 is not stack'd, malloc'd or (recently) free'd
-==5477== 
-==5477== 
-==5477== Process terminating with default action of signal 11 (SIGSEGV)
-==5477==  Access not within mapped region at address 0x40
-==5477==    at 0x10BC66: Inst::getFixed() const (Inst.h:35)
-==5477==    by 0x122CE5: Solver::removeFF_PlaceRows(Inst const*) (solverAPI.cpp:59)
-==5477==    by 0x10CAB7: Solver::solve(std::basic_ifstream<char, std::char_traits<char> >&, std::basic_ofstream<char, std::char_traits<char> >&) (legalize.cpp:318)
-==5477==    by 0x111B38: main (main.cpp:15)
-==5477==  If you believe this happened as a result of a stack
-==5477==  overflow in your program's main thread (unlikely but
-==5477==  possible), you can try to increase the size of the
-==5477==  main thread stack using the --main-stacksize= flag.
-==5477==  The main thread stack size used in this run was 8388608.
-==5477== 
-==5477== HEAP SUMMARY:
-==5477==     in use at exit: 115,542 bytes in 140 blocks
-==5477==   total heap usage: 539 allocs, 399 frees, 245,674 bytes allocated
-==5477== 
-==5477== LEAK SUMMARY:
-==5477==    definitely lost: 0 bytes in 0 blocks
-==5477==    indirectly lost: 0 bytes in 0 blocks
-==5477==      possibly lost: 0 bytes in 0 blocks
-==5477==    still reachable: 115,542 bytes in 140 blocks
-==5477==         suppressed: 0 bytes in 0 blocks
-==5477== Rerun with --leak-check=full to see details of leaked memory
-==5477== 
-==5477== For lists of detected and suppressed errors, rerun with: -s
-==5477== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+==7705== Memcheck, a memory error detector
+==7705== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==7705== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==7705== Command: ./../bin/Legalizer ../testcase/testcase1_ALL0_5000/testcase1_ALL0_5000.lg ../testcase/testcase1_ALL0_5000/testcase1_ALL0_5000.opt ../output/testcase1_ALL0_5000_post.lg
+==7705== Parent PID: 7704
+==7705== 
+==7705== 
+==7705== Process terminating with default action of signal 1 (SIGHUP)
+==7705==    at 0x11295B: PlaceRow::searchFFLL(Inst*, std::vector<PlaceRow, std::allocator<PlaceRow> >&) (PlaceRow.cpp:212)
+==7705==    by 0x10AD60: Solver::BruteFindInsertion[abi:cxx11](Inst*) (legalize.cpp:81)
+==7705==    by 0x10BAD6: Solver::solve(std::basic_ifstream<char, std::char_traits<char> >&, std::basic_ofstream<char, std::char_traits<char> >&) (legalize.cpp:353)
+==7705==    by 0x11058E: main (main.cpp:15)
+==7705== 
+==7705== HEAP SUMMARY:
+==7705==     in use at exit: 43,697,416 bytes in 425,481 blocks
+==7705==   total heap usage: 891,441 allocs, 465,960 frees, 73,249,932 bytes allocated
+==7705== 
+==7705== LEAK SUMMARY:
+==7705==    definitely lost: 0 bytes in 0 blocks
+==7705==    indirectly lost: 0 bytes in 0 blocks
+==7705==      possibly lost: 0 bytes in 0 blocks
+==7705==    still reachable: 43,697,416 bytes in 425,481 blocks
+==7705==         suppressed: 0 bytes in 0 blocks
+==7705== Rerun with --leak-check=full to see details of leaked memory
+==7705== 
+==7705== For lists of detected and suppressed errors, rerun with: -s
+==7705== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

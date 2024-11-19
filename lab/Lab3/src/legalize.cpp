@@ -43,15 +43,18 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
 
     if (LL_rowIdx == 0)
     {
-        go_down = true;
+        // go_down = true;
+        go_down = false;
     }
     else if (LL_rowIdx == placeRows.size() - 1)
     {
-        go_down = false;
+        // go_down = false;
+        go_down = true;
     }
     else
     {
         go_down = rand() % 2;
+        // go_down = true;
     }
 
     // unordered_map<int, int> visited_rows;
@@ -231,6 +234,11 @@ vector<string> Solver::BruteFindInsertion(Inst *ff)
             ofstream plot_file(filename);
             writePlotFile(plot_file, {});
             plot_file.close();
+
+            filename = "../draw/text/" + ff->getName() + "_place.txt";
+            ofstream plot_file2(filename);
+            writePlaceRow(plot_file2);
+            plot_file2.close();
         }
 
         exit(1);

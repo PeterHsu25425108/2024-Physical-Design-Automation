@@ -39,16 +39,16 @@ def read_file(filename):
             #     for i in range(2, len(parts)):
             #         name = parts[i]
             #         moved_ffs.append(name)
-            # elif line.startswith("PlacementRows"):
-            #     parts = line.split(" ")
-            #     startY = float(parts[1])
-            #     height = float(parts[2])
-            #     free_sites = []
-            #     for i in range(3, len(parts)):
-            #         x = parts[i].split(",")[0]
-            #         width = parts[i].split(",")[1]
-            #         free_sites.append((float(x), float(width)))
-            #     placeRows.append((startY, height, free_sites))
+            elif line.startswith("PlacementRows"):
+                parts = line.split(" ")
+                startY = float(parts[1])
+                height = float(parts[2])
+                free_sites = []
+                for i in range(3, len(parts)):
+                    x = parts[i].split(",")[0]
+                    width = parts[i].split(",")[1]
+                    free_sites.append((float(x), float(width)))
+                placeRows.append((startY, height, free_sites))
 
     return die_size, cells, placeRows, moved_ffs
 
@@ -134,21 +134,28 @@ def plot_file(
         #     color="black",
         # )
 
+    print("adding placement rows")
     # plot the free sites in placement rows
     # each with lower left corner at (x, startY) and width, plotted as rectangles with purple dashed lines as edges
-    # for startY, height, free_sites in placeRows:
-    #     for x, width in free_sites:
-    #         ax.add_patch(
-    #             patches.Rectangle(
-    #                 (x, startY),
-    #                 width,
-    #                 height,
-    #                 edgecolor="purple",
-    #                 facecolor="none",
-    #                 linewidth=1,
-    #                 linestyle="--",
-    #             )
-    #         )
+    # 1.23012e+06, 1.1613e+06
+    for startY, height, free_sites in tqdm(placeRows):
+        for x, width in free_sites:
+
+            facecolor = "none"
+            if x == 1.23012e06 and startY == 1.1613e06:
+                facecolor = "green"
+
+            ax.add_patch(
+                patches.Rectangle(
+                    (x, startY),
+                    width,
+                    height,
+                    edgecolor="purple",
+                    facecolor=facecolor,
+                    linewidth=1,
+                    # linestyle="--",
+                )
+            )
     print("done adding patches")
 
     # Formatting and saving

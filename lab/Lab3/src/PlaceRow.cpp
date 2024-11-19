@@ -43,6 +43,9 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
     // the row index of the highest row the ff occupies
     int top_rowIdx = LL_rowIdx + occRowCount - 1;
 
+    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+        cout << "## LL_rowIdx: " << LL_rowIdx << " top_rowIdx: " << top_rowIdx << " occRowCount: " << occRowCount << endl;
+
     if (top_rowIdx >= placeRows.size())
     {
         if (DEBUG_SEARCH)
@@ -113,11 +116,22 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
 
     unordered_map<int, bool> visited_sites;
 
+    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+        cout << " ========== searchFFLL: " << ff->getName() << " on row " << this->getRowIdx() << " y =  " << this->startY << " ==========" << endl;
+
     while (it_left != free_sites.end() || it_right != free_sites.end())
     {
         // the x interval of the free site that is being checked
         auto it_curr = go_left ? it_left : it_right;
         visited_sites[it_curr->first] = true;
+
+        if (DEBUG_NOTFOUND)
+        {
+            if (ff->getName() == "FF_4_1895")
+            {
+                cout << "(" << it_curr->first << ", " << this->startY << ") -> (" << it_curr->first + it_curr->second << ", " << this->startY << "[" << "w = " << it_curr->second << "])" << endl;
+            }
+        }
 
         Interval init_interval(it_curr->first, it_curr->second, LL_rowIdx);
         queue<Interval> q;
@@ -131,6 +145,14 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             Interval curr_interval = q.front();
             q.pop();
 
+            if (DEBUG_NOTFOUND)
+            {
+                if (ff->getName() == "FF_4_1895")
+                {
+                    cout << "curr_interval: " << "x left " << curr_interval.x_left << " width " << curr_interval.width << " x right " << curr_interval.x_left + curr_interval.width << " index height " << curr_interval.topIdx - LL_rowIdx + 1 << endl;
+                }
+            }
+
             if (DEBUG_BRUTEFINDINSERT || DEBUG_SEARCH)
             {
                 cout << "curr_interval: " << "x left " << curr_interval.x_left << " width " << curr_interval.width << " x right " << curr_interval.x_left + curr_interval.width << " topIdx " << curr_interval.topIdx << endl;
@@ -142,11 +164,17 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 if (curr_interval.width >= ff->getWidth())
                 {
                     success_Intervals.push_back(curr_interval);
-                    if (DEBUG_SEARCH)
+                    if (DEBUG_SEARCH || (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895"))
                     {
                         cout << "success interval: " << "x left " << curr_interval.x_left << " width " << curr_interval.width << " x right " << curr_interval.x_left + curr_interval.width << " topIdx " << curr_interval.topIdx << endl;
                     }
                 }
+
+                if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                {
+                    cout << "(case1) curr interval skip cuz not enough width when reaching the top row" << endl;
+                }
+
                 continue;
             }
 
@@ -158,12 +186,57 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             // find the 1st interval that overlaps with the current interval
             auto left_bound = above_row.free_sites.lower_bound(xl);
 
+            if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+            {
+                if (left_bound != above_row.free_sites.end())
+                {
+                    cout << "xl: " << xl << " xr: " << xr << endl;
+                    cout << "above row idx: " << above_row.getRowIdx() << endl;
+                    cout << "left_bound: x left " << left_bound->first << " width " << left_bound->second << " x right " << left_bound->first + left_bound->second << endl;
+                }
+                else
+                {
+                    cout << "all sites have x left < xl" << endl;
+                }
+            }
+
+            if (left_bound == above_row.free_sites.end())
+            {
+                // find the last site of the above row
+                map<double, int>::iterator last_site = prev(above_row.free_sites.end());
+                double last_site_xl = last_site->first;
+                double last_site_xr = last_site->first + last_site->second;
+                bool overlap = max(xl, last_site_xl) < min(xr, last_site_xr);
+                if (!overlap)
+                {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "skipped" << endl;
+                    }
+
+                    continue;
+                }
+                else
+                {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "last site: x left " << last_site->first << " width " << last_site->second << " x right " << last_site->first + last_site->second << endl;
+                    }
+
+                    left_bound = last_site;
+                }
+            }
             // left_bound->first > xl
-            if (left_bound->first > xl)
+            else if (left_bound->first > xl)
             {
                 // if left_bound is the first site and it doesn't overlap with the current interval
                 if (left_bound == above_row.free_sites.begin() && left_bound->first >= xr)
                 {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "(case2) left_bound is the first site and it doesn't overlap with the current interval" << endl;
+                    }
+
                     continue;
                 }
 
@@ -174,8 +247,13 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                     left_bound = prev_left_bound;
                 }
                 // if left_bound doesn't overlap with the current interval
-                else if (left_bound->first > xr)
+                else if (left_bound->first >= xr)
                 {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "(case3) left_bound doesn't overlap with the current interval" << endl;
+                    }
+
                     continue;
                 }
             }
@@ -183,9 +261,50 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             // find the last interval that overlaps with the current interval
             // right_bound->first >= xr
             auto right_bound = above_row.free_sites.lower_bound(xr);
-            // if right_bound doesn't overlap with the current interval and it is the first site
-            if (right_bound == above_row.free_sites.begin())
+
+            if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
             {
+                if (right_bound != above_row.free_sites.end())
+                    cout << "right_bound: x left " << right_bound->first << " width " << right_bound->second << " x right " << right_bound->first + right_bound->second << endl;
+                else
+                {
+                    cout << "all sites have x left < xr" << endl;
+                }
+            }
+
+            if (right_bound == above_row.free_sites.end())
+            {
+                map<double, int>::iterator last_site = prev(above_row.free_sites.end());
+                double last_site_xl = last_site->first;
+                double last_site_xr = last_site->first + last_site->second;
+                bool overlap = max(xl, last_site_xl) < min(xr, last_site_xr);
+                if (!overlap)
+                {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "skipped" << endl;
+                    }
+
+                    continue;
+                }
+                else
+                {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "last site: x left " << last_site->first << " width " << last_site->second << " x right " << last_site->first + last_site->second << endl;
+                    }
+
+                    right_bound = last_site;
+                }
+            }
+            // if right_bound doesn't overlap with the current interval and it is the first site
+            else if (right_bound == above_row.free_sites.begin())
+            {
+                if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                {
+                    cout << "(case4) right_bound doesn't overlap with the current interval and it is the first site" << endl;
+                }
+
                 continue;
             }
             else
@@ -193,8 +312,13 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 // right_bound->first <= xr
                 right_bound = prev(right_bound);
                 // if right_bound doesn't overlap with the current interval
-                if (right_bound->first + right_bound->second < xl)
+                if (right_bound->first + right_bound->second <= xl)
                 {
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "(case5) right_bound doesn't overlap with the current interval" << endl;
+                    }
+
                     continue;
                 }
             }
@@ -202,6 +326,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             // find the intervals with width >= ff->getWidth() within the interval [left_bound, right_bound]
             for (auto it = left_bound; it != next(right_bound); it++)
             {
+                if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                {
+                    cout << "Found overlap interval: x left " << it->first << " width " << it->second << " x right " << it->first + it->second << endl;
+                }
+
                 // if the interval's width is enough to accommodate the ff
                 if (it->second >= ff->getWidth())
                 {
@@ -209,6 +338,10 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                     double x_right = min(xr, it->first + it->second);
                     Interval new_interval(x_left, x_right - x_left, curr_interval.topIdx + 1);
                     q.push(new_interval);
+                    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+                    {
+                        cout << "Pushed new interval: x left " << new_interval.x_left << " width " << new_interval.width << " x right " << new_interval.x_left + new_interval.width << " topIdx " << new_interval.topIdx << endl;
+                    }
                 }
             }
         }
@@ -257,10 +390,18 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
                 cout << "Final x: " << final_x << endl;
             }
 
+            if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+            {
+                cout << " ================= " << endl;
+            }
+
             // delete the hash table
             visited_sites.clear();
             return make_pair(final_x, this->startY);
         }
+
+        // bool left_end = it_left == free_sites.begin();
+        // bool right_end = it_right == free_sites.end();
 
         // update the iterators
         if (go_left)
@@ -273,6 +414,11 @@ pair<double, double> PlaceRow::searchFFLL(Inst *ff, vector<PlaceRow> &placeRows)
             it_right = next(it_right);
             go_left = (it_left == free_sites.end()) ? false : true;
         }
+    }
+
+    if (DEBUG_NOTFOUND && ff->getName() == "FF_4_1895")
+    {
+        cout << "======================" << endl;
     }
 
     if (DEBUG_BRUTEFINDINSERT || DEBUG_SEARCH)

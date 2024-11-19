@@ -93,6 +93,8 @@ private:
     // write the text file for plotting
     void writePlotFile(ofstream &plot_file, vector<string> moved_ff);
 
+    void writePlaceRow(ofstream &plot_file);
+
     // Find the cell whose LL corner is at the given coordinate on the layout
     // key: the coordinate of LL corner of the cell
     // value: ptr to the cell instance

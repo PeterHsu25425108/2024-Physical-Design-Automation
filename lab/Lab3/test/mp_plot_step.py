@@ -3,6 +3,7 @@ import sys
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import multiprocessing
+from tqdm import *
 
 
 def read_file(filename):
@@ -76,7 +77,7 @@ def plot_file(
         )
 
     # Plot cells
-    for x, y, width, height, fixed, name in cells:
+    for x, y, width, height, fixed, name in tqdm(cells):
         color = None
         if fixed:
             color = "gray"
