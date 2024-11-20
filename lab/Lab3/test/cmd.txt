@@ -1,1 +1,2 @@
-start init_PlacementRow
+FF_2_3: 177480 630000
+Solver::addinst_PlaceRows: LL_rowIdx: 292 top_rowIdx: 293
