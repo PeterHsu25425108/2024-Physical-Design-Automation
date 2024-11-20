@@ -1,8 +1,8 @@
 SOURCE_DIR = ../src
 BIN_DIR = ../bin
 OBJ_DIR = ../obj
-CFLAGS = -std=c++11  -c
-LDFLAGS = -std=c++11
+CFLAGS = -std=c++11  -c -g
+LDFLAGS = -std=c++11 -g
 EXEC = $(BIN_DIR)/Legalizer
 OUT_DIR = ../output
 DRAW_DIR = ../draw

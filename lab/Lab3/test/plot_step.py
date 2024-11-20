@@ -187,7 +187,7 @@ if __name__ == "__main__":
     casename = sys.argv[1]
     new_ff = sys.argv[2]
     output_filename_base = "../draw/plot/" + casename
-    lg_file = "../draw/text/" + "/" + new_ff + ".txt"
+    lg_file = "../draw/text" + "/" + new_ff + ".txt"
 
     # Read and plot the .txt file
     die_size, cells, placeRows, moved_ffs = read_file(lg_file)

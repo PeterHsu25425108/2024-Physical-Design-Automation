@@ -1,30 +1,15 @@
-==17157== Memcheck, a memory error detector
-==17157== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==17157== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==17157== Command: ./../bin/Legalizer ../testcase/testcase1_16900/testcase1_16900.lg ../testcase/testcase1_16900/testcase1_16900.opt ../output/testcase1_16900_post.lg
-==17157== Parent PID: 17156
-==17157== 
-==17157== 
-==17157== Process terminating with default action of signal 2 (SIGINT)
-==17157==    at 0x4CB17E2: read (read.c:26)
-==17157==    by 0x493AC8E: std::__basic_file<char>::xsgetn(char*, long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==17157==    by 0x497DAEF: std::basic_filebuf<char, std::char_traits<char> >::underflow() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==17157==    by 0x498A9B1: std::istream::sentry::sentry(std::istream&, bool) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==17157==    by 0x498D201: std::istream& std::istream::_M_extract<double>(double&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
-==17157==    by 0x119CB1: Solver::readlg(std::basic_ifstream<char, std::char_traits<char> >&) (readWrite.cpp:62)
-==17157==    by 0x11013E: main (main.cpp:14)
-==17157== 
-==17157== HEAP SUMMARY:
-==17157==     in use at exit: 6,871,528 bytes in 97,985 blocks
-==17157==   total heap usage: 293,964 allocs, 195,979 frees, 18,524,790 bytes allocated
-==17157== 
-==17157== LEAK SUMMARY:
-==17157==    definitely lost: 0 bytes in 0 blocks
-==17157==    indirectly lost: 0 bytes in 0 blocks
-==17157==      possibly lost: 0 bytes in 0 blocks
-==17157==    still reachable: 6,871,528 bytes in 97,985 blocks
-==17157==         suppressed: 0 bytes in 0 blocks
-==17157== Rerun with --leak-check=full to see details of leaked memory
-==17157== 
-==17157== For lists of detected and suppressed errors, rerun with: -s
-==17157== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==6274== Memcheck, a memory error detector
+==6274== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==6274== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==6274== Command: ./../bin/Legalizer ../testcase/simpleCase1/simpleCase1.lg ../testcase/simpleCase1/simpleCase1.opt ../output/simpleCase1_post.lg
+==6274== Parent PID: 6273
+==6274== 
+==6274== 
+==6274== HEAP SUMMARY:
+==6274==     in use at exit: 0 bytes in 0 blocks
+==6274==   total heap usage: 143 allocs, 143 frees, 150,891 bytes allocated
+==6274== 
+==6274== All heap blocks were freed -- no leaks are possible
+==6274== 
+==6274== For lists of detected and suppressed errors, rerun with: -s
+==6274== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
