@@ -87,4 +87,5 @@ run_cmd: $(EXEC)
 	time ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
 
 check: ../output/$(CASE_NAME)_post.lg
+	chmod 755 Evaluator
 	./Evaluator ../testcase/$(CASE_NAME)/$(CASE_NAME).lg ../testcase/$(CASE_NAME)/$(CASE_NAME).opt ../output/$(CASE_NAME)_post.lg
