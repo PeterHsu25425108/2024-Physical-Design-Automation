@@ -9,6 +9,8 @@ DRAW_DIR = ../draw
 DRAW_TEXT_DIR = ../draw/text
 TESTCASE_DIR = ../testcase
 
+all : $(EXEC)
+
 # Ensure the object directory exists
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)

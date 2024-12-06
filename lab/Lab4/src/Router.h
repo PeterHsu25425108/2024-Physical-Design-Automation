@@ -10,8 +10,8 @@ using namespace std;
 class Router
 {
 public:
-    Router();
-    ~Router();
+    Router(){;}
+    ~Router(){;}
     void parseGMP(ifstream& gmp_file);
     void parseGCL(ifstream& gcl_file);
     void parseCST(ifstream& cst_file);
@@ -21,6 +21,7 @@ private:
     //vector<vector<double>> grid_costM1, grid_costM2;
 
     // M1 and M2 cost and capacity can be found in grid
+    // dim: GRID_DIM_VER x GRID_DIM_HOR
     vector<vector<GCell>> grid;
 
     vector<Net> nets;

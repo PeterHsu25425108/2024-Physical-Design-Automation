@@ -60,21 +60,30 @@ void Router::parseGMP(ifstream& gmp_file)
         else if(line==".b")
         {
             int bump_idx, bump_x, bump_y;
-            gmp_file >> bump_idx >> bump_x >> bump_y;
-
-            // calculate the absolute position of the bump
-            Chip* chip_ptr = (chip_idx==0) ? &chip1 : &chip2;
-            bump_x += chip_ptr->llx;
-            bump_y += chip_ptr->lly;
-
-            if(chip_idx==0)
+            string temp;
+            getline(gmp_file, temp);
+            while(temp!="")
             {
-                chip1.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+                stringstream ss(temp);
+                ss >> bump_idx >> bump_x >> bump_y;
+
+                // calculate the absolute position of the bump
+                Chip* chip_ptr = (chip_idx==0) ? &chip1 : &chip2;
+                bump_x += chip_ptr->llx;
+                bump_y += chip_ptr->lly;
+
+                if(chip_idx==0)
+                {
+                    chip1.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+                }
+                else if(chip_idx==1)
+                {
+                    chip2.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+                }
+
+                getline(gmp_file, temp);
             }
-            else if(chip_idx==1)
-            {
-                chip2.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
-            }
+
         }
         else
         {
@@ -86,25 +95,33 @@ void Router::parseGMP(ifstream& gmp_file)
     // calculate the number of grids in the horizontal and vertical directions
     GRID_DIM_HOR = GMP_WIDTH / GRID_W;
     GRID_DIM_VER = GMP_HEIGHT / GRID_H;
+    grid.resize(GRID_DIM_VER, vector<GCell>(GRID_DIM_HOR));
 }
 
 void Router::parseGCL(ifstream& gcl_file)
 {
     string line;
     // filter out .ec
-    getline(gcl_file, line);
+    gcl_file >> line;
     int num_cells_processed=0;
-    while(gcl_file >> line)
+    int leftEdgeCap, rightEdgeCap;
+
+    while(gcl_file >> leftEdgeCap >> rightEdgeCap)
     {
         num_cells_processed++;
         // (UNDONE) check if the number of cells processed <= number of cells in the data structure
-
-        int leftEdgeCap, rightEdgeCap;
-        // find the first index of the first space
-        stringstream ss(line);
-        ss >> leftEdgeCap >> rightEdgeCap;
+        if(num_cells_processed > GRID_DIM_HOR * GRID_DIM_VER)
+        {
+            cerr << "Error: number of cells processed exceeds the number of cells in the data structure" << endl;
+            exit(1);
+        }        
         
         // raster scan order
+        int row_idx = (num_cells_processed-1) / GRID_DIM_HOR;
+        int col_idx = (num_cells_processed-1) % GRID_DIM_HOR;
+
+        grid[row_idx][col_idx].horCap = leftEdgeCap;
+        grid[row_idx][col_idx].verCap = rightEdgeCap;
 
         if(DEBUG_PARSING)
         {
@@ -143,11 +160,26 @@ void Router::parseCST(ifstream& cst_file)
         else if(line==".l")
         {
             int grid_idx=0;
-            Chip* chip_ptr = (layer_idx==0) ? &chip1 : &chip2;
+            bool isM1 = (layer_idx==0) ? true : false;
 
             // raster scan order
-            
+            for(int row_idx=0; row_idx<GRID_DIM_VER; row_idx++)
+            {
+                for(int col_idx=0; col_idx<GRID_DIM_HOR; col_idx++)
+                {
+                    double cost;
+                    cst_file >> cost;
 
+                    if(isM1)
+                    {
+                        grid[row_idx][col_idx].M1_cost = cost;
+                    }
+                    else
+                    {
+                        grid[row_idx][col_idx].M2_cost = cost;
+                    }
+                }
+            }
             layer_idx++;
         }
     }
