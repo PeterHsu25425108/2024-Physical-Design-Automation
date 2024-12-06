@@ -18,14 +18,18 @@ public:
 
 private:
     Chip chip1, chip2;
-    vector<vector<double>> grid_costM1, grid_costM2;
+    //vector<vector<double>> grid_costM1, grid_costM2;
+
+    // M1 and M2 cost and capacity can be found in grid
+    vector<vector<GCell>> grid;
+
     vector<Net> nets;
 
     double Alpha, Beta, Gamma, Delta;
     double ViaCost;
     int GMP_LLX, GMP_LLY, GMP_WIDTH, GMP_HEIGHT;
     int GRID_W, GRID_H;
-    
+    int GRID_DIM_HOR, GRID_DIM_VER;
 };
 
 #endif

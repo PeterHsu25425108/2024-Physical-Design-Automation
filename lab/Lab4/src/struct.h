@@ -32,6 +32,12 @@ struct Chip
     Chip(int llx, int lly, int width, int height): llx(llx), lly(lly), width(width), height(height) {}
 };
 
+struct GCell
+{
+    double M1_cost, M2_cost;
+    int verCap, horCap;
+};
+
 struct Net
 {
     int net_id;
