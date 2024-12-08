@@ -46,6 +46,11 @@ void Router::parseGMP(ifstream& gmp_file)
 
                 chip1.width = chip_w;
                 chip1.height = chip_h;
+
+                if(DEBUG_PARSING)
+                {
+                    cout <<"chip1 info: " << chip1.llx << " " << chip1.lly << " " << chip1.width << " " << chip1.height << endl;
+                }
             }
             else if(chip_idx==1)
             {
@@ -54,6 +59,11 @@ void Router::parseGMP(ifstream& gmp_file)
                 chip2.lly = chip_y + GMP_LLY;
                 chip2.width = chip_w;
                 chip2.height = chip_h;
+
+                if(DEBUG_PARSING)
+                {
+                    cout <<"chip2 info: " << chip2.llx << " " << chip2.lly << " " << chip2.width << " " << chip2.height << endl;
+                }
             }
         }
         // bump info
@@ -61,6 +71,7 @@ void Router::parseGMP(ifstream& gmp_file)
         {
             int bump_idx, bump_x, bump_y;
             string temp;
+            getline(gmp_file, temp);
             getline(gmp_file, temp);
             while(temp!="")
             {
@@ -75,10 +86,20 @@ void Router::parseGMP(ifstream& gmp_file)
                 if(chip_idx==0)
                 {
                     chip1.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+
+                    if(DEBUG_PARSING)
+                    {
+                        cout << "chip1 bump: " << chip1.bumps.back() << endl;
+                    }
                 }
                 else if(chip_idx==1)
                 {
                     chip2.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+
+                    if(DEBUG_PARSING)
+                    {
+                        cout << "chip2 bump: " << chip2.bumps.back() << endl;
+                    }
                 }
 
                 getline(gmp_file, temp);
@@ -87,7 +108,7 @@ void Router::parseGMP(ifstream& gmp_file)
         }
         else
         {
-            cerr << "Error: unknown token in GMP file" << endl;
+            cerr << "Error: unknown token "<<line<<" in GMP file" << endl;
             exit(1);
         }
     }
@@ -96,6 +117,12 @@ void Router::parseGMP(ifstream& gmp_file)
     GRID_DIM_HOR = GMP_WIDTH / GRID_W;
     GRID_DIM_VER = GMP_HEIGHT / GRID_H;
     grid.resize(GRID_DIM_VER, vector<GCell>(GRID_DIM_HOR));
+
+    if(DEBUG_PARSING)
+    {
+        cout << "GRID_DIM_HOR: " << GRID_DIM_HOR << " GRID_DIM_VER: " << GRID_DIM_VER << endl;
+        cout << "grid.size(): " << grid.size() << " grid[0].size(): " << grid[0].size() << endl;
+    }
 }
 
 void Router::parseGCL(ifstream& gcl_file)
@@ -125,7 +152,8 @@ void Router::parseGCL(ifstream& gcl_file)
 
         if(DEBUG_PARSING)
         {
-            cout << "leftEdgeCap: " << leftEdgeCap << " rightEdgeCap: " << rightEdgeCap << endl;
+            cout << "grid[" << row_idx << "][" << col_idx << "].horCap: " << grid[row_idx][col_idx].horCap << " grid[" << row_idx << "][" << col_idx << "].verCap: " << grid[row_idx][col_idx].verCap << endl;
+            //cout << "leftEdgeCap: " << leftEdgeCap << " rightEdgeCap: " << rightEdgeCap << endl;
         }
     }
 }
@@ -139,28 +167,58 @@ void Router::parseCST(ifstream& cst_file)
         if(line==".alpha")
         {
             cst_file >> Alpha;
+
+            if(DEBUG_PARSING)
+            {
+                cout << "Alpha: " << Alpha << endl;
+            }
         }
         else if(line==".beta")
         {
             cst_file >> Beta;
+
+            if(DEBUG_PARSING)
+            {
+                cout << "Beta: " << Beta << endl;
+            }
         }
         else if(line==".gamma")
         {
             cst_file >> Gamma;
+
+            if(DEBUG_PARSING)
+            {
+                cout << "Gamma: " << Gamma << endl;
+            }
         }
         else if(line==".delta")
         {
             cst_file >> Delta;
+
+            if(DEBUG_PARSING)
+            {
+                cout << "Delta: " << Delta << endl;
+            }
         }
         else if(line==".v")
         {
             cst_file >> ViaCost;
+
+            if(DEBUG_PARSING)
+            {
+                cout << "ViaCost: " << ViaCost << endl;
+            }
         }
         // layer info of layer[layer_idx]
         else if(line==".l")
         {
             int grid_idx=0;
             bool isM1 = (layer_idx==0) ? true : false;
+
+            if(DEBUG_PARSING)
+            {
+                cout <<(isM1 ? "M1" : "M2") << " layer" << endl;
+            }
 
             // raster scan order
             for(int row_idx=0; row_idx<GRID_DIM_VER; row_idx++)
@@ -173,10 +231,19 @@ void Router::parseCST(ifstream& cst_file)
                     if(isM1)
                     {
                         grid[row_idx][col_idx].M1_cost = cost;
+
+                        if(DEBUG_PARSING)
+                        {
+                            cout << "grid[" << row_idx << "][" << col_idx << "].M1_cost: " << grid[row_idx][col_idx].M1_cost << endl;
+                        }
                     }
                     else
                     {
                         grid[row_idx][col_idx].M2_cost = cost;
+                        if(DEBUG_PARSING)
+                        {
+                            cout << "grid[" << row_idx << "][" << col_idx << "].M2_cost: " << grid[row_idx][col_idx].M2_cost << endl;
+                        }
                     }
                 }
             }
