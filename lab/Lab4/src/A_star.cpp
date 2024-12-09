@@ -39,14 +39,52 @@ struct ASTarNode
 void Router::backTrack(const vector<vector<pair<int,int>>>& parent, pair<int, int> src_idx, pair<int,int> tar_idx, vector<WireSeg>& wire_segs)
 {
     pair<int, int> cur_idx = tar_idx;
-    Direction cur_dir = VERTICAL;
-    
+    pair<int, int> start_idx = src_idx;
+    Direction prev_dir = VERTICAL;
 
-    while(cur_idx != src_idx && parent[cur_idx.first][cur_idx.second] != make_pair(-1,-1))
+    while(cur_idx != make_pair(-1,-1))
     {
         pair<int, int> parent_idx = parent[cur_idx.first][cur_idx.second];
-        Direction parent_dir = (parent_idx !=make_pair(-1,-1) && (parent_idx.first == cur_idx.first)) ? HORIZONTAL : VERTICAL;
+        if(cur_idx != src_idx && parent_idx == make_pair(-1,-1))
+        {
+            cerr << "!!: backTrack failed!" << endl;
+            cerr << "src_idx: (" << src_idx.first << ", " << src_idx.second << ") tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
+            cerr << "cur_idx: (" << cur_idx.first << ", " << cur_idx.second << ")" << endl;
+            exit(1);
+        }
 
+        Direction parent2cur_dir = (parent_idx !=make_pair(-1,-1) && (parent_idx.first == cur_idx.first)) ? HORIZONTAL : VERTICAL;
+
+        // if the wire seg changes direction or the parent is the start of the wire seg
+        // then add a wire seg and update the verNetCount and horNetCount of the grid on the wire seg
+        if(parent2cur_dir != prev_dir || parent_idx == make_pair(-1,-1))
+        {
+            // add a wire seg
+            pair<int, int> start_coor = Idx2LLcoor(start_idx.first, start_idx.second);
+            pair<int, int> cur_coor = Idx2LLcoor(cur_idx.first, cur_idx.second);
+
+            // update the grid's verNetCount or horNetCount
+            if(prev_dir == HORIZONTAL)
+            {
+                // update the horNetCount
+                for(int i = min(start_idx.first, cur_idx.first)+1; i <= max(start_idx.first, cur_idx.first); i++)
+                {
+                    //grid[i][start_idx.second].horNetCount++;
+                }
+            }
+            else
+            {
+                // update the verNetCount
+                for(int j = min(start_idx.second, cur_idx.second)+1; j <= max(start_idx.second, cur_idx.second); j++)
+                {
+                    //grid[start_idx.first][j].verNetCount++;
+                }
+            }
+
+            wire_segs.push_back({start_coor.first, start_coor.second, cur_coor.first, cur_coor.second, M1});
+            prev_dir = parent2cur_dir;
+            start_idx = cur_idx;
+        }
 
         cur_idx = parent_idx;
     }
