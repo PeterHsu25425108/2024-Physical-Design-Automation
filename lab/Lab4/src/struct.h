@@ -5,6 +5,7 @@
 #include<fstream>
 #include<sstream>
 #include<vector>
+#include<unordered_map>
 using namespace std;
 
 enum MetalLayer
@@ -44,6 +45,8 @@ struct Chip
 {
     int llx, lly, width, height;
     vector<Bump> bumps;
+    unordered_map<int, int> bump_idx2idx;
+
     Chip(){}
     ~Chip(){}
     Chip(int llx, int lly, int width, int height): llx(llx), lly(lly), width(width), height(height) {}
@@ -52,18 +55,30 @@ struct Chip
         os << "Chip: llx: " << chip.llx << " lly: " << chip.lly << " width: " << chip.width << " height: " << chip.height;
         return os;
     }
+
+    void addBump(const Bump& bump)
+    {
+        bumps.push_back(bump);
+        bump_idx2idx[bump.bump_idx] = bumps.size()-1;
+    }
+
+    Bump& getBump(int bump_idx)
+    {
+        return bumps[bump_idx2idx[bump_idx]];
+    }
 };
 
 struct GCell
 {
     double M1_cost, M2_cost;
-    int verCap, horCap;
+    int bottomVerCap, leftHorCap;
+    int verNetCount, horNetCount;
 
-    GCell(){}
+    GCell(){verNetCount = 0; horNetCount = 0;}
     ~GCell(){}
     friend ostream& operator<<(ostream& os, const GCell& gcell)
     {
-        os << "GCell: M1_cost: " << gcell.M1_cost << " M2_cost: " << gcell.M2_cost << " verCap: " << gcell.verCap << " horCap: " << gcell.horCap;
+        os << "GCell: M1_cost: " << gcell.M1_cost << " M2_cost: " << gcell.M2_cost << " bottomVerCap: " << gcell.bottomVerCap << " leftHorCap: " << gcell.leftHorCap;
         return os;
     }
 };
@@ -74,7 +89,7 @@ struct Net
     vector<WireSeg> wire_segs;
     Net(int net_id): net_id(net_id) {}
     double cost;
-    void calNetCost()const;
+    //void calNetCost()const;
 
     Net(){}
     ~Net(){}

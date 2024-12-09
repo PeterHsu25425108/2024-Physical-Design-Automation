@@ -85,7 +85,7 @@ void Router::parseGMP(ifstream& gmp_file)
 
                 if(chip_idx==0)
                 {
-                    chip1.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+                    chip1.addBump(Bump(bump_idx, bump_x, bump_y));
 
                     if(DEBUG_PARSING)
                     {
@@ -94,7 +94,7 @@ void Router::parseGMP(ifstream& gmp_file)
                 }
                 else if(chip_idx==1)
                 {
-                    chip2.bumps.push_back(Bump(bump_idx, bump_x, bump_y));
+                    chip2.addBump(Bump(bump_idx, bump_x, bump_y));
 
                     if(DEBUG_PARSING)
                     {
@@ -147,12 +147,12 @@ void Router::parseGCL(ifstream& gcl_file)
         int row_idx = (num_cells_processed-1) / GRID_DIM_HOR;
         int col_idx = (num_cells_processed-1) % GRID_DIM_HOR;
 
-        grid[row_idx][col_idx].horCap = leftEdgeCap;
-        grid[row_idx][col_idx].verCap = rightEdgeCap;
+        grid[row_idx][col_idx].leftHorCap = leftEdgeCap;
+        grid[row_idx][col_idx].bottomVerCap = rightEdgeCap;
 
         if(DEBUG_PARSING)
         {
-            cout << "grid[" << row_idx << "][" << col_idx << "].horCap: " << grid[row_idx][col_idx].horCap << " grid[" << row_idx << "][" << col_idx << "].verCap: " << grid[row_idx][col_idx].verCap << endl;
+            cout << "grid[" << row_idx << "][" << col_idx << "].leftHorCap: " << grid[row_idx][col_idx].leftHorCap << " grid[" << row_idx << "][" << col_idx << "].bottomVerCap: " << grid[row_idx][col_idx].bottomVerCap << endl;
             //cout << "leftEdgeCap: " << leftEdgeCap << " rightEdgeCap: " << rightEdgeCap << endl;
         }
     }
@@ -250,4 +250,28 @@ void Router::parseCST(ifstream& cst_file)
             layer_idx++;
         }
     }
+}
+
+void Router::writeOutput(ofstream& out_file, const Net& net)
+{
+
+    out_file << net.net_id << endl;
+    MetalLayer prev_layer  = M1;
+    for(auto &wire_seg: net.wire_segs)
+    {
+        if(prev_layer != wire_seg.metal_layer)
+        {
+            out_file << "via" << endl;
+            prev_layer = wire_seg.metal_layer;
+        }
+        
+        out_file << (wire_seg.metal_layer==M1 ? "M1" : "M2") << " " << wire_seg.x1 << " " << wire_seg.y1 << " " << wire_seg.x2 << " " << wire_seg.y2 << endl;
+    
+        // if the last wire segment is not on M1, add a via
+        if(wire_seg.metal_layer == M2 && &wire_seg == &net.wire_segs.back())
+        {
+            out_file << "via" << endl;
+        }
+    }
+    
 }

@@ -20,6 +20,9 @@ int main(int argc, char* argv[])
     router.parseGCL(gcl_file);
     router.parseCST(cst_file);
 
+    // solve the routing problem
+    router.solve(out_file);
+
     gmp_file.close();
     gcl_file.close();
     cst_file.close();
