@@ -5,12 +5,17 @@
 #include<fstream>
 #include<sstream>
 #include"struct.h"
+#include<limits>
 using namespace std;
 
 class Router
 {
 public:
-    Router(){;}
+    Router()
+    {
+        M1Cost_max=numeric_limits<double>::min();
+        M2Cost_max=numeric_limits<double>::min();
+    }
     ~Router(){;}
     void parseGMP(ifstream& gmp_file);
     void parseGCL(ifstream& gcl_file);
@@ -58,6 +63,7 @@ private:
     int GMP_LLX, GMP_LLY, GMP_WIDTH, GMP_HEIGHT;
     int GRID_W, GRID_H;
     int GRID_DIM_HOR, GRID_DIM_VER;
+    double M1Cost_max, M2Cost_max, MetalCost_max;
 };
 
 #endif

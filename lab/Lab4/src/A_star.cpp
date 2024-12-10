@@ -38,9 +38,14 @@ struct ASTarNode
 
 void Router::backTrack(const vector<vector<pair<int,int>>>& parent, pair<int, int> src_idx, pair<int,int> tar_idx, vector<WireSeg>& wire_segs)
 {
+    if(DEBUG_BACKTRACK)
+    {
+        cout << "Backtrack from src_idx: (" << src_idx.first << ", " << src_idx.second << ") to tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
+    }
+
     pair<int, int> cur_idx = tar_idx;
-    pair<int, int> start_idx = src_idx;
-    Direction prev_dir = VERTICAL;
+    pair<int, int> end_idx = tar_idx;
+    Direction prev_dir = (parent[cur_idx.first][cur_idx.second].first == cur_idx.first) ? HORIZONTAL : VERTICAL;
 
     while(cur_idx != make_pair(-1,-1))
     {
@@ -57,33 +62,40 @@ void Router::backTrack(const vector<vector<pair<int,int>>>& parent, pair<int, in
 
         // if the wire seg changes direction or the parent is the start of the wire seg
         // then add a wire seg and update the verNetCount and horNetCount of the grid on the wire seg
+        // need to exclude the case when a via is added onto the src or tar grid
         if(parent2cur_dir != prev_dir || parent_idx == make_pair(-1,-1))
         {
+            if(DEBUG_BACKTRACK)
+            {
+                cout << "find wire seg from (" << cur_idx.first << ", " << cur_idx.second << ") to (" << end_idx.first << ", " << end_idx.second << ")" << endl;
+            }
+
             // add a wire seg
-            pair<int, int> start_coor = Idx2LLcoor(start_idx.first, start_idx.second);
             pair<int, int> cur_coor = Idx2LLcoor(cur_idx.first, cur_idx.second);
+            pair<int, int> end_coor = Idx2LLcoor(end_idx.first, end_idx.second);
+            MetalLayer ml = (prev_dir == HORIZONTAL) ? M2 : M1;
+            wire_segs.push_back({cur_coor.first, cur_coor.second, end_coor.first, end_coor.second, ml});
 
             // update the grid's verNetCount or horNetCount
             if(prev_dir == HORIZONTAL)
             {
                 // update the horNetCount
-                for(int i = min(start_idx.first, cur_idx.first)+1; i <= max(start_idx.first, cur_idx.first); i++)
+                for(int i = min(cur_idx.second, end_idx.second)+1; i <= max(cur_idx.second, end_idx.second); i++)
                 {
-                    //grid[i][start_idx.second].horNetCount++;
+                    grid[cur_idx.first][i].horNetCount++;
                 }
             }
             else
             {
                 // update the verNetCount
-                for(int j = min(start_idx.second, cur_idx.second)+1; j <= max(start_idx.second, cur_idx.second); j++)
+                for(int j = min(cur_idx.first, end_idx.first)+1; j <= max(end_idx.first, cur_idx.first); j++)
                 {
-                    //grid[start_idx.first][j].verNetCount++;
+                    grid[j][cur_idx.second].verNetCount++;
                 }
             }
 
-            wire_segs.push_back({start_coor.first, start_coor.second, cur_coor.first, cur_coor.second, M1});
             prev_dir = parent2cur_dir;
-            start_idx = cur_idx;
+            end_idx = cur_idx;
         }
 
         cur_idx = parent_idx;
@@ -164,52 +176,63 @@ double Router::exact_cost(pair<int, int> src_idx, pair<int, int> tar_idx, const 
         }
     }
 
+    bool ov;
     // overflow cost
     if(src2tar_dir == HORIZONTAL)
     {
-        if(tar_idx.first == src_idx.first-1)
+        // left neighbor ov
+        if(tar_idx.second == src_idx.second-1)
         {
             // check the capacity of tar grid
-            bool ov = grid[tar_idx.first][tar_idx.second].leftHorCap <= grid[tar_idx.first][tar_idx.second].horNetCount;
-            val += ov * Beta;
+            ov = grid[src_idx.first][src_idx.second].leftHorCap <= grid[src_idx.first][src_idx.second].horNetCount;
+            //val += ov * Beta;
         }
-        else if(tar_idx.first == src_idx.first+1)
+        // right neighbor ov
+        else if(tar_idx.second == src_idx.second+1)
         {
-            bool ov = grid[src_idx.first][src_idx.second].leftHorCap <= grid[src_idx.first][src_idx.second].horNetCount;
-            val += ov * Beta;
+            ov = grid[tar_idx.first][tar_idx.second].leftHorCap <= grid[tar_idx.first][tar_idx.second].horNetCount;
+            //val += ov * Beta;
         }
         else
         {
-            cerr << "!!: exact_cost called on non-adjacent nodes!" << endl;
+            cerr << "!!: exact_cost called on non-adjacent nodes(HORIZONTAL)!" << endl;
             cerr <<"src_idx: (" << src_idx.first << ", " << src_idx.second << ") tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
             cerr << "src position: (" << Idx2LLcoor(src_idx.first, src_idx.second).first << ", " << Idx2LLcoor(src_idx.first, src_idx.second).second << ") tar position: (" << Idx2LLcoor(tar_idx.first, tar_idx.second).first << ", " << Idx2LLcoor(tar_idx.first, tar_idx.second).second << ")" << endl;
             cerr << "tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
             cerr << "tar position: (" << Idx2LLcoor(tar_idx.first, tar_idx.second).first << ", " << Idx2LLcoor(tar_idx.first, tar_idx.second).second << ")" << endl;
             exit(1);
         }
+
+        val += ov * Beta * 0.5 * MetalCost_max;
     }
     else
     {
-        if(tar_idx.second == src_idx.second+1)
+        // up neighbor ov
+        if(tar_idx.first == src_idx.first+1)
         {
-            bool ov = grid[tar_idx.first][tar_idx.second].bottomVerCap <= grid[tar_idx.first][tar_idx.second].verNetCount;
-            val += ov * Beta;
+            ov = grid[tar_idx.first][tar_idx.second].bottomVerCap <= grid[tar_idx.first][tar_idx.second].verNetCount;
+            //val += ov * Beta;
         }
-        else if(tar_idx.second == src_idx.second-1)
+        // down neighbor ov
+        else if(tar_idx.first == src_idx.first-1)
         {
-            bool ov = grid[src_idx.first][src_idx.second].bottomVerCap <= grid[src_idx.first][src_idx.second].verNetCount;
-            val += ov * Beta;
+            ov = grid[src_idx.first][src_idx.second].bottomVerCap <= grid[src_idx.first][src_idx.second].verNetCount;
+            //val += ov * Beta;
         }
         else
         {
-            cerr << "!!: exact_cost called on non-adjacent nodes!" << endl;
+            cerr << "!!: exact_cost called on non-adjacent nodes(VERTICAL)!" << endl;
             cerr <<"src_idx: (" << src_idx.first << ", " << src_idx.second << ") tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
             cerr << "src position: (" << Idx2LLcoor(src_idx.first, src_idx.second).first << ", " << Idx2LLcoor(src_idx.first, src_idx.second).second << ") tar position: (" << Idx2LLcoor(tar_idx.first, tar_idx.second).first << ", " << Idx2LLcoor(tar_idx.first, tar_idx.second).second << ")" << endl;
             cerr << "tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
             cerr << "tar position: (" << Idx2LLcoor(tar_idx.first, tar_idx.second).first << ", " << Idx2LLcoor(tar_idx.first, tar_idx.second).second << ")" << endl;
             exit(1);
         }
+
+        val += ov * Beta * 0.5 * M1Cost_max;
     }
+
+    return val;
 }
 
 void Router::A_star(int net_id)
@@ -218,11 +241,17 @@ void Router::A_star(int net_id)
     vector<vector<double>> g_cost(GRID_DIM_VER, vector<double>(GRID_DIM_HOR, numeric_limits<double>::max()));
     vector<vector<double>> f_cost(GRID_DIM_VER, vector<double>(GRID_DIM_HOR, numeric_limits<double>::max()));
     /*priority_queue*/set<ASTarNode> pq;
-    unordered_map<int, set<ASTarNode>::iterator> pq_map;
+    //unordered_map<int, set<ASTarNode>::iterator> pq_map;
 
     // starting from chip1, end at chip2
     pair<int, int> src_idx = LLcoor2Idx(chip1.getBump(net_id).x, chip1.getBump(net_id).y);
     pair<int, int> tar_idx = LLcoor2Idx(chip2.getBump(net_id).x, chip2.getBump(net_id).y);
+
+    if(DEBUG_ASTAR)
+    {
+        cout <<endl << "A star search for net "<< net_id << endl;
+        cout << "src_idx: (" << src_idx.first << ", " << src_idx.second << ") tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
+    }
 
     // set the initial value of g score and f score for the starting node
     g_cost[src_idx.first][src_idx.second] = 0;
@@ -230,8 +259,8 @@ void Router::A_star(int net_id)
 
     // push the starting node to the priority queue
     pq.insert({src_idx, f_cost[src_idx.first][src_idx.second]});
-    int src_key = src_idx.first * GRID_DIM_HOR + src_idx.second;
-    pq_map[src_key] = pq.begin();
+    int src_key = src_idx.first * GRID_DIM_VER + src_idx.second;
+    //pq_map[src_key] = pq.begin();
 
     while(!pq.empty())
     {
@@ -239,9 +268,19 @@ void Router::A_star(int net_id)
         pair<int, int> curNodeIdx = pq.begin()->idx;
         // delete the node from the pq
         pq.erase(pq.begin());
+
+        if(DEBUG_ASTAR)
+        {
+            cout << "curNodeIdx: (" << curNodeIdx.first << ", " << curNodeIdx.second << ") f_cost: " << f_cost[curNodeIdx.first][curNodeIdx.second] << endl;
+        }
         
         if(curNodeIdx == tar_idx)
         {
+            if(DEBUG_ASTAR)
+            {
+                cout << "A star search for net "<< net_id <<" succeed!"<<endl;
+            }
+
             // backtrack the path
             backTrack(parent, src_idx, tar_idx, nets[net_id].wire_segs);
             // calculate the cost of the net
@@ -276,23 +315,59 @@ void Router::A_star(int net_id)
 
         for(auto& neighbor : neighbors)
         {
+            if(DEBUG_ASTAR)
+            {
+                cout <<"search neighbor: (" << neighbor.first << ", " << neighbor.second << ")"<<endl;
+            }
+                
             double new_g_cost = g_cost[curNodeIdx.first][curNodeIdx.second] + exact_cost(curNodeIdx, neighbor, parent);
+
+            if(DEBUG_ASTAR)
+            {
+                cout << "----------------- " << endl;
+                cout << "   old g_cost: " << g_cost[neighbor.first][neighbor.second] << endl;
+                cout << "   exact_cost: " << exact_cost(curNodeIdx, neighbor, parent) << endl;
+                cout << "   g_cost[curNodeIdx]: " << g_cost[curNodeIdx.first][curNodeIdx.second] << endl;
+                cout << "   new_g_cost: " << new_g_cost << endl;
+                cout << "   g_cost[neighbor]: " << g_cost[neighbor.first][neighbor.second] << endl;
+                cout << "-----------------" << endl;
+            }
+
             if(new_g_cost < g_cost[neighbor.first][neighbor.second])
             {
+                if(DEBUG_ASTAR)
+                {
+                    cout << "INSERT neighbor: (" << neighbor.first << ", " << neighbor.second << ")" << endl;
+                    
+                }
+
+                auto it_set = pq.find({neighbor, f_cost[neighbor.first][neighbor.second]});
+
                 parent[neighbor.first][neighbor.second] = curNodeIdx;
                 g_cost[neighbor.first][neighbor.second] = new_g_cost;
                 f_cost[neighbor.first][neighbor.second] = g_cost[neighbor.first][neighbor.second] + h_est(neighbor, tar_idx);
                 
                 // find the neighbor in the pq
-                int neighbor_key = neighbor.first * GRID_DIM_HOR + neighbor.second;
-                auto it = pq_map.find(neighbor_key);
+                if(it_set != pq.end())
+                {
+                    pq.erase(it_set);
+                }
+
+                //int neighbor_key = neighbor.first * GRID_DIM_VER + neighbor.second;
+                /*auto it = pq_map.find(neighbor_key);
                 if(it!= pq_map.end())
                 {
                     pq.erase(it->second);
-                }
+                    pq_map.erase(it);
+                }*/
                 
                 pq.insert({neighbor, f_cost[neighbor.first][neighbor.second]});
-                pq_map[neighbor_key] = pq.begin();
+                //pq_map[neighbor_key] = pq.begin();
+            }
+
+            if(DEBUG_ASTAR)
+            {
+                cout << endl;
             }
         }
     }

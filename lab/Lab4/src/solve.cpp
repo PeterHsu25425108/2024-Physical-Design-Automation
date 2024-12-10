@@ -31,6 +31,15 @@ void Router::solve(ofstream& out_file)
     // sort the net by the area in ascending order
     sort(net_id_area.begin(), net_id_area.end(), [](const pair<int, int>& a, const pair<int, int>& b) { return a.second < b.second; });
 
+    if(DEBUG_SOLVE)
+    {
+        cout << "Net id and area: " << endl;
+        for(auto& p : net_id_area)
+        {
+            cout << "Net id: " << p.first << " area: " << p.second << endl;
+        }
+    }
+
     // for each net, route it
     for(auto& p : net_id_area)
     {

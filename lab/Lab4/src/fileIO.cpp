@@ -91,6 +91,9 @@ void Router::parseGMP(ifstream& gmp_file)
                     {
                         cout << "chip1 bump: " << chip1.bumps.back() << endl;
                     }
+
+                    // add net
+                    nets.push_back(Net(bump_idx));
                 }
                 else if(chip_idx==1)
                 {
@@ -104,7 +107,7 @@ void Router::parseGMP(ifstream& gmp_file)
 
                 getline(gmp_file, temp);
             }
-
+            chip_idx++;
         }
         else
         {
@@ -231,6 +234,7 @@ void Router::parseCST(ifstream& cst_file)
                     if(isM1)
                     {
                         grid[row_idx][col_idx].M1_cost = cost;
+                        M1Cost_max = max(M1Cost_max, cost);
 
                         if(DEBUG_PARSING)
                         {
@@ -240,6 +244,8 @@ void Router::parseCST(ifstream& cst_file)
                     else
                     {
                         grid[row_idx][col_idx].M2_cost = cost;
+                        M2Cost_max = max(M2Cost_max, cost);
+
                         if(DEBUG_PARSING)
                         {
                             cout << "grid[" << row_idx << "][" << col_idx << "].M2_cost: " << grid[row_idx][col_idx].M2_cost << endl;
@@ -250,6 +256,13 @@ void Router::parseCST(ifstream& cst_file)
             layer_idx++;
         }
     }
+
+    MetalCost_max = max(M1Cost_max, M2Cost_max);
+    if(DEBUG_PARSING)
+    {
+        cout << "M1Cost_max: " << M1Cost_max << " M2Cost_max: " << M2Cost_max << endl;
+        cout << "MetalCost_max: " << MetalCost_max << endl;
+    }
 }
 
 void Router::writeOutput(ofstream& out_file, const Net& net)
@@ -257,8 +270,10 @@ void Router::writeOutput(ofstream& out_file, const Net& net)
 
     out_file << net.net_id << endl;
     MetalLayer prev_layer  = M1;
-    for(auto &wire_seg: net.wire_segs)
+    vector<WireSeg>::const_reverse_iterator rit;
+    for(rit = net.wire_segs.rbegin(); rit != net.wire_segs.rend(); ++rit)
     {
+        WireSeg wire_seg = *rit;
         if(prev_layer != wire_seg.metal_layer)
         {
             out_file << "via" << endl;
