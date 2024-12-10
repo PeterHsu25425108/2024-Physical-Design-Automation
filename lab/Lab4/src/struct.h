@@ -87,11 +87,11 @@ struct Net
 {
     int net_id;
     vector<WireSeg> wire_segs;
-    Net(int net_id): net_id(net_id) {}
+    Net(int net_id): net_id(net_id), cost(0) {}
     double cost;
     //void calNetCost()const;
 
-    Net(){}
+    Net(): net_id(-1){}
     ~Net(){}
 
     friend ostream& operator<<(ostream& os, const Net& net)

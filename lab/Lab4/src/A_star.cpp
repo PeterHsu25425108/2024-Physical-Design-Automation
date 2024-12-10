@@ -247,6 +247,39 @@ void Router::A_star(int net_id)
     pair<int, int> src_idx = LLcoor2Idx(chip1.getBump(net_id).x, chip1.getBump(net_id).y);
     pair<int, int> tar_idx = LLcoor2Idx(chip2.getBump(net_id).x, chip2.getBump(net_id).y);
 
+    ofstream prop_file;
+    if(PROPAGATE_PLOT)
+    {
+        prop_file.open("../draw/text/propagate_" + to_string(net_id) + ".txt");
+        prop_file << "GMP_LLX " << GMP_LLX << " GMP_LLY " << GMP_LLY << " GRID_W " << GRID_W << " GRID_H " << GRID_H << " GMP_WIDTH " << GMP_WIDTH << " GMP_HEIGHT " << GMP_HEIGHT << endl;
+        prop_file << "src idx " << src_idx.first << " " << src_idx.second << endl;
+        prop_file << "tar idx " << tar_idx.first << " " << tar_idx.second << endl;
+    }
+
+    if(DEBUG_ASTAR)
+    {
+        cout << "src position: (" << chip1.getBump(net_id).x << ", " << chip1.getBump(net_id).y << ") tar position: (" << chip2.getBump(net_id).x << ", " << chip2.getBump(net_id).y << ")" << endl;
+        cout << "tar position: (" << Idx2LLcoor(tar_idx.first, tar_idx.second).first << ", " << Idx2LLcoor(tar_idx.first, tar_idx.second).second << ")" << endl;
+    }
+
+    // check if the src and tar position are out of the routing grid
+    if(chip1.getBump(net_id).x < GMP_LLX || chip1.getBump(net_id).x >= GMP_LLX + GMP_WIDTH || chip1.getBump(net_id).y < GMP_LLY || chip1.getBump(net_id).y >= GMP_LLY + GMP_HEIGHT)
+    {
+        cerr << "!!: A star search for net "<< net_id <<"failed!"<<endl;
+        cerr << "src position: (" << chip1.getBump(net_id).x << ", " << chip1.getBump(net_id).y << ")" << endl;
+        cerr << "src_idx: (" << src_idx.first << ", " << src_idx.second << ")" << endl;
+        exit(1);
+    }
+
+    if(chip2.getBump(net_id).x < GMP_LLX || chip2.getBump(net_id).x >= GMP_LLX + GMP_WIDTH || chip2.getBump(net_id).y < GMP_LLY || chip2.getBump(net_id).y >= GMP_LLY + GMP_HEIGHT)
+    {
+        cerr << "!!: A star search for net "<< net_id <<"failed!"<<endl;
+        cerr << "tar position: (" << chip2.getBump(net_id).x << ", " << chip2.getBump(net_id).y << ")" << endl;
+        cerr << "tar_idx: (" << tar_idx.first << ", " << tar_idx.second << ")" << endl;
+        exit(1);
+    }
+    
+
     if(DEBUG_ASTAR)
     {
         cout <<endl << "A star search for net "<< net_id << endl;
@@ -269,6 +302,11 @@ void Router::A_star(int net_id)
         // delete the node from the pq
         pq.erase(pq.begin());
 
+        if(PROPAGATE_PLOT)
+        {
+            prop_file << curNodeIdx.first << " " << curNodeIdx.second << endl;
+        }
+
         if(DEBUG_ASTAR)
         {
             cout << "curNodeIdx: (" << curNodeIdx.first << ", " << curNodeIdx.second << ") f_cost: " << f_cost[curNodeIdx.first][curNodeIdx.second] << endl;
@@ -285,6 +323,12 @@ void Router::A_star(int net_id)
             backTrack(parent, src_idx, tar_idx, nets[net_id].wire_segs);
             // calculate the cost of the net
             nets[net_id].cost = g_cost[tar_idx.first][tar_idx.second];
+
+            if(PROPAGATE_PLOT)
+            {
+                prop_file.close();
+            }
+
             return;
         }
 
@@ -329,7 +373,6 @@ void Router::A_star(int net_id)
                 cout << "   exact_cost: " << exact_cost(curNodeIdx, neighbor, parent) << endl;
                 cout << "   g_cost[curNodeIdx]: " << g_cost[curNodeIdx.first][curNodeIdx.second] << endl;
                 cout << "   new_g_cost: " << new_g_cost << endl;
-                cout << "   g_cost[neighbor]: " << g_cost[neighbor.first][neighbor.second] << endl;
                 cout << "-----------------" << endl;
             }
 
@@ -371,6 +414,8 @@ void Router::A_star(int net_id)
             }
         }
     }
+
+    prop_file.close();
 
     cerr << "!!: A star search for net "<< net_id <<"failed!"<<endl;
     exit(1);

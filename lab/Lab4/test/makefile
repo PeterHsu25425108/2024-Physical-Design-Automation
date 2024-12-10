@@ -64,7 +64,7 @@ clean_plot:
 	rm  $(DRAW_DIR)/png/*
 	rm  $(DRAW_DIR)/svg/*
 clean_text:
-	rm  $(DRAW_TEXT_DIR)/*
+	rm  $(DRAW_TEXT_DIR)/*.txt
 
 # run ../draw/plot.py to plot all .txt files in the DRAW_TEXT_DIR
 # plot_all:

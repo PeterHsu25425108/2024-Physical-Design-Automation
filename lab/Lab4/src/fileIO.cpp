@@ -268,7 +268,7 @@ void Router::parseCST(ifstream& cst_file)
 void Router::writeOutput(ofstream& out_file, const Net& net)
 {
 
-    out_file << net.net_id << endl;
+    out_file <<"n"<< net.net_id << endl;
     MetalLayer prev_layer  = M1;
     vector<WireSeg>::const_reverse_iterator rit;
     for(rit = net.wire_segs.rbegin(); rit != net.wire_segs.rend(); ++rit)
@@ -288,5 +288,6 @@ void Router::writeOutput(ofstream& out_file, const Net& net)
             out_file << "via" << endl;
         }
     }
+    out_file<<".end"<<endl;
     
 }

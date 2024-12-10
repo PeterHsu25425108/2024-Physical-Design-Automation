@@ -39,13 +39,13 @@ public:
     // convert the grid ll coordinate to the grid index
     pair<int, int> LLcoor2Idx(int x, int y)
     {
-        return { (x - GMP_LLX) / GRID_W, (y - GMP_LLY) / GRID_H };
+        return { (y - GMP_LLY) / GRID_H, (x - GMP_LLX) / GRID_W };
     }
 
     // convert the grid index to the grid ll coordinate
     pair<int, int> Idx2LLcoor(int i, int j)
     {
-        return { GMP_LLX + i * GRID_W, GMP_LLY + j * GRID_H };
+        return { GMP_LLX + j * GRID_W, GMP_LLY + i * GRID_H };
     }
 
 private:
