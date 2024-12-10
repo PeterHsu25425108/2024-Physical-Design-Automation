@@ -49,7 +49,8 @@ void Router::parseGMP(ifstream& gmp_file)
 
                 if(DEBUG_PARSING)
                 {
-                    cout <<"chip1 info: " << chip1.llx << " " << chip1.lly << " " << chip1.width << " " << chip1.height << endl;
+                    //cout <<"chip1 info: " << chip1.llx << " " << chip1.lly << " " << chip1.width << " " << chip1.height << endl;
+                    cout << "chip1 info: " << " chip_x: " << chip_x << " chip_y: " << chip_y << " chip_w: " << chip_w << " chip_h: " << chip_h << endl;
                 }
             }
             else if(chip_idx==1)
@@ -62,7 +63,7 @@ void Router::parseGMP(ifstream& gmp_file)
 
                 if(DEBUG_PARSING)
                 {
-                    cout <<"chip2 info: " << chip2.llx << " " << chip2.lly << " " << chip2.width << " " << chip2.height << endl;
+                    cout <<"chip2 info: " << " chip_x: " << chip_x << " chip_y: " << chip_y << " chip_w: " << chip_w << " chip_h: " << chip_h << endl;
                 }
             }
         }
@@ -79,29 +80,38 @@ void Router::parseGMP(ifstream& gmp_file)
                 ss >> bump_idx >> bump_x >> bump_y;
 
                 // calculate the absolute position of the bump
-                Chip* chip_ptr = (chip_idx==0) ? &chip1 : &chip2;
-                bump_x += chip_ptr->llx;
-                bump_y += chip_ptr->lly;
+                // Chip* chip_ptr = (chip_idx==0) ? &chip1 : &chip2;
+                // bump_x += chip_ptr->llx;
+                // bump_y += chip_ptr->lly;
 
                 if(chip_idx==0)
                 {
+                    // calculate the absolute position of the bump
+                    bump_x += chip1.llx;
+                    bump_y += chip1.lly;
+
                     chip1.addBump(Bump(bump_idx, bump_x, bump_y));
 
                     if(DEBUG_PARSING)
                     {
-                        cout << "chip1 bump: " << chip1.bumps.back() << endl;
+                        cout << "chip1 bump: " << " bump_idx: " << bump_idx << " bump_x: " << bump_x << " bump_y: " << bump_y << endl;
                     }
 
                     // add net
                     nets.push_back(Net(bump_idx));
+                    net_id2netIdx[bump_idx] = nets.size()-1;
                 }
                 else if(chip_idx==1)
                 {
+                    // calculate the absolute position of the bump
+                    bump_x += chip2.llx;
+                    bump_y += chip2.lly;
+
                     chip2.addBump(Bump(bump_idx, bump_x, bump_y));
 
                     if(DEBUG_PARSING)
                     {
-                        cout << "chip2 bump: " << chip2.bumps.back() << endl;
+                        cout << "chip2 bump: " << " bump_idx: " << bump_idx << " bump_x: " << bump_x << " bump_y: " << bump_y << endl;
                     }
                 }
 
@@ -283,7 +293,7 @@ void Router::writeOutput(ofstream& out_file, const Net& net)
         out_file << (wire_seg.metal_layer==M1 ? "M1" : "M2") << " " << wire_seg.x1 << " " << wire_seg.y1 << " " << wire_seg.x2 << " " << wire_seg.y2 << endl;
     
         // if the last wire segment is not on M1, add a via
-        if(wire_seg.metal_layer == M2 && &wire_seg == &net.wire_segs.back())
+        if(wire_seg.metal_layer == M2 && (rit+1) == net.wire_segs.rend())
         {
             out_file << "via" << endl;
         }

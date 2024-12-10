@@ -43,10 +43,32 @@ void Router::solve(ofstream& out_file)
     // for each net, route it
     for(auto& p : net_id_area)
     {
+        if(DEBUG_SOLVE)
+        {
+            cout << "Routing net: " << p.first << endl;
+        }
+
         // route the net
         A_star(p.first);
 
+        if(DEBUG_SOLVE)
+        {
+            cout << "Net " << p.first << " is routed" << endl;
+        }
+
         // write the output
-        writeOutput(out_file, nets[p.first]);
+        int net_idx = net_id2netIdx[p.first];
+        writeOutput(out_file, nets[net_idx]);
+
+        if(DEBUG_SOLVE)
+        {
+            // print the sum of all the net cost
+            double total_cost = 0;
+            for(auto& net : nets)
+            {
+                total_cost += net.cost;
+            }
+            cout << "Total cost: " << total_cost << endl;
+        }
     }
 }

@@ -1,30 +1,170 @@
-==28214== Memcheck, a memory error detector
-==28214== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
-==28214== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
-==28214== Command: ./../bin/D2DGRter ../testcase/testcase2/testcase2.gmp ../testcase/testcase2/testcase2.gcl ../testcase/testcase2/testcase2.cst ../testcase/testcase2/testcase2.lg
-==28214== Parent PID: 28213
-==28214== 
-==28214== 
-==28214== Process terminating with default action of signal 2 (SIGINT)
-==28214==    at 0x110A65: std::less<ASTarNode>::operator()(ASTarNode const&, ASTarNode const&) const (stl_function.h:400)
-==28214==    by 0x1100F5: std::_Rb_tree<ASTarNode, ASTarNode, std::_Identity<ASTarNode>, std::less<ASTarNode>, std::allocator<ASTarNode> >::_M_get_insert_unique_pos(ASTarNode const&) (stl_tree.h:2071)
-==28214==    by 0x10EC95: std::pair<std::_Rb_tree_iterator<ASTarNode>, bool> std::_Rb_tree<ASTarNode, ASTarNode, std::_Identity<ASTarNode>, std::less<ASTarNode>, std::allocator<ASTarNode> >::_M_insert_unique<ASTarNode>(ASTarNode&&) (stl_tree.h:2124)
-==28214==    by 0x10DC5A: std::set<ASTarNode, std::less<ASTarNode>, std::allocator<ASTarNode> >::insert(ASTarNode&&) (stl_set.h:521)
-==28214==    by 0x10CCFA: Router::A_star(int) (A_star.cpp:407)
-==28214==    by 0x11C380: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
-==28214==    by 0x11B564: main (main.cpp:24)
-==28214== 
-==28214== HEAP SUMMARY:
-==28214==     in use at exit: 1,232,912 bytes in 913 blocks
-==28214==   total heap usage: 153,928 allocs, 153,015 frees, 7,171,109 bytes allocated
-==28214== 
-==28214== LEAK SUMMARY:
-==28214==    definitely lost: 0 bytes in 0 blocks
-==28214==    indirectly lost: 0 bytes in 0 blocks
-==28214==      possibly lost: 0 bytes in 0 blocks
-==28214==    still reachable: 1,232,912 bytes in 913 blocks
-==28214==         suppressed: 0 bytes in 0 blocks
-==28214== Rerun with --leak-check=full to see details of leaked memory
-==28214== 
-==28214== For lists of detected and suppressed errors, rerun with: -s
-==28214== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==3044== Memcheck, a memory error detector
+==3044== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==3044== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==3044== Command: ./../bin/D2DGRter ../testcase/testcase0/testcase0.gmp ../testcase/testcase0/testcase0.gcl ../testcase/testcase0/testcase0.cst ../testcase/testcase0/testcase0.lg
+==3044== Parent PID: 3043
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x10E370: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:112)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x1111E7: std::vector<WireSeg, std::allocator<WireSeg> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1758)
+==3044==    by 0x10F681: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:436)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x10D56F: unsigned long const& std::max<unsigned long>(unsigned long const&, unsigned long const&) (stl_algobase.h:259)
+==3044==    by 0x111226: std::vector<WireSeg, std::allocator<WireSeg> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1761)
+==3044==    by 0x10F681: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:436)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x111241: std::vector<WireSeg, std::allocator<WireSeg> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1762)
+==3044==    by 0x10F681: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:436)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x111253: std::vector<WireSeg, std::allocator<WireSeg> >::_M_check_len(unsigned long, char const*) const (stl_vector.h:1762)
+==3044==    by 0x10F681: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:436)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x11133B: std::_Vector_base<WireSeg, std::allocator<WireSeg> >::_M_allocate(unsigned long) (stl_vector.h:346)
+==3044==    by 0x10F6D6: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:440)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x112DBA: __gnu_cxx::new_allocator<WireSeg>::allocate(unsigned long, void const*) (new_allocator.h:111)
+==3044==    by 0x112281: std::allocator_traits<std::allocator<WireSeg> >::allocate(std::allocator<WireSeg>&, unsigned long) (alloc_traits.h:464)
+==3044==    by 0x11134F: std::_Vector_base<WireSeg, std::allocator<WireSeg> >::_M_allocate(unsigned long) (stl_vector.h:346)
+==3044==    by 0x10F6D6: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:440)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x4848FC0: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==3044==    by 0x112DEF: __gnu_cxx::new_allocator<WireSeg>::allocate(unsigned long, void const*) (new_allocator.h:127)
+==3044==    by 0x112281: std::allocator_traits<std::allocator<WireSeg> >::allocate(std::allocator<WireSeg>&, unsigned long) (alloc_traits.h:464)
+==3044==    by 0x11134F: std::_Vector_base<WireSeg, std::allocator<WireSeg> >::_M_allocate(unsigned long) (stl_vector.h:346)
+==3044==    by 0x10F6D6: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:440)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Use of uninitialised value of size 8
+==3044==    at 0x11115B: void __gnu_cxx::new_allocator<WireSeg>::construct<WireSeg, WireSeg>(WireSeg*, WireSeg&&) (new_allocator.h:162)
+==3044==    by 0x10F5A8: void std::allocator_traits<std::allocator<WireSeg> >::construct<WireSeg, WireSeg>(std::allocator<WireSeg>&, WireSeg*, WireSeg&&) (alloc_traits.h:516)
+==3044==    by 0x10F720: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:449)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x113689: WireSeg* std::__relocate_a_1<WireSeg*, WireSeg*, std::allocator<WireSeg> >(WireSeg*, WireSeg*, WireSeg*, std::allocator<WireSeg>&) (stl_uninitialized.h:1031)
+==3044==    by 0x112E4F: WireSeg* std::__relocate_a<WireSeg*, WireSeg*, std::allocator<WireSeg> >(WireSeg*, WireSeg*, WireSeg*, std::allocator<WireSeg>&) (stl_uninitialized.h:1046)
+==3044==    by 0x1122B7: std::vector<WireSeg, std::allocator<WireSeg> >::_S_do_relocate(WireSeg*, WireSeg*, WireSeg*, std::allocator<WireSeg>&, std::integral_constant<bool, true>) (stl_vector.h:456)
+==3044==    by 0x11138C: std::vector<WireSeg, std::allocator<WireSeg> >::_S_relocate(WireSeg*, WireSeg*, WireSeg*, std::allocator<WireSeg>&) (stl_vector.h:469)
+==3044==    by 0x10F762: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:461)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x10E2D9: std::_Vector_base<WireSeg, std::allocator<WireSeg> >::_M_deallocate(WireSeg*, unsigned long) (stl_vector.h:353)
+==3044==    by 0x10F873: void std::vector<WireSeg, std::allocator<WireSeg> >::_M_realloc_insert<WireSeg>(__gnu_cxx::__normal_iterator<WireSeg*, std::vector<WireSeg, std::allocator<WireSeg> > >, WireSeg&&) (vector.tcc:500)
+==3044==    by 0x10E3DD: void std::vector<WireSeg, std::allocator<WireSeg> >::emplace_back<WireSeg>(WireSeg&&) (vector.tcc:121)
+==3044==    by 0x10D659: std::vector<WireSeg, std::allocator<WireSeg> >::push_back(WireSeg&&) (stl_vector.h:1204)
+==3044==    by 0x10AA54: Router::backTrack(std::vector<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >, std::allocator<std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > > > > const&, std::pair<int, int>, std::pair<int, int>, std::vector<WireSeg, std::allocator<WireSeg> >&) (A_star.cpp:77)
+==3044==    by 0x10C774: Router::A_star(int) (A_star.cpp:323)
+==3044==    by 0x11CE62: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:47)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x4990A4E: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x499F119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x116008: Router::writeOutput(std::basic_ofstream<char, std::char_traits<char> >&, Net const&) (fileIO.cpp:280)
+==3044==    by 0x11CE9F: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:50)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Use of uninitialised value of size 8
+==3044==    at 0x499092B: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x4990A78: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x499F119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x116008: Router::writeOutput(std::basic_ofstream<char, std::char_traits<char> >&, Net const&) (fileIO.cpp:280)
+==3044==    by 0x11CE9F: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:50)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x499093D: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x4990A78: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x499F119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x116008: Router::writeOutput(std::basic_ofstream<char, std::char_traits<char> >&, Net const&) (fileIO.cpp:280)
+==3044==    by 0x11CE9F: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:50)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== Conditional jump or move depends on uninitialised value(s)
+==3044==    at 0x4990AAE: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_int<long>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, long) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x499F119: std::ostream& std::ostream::_M_insert<long>(long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)
+==3044==    by 0x116008: Router::writeOutput(std::basic_ofstream<char, std::char_traits<char> >&, Net const&) (fileIO.cpp:280)
+==3044==    by 0x11CE9F: Router::solve(std::basic_ofstream<char, std::char_traits<char> >&) (solve.cpp:50)
+==3044==    by 0x11C046: main (main.cpp:24)
+==3044== 
+==3044== 
+==3044== HEAP SUMMARY:
+==3044==     in use at exit: 40 bytes in 1 blocks
+==3044==   total heap usage: 5,219 allocs, 5,218 frees, 305,357 bytes allocated
+==3044== 
+==3044== LEAK SUMMARY:
+==3044==    definitely lost: 40 bytes in 1 blocks
+==3044==    indirectly lost: 0 bytes in 0 blocks
+==3044==      possibly lost: 0 bytes in 0 blocks
+==3044==    still reachable: 0 bytes in 0 blocks
+==3044==         suppressed: 0 bytes in 0 blocks
+==3044== Rerun with --leak-check=full to see details of leaked memory
+==3044== 
+==3044== Use --track-origins=yes to see where uninitialised values come from
+==3044== For lists of detected and suppressed errors, rerun with: -s
+==3044== ERROR SUMMARY: 17 errors from 15 contexts (suppressed: 0 from 0)

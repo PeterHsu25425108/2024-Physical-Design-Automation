@@ -320,7 +320,7 @@ void Router::A_star(int net_id)
             }
 
             // backtrack the path
-            backTrack(parent, src_idx, tar_idx, nets[net_id].wire_segs);
+            backTrack(parent, src_idx, tar_idx, nets[net_id2netIdx[net_id]].wire_segs);
             // calculate the cost of the net
             nets[net_id].cost = g_cost[tar_idx.first][tar_idx.second];
 

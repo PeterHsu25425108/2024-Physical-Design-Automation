@@ -64,6 +64,7 @@ private:
     int GRID_W, GRID_H;
     int GRID_DIM_HOR, GRID_DIM_VER;
     double M1Cost_max, M2Cost_max, MetalCost_max;
+    unordered_map<int, int> net_id2netIdx;
 };
 
 #endif

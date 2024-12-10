@@ -90,4 +90,4 @@ run_cmd: $(EXEC)
 
 check: ../testcase/$(CASE_NAME)/$(CASE_NAME).lg 
 	chmod 755 Evaluator
-	./Evaluator ~/PDA/lab/Lab4/testcase/$(CASE_NAME) $(CASE_NAME)
+	./Evaluator ~/PDA/lab/Lab4/testcase/$(CASE_NAME) $(CASE_NAME) > ../perf/$(CASE_NAME)_perf.txt
