@@ -1,0 +1,229 @@
+Net id and area: 
+Net id: 55 area: 0
+Net id: 22 area: 8200
+Net id: 9 area: 13600
+Net id: 20 area: 25200
+Net id: 4 area: 34500
+Net id: 11 area: 36000
+Net id: 29 area: 37500
+Net id: 49 area: 38500
+Net id: 56 area: 39200
+Net id: 25 area: 40800
+Net id: 16 area: 44800
+Net id: 50 area: 49600
+Net id: 15 area: 58400
+Net id: 27 area: 58500
+Net id: 33 area: 62100
+Net id: 5 area: 69300
+Net id: 19 area: 76000
+Net id: 41 area: 76800
+Net id: 6 area: 78000
+Net id: 17 area: 84700
+Net id: 10 area: 89100
+Net id: 21 area: 91000
+Net id: 24 area: 91800
+Net id: 47 area: 94500
+Net id: 57 area: 103500
+Net id: 32 area: 111800
+Net id: 53 area: 112000
+Net id: 36 area: 115200
+Net id: 48 area: 132800
+Net id: 26 area: 134400
+Net id: 30 area: 156000
+Net id: 34 area: 159000
+Net id: 52 area: 159800
+Net id: 12 area: 173800
+Net id: 54 area: 173800
+Net id: 23 area: 182600
+Net id: 2 area: 186300
+Net id: 39 area: 198400
+Net id: 14 area: 205800
+Net id: 38 area: 215800
+Net id: 43 area: 227700
+Net id: 45 area: 234000
+Net id: 37 area: 235200
+Net id: 28 area: 260400
+Net id: 51 area: 262500
+Net id: 1 area: 289800
+Net id: 7 area: 300200
+Net id: 8 area: 301600
+Net id: 40 area: 306000
+Net id: 35 area: 309400
+Net id: 3 area: 332100
+Net id: 18 area: 367200
+Net id: 42 area: 371000
+Net id: 44 area: 389400
+Net id: 13 area: 403200
+Net id: 46 area: 437100
+Net id: 31 area: 460000
+Routing net: 55
+Net 55 is routed
+Total cost: 1562.14
+Routing net: 22
+Net 22 is routed
+Total cost: 4720.99
+Routing net: 9
+Net 9 is routed
+Total cost: 6868
+Routing net: 20
+Net 20 is routed
+Total cost: 10382.2
+Routing net: 4
+Net 4 is routed
+Total cost: 13177.8
+Routing net: 11
+Net 11 is routed
+Total cost: 14991.5
+Routing net: 29
+Net 29 is routed
+Total cost: 18272.4
+Routing net: 49
+Net 49 is routed
+Total cost: 20432.5
+Routing net: 56
+Net 56 is routed
+Total cost: 21748.6
+Routing net: 25
+Net 25 is routed
+Total cost: 24554.6
+Routing net: 16
+Net 16 is routed
+Total cost: 26952.2
+Routing net: 50
+Net 50 is routed
+Total cost: 29473.8
+Routing net: 15
+Net 15 is routed
+Total cost: 32814.5
+Routing net: 27
+Net 27 is routed
+Total cost: 35376.5
+Routing net: 33
+Net 33 is routed
+Total cost: 38259.3
+Routing net: 5
+Net 5 is routed
+Total cost: 41283.7
+Routing net: 19
+Net 19 is routed
+Total cost: 44859.8
+Routing net: 41
+Net 41 is routed
+Total cost: 50464.7
+Routing net: 6
+Net 6 is routed
+Total cost: 54787.2
+Routing net: 17
+Net 17 is routed
+Total cost: 58613.7
+Routing net: 10
+Net 10 is routed
+Total cost: 62162.7
+Routing net: 21
+Net 21 is routed
+Total cost: 64683.2
+Routing net: 24
+Net 24 is routed
+Total cost: 67048.1
+Routing net: 47
+Net 47 is routed
+Total cost: 70331.8
+Routing net: 57
+Net 57 is routed
+Total cost: 70331.8
+Routing net: 32
+Net 32 is routed
+Total cost: 74347.2
+Routing net: 53
+Net 53 is routed
+Total cost: 78746.3
+Routing net: 36
+Net 36 is routed
+Total cost: 84877.5
+Routing net: 48
+Net 48 is routed
+Total cost: 90183.6
+Routing net: 26
+Net 26 is routed
+Total cost: 95577.5
+Routing net: 30
+Net 30 is routed
+Total cost: 99172.4
+Routing net: 34
+Net 34 is routed
+Total cost: 106365
+Routing net: 52
+Net 52 is routed
+Total cost: 113158
+Routing net: 12
+Net 12 is routed
+Total cost: 117615
+Routing net: 54
+Net 54 is routed
+Total cost: 122170
+Routing net: 23
+Net 23 is routed
+Total cost: 126447
+Routing net: 2
+Net 2 is routed
+Total cost: 130425
+Routing net: 39
+Net 39 is routed
+Total cost: 133522
+Routing net: 14
+Net 14 is routed
+Total cost: 139194
+Routing net: 38
+Net 38 is routed
+Total cost: 144414
+Routing net: 43
+Net 43 is routed
+Total cost: 149023
+Routing net: 45
+Net 45 is routed
+Total cost: 153308
+Routing net: 37
+Net 37 is routed
+Total cost: 157385
+Routing net: 28
+Net 28 is routed
+Total cost: 163210
+Routing net: 51
+Net 51 is routed
+Total cost: 167653
+Routing net: 1
+Net 1 is routed
+Total cost: 172936
+Routing net: 7
+Net 7 is routed
+Total cost: 177952
+Routing net: 8
+Net 8 is routed
+Total cost: 183725
+Routing net: 40
+Net 40 is routed
+Total cost: 188025
+Routing net: 35
+Net 35 is routed
+Total cost: 193943
+Routing net: 3
+Net 3 is routed
+Total cost: 198246
+Routing net: 18
+Net 18 is routed
+Total cost: 203637
+Routing net: 42
+Net 42 is routed
+Total cost: 209988
+Routing net: 44
+Net 44 is routed
+Total cost: 214634
+Routing net: 13
+Net 13 is routed
+Total cost: 220526
+Routing net: 46
+Net 46 is routed
+Total cost: 226738
+Routing net: 31
+Net 31 is routed
+Total cost: 232469

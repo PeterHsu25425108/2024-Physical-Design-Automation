@@ -88,6 +88,10 @@ run: $(EXEC)
 run_cmd: $(EXEC)
 	time ./$(EXEC) ../testcase/$(CASE_NAME)/$(CASE_NAME).gmp ../testcase/$(CASE_NAME)/$(CASE_NAME).gcl ../testcase/$(CASE_NAME)/$(CASE_NAME).cst ../testcase/$(CASE_NAME)/$(CASE_NAME).lg 
 
-check: ../testcase/$(CASE_NAME)/$(CASE_NAME).lg 
+check_save: ../testcase/$(CASE_NAME)/$(CASE_NAME).lg 
 	chmod 755 Evaluator
 	./Evaluator ~/PDA/lab/Lab4/testcase/$(CASE_NAME) $(CASE_NAME) > ../perf/$(CASE_NAME)_perf.txt
+
+check: ../testcase/$(CASE_NAME)/$(CASE_NAME).lg 
+	chmod 755 Evaluator
+	./Evaluator ~/PDA/lab/Lab4/testcase/$(CASE_NAME) $(CASE_NAME)
