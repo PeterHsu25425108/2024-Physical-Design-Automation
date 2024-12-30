@@ -1,0 +1,3 @@
+Error: number of cells processed exceeds the number of cells in the data structure
+0.15user 0.01system 0:00.25elapsed 69%CPU (0avgtext+0avgdata 48656maxresident)k
+11752inputs+8outputs (0major+12458minor)pagefaults 0swaps

@@ -25,7 +25,7 @@ void Router::parseGMP(ifstream& gmp_file)
         // grid info
         else if(line==".g")
         {
-            gmp_file >> GRID_H >> GRID_W;
+            gmp_file >> GRID_W >> GRID_H;
 
             if(DEBUG_PARSING)
             {
@@ -152,6 +152,8 @@ void Router::parseGCL(ifstream& gcl_file)
         // (UNDONE) check if the number of cells processed <= number of cells in the data structure
         if(num_cells_processed > GRID_DIM_HOR * GRID_DIM_VER)
         {
+            cerr << "GRID_DIM_HOR: " << GRID_DIM_HOR << " GRID_DIM_VER: " << GRID_DIM_VER << endl;
+            cerr << "num_cells_processed: " << num_cells_processed << endl;
             cerr << "Error: number of cells processed exceeds the number of cells in the data structure" << endl;
             exit(1);
         }        
