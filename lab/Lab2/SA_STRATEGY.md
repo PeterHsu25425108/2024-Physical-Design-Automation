@@ -36,8 +36,8 @@ The algorithm uses a two-phase cost function strategy:
 #### Phase 1: Penalty-based Cost (During Search)
 ```
 SA_cost = {
-    -4 × OutlineArea / objective,     if layout fits within outline
-    10 × (x_error + y_error),         otherwise
+    -4 × outlineWidth × outlineHeight / objective,     if layout fits within outline
+    10 × (x_error + y_error),                          otherwise
 }
 ```
 where:
@@ -90,7 +90,7 @@ Three types of moves are used to explore the solution space:
 
 The algorithm uses a geometric cooling schedule:
 
-- **Initial temperature (T₀)**: 10,000
+- **Initial temperature (T)**: 10000
   - High enough to accept most moves initially
   - Enables thorough exploration of the solution space
 
@@ -142,7 +142,7 @@ This ensures the algorithm returns the best feasible solution even if the search
    - Parse input blocks and nets
    - Build initial B*-Tree by inserting blocks sequentially
    - Calculate initial cost
-   - Set T = T₀, best_tree = current_tree
+   - Set T = 10000, best_tree = current_tree
 
 2. Main SA Loop (until termination):
    a. Randomly select perturbation move (Swap/Rotate/Move)
@@ -209,8 +209,8 @@ The contour list enables O(n) packing time by maintaining only the active placem
 ## References
 
 This implementation is based on B*-Tree representation for floorplanning:
-- Y.-C. Chang et al., "B*-Trees: A New Representation for Non-Slicing Floorplans," DAC 2000
-- The algorithm combines classic simulated annealing with modern floorplan representation techniques
+- Y.-C. Chang, Y.-W. Chang, G.-M. Wu, and S.-W. Wu, "B*-Trees: A New Representation for Non-Slicing Floorplans," in Proceedings of the 37th Annual Design Automation Conference (DAC), 2000, pp. 458-463, doi: 10.1145/337292.337541
+- The algorithm combines classic simulated annealing metaheuristic with modern floorplan representation techniques
 
 ## Usage
 
