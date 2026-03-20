@@ -1,0 +1,50 @@
+NumBlocks: 33
+bk8a 1148 3234 210 210 bk2 nullptr bk9d
+bk17b 1029 1323 182 203 bk14a nullptr nullptr
+bk10b 714 0 161 140 bk10a bk12 bk10c
+bk14c 875 1022 161 119 bk13 nullptr bk18
+bk12 875 0 140 406 bk10b bk2 bk13
+bk1 0 0 336 133 nullptr bk10a bk15a
+bk9d 1148 3563 119 84 bk8a nullptr nullptr
+bk10a 336 0 378 119 bk1 bk10b bk11
+bk10c 714 140 119 49 bk10b bk14a bk16
+bk11 336 119 175 119 bk10a bk9a bk14b
+bk8b 749 2100 126 378 bk15b nullptr nullptr
+bk15a 0 133 119 266 bk1 bk5a bk19
+bk14a 833 903 196 119 bk10c bk17b bk9c
+bk9b 511 1988 119 119 bk5b nullptr nullptr
+bk16 714 525 119 126 bk10c bk17a bk5c
+bk15b 630 189 119 336 bk14b bk8b bk21
+bk9a 511 1869 182 119 bk11 nullptr nullptr
+bk17a 833 1141 371 182 bk16 nullptr nullptr
+bk4 875 2688 560 133 bk18 nullptr nullptr
+bk18 875 1526 182 203 bk14c bk3 bk4
+bk21 630 1729 315 140 bk15b nullptr nullptr
+bk5b 336 357 175 133 bk14b bk9b nullptr
+bk5c 714 1869 133 231 bk16 nullptr nullptr
+bk6 1015 2821 133 315 bk20 nullptr nullptr
+bk14b 336 238 294 119 bk11 bk15b bk5b
+bk2 1015 1729 133 294 bk12 bk8a bk20
+bk20 1015 2023 182 350 bk2 nullptr bk6
+bk3 1057 2373 133 315 bk18 nullptr bk7
+bk13 875 406 140 497 bk12 nullptr bk14c
+bk5a 119 133 133 140 bk15a nullptr nullptr
+bk9c 833 3444 357 119 bk14a nullptr nullptr
+bk19 0 399 84 119 bk15a nullptr nullptr
+bk7 1057 3136 182 98 bk3 nullptr nullptr
+NumContours: 14
+0 84 518
+84 119 399
+119 252 273
+252 336 133
+336 511 490
+511 630 2107
+630 693 1988
+693 714 1869
+714 749 2100
+749 833 2478
+833 1148 3563
+1148 1267 3647
+1267 1358 3444
+1358 1435 2821
+Outline: 1205 1095 1435 3647
