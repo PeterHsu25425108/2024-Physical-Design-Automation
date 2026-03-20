@@ -56,11 +56,13 @@ def plot_blocks_and_contours(file_path):
     # Plot blocks
     for name, block in blocks.items():
 
-        if block["parent"] == "nullptr":
-            color = "blue"
-        else:
-            color = "pink"
+        # if block["parent"] == "nullptr":
+        #     color = "blue"
+        # else:
+            # color = "pink"
 
+        
+        color = "pink"
         rect = patches.Rectangle(
             (block["llx"], block["lly"]),
             block["width"],
@@ -74,69 +76,69 @@ def plot_blocks_and_contours(file_path):
         ax.add_patch(rect)
 
         # Draw block name
-        ax.text(
-            block["llx"] + block["width"] / 2,
-            block["lly"] + block["height"] / 2,
-            name,
-            ha="center",
-            va="center",
-            color="black",
-            fontsize=8,
-        )
+        # ax.text(
+        #     block["llx"] + block["width"] / 2,
+        #     block["lly"] + block["height"] / 2,
+        #     name,
+        #     ha="center",
+        #     va="center",
+        #     color="black",
+        #     fontsize=8,
+        # )
 
         # Draw arrows for parent-child relationships
-        if block["left"] != "nullptr":
-            parent_block = block
-            child_block = blocks[block["left"]]
+        # if block["left"] != "nullptr":
+        #     parent_block = block
+        #     child_block = blocks[block["left"]]
 
-            parent_center = (
-                parent_block["llx"] + parent_block["width"] / 2,
-                parent_block["lly"] + parent_block["height"] / 2,
-            )
-            child_center = (
-                child_block["llx"] + child_block["width"] / 2,
-                child_block["lly"] + child_block["height"] / 2,
-            )
+        #     parent_center = (
+        #         parent_block["llx"] + parent_block["width"] / 2,
+        #         parent_block["lly"] + parent_block["height"] / 2,
+        #     )
+        #     child_center = (
+        #         child_block["llx"] + child_block["width"] / 2,
+        #         child_block["lly"] + child_block["height"] / 2,
+        #     )
 
-            # if the child is a left child, draw the arrow from the right side of the parent, and set the color to blue
-            ax.annotate(
-                "",
-                xy=child_center,
-                xytext=(parent_center[0], parent_center[1]),
-                arrowprops=dict(
-                    arrowstyle="->", color="blue", lw=1.5, shrinkA=5, shrinkB=5
-                ),
-            )
+        #     # if the child is a left child, draw the arrow from the right side of the parent, and set the color to blue
+        #     ax.annotate(
+        #         "",
+        #         xy=child_center,
+        #         xytext=(parent_center[0], parent_center[1]),
+        #         arrowprops=dict(
+        #             arrowstyle="->", color="blue", lw=1.5, shrinkA=5, shrinkB=5
+        #         ),
+        #     )
 
-            if DEBUG:
-                # print the name of the parent and child blocks
-                print(f"Drawing arrow from {parent_block} to {child_block}")
-        if block["right"] != "nullptr":
-            parent_block = block
-            child_block = blocks[block["right"]]
+        #     if DEBUG:
+        #         # print the name of the parent and child blocks
+        #         print(f"Drawing arrow from {parent_block} to {child_block}")
+        # if block["right"] != "nullptr":
+        #     parent_block = block
+        #     child_block = blocks[block["right"]]
 
-            parent_center = (
-                parent_block["llx"] + parent_block["width"] / 2,
-                parent_block["lly"] + parent_block["height"] / 2,
-            )
-            child_center = (
-                child_block["llx"] + child_block["width"] / 2,
-                child_block["lly"] + child_block["height"] / 2,
-            )
+        #     parent_center = (
+        #         parent_block["llx"] + parent_block["width"] / 2,
+        #         parent_block["lly"] + parent_block["height"] / 2,
+        #     )
+        #     child_center = (
+        #         child_block["llx"] + child_block["width"] / 2,
+        #         child_block["lly"] + child_block["height"] / 2,
+        #     )
 
-            # if the child is a right child, draw the arrow from the left side of the parent, and set the color to red
+        #     # if the child is a right child, draw the arrow from the left side of the parent, and set the color to red
 
-            ax.annotate(
-                "",
-                xy=child_center,
-                xytext=(parent_center[0], parent_center[1]),
-                arrowprops=dict(
-                    arrowstyle="->", color="green", lw=1.5, shrinkA=5, shrinkB=5
-                ),
-            )
+        #     ax.annotate(
+        #         "",
+        #         xy=child_center,
+        #         xytext=(parent_center[0], parent_center[1]),
+        #         arrowprops=dict(
+        #             arrowstyle="->", color="green", lw=1.5, shrinkA=5, shrinkB=5
+        #         ),
+        #     )
 
-            if DEBUG:
-                print(f"Drawing arrow from {parent_block} to {child_block}")
+        #     if DEBUG:
+        #         print(f"Drawing arrow from {parent_block} to {child_block}")
 
     # Plot outline
     outline = patches.Rectangle(
@@ -146,7 +148,7 @@ def plot_blocks_and_contours(file_path):
         linewidth=1,
         edgecolor="purple",
         facecolor="none",
-        linestyle="dashed",
+        # linestyle="dashed",
     )
     ax.add_patch(outline)
 
@@ -163,14 +165,14 @@ def plot_blocks_and_contours(file_path):
     ax.add_patch(boundary)
 
     # Plot contour lines
-    for left_x, right_x, y in contours:
-        line = mlines.Line2D([left_x, right_x], [y, y], color="red", dashes=[6, 2])
-        ax.add_line(line)
+    # for left_x, right_x, y in contours:
+    #     line = mlines.Line2D([left_x, right_x], [y, y], color="red", dashes=[6, 2])
+    #     ax.add_line(line)
         # plot gray dashed vertical lines from(x_left, 0) to (x_left, y) and from (x_right, 0) to (x_right, y)
-        ax.plot([left_x, left_x], [0, y], color="gray", linestyle="dashed")
-        ax.plot([right_x, right_x], [0, y], color="gray", linestyle="dashed")
-        if DEBUG:
-            print(f"Drawing contour line from ({left_x}, {y}) to ({right_x}, {y})")
+        # ax.plot([left_x, left_x], [0, y], color="gray", linestyle="dashed")
+        # ax.plot([right_x, right_x], [0, y], color="gray", linestyle="dashed")
+        # if DEBUG:
+        #     print(f"Drawing contour line from ({left_x}, {y}) to ({right_x}, {y})")
 
     # Adjust axis limits based on the parsed data range
     max_w = max(max_w, outline_width)

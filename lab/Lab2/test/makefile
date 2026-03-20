@@ -66,11 +66,12 @@ plot_final: $(DRAW_TEXT_DIR)/final_plot.txt
 
 # Pattern rule to run [case_name] testcase with alpha = [alpha] using valgrind
 run_valgrind: $(EXEC)
-	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt > cmd.txt
+	valgrind --leak-check=full --track-origins=yes --log-file=memory.log ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt 
 	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/output.txt
 
 run: $(EXEC)
-	time ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt > cmd.txt
+	mkdir -p ../output/$(CASE_NAME)/
+	time ./../bin/Lab2 $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt
 	./verifier $(ALPHA) ../testcase/$(CASE_NAME)/$(CASE_NAME).block ../testcase/$(CASE_NAME)/$(CASE_NAME).nets ../output/$(CASE_NAME)/$(CASE_NAME)_output.txt
 
 check: $(EXEC)

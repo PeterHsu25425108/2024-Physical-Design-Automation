@@ -74,15 +74,17 @@ private:
     // the boundary width and height,contour_list, the LB of each block will be updated
     void updateContour(Block *curr);
 
-    // Cost function realted functions
-    void calcTotHPWL();
-    void calcBoundArea();
-    void calcAspectRatio();
+
     // void calcOutOfBoundArea(int outline_width, int outline_height);
 
 public:
     BSTree();
     ~BSTree();
+
+    // Cost function realted functions
+    void calcTotHPWL();
+    void calcBoundArea();
+    void calcAspectRatio();
 
     BSTree(const BSTree &copied_tree);
     // assignment operator

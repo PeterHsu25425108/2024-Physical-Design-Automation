@@ -36,6 +36,12 @@ void SA::solve()
         ofstream init_plot_file("../draw/text/init_plot.txt");
         new_tree.writePlotFile(init_plot_file, outlineWidth, outlineHeight);
         init_plot_file.close();
+        // print the initial bounding area and HPWL
+        cout << "Calculating initial HPWL and bounding area..." << endl;
+        // new_tree.calcTotHPWL();
+        // new_tree.calcBoundArea();
+        cout << "Initial bounding area: " <<  bs_tree.getBoundingArea() << endl;
+        cout << "Initial HPWL: " <<  bs_tree.getTotHPWL() << endl;
     }
 
     int iter = 0;
@@ -287,6 +293,12 @@ void SA::solve()
         ofstream final_plot_file("../draw/text/final_plot.txt");
         best_tree.writePlotFile(final_plot_file, outlineWidth, outlineHeight);
         final_plot_file.close();
+        // print the final bounding area and HPWL
+        cout << "Calculating final HPWL and bounding area..." << endl;
+        best_tree.calcTotHPWL();
+        best_tree.calcBoundArea();
+        cout << "Final bounding area: " << best_tree.getBoundingArea() << endl;
+        cout << "Final HPWL: " << best_tree.getTotHPWL() << endl;
     }
     if (DEBUG_SA)
     {
